@@ -8,8 +8,8 @@ import mobee.core.GlobalState;
 import mobee.core.IntentionSelector;
 import mobee.core.ProgramLoader;
 import mobee.lang.Agent;
+import mobee.util.ArgumentsLoader;
 import mobee.util.Catalog;
-import mobee.util.CommandLineParser;
 
 public class Main {
 
@@ -27,24 +27,20 @@ public class Main {
 	public static void main(String[] args) {
 
 		// Parse the command line options
-		if (CommandLineParser.parseHelpArgs(args) || !CommandLineParser.parseArgs(args)) {
-			System.out.println(getAppHeader());
-			CommandLineParser.printHelp(Main.class.getName(), 100);
-			System.exit(0);
-		}
+		ArgumentsLoader.parse(args);
 
 		// Configure logging
 		try {
-			fh = new FileHandler(CommandLineParser.getLogfile(), false);
+			fh = new FileHandler(ArgumentsLoader.getLogFile(), false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		Logger thisLogger = Logger.getLogger("");
 		fh.setFormatter(new SimpleFormatter());
 		thisLogger.addHandler(fh);
-		thisLogger.setLevel(CommandLineParser.getLogLevel());                    
+		thisLogger.setLevel(ArgumentsLoader.getLogLevel());                    
 
-		int NUMAGENTS = CommandLineParser.getNumAgents(); 
+		int NUMAGENTS = ArgumentsLoader.getNumAgents(); 
 		int INCREMENT = 10000;
 
 		GlobalState.agents = new Catalog("agents", NUMAGENTS, INCREMENT);
@@ -54,7 +50,7 @@ public class Main {
 		
 		// Create the agents
 		t0 = System.currentTimeMillis();
-		ProgramLoader.load(CommandLineParser.getAgentClass(), NUMAGENTS, GlobalState.agents);
+		ProgramLoader.load(ArgumentsLoader.getAgentClass(), NUMAGENTS, GlobalState.agents);
 		t1 = System.currentTimeMillis();
 		logger.info(": Created " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
 

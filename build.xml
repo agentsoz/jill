@@ -8,7 +8,6 @@
 
     <path id="mobee.classpath">
         <pathelement location="${bin.dir}"/>
-        <pathelement location="dep/commons-cli-1.2.jar"/>
     </path>
 
     <target name="init">
@@ -34,7 +33,6 @@
     <target depends="build" name="dist">
         <jar destfile="${ant.project.name}.jar">
            <fileset dir="${bin.dir}" includes="**" />
-            <zipgroupfileset excludes="META-INF/*.SF" dir="${basedir}/dep" includes="**/*.jar"/>
            <manifest>
                <attribute name="Built-By" value="${user.name}"/>
                <attribute name="Class-Path" value="."/>
