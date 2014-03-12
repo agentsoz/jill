@@ -1,5 +1,8 @@
 package mobee;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
@@ -70,12 +73,30 @@ public class Main {
 
 		// Wait till we are all done
 		t0 = System.currentTimeMillis();
-		int cycles = 1;
-		while(IntentionSelector.run()) {
-			cycles++;
+		int cycles = ArgumentsLoader.getNumCycles();
+		int ncores = ArgumentsLoader.getNumThreads();
+		int poolsize = GlobalState.agents.size()/ncores;
+		int cycle = 0;
+		while (cycles == -1 || cycle  < cycles) {
+	        ExecutorService executor = Executors.newFixedThreadPool(ncores);
+	        for (int i = 0; i < ncores; i++) {
+	        	int start = i*poolsize;
+	        	int size = (start+poolsize<=GlobalState.agents.size()) ? poolsize : 
+	        		poolsize - (GlobalState.agents.size()-start);
+				executor.execute(new IntentionSelector(start,size));
+	        }
+			executor.shutdown();
+			try {
+				executor.awaitTermination(10, TimeUnit.SECONDS);
+			} catch (InterruptedException e) {
+				logger.warning(e.getMessage());
+			}
+			if (cycles != -1) {
+				cycle++;
+			}
 		}
 		t1 = System.currentTimeMillis();
-		logger.info(": Finished running "+cycles+" execution cycles with " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
+		logger.info(": Finished running "+cycle+" execution cycles with " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
 
 		// Finish the agents
 		t0 = System.currentTimeMillis();

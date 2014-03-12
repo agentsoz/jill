@@ -12,18 +12,25 @@ import mobee.struct.GoalType;
 import mobee.struct.PlanType;
 import mobee.util.Catalog;
 
-public class IntentionSelector {
+public class IntentionSelector implements Runnable {
 
-	private final static Logger logger = Logger.getLogger("");
+	//private final static Logger logger = Logger.getLogger("");
 
-	public static Random rand = new Random();
+	private boolean done = false;
+	private int start;
+	private int size;
+	
 
-	public static boolean run() {
-		int cPlansExecuted = 0;
-		int cNewPlansAdded = 0;
-		boolean done = true;
+	public IntentionSelector(int start, int size) {
+		this.start = start;
+		this.size = size;
+	}
+
+
+	public void run() {
+		done = true;
 		ArrayList<Plan> options = new ArrayList<Plan>();
-		for (int i = 0; i < GlobalState.agentsIntentions.size(); i++) {
+		for (int i = start; i < start+size; i++) {
 			Catalog agentExecutionStack = (Catalog)GlobalState.agentsIntentions.get(i);
 			int esSize = agentExecutionStack.size();
 			if (agentExecutionStack == null || esSize == 0) {
@@ -47,7 +54,6 @@ public class IntentionSelector {
 					}
 				} else {
 					((Plan) node).step();
-					cPlansExecuted++;
 					done = false;
 				}
 
@@ -79,14 +85,13 @@ public class IntentionSelector {
 					continue;
 				}
 				// TODO: Pick a plan option using some policy (random for now)
-				int choice = rand.nextInt(options.size());
+				int choice = GlobalState.rand.nextInt(options.size());
 				agentExecutionStack.push(options.get(choice));
 				options.clear();
-				cNewPlansAdded++;
 				done = false;
 			}
 		}
-		logger.fine("Processed "+GlobalState.agentsIntentions.size()+" agents, added "+cNewPlansAdded+" plans to stack, executed "+cPlansExecuted+" plans.");
-		return !done;
+		//logger.fine("Processed "+GlobalState.agentsIntentions.size()+" agents, added "+cNewPlansAdded+" plans to stack, executed "+cPlansExecuted+" plans.");
+		//return !done;
 	}
 }

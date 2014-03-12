@@ -1,5 +1,7 @@
 package mobee.core;
 
+import java.util.Random;
+
 import mobee.util.Catalog;
 
 /**
@@ -15,5 +17,7 @@ public class GlobalState {
 	
 	public static Catalog agents;
 	public static Catalog agentsIntentions;
-	
+
+	public static Random rand = new Random();
+
 }

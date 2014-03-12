@@ -10,6 +10,8 @@ public class ArgumentsLoader {
 	private static Level logLevel = Level.WARNING;
 	private static String agentClass = null;
 	private static int numAgents = 0;
+	private static int numCycles = -1;
+	private static int numThreads = Runtime.getRuntime().availableProcessors();
 	
 	public static String usage() {
 		return 
@@ -17,8 +19,10 @@ public class ArgumentsLoader {
 			" [-l <logfile>] [-d <debuglevel>] -c <agentclass> -n <numagents>" + "\n" +
 			" -c <agentclass>   agent class to load" +
 			" -d <debuglevel>   debug level (e.g., 'SEVERE', 'INFO', or 'FINE')" +
+			" -i <cycles>       number of cycles to perform before existing (runs forever if unspecified)" +
 			" -l <logfile>      file for logging output" +
-			" -n <numagent>     number of agents to create (of type <agentclass>"
+			" -n <numagent>     number of agents to create (of type <agentclass>" +
+			" -t <numthreads>   number of threads used by execution engine (defaults to number of available cores)"
 			;
 	}
 	
@@ -57,12 +61,36 @@ public class ArgumentsLoader {
 					}
 				}
 				break;
+			case "-i":
+				if (i+1 < args.length) {
+					i++;
+					try {
+						numCycles = Integer.parseInt(args[i]);
+					} catch (Exception e) {
+						abort("Option value '"+args[i]+"' is not a number");
+					}
+				}
+				break;
+			case "-t":
+				if (i+1 < args.length) {
+					i++;
+					try {
+						numThreads = Integer.parseInt(args[i]);
+					} catch (Exception e) {
+						abort("Option value '"+args[i]+"' is not a number");
+					}
+				}
+				break;
 			}	
 		}
 		// Abort if required args were not given
 		if (agentClass == null) {
 			abort("Some required options were not given");
 		}
+	}
+
+	public static int getNumThreads() {
+		return numThreads;
 	}
 
 	public static String getLogFile() {
@@ -81,6 +109,10 @@ public class ArgumentsLoader {
 		return numAgents;
 	}
 	
+	public static int getNumCycles() {
+		return numCycles;
+	}
+
 	private static void abort(String err) {
 		System.err.println(err);
 		usage();
