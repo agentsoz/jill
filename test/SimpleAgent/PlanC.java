@@ -1,9 +1,9 @@
 package SimpleAgent;
 
-import mobee.lang.Agent;
-import mobee.lang.Plan;
-import mobee.lang.PlanInfo;
-import mobee.lang.PlanStep;
+import mocabdi.lang.Agent;
+import mocabdi.lang.Plan;
+import mocabdi.lang.PlanInfo;
+import mocabdi.lang.PlanStep;
 
 @PlanInfo(handlesGoal="SimpleAgent.GoalC")
 public class PlanC extends Plan {

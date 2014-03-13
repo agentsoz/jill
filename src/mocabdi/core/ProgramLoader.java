@@ -1,19 +1,19 @@
-package mobee.core;
+package mocabdi.core;
 
 import java.lang.annotation.Annotation;
 import java.util.logging.Logger;
 
-import mobee.core.GlobalState;
-import mobee.lang.Agent;
-import mobee.lang.AgentInfo;
-import mobee.lang.Goal;
-import mobee.lang.GoalInfo;
-import mobee.lang.Plan;
-import mobee.lang.PlanInfo;
-import mobee.struct.AgentType;
-import mobee.struct.GoalType;
-import mobee.struct.PlanType;
-import mobee.util.Catalog;
+import mocabdi.core.GlobalState;
+import mocabdi.lang.Agent;
+import mocabdi.lang.AgentInfo;
+import mocabdi.lang.Goal;
+import mocabdi.lang.GoalInfo;
+import mocabdi.lang.Plan;
+import mocabdi.lang.PlanInfo;
+import mocabdi.struct.AgentType;
+import mocabdi.struct.GoalType;
+import mocabdi.struct.PlanType;
+import mocabdi.util.Catalog;
 
 
 

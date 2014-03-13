@@ -1,6 +1,6 @@
-package mobee.lang;
+package mocabdi.lang;
 
-import mobee.struct.AObject;
+import mocabdi.struct.AObject;
 
 
 public class Goal extends AObject {

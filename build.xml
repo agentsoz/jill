@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project basedir="." default="build" name="mobee">
+<project basedir="." default="build" name="mocabdi">
     <property name="target" value="1.7"/>
     <property name="source" value="1.7"/>
 
     <property name="bin.dir" value="${basedir}/bin"/>
 
 
-    <path id="mobee.classpath">
+    <path id="mclasspath">
         <pathelement location="${bin.dir}"/>
     </path>
 
@@ -26,7 +26,7 @@
     <target depends="init" name="build">
         <javac destdir="${bin.dir}" includeantruntime="false" source="${source}" target="${target}">
             <src path="src"/>
-            <classpath refid="mobee.classpath"/>
+            <classpath refid="mclasspath"/>
         </javac>
     </target>
 
@@ -36,7 +36,7 @@
            <manifest>
                <attribute name="Built-By" value="${user.name}"/>
                <attribute name="Class-Path" value="."/>
-               <attribute name="Main-Class" value="mobee.Main"/>
+               <attribute name="Main-Class" value="mocabdi.Main"/>
            </manifest>               
         </jar>
     </target>

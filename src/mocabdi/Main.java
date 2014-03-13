@@ -1,4 +1,4 @@
-package mobee;
+package mocabdi;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -7,12 +7,12 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-import mobee.core.GlobalState;
-import mobee.core.IntentionSelector;
-import mobee.core.ProgramLoader;
-import mobee.lang.Agent;
-import mobee.util.ArgumentsLoader;
-import mobee.util.Catalog;
+import mocabdi.core.GlobalState;
+import mocabdi.core.IntentionSelector;
+import mocabdi.core.ProgramLoader;
+import mocabdi.lang.Agent;
+import mocabdi.util.ArgumentsLoader;
+import mocabdi.util.Catalog;
 
 public class Main {
 

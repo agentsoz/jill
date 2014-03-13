@@ -1,4 +1,4 @@
-package mobee.lang;
+package mocabdi.lang;
 
 public interface PlanStep {
 

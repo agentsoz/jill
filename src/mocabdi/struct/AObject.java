@@ -1,7 +1,7 @@
-package mobee.struct;
+package mocabdi.struct;
 
-import mobee.config.GlobalConstant;
-import mobee.util.AString;
+import mocabdi.config.GlobalConstant;
+import mocabdi.util.AString;
 
 public class AObject {
 	

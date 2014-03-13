@@ -1,7 +1,7 @@
 package SimpleAgent;
 
-import mobee.lang.Goal;
-import mobee.lang.GoalInfo;
+import mocabdi.lang.Goal;
+import mocabdi.lang.GoalInfo;
 
 @GoalInfo(hasPlans={"SimpleAgent.PlanB"})
 public class GoalB extends Goal {

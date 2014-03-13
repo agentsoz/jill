@@ -1,4 +1,4 @@
-package mobee.struct;
+package mocabdi.struct;
 
 import java.lang.reflect.Method;
 

@@ -1,8 +1,8 @@
-package mobee.util;
+package mocabdi.util;
 
 import java.util.logging.Level;
 
-import mobee.Main;
+import mocabdi.Main;
 
 public class ArgumentsLoader {
 

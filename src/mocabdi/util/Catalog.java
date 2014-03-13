@@ -1,7 +1,7 @@
-package mobee.util;
+package mocabdi.util;
 
-import mobee.config.GlobalConstant;
-import mobee.struct.AObject;
+import mocabdi.config.GlobalConstant;
+import mocabdi.struct.AObject;
 
 public class Catalog extends AObject{
 

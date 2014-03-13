@@ -1,7 +1,7 @@
-package mobee.lang;
+package mocabdi.lang;
 
-import mobee.struct.AObject;
-import mobee.util.Catalog;
+import mocabdi.struct.AObject;
+import mocabdi.util.Catalog;
 
 
 public class Agent extends AObject {

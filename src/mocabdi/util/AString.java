@@ -1,4 +1,4 @@
-package mobee.util;
+package mocabdi.util;
 
 import java.io.UnsupportedEncodingException;
 

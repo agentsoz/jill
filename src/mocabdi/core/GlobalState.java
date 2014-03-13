@@ -1,8 +1,8 @@
-package mobee.core;
+package mocabdi.core;
 
 import java.util.Random;
 
-import mobee.util.Catalog;
+import mocabdi.util.Catalog;
 
 /**
  * A catalog of all known agent, goal and plan types

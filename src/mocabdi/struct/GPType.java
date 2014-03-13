@@ -1,4 +1,4 @@
-package mobee.struct;
+package mocabdi.struct;
 
 public class GPType extends AObject{
 

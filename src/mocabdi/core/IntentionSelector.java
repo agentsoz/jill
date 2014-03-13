@@ -1,16 +1,16 @@
-package mobee.core;
+package mocabdi.core;
 
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Logger;
 
-import mobee.lang.Agent;
-import mobee.lang.Goal;
-import mobee.lang.Plan;
-import mobee.struct.AObject;
-import mobee.struct.GoalType;
-import mobee.struct.PlanType;
-import mobee.util.Catalog;
+import mocabdi.lang.Agent;
+import mocabdi.lang.Goal;
+import mocabdi.lang.Plan;
+import mocabdi.struct.AObject;
+import mocabdi.struct.GoalType;
+import mocabdi.struct.PlanType;
+import mocabdi.util.Catalog;
 
 public class IntentionSelector implements Runnable {
 
