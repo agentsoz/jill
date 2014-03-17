@@ -1,0 +1,115 @@
+==============================================================================
+MocaBDI, millions of cognitive (BDI) agents
+Copyright (C) 2014 Dhirendra Singh
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+Contact: Dhirendra Singh <dhi.singh@gmail.com>
+==============================================================================
+
+
+
+==============================================================================
+1.0 INTRODUCTION
+
+MocaBDI <http://mocabdi.bitbucket.org> is an open source initiate to deliver a 
+very fast and lightweight java-based BDI (Beliefs, Desires, Intentions) 
+execution engine for developing large-scale multi-agent systems. MocaBDI is:
+
+* A BDI execution engine: that supports complex BDI goal-plan behaviour 
+  hierarchies in the PRS style (A Rao and M Georgeff. BDI Agents: from 
+  theory to practice. In ICMAS, volume 95, pages 312–319, 1995).
+
+* Lightweight: the design and implementation is heavily optimised to 
+  deliver a very lightweight distribution (see 2.0 RELEASES for details)
+  fit for inclusion in web-based and embedded-Java applications.
+
+* Fast: The MocaBDI BDI execution engine is very fast, and was designed from 
+  ground-up to handle millions of BDI agents (see 3.0 BENCHMARKS). 
+
+* Java-based: The programming of BDI agents in MocaBDI is done in 
+  pure Java, so users benefit from the various support tools that are available
+  to Java developers, such as full integration with the Eclipse IDE.
+  MocaBDI itself is written in Java and is distributed as a JAR bundle which can
+  be easily integrated into larger projects that require cognitive reasoning
+  agents.
+
+* Open source: MocaBDI is released under the terms of the 
+  GNU General Public License <http://www.gnu.org/licenses/>.
+  
+
+
+==============================================================================
+2.0 RELEASES
+
+The latest stable release as well as all previous releases are available at:
+<download-url>.
+
+Version  : 0.1
+Released : <date>   
+Binary   : mocabdi-0.1.jar (size 21K) 
+Summary  : First stable release
+Features :
+   *
+   *
+   *
+
+
+
+==============================================================================
+3.0 BENCHMARKS
+
+Version    : 0.1
+Benchmark  : 1 million agents, 1GB java heap size, 20 execution cycles
+OS         : Linux Mint 13, 3.2.0-23-generic, x86_64
+Harware    : Macbook Pro, i5-2415M CPU (4x cores), 4GB RAM 
+Command    : java --Xms1g -Xmx1g 
+             -cp mocabdi-0.1.jar:examples-0.1.jar mocabdi.Main \
+             -d INFO \
+             -l TestAgent.log \
+             -c SimpleAgent.TestAgent \
+             -n 1000000 \
+             -i 20
+Results    : Finished running 20 execution cycles with 1000000 agents (2521 ms)
+
+
+
+==============================================================================
+4.0 DEVELOPERS
+
+MocaBDI uses Apache Maven (http://maven.apache.org) to manage the build process
+and the entire software life cycle. 
+
+* To get started with Maven see:
+  http://maven.apache.org/guides/getting-started/.
+
+* For an introduction to the Maven build lifecycle see:
+  https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
+
+* To checkout the latest sources:
+  git pull <repo-url>
+
+* To build, test (unit tests), package, verify (integration tests), and install (locally):
+  mvn clean install
+
+* To build the source and Javadoc archives:
+  mvn source:jar javadoc:jar 
+
+* To contribute a patch, see the contribution HOWTO:
+  <contrib-url>
+
+
+
+==============================================================================
+
