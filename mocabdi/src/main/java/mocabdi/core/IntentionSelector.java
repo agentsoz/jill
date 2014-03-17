@@ -22,9 +22,6 @@
 package mocabdi.core;
 
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.logging.Logger;
-
 import mocabdi.lang.Agent;
 import mocabdi.lang.Goal;
 import mocabdi.lang.Plan;
@@ -37,7 +34,9 @@ public class IntentionSelector implements Runnable {
 
 	//private final static Logger logger = Logger.getLogger("");
 
+	@SuppressWarnings("unused")
 	private boolean done = false;
+	
 	private int start;
 	private int size;
 	
