@@ -85,13 +85,8 @@ public class Catalog extends AObject{
 	 * Grows the Catalog by a factor of {@link Catalog#DEFAULT_INCREMENT}.
 	 */
 	private void grow() {
-		//Thread t1 = new Thread(new Runnable() {
-		//     public void run()
-		//     {
-		 		AObject[] temp = new AObject[objects.length+increment];
-				System.arraycopy(objects, 0, temp, 0, objects.length);
-				objects = temp;
-		//     }});  
-		//t1.start();		
+ 		AObject[] temp = new AObject[objects.length+increment];
+		System.arraycopy(objects, 0, temp, 0, objects.length);
+		objects = temp;
 	}
 }

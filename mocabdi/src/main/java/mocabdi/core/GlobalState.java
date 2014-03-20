@@ -37,7 +37,6 @@ public class GlobalState {
 	public static Catalog planTypes = new Catalog("planTypes", 20,5);
 	
 	public static Catalog agents;
-	public static Catalog agentsIntentions;
 
 	public static Random rand = new Random();
 

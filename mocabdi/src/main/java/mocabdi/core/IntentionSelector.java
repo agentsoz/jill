@@ -51,7 +51,7 @@ public class IntentionSelector implements Runnable {
 		done = true;
 		ArrayList<Plan> options = new ArrayList<Plan>();
 		for (int i = start; i < start+size; i++) {
-			Catalog agentExecutionStack = (Catalog)GlobalState.agentsIntentions.get(i);
+			Catalog agentExecutionStack = (Catalog)((Agent)GlobalState.agents.get(i)).getExecutionStack();
 			int esSize = agentExecutionStack.size();
 			if (agentExecutionStack == null || esSize == 0) {
 				// Nothing to do for this agent

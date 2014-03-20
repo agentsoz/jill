@@ -68,7 +68,6 @@ public class Main {
 		int INCREMENT = 10000;
 
 		GlobalState.agents = new Catalog("agents", NUMAGENTS, INCREMENT);
-		GlobalState.agentsIntentions = new Catalog("agentsIntentions", NUMAGENTS, INCREMENT);
 
 		long t0, t1;
 		
@@ -84,8 +83,6 @@ public class Main {
 		for (int i = 0; i < GlobalState.agents.size(); i++) {
 			// Get the agent
 			Agent agent = (Agent)GlobalState.agents.get(i);
-			//Attach its intentions stack to the global intentions structure
-			GlobalState.agentsIntentions.push(agent.getExecutionStack());
 			// Start the agent
 			agent.start();
 		}
