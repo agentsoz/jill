@@ -56,7 +56,7 @@
 				<version>1.2.1</version>
 				<executions>
 					<execution>
-						<id>run-mocabdi-jar</id>
+						<id>TestAgent-output</id>
 						<phase>integration-test</phase>
 						<goals>
 							<goal>exec</goal>
@@ -72,7 +72,55 @@
 								<argument>-d</argument>
 								<argument>INFO</argument>
 								<argument>-l</argument>
-								<argument>SimpleAgent.log</argument>
+								<argument>TestAgent-output.log</argument>
+								<argument>-c</argument>
+								<argument>SimpleAgent.TestAgent</argument>
+								<argument>-n</argument>
+								<argument>1000</argument>
+								<argument>-i</argument>
+								<argument>20</argument>
+								<argument>-r</argument>
+								<argument>12345</argument>
+								<argument>-p</argument>
+								<argument>-d</argument>
+								<argument>-o</argument>
+								<argument>TestAgent-output.out</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>TestAgent-output-verify</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>diff</executable>
+							<arguments>
+								<argument>-q</argument>
+								<argument>TestAgent-output.out</argument>
+								<argument>./outputs/TestAgent1000.out</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>TestAgent-performance</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>java</executable>
+							<arguments>
+								<argument>-classpath</argument>
+								<classpath />
+								<argument>-Xmx1g</argument>
+								<argument>-Xms1g</argument>
+								<argument>mocabdi.Main</argument>
+								<argument>-d</argument>
+								<argument>INFO</argument>
+								<argument>-l</argument>
+								<argument>TestAgent-performance.log</argument>
 								<argument>-c</argument>
 								<argument>SimpleAgent.TestAgent</argument>
 								<argument>-n</argument>

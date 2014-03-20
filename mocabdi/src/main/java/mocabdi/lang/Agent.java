@@ -21,6 +21,8 @@
 
 package mocabdi.lang;
 
+import java.io.PrintWriter;
+
 import mocabdi.struct.AObject;
 import mocabdi.util.Stack;
 
@@ -45,7 +47,7 @@ public class Agent extends AObject {
 		executionStack.push(goal);
 	}
 
-	public void start() {
+	public void start(PrintWriter writer, String params) {
 	}
 	
 	public void finish() {

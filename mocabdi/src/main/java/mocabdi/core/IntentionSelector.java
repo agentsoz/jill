@@ -22,6 +22,8 @@
 package mocabdi.core;
 
 import java.util.ArrayList;
+import java.util.Random;
+
 import mocabdi.lang.Agent;
 import mocabdi.lang.Goal;
 import mocabdi.lang.Plan;
@@ -39,10 +41,12 @@ public class IntentionSelector implements Runnable {
 	private int start;
 	private int size;
 	
+	private Random rand;
 
-	public IntentionSelector(int start, int size) {
+	public IntentionSelector(long l, int start, int size) {
 		this.start = start;
 		this.size = size;
+		this.rand = new Random(l);
 	}
 
 
@@ -104,7 +108,7 @@ public class IntentionSelector implements Runnable {
 					continue;
 				}
 				// TODO: Pick a plan option using some policy (random for now)
-				int choice = GlobalState.rand.nextInt(options.size());
+				int choice = rand.nextInt(options.size());
 				agentExecutionStack.push(options.get(choice));
 				options.clear();
 				done = false;

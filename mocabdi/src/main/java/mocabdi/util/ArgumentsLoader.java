@@ -24,6 +24,7 @@ package mocabdi.util;
 import java.util.logging.Level;
 
 import mocabdi.Main;
+import mocabdi.config.GlobalConstant;
 
 public class ArgumentsLoader {
 
@@ -33,17 +34,23 @@ public class ArgumentsLoader {
 	private static int numAgents = 0;
 	private static int numCycles = -1;
 	private static int numThreads = Runtime.getRuntime().availableProcessors();
+	private static String pargs = "";
+	private static long randomSeed = -1;
+	private static String pout = null;
 	
 	public static String usage() {
-		return 
-			"usage:" + Main.class.getName() + 
-			" [-l <logfile>] [-d <debuglevel>] -c <agentclass> -n <numagents>" + "\n" +
-			" -c <agentclass>   agent class to load" +
-			" -d <debuglevel>   debug level (e.g., 'SEVERE', 'INFO', or 'FINE')" +
-			" -i <cycles>       number of cycles to perform before existing (runs forever if unspecified)" +
-			" -l <logfile>      file for logging output" +
-			" -n <numagent>     number of agents to create (of type <agentclass>" +
-			" -t <numthreads>   number of threads used by execution engine (defaults to number of available cores)"
+		return GlobalConstant.APP_HEADER + "\n\n" +
+			"usage: " + Main.class.getName() + 
+			"  [options] -c <agentclass> -i <cycles> -n <numagents>" + "\n" +
+			"   -c <agentclass>   agent class to load" + "\n" +
+			"   -d <debuglevel>   debug level (e.g., 'SEVERE', 'INFO', 'FINE')" + "\n" +
+			"   -i <cycles>       number of cycles to perform before existing (runs forever if unspecified)" + "\n" +
+			"   -l <logfile>      file for logging output" + "\n" +
+			"   -n <numagent>     number of agents to create (of type <agentclass>)" + "\n" +
+			"   -o <outfile>      file for program output" + "\n" +
+			"   -p <pargs>        arguments string to pass to agent class (optional)" + "\n" +
+			"   -r <randseed>     seed to use for random number generator (optional)" + "\n" +
+			"   -t <numthreads>   number of threads used by execution engine (defaults to number of available cores)" + "\n"
 			;
 	}
 	
@@ -66,6 +73,16 @@ public class ArgumentsLoader {
 					}
 				}
 				break;
+			case "-i":
+				if (i+1 < args.length) {
+					i++;
+					try {
+						numCycles = Integer.parseInt(args[i]);
+					} catch (Exception e) {
+						abort("Option value '"+args[i]+"' is not a number");
+					}
+				}
+				break;
 			case "-l":
 				if (i+1 < args.length) {
 					i++;
@@ -82,11 +99,23 @@ public class ArgumentsLoader {
 					}
 				}
 				break;
-			case "-i":
+			case "-o":
+				if (i+1 < args.length) {
+					i++;
+					pout = args[i];
+				}
+				break;
+			case "-p":
+				if (i+1 < args.length) {
+					i++;
+					pargs = args[i];
+				}
+				break;
+			case "-r":
 				if (i+1 < args.length) {
 					i++;
 					try {
-						numCycles = Integer.parseInt(args[i]);
+						randomSeed = Long.parseLong(args[i]);
 					} catch (Exception e) {
 						abort("Option value '"+args[i]+"' is not a number");
 					}
@@ -135,8 +164,20 @@ public class ArgumentsLoader {
 	}
 
 	private static void abort(String err) {
-		System.err.println(err);
-		usage();
+		System.err.println("\nERROR: " + err + "\n");
+		System.out.println(usage());
 		System.exit(0);
+	}
+
+	public static String getProgramArguments() {
+		return pargs ;
+	}
+
+	public static String getProgramOutputFile() {
+		return pout ;
+	}
+
+	public static long getRandomSeed() {
+		return randomSeed;
 	}
 }

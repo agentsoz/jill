@@ -21,6 +21,7 @@
 
 package mocabdi;
 
+import java.io.PrintWriter;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -37,10 +38,6 @@ import mocabdi.util.Catalog;
 
 public class Main {
 
-	public static final String APP_NAME = "MoBee (C) 2014 RMIT Agents Group";
-	public static final String APP_VERSION = "0.1";
-	public static String getAppHeader() {   return APP_NAME + " Ver " + APP_VERSION; }
-
 	private final static Logger logger = Logger.getLogger("");
 	private static FileHandler fh = null;
 
@@ -52,7 +49,7 @@ public class Main {
 
 		// Parse the command line options
 		ArgumentsLoader.parse(args);
-
+		
 		// Configure logging
 		try {
 			fh = new FileHandler(ArgumentsLoader.getLogFile(), false);
@@ -78,13 +75,23 @@ public class Main {
 		logger.info(": Created " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
 
 
+		// Redirect the agent program output if specified
+		PrintWriter writer = null;
+		if (ArgumentsLoader.getProgramOutputFile() != null) {
+			try {
+				writer = new PrintWriter(ArgumentsLoader.getProgramOutputFile(), "UTF-8");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 		// Start the agents
 		t0 = System.currentTimeMillis();
 		for (int i = 0; i < GlobalState.agents.size(); i++) {
 			// Get the agent
 			Agent agent = (Agent)GlobalState.agents.get(i);
 			// Start the agent
-			agent.start();
+			agent.start(writer, ArgumentsLoader.getProgramArguments());
 		}
 		t1 = System.currentTimeMillis();
 		logger.info(": Started " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
@@ -101,7 +108,7 @@ public class Main {
 	        	int start = i*poolsize;
 	        	int size = (start+poolsize<=GlobalState.agents.size()) ? poolsize : 
 	        		poolsize - (GlobalState.agents.size()-start);
-				executor.execute(new IntentionSelector(start,size));
+				executor.execute(new IntentionSelector(ArgumentsLoader.getRandomSeed(), start,size));
 	        }
 			executor.shutdown();
 			try {
@@ -123,6 +130,9 @@ public class Main {
 			Agent agent = (Agent)GlobalState.agents.get(i);
 			// Terminate the agent
 			agent.finish();
+		}
+		if (writer != null) {
+			writer.close();
 		}
 		t1 = System.currentTimeMillis();
 		logger.info(": Terminated " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");

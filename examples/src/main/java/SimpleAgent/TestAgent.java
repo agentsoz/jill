@@ -21,6 +21,8 @@
 
 package SimpleAgent;
 
+import java.io.PrintWriter;
+
 import mocabdi.lang.Agent;
 import mocabdi.lang.AgentInfo;
 
@@ -28,12 +30,18 @@ import mocabdi.lang.AgentInfo;
 public class TestAgent extends Agent {
 
 	private int i = 0;
+	private PrintWriter writer = null;
+	private boolean verbose = false;
 	
 	public TestAgent(String str) {
 		super(str);
 	}
 
-	public void start() {
+	public void start(PrintWriter writer, String params) {
+		if (params != null && params.equals("-d")) {
+			verbose = true;
+			this.writer = writer;
+		}
 		post(new GoalA("gA"));
 	}
 	
@@ -43,7 +51,13 @@ public class TestAgent extends Agent {
 		 *   hex '8' if plan PlanD ran, 
 		 *   hex '7' if plans PlanA then PlanB then PlanC ran. 
 		*/
-		//System.out.printf("%h", i);
+		if (verbose ) {
+			if (writer == null) {
+				System.out.printf("%h", i);
+			} else {
+				writer.printf("%h", i);
+			}
+		}
 	}
 
 	public int getI() {
