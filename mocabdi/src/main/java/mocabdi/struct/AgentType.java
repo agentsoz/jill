@@ -39,24 +39,24 @@ public class AgentType extends AObject{
 		this.cAgent = cAgent;
 	}
 	
-	public int[] getGoals() {
-		int[] ints = new int[goals.length];
-		for (int i = 0; i < ints.length; i++) {
-			ints[i] = (int)(goals[i]);
+	public byte[] getGoals() {
+		byte[] arr = new byte[goals.length];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = (byte)(goals[i]);
 		}
-		return ints;
+		return arr;
 	}
 
-	public void setGoals(int[] ints) {
-		goals = new byte[ints.length];
-		for (int i = 0; i < ints.length; i++) {
-			goals[i] = (byte)(ints[i] & 0x000f);
+	public void setGoals(byte[] arr) {
+		goals = new byte[arr.length];
+		for (int i = 0; i < arr.length; i++) {
+			goals[i] = arr[i];
 		}
 	}
 
-	public void addGoal(int goal) {
+	public void addGoal(byte goal) {
 		goals = GPType.grow(goals,1);
-		goals[goals.length-1] = (byte)(goal & 0x000f);
+		goals[goals.length-1] = goal;
 	}
 }
 

@@ -30,31 +30,31 @@ public class GPType extends AObject{
 		super(str);
 	}
 
-	public int[] getParents() {
-		int[] ints = new int[parents.length];
-		for (int i = 0; i < ints.length; i++) {
-			ints[i] = (int)(parents[i]);
+	public byte[] getParents() {
+		byte[] arr = new byte[parents.length];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = parents[i];
 		}
-		return ints;
+		return arr;
 	}
 
-	public void addParent(int parent) {
+	public void addParent(byte parent) {
 		parents = grow(parents,1);
-		parents[parents.length-1] = (byte)(parent & 0x000f);
+		parents[parents.length-1] = parent;
 	}
 
 	
-	public int[] getChildren() {
-		int[] ints = new int[children.length];
-		for (int i = 0; i < ints.length; i++) {
-			ints[i] = (int)(children[i]);
+	public byte[] getChildren() {
+		byte[] arr = new byte[children.length];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = children[i];
 		}
-		return ints;
+		return arr;
 	}
 
-	public void addChild(int child) {
+	public void addChild(byte child) {
 		children = grow(children,1);
-		children[children.length-1] = (byte)(child & 0x000f);
+		children[children.length-1] = child;
 	}
 
 

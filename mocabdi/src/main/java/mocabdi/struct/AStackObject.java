@@ -19,15 +19,23 @@
 */
 
 
-package mocabdi.lang;
+package mocabdi.struct;
 
-import mocabdi.struct.AStackObject;
+import mocabdi.config.GlobalConstant;
 
-
-public class Goal extends AStackObject {
-
-	public Goal(String str) {
-	}
+public class AStackObject {
 	
 
+	private byte id = GlobalConstant.NULLID;
+
+	public AStackObject() {
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(byte id) {
+		this.id = id;
+	}
 }

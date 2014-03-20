@@ -78,7 +78,7 @@ public class ProgramLoader {
 				GoalType gtype = new GoalType(gclass.getName());
 				gtype.setGoalClass(gclass);
 				GlobalState.goalTypes.push(gtype);
-				atype.addGoal(gtype.getId());
+				atype.addGoal((byte)gtype.getId());
 
 				// Find the plans that this goal has
 				annotation = gclass.getAnnotation(GoalInfo.class);
@@ -102,8 +102,8 @@ public class ProgramLoader {
 					ptype.setPlanClass(pclass);
 					GlobalState.planTypes.push(ptype);
 					// Set up the parent/child links between them (makings of a goal-plan tree)
-					ptype.addParent(gtype.getId());
-					gtype.addChild(ptype.getId());
+					ptype.addParent((byte)gtype.getId());
+					gtype.addChild((byte)ptype.getId());
 				}
 			}
 
@@ -122,8 +122,8 @@ public class ProgramLoader {
 							continue;
 						}
 						// Found the goal posted by the plan, so setup the links
-						ptype.addChild(gtype.getId());
-						gtype.addParent(ptype.getId());
+						ptype.addChild((byte)gtype.getId());
+						gtype.addParent((byte)ptype.getId());
 					}
 				}
 			}

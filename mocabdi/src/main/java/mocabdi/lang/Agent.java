@@ -22,21 +22,21 @@
 package mocabdi.lang;
 
 import mocabdi.struct.AObject;
-import mocabdi.util.Catalog;
+import mocabdi.util.Stack;
 
 
 public class Agent extends AObject {
 
 	private byte[] goals; // This agent's goal-plan tree
 
-	private Catalog executionStack; // This agent's goal-plan execution stack
+	private Stack executionStack; // This agent's goal-plan execution stack
 	
 	public Agent(String str) {
 		super(str);
-		executionStack = new Catalog(getName()+"es",10,10); // suffix 'es' for execution stack
+		executionStack = new Stack((byte)1,(byte)1); // suffix 'es' for execution stack
 	}
 
-	public Catalog getExecutionStack() {
+	public Stack getExecutionStack() {
 		return executionStack;
 	}
 
@@ -52,18 +52,18 @@ public class Agent extends AObject {
 		
 	}
 
-	public int[] getGoals() {
-		int[] ints = new int[goals.length];
-		for (int i = 0; i < ints.length; i++) {
-			ints[i] = (int)(goals[i]);
+	public byte[] getGoals() {
+		byte[] arr = new byte[goals.length];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = goals[i];
 		}
-		return ints;
+		return arr;
 	}
 
-	public void setGoals(int[] ints) {
-		goals = new byte[ints.length];
-		for (int i = 0; i < ints.length; i++) {
-			goals[i] = (byte)(ints[i] & 0x000f);
+	public void setGoals(byte[] bs) {
+		goals = new byte[bs.length];
+		for (int i = 0; i < bs.length; i++) {
+			goals[i] = (byte)(bs[i] & 0x000f);
 		}
 	}
 

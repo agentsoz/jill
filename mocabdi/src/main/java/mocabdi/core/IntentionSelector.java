@@ -25,10 +25,9 @@ import java.util.ArrayList;
 import mocabdi.lang.Agent;
 import mocabdi.lang.Goal;
 import mocabdi.lang.Plan;
-import mocabdi.struct.AObject;
 import mocabdi.struct.GoalType;
 import mocabdi.struct.PlanType;
-import mocabdi.util.Catalog;
+import mocabdi.util.Stack;
 
 public class IntentionSelector implements Runnable {
 
@@ -51,7 +50,7 @@ public class IntentionSelector implements Runnable {
 		done = true;
 		ArrayList<Plan> options = new ArrayList<Plan>();
 		for (int i = start; i < start+size; i++) {
-			Catalog agentExecutionStack = (Catalog)((Agent)GlobalState.agents.get(i)).getExecutionStack();
+			Stack agentExecutionStack = (Stack)((Agent)GlobalState.agents.get(i)).getExecutionStack();
 			int esSize = agentExecutionStack.size();
 			if (agentExecutionStack == null || esSize == 0) {
 				// Nothing to do for this agent
@@ -59,7 +58,7 @@ public class IntentionSelector implements Runnable {
 			}
 			
 			// Get the item at the top of the stack
-			AObject node = (AObject)agentExecutionStack.get(esSize-1);
+			Object node = (Object)agentExecutionStack.get(esSize-1);
 			
 			// If it is a plan then execute it
 			if (node instanceof Plan) {
@@ -85,7 +84,7 @@ public class IntentionSelector implements Runnable {
 				options.clear();
 				// Get the goal type for this goal
 				GoalType gtype = (GoalType)GlobalState.goalTypes.find(node.getClass().getName());
-				int[] ptypes = gtype.getChildren();
+				byte[] ptypes = gtype.getChildren();
 				assert(ptypes != null);
 				for(int p = 0; p < ptypes.length; p++) {
 					PlanType ptype = (PlanType)GlobalState.planTypes.get(ptypes[p]);

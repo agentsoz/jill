@@ -21,15 +21,14 @@
 
 package mocabdi.lang;
 
-import mocabdi.struct.AObject;
+import mocabdi.struct.AStackObject;
 
-public abstract class Plan extends AObject {
+public abstract class Plan extends AStackObject {
 
 	private final Agent agent;
 	private byte index = 0;
 
 	public Plan(Agent agent, String name) {
-		super(name);
 		this.agent = agent;
 	}
 
