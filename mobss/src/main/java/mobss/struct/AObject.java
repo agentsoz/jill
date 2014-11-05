@@ -19,10 +19,10 @@
 */
 
 
-package mocabdi.struct;
+package mobss.struct;
 
-import mocabdi.config.GlobalConstant;
-import mocabdi.util.AString;
+import mobss.config.GlobalConstant;
+import mobss.util.AString;
 
 public class AObject {
 	

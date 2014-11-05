@@ -19,12 +19,12 @@
 */
 
 
-package mocabdi.util;
+package mobss.util;
 
 import java.util.logging.Level;
 
-import mocabdi.Main;
-import mocabdi.config.GlobalConstant;
+import mobss.Main;
+import mobss.config.GlobalConstant;
 
 public class ArgumentsLoader {
 

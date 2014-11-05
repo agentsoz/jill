@@ -19,10 +19,10 @@
 */
 
 
-package mocabdi.util;
+package mobss.util;
 
-import mocabdi.config.GlobalConstant;
-import mocabdi.struct.AStackObject;
+import mobss.config.GlobalConstant;
+import mobss.struct.AStackObject;
 
 public class Stack{
 

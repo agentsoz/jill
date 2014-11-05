@@ -19,12 +19,12 @@
 */
 
 
-package mocabdi.lang;
+package mobss.lang;
 
 import java.io.PrintWriter;
 
-import mocabdi.struct.AObject;
-import mocabdi.util.Stack;
+import mobss.struct.AObject;
+import mobss.util.Stack;
 
 
 public class Agent extends AObject {

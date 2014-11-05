@@ -19,7 +19,7 @@
 */
 
 
-package mocabdi.util;
+package mobss.util;
 
 import java.io.UnsupportedEncodingException;
 

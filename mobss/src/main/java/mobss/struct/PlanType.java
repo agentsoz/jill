@@ -19,7 +19,7 @@
 */
 
 
-package mocabdi.struct;
+package mobss.struct;
 
 import java.lang.reflect.Method;
 

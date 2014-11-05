@@ -19,7 +19,7 @@
 */
 
 
-package mocabdi;
+package mobss;
 
 import java.io.PrintWriter;
 import java.util.concurrent.ExecutorService;
@@ -29,12 +29,12 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-import mocabdi.core.GlobalState;
-import mocabdi.core.IntentionSelector;
-import mocabdi.core.ProgramLoader;
-import mocabdi.lang.Agent;
-import mocabdi.util.ArgumentsLoader;
-import mocabdi.util.Catalog;
+import mobss.core.GlobalState;
+import mobss.core.IntentionSelector;
+import mobss.core.ProgramLoader;
+import mobss.lang.Agent;
+import mobss.util.ArgumentsLoader;
+import mobss.util.Catalog;
 
 public class Main {
 

@@ -19,22 +19,22 @@
 */
 
 
-package mocabdi.core;
+package mobss.core;
 
 import java.lang.annotation.Annotation;
 import java.util.logging.Logger;
 
-import mocabdi.core.GlobalState;
-import mocabdi.lang.Agent;
-import mocabdi.lang.AgentInfo;
-import mocabdi.lang.Goal;
-import mocabdi.lang.GoalInfo;
-import mocabdi.lang.Plan;
-import mocabdi.lang.PlanInfo;
-import mocabdi.struct.AgentType;
-import mocabdi.struct.GoalType;
-import mocabdi.struct.PlanType;
-import mocabdi.util.Catalog;
+import mobss.core.GlobalState;
+import mobss.lang.Agent;
+import mobss.lang.AgentInfo;
+import mobss.lang.Goal;
+import mobss.lang.GoalInfo;
+import mobss.lang.Plan;
+import mobss.lang.PlanInfo;
+import mobss.struct.AgentType;
+import mobss.struct.GoalType;
+import mobss.struct.PlanType;
+import mobss.util.Catalog;
 
 
 

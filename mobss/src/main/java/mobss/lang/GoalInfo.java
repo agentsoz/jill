@@ -19,7 +19,7 @@
 */
 
 
-package mocabdi.lang;
+package mobss.lang;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

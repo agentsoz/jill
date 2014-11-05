@@ -19,9 +19,9 @@
 */
 
 
-package mocabdi.struct;
+package mobss.struct;
 
-import mocabdi.config.GlobalConstant;
+import mobss.config.GlobalConstant;
 
 public class AStackObject {
 	

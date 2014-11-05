@@ -19,7 +19,7 @@
 */
 
 
-package mocabdi.struct;
+package mobss.struct;
 
 public class GPType extends AObject{
 

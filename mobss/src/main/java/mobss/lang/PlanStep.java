@@ -19,7 +19,7 @@
 */
 
 
-package mocabdi.lang;
+package mobss.lang;
 
 public interface PlanStep {
 

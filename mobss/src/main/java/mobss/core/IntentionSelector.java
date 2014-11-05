@@ -19,17 +19,17 @@
 */
 
 
-package mocabdi.core;
+package mobss.core;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import mocabdi.lang.Agent;
-import mocabdi.lang.Goal;
-import mocabdi.lang.Plan;
-import mocabdi.struct.GoalType;
-import mocabdi.struct.PlanType;
-import mocabdi.util.Stack;
+import mobss.lang.Agent;
+import mobss.lang.Goal;
+import mobss.lang.Plan;
+import mobss.struct.GoalType;
+import mobss.struct.PlanType;
+import mobss.util.Stack;
 
 public class IntentionSelector implements Runnable {
 

@@ -19,9 +19,9 @@
 */
 
 
-package mocabdi.lang;
+package mobss.lang;
 
-import mocabdi.struct.AStackObject;
+import mobss.struct.AStackObject;
 
 
 public class Goal extends AStackObject {

@@ -19,10 +19,10 @@
 */
 
 
-package mocabdi.util;
+package mobss.util;
 
-import mocabdi.config.GlobalConstant;
-import mocabdi.struct.AObject;
+import mobss.config.GlobalConstant;
+import mobss.struct.AObject;
 
 public class Catalog extends AObject{
 

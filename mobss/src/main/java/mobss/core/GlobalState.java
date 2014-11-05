@@ -19,9 +19,9 @@
 */
 
 
-package mocabdi.core;
+package mobss.core;
 
-import mocabdi.util.Catalog;
+import mobss.util.Catalog;
 
 /**
  * A catalog of all known agent, goal and plan types
