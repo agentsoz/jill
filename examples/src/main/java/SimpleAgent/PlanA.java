@@ -1,5 +1,5 @@
 /*
-    MocaBDI, millions of cognitive (BDI) agents
+    MOBSS, Masses of BDI Agents for Social Simulation
     Copyright (C) 2014 Dhirendra Singh
 
     This program is free software: you can redistribute it and/or modify
@@ -21,10 +21,10 @@
 
 package SimpleAgent;
 
-import mocabdi.lang.Agent;
-import mocabdi.lang.Plan;
-import mocabdi.lang.PlanInfo;
-import mocabdi.lang.PlanStep;
+import mobss.lang.Agent;
+import mobss.lang.Plan;
+import mobss.lang.PlanInfo;
+import mobss.lang.PlanStep;
 
 @PlanInfo(handlesGoal="SimpleAgent.GoalA", postsGoals={"SimpleAgent.GoalB", "SimpleAgent.GoalC"})
 public class PlanA extends Plan { 
