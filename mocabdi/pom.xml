@@ -23,18 +23,18 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>mocabdi</groupId>
+		<groupId>mobss</groupId>
 		<artifactId>main</artifactId>
 		<version>0.1</version>
 	</parent>
 
-	<groupId>mocabdi</groupId>
-	<artifactId>mocabdi</artifactId>
+	<groupId>mobss</groupId>
+	<artifactId>mobss</artifactId>
 	<version>0.1</version>
 	<packaging>jar</packaging>
 
-	<name>mocabdi</name>
-	<url>mocabdi.bitbucket.org</url>
+	<name>mobss</name>
+	<url>mobss.bitbucket.org</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

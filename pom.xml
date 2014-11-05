@@ -23,13 +23,13 @@
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>mocabdi</groupId>
+	<groupId>mobss</groupId>
 	<artifactId>main</artifactId>
 	<version>0.1</version>
 	<packaging>pom</packaging>
 
 	<name>main</name>
-	<url>mocabdi.bitbucket.org</url>
+	<url>mobss.bitbucket.org</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -107,7 +107,7 @@
 	</build>
 
 	<modules>
-		<module>mocabdi</module>
+		<module>mobss</module>
 		<module>examples</module>
 	</modules>
 
