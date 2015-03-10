@@ -1,0 +1,194 @@
+------------------------------------------------------------------------
+PLAYGROUND: CQEngine (https://code.google.com/p/cqengine/)
+------------------------------------------------------------------------
+
+CQEngine is an indexing and query engine, for retrieving objects matching 
+SQL-like queries from Java collections or arbitrary data sources, with 
+extremely low latency. Supports millions of queries per second, with response 
+times in the order of microseconds.
+
+This benchmark tests the CQEngine library in ./dep/cqengine-1.2.6-all.jar.
+
+
+1. COMPILING AND RUNNING THE BENCHMARK
+
+To compile and run the benchmark, do:
+   > ant
+
+
+2. FINDINGS
+
+The benchmark initialise N resident agents. Residents have the following
+properties: name, age, gender, and marital status. The benchmark then makes
+a range of queries on this population, to extract matches.
+
+A summary of the results for 1 million agents is below. For full details 
+see the report appended at the end of this document.
+
+     [java] 0: Average time to initialise 1000000 agents was 8033 ms
+     [java] 1: Find all male or unmarried residents: 749813 matches found in 1 ms
+     [java] 2: Find all residents called 'Anita' aged less than 20 years: 9446 matches found in 3 ms
+     [java] 3: Find all residents who have names starting with 'Li' and are not married: 47813 matches found in 0 ms
+     [java] 4: Find all Female residents called Pam who are either Single or older than 65 years: 15914 matches found in 1 ms
+
+Benchmarking shows CQEngine to be extremely fast and much better than Qulog for instance
+for core performance (querying). On top of that, it is written in Java and so there is
+no communication overhead. The licensing is Apache which is compatible with GPL v3. The
+physical footprint is also very small (the library is ~350KB).
+
+CQEngine uses an indexing scheme, so the tradeoff is that initialisation
+(adding beliefs to a collection) is slow (relatively slow that is, it is still
+pretty fast). 
+
+For more details on CQEngine benchmarking see 
+https://code.google.com/p/cqengine/wiki/Benchmark
+
+
+3. BENCHMARKING REPORT
+
+Benchmark results are pasted below:
+
+     [java] usage: CQTest
+     [java]   -h          show this help message and exit
+     [java]   -n agents   number of agents (default is 10000)
+     [java]   -s show     number of query results to show (default is 10)
+     [java] 
+     [java] 
+     [java] 0: Average time to initialise 1000 agents was 108 ms
+     [java] 
+     [java] 1: Find all male or unmarried residents: 727 matches found in 2 ms
+     [java] Showing 5 results:
+     [java]  Nancy','6,Male,Married
+     [java]  Anita','42,Male,Married
+     [java]  Amber','43,Male,Single
+     [java]  Nancy','70,Male,Single
+     [java]  Amber','78,Male,Single
+     [java] 
+     [java] 2: Find all residents called 'Anita' aged less than 20 years: 6 matches found in 3 ms
+     [java] Showing 5 results:
+     [java]  Anita','18,Male,Single
+     [java]  Anita','18,Female,Single
+     [java]  Anita','17,Female,Married
+     [java]  Anita','0,Female,Single
+     [java]  Anita','3,Female,Single
+     [java] 
+     [java] 3: Find all residents who have names starting with 'Li' and are not married: 58 matches found in 0 ms
+     [java] Showing 5 results:
+     [java]  Lin','77,Female,Single
+     [java]  Lin','43,Male,Single
+     [java]  Lin','53,Female,Single
+     [java]  Lin','1,Male,Single
+     [java]  Lin','41,Male,Single
+     [java] 
+     [java] 4: Find all Female residents called Pam who are either Single or older than 65 years: 15 matches found in 0 ms
+     [java] Showing 5 results:
+     [java]  Pam','19,Female,Single
+     [java]  Pam','58,Female,Single
+     [java]  Pam','87,Female,Married
+     [java]  Pam','13,Female,Single
+     [java]  Pam','55,Female,Single
+     [java] 
+     [java] 0: Average time to initialise 10000 agents was 278 ms
+     [java] 
+     [java] 1: Find all male or unmarried residents: 7541 matches found in 2 ms
+     [java] Showing 5 results:
+     [java]  Fiona','22,Male,Married
+     [java]  Roger','68,Male,Single
+     [java]  Alice','25,Male,Married
+     [java]  Laura','46,Male,Married
+     [java]  Amber','93,Male,Single
+     [java] 
+     [java] 2: Find all residents called 'Anita' aged less than 20 years: 114 matches found in 3 ms
+     [java] Showing 5 results:
+     [java]  Anita','11,Female,Married
+     [java]  Anita','4,Female,Single
+     [java]  Anita','1,Female,Married
+     [java]  Anita','4,Male,Married
+     [java]  Anita','12,Male,Single
+     [java] 
+     [java] 3: Find all residents who have names starting with 'Li' and are not married: 441 matches found in 1 ms
+     [java] Showing 5 results:
+     [java]  Lionel','42,Female,Single
+     [java]  Lionel','23,Female,Single
+     [java]  Lionel','69,Female,Single
+     [java]  Lin','31,Male,Single
+     [java]  Lionel','68,Male,Single
+     [java] 
+     [java] 4: Find all Female residents called Pam who are either Single or older than 65 years: 164 matches found in 1 ms
+     [java] Showing 5 results:
+     [java]  Pam','49,Female,Single
+     [java]  Pam','44,Female,Single
+     [java]  Pam','4,Female,Single
+     [java]  Pam','40,Female,Single
+     [java]  Pam','50,Female,Single
+     [java] 
+     [java] 0: Average time to initialise 100000 agents was 560 ms
+     [java] 
+     [java] 1: Find all male or unmarried residents: 75066 matches found in 1 ms
+     [java] Showing 5 results:
+     [java]  Roger','37,Male,Married
+     [java]  John','96,Male,Married
+     [java]  Pam','33,Male,Single
+     [java]  Rima','54,Male,Single
+     [java]  Nick','29,Male,Single
+     [java] 
+     [java] 2: Find all residents called 'Anita' aged less than 20 years: 930 matches found in 3 ms
+     [java] Showing 5 results:
+     [java]  Anita','0,Male,Single
+     [java]  Anita','8,Female,Married
+     [java]  Anita','3,Male,Single
+     [java]  Anita','3,Female,Single
+     [java]  Anita','19,Male,Married
+     [java] 
+     [java] 3: Find all residents who have names starting with 'Li' and are not married: 4785 matches found in 0 ms
+     [java] Showing 5 results:
+     [java]  Lionel','96,Male,Single
+     [java]  Lin','33,Female,Single
+     [java]  Lin','90,Male,Single
+     [java]  Lin','4,Male,Single
+     [java]  Lin','12,Female,Single
+     [java] 
+     [java] 4: Find all Female residents called Pam who are either Single or older than 65 years: 1641 matches found in 1 ms
+     [java] Showing 5 results:
+     [java]  Pam','91,Female,Married
+     [java]  Pam','27,Female,Single
+     [java]  Pam','37,Female,Single
+     [java]  Pam','51,Female,Single
+     [java]  Pam','56,Female,Single
+     [java] 
+     [java] 0: Average time to initialise 1000000 agents was 8033 ms
+     [java] 
+     [java] 1: Find all male or unmarried residents: 749813 matches found in 1 ms
+     [java] Showing 5 results:
+     [java]  Lin','35,Male,Married
+     [java]  Julia','19,Male,Married
+     [java]  Amber','57,Male,Single
+     [java]  John','44,Male,Married
+     [java]  John','32,Male,Married
+     [java] 
+     [java] 2: Find all residents called 'Anita' aged less than 20 years: 9446 matches found in 3 ms
+     [java] Showing 5 results:
+     [java]  Anita','5,Male,Single
+     [java]  Anita','9,Male,Married
+     [java]  Anita','19,Male,Single
+     [java]  Anita','3,Male,Married
+     [java]  Anita','14,Male,Single
+     [java] 
+     [java] 3: Find all residents who have names starting with 'Li' and are not married: 47813 matches found in 0 ms
+     [java] Showing 5 results:
+     [java]  Lionel','64,Male,Single
+     [java]  Lin','92,Male,Single
+     [java]  Lionel','56,Female,Single
+     [java]  Lionel','38,Female,Single
+     [java]  Lin','79,Male,Single
+     [java] 
+     [java] 4: Find all Female residents called Pam who are either Single or older than 65 years: 15914 matches found in 1 ms
+     [java] Showing 5 results:
+     [java]  Pam','73,Female,Married
+     [java]  Pam','2,Female,Single
+     [java]  Pam','68,Female,Single
+     [java]  Pam','12,Female,Single
+     [java]  Pam','72,Female,Married
+
+------------------------------------------------------------------------
+
