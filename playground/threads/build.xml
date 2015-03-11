@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<project name="Java Threads Playground" basedir="." default="run">
+	<property name="build.dir" value="bin"/>
+	<property name="src.dir" value="src"/>
+	<property name="main.class" value="threadtest.Test"/>
+	
+        <path id="classpath">
+           <pathelement path="${build.dir}"/>
+        </path> 
+
+	<target name="config" description="Initial setup">
+		<mkdir dir="${build.dir}"/>
+	</target>
+	
+	<target name="build" description="Compile playground" depends="config">
+		<javac destdir="${build.dir}" source="1.7" target="1.7" includeantruntime="false"
+				debug="true" deprecation="false" optimize="false" failonerror="true">
+			<src path="${src.dir}"/>              
+			<classpath refid="classpath"/>
+	    	</javac>
+	</target>
+
+	<target name="run" description="Run playground tests" depends="build">
+		<java classname="${main.class}" dir="${basedir}" fork="true" failonerror="true" maxmemory="2g">
+			<arg line="-h"/>
+			<classpath refid="classpath"/>
+		</java>
+		<java classname="${main.class}" dir="${basedir}" fork="true" failonerror="true" maxmemory="2g">
+			<arg line="-n 100"/>
+			<classpath refid="classpath"/>
+		</java>
+		<java classname="${main.class}" dir="${basedir}" fork="true" failonerror="true" maxmemory="2g">
+			<arg line="-n 1000"/>
+			<classpath refid="classpath"/>
+		</java>
+		<java classname="${main.class}" dir="${basedir}" fork="true" failonerror="true" maxmemory="2g">
+			<arg line="-n 10000"/>
+			<classpath refid="classpath"/>
+		</java>
+		<java classname="${main.class}" dir="${basedir}" fork="true" failonerror="true" maxmemory="2g">
+			<arg line="-n 100000"/>
+			<classpath refid="classpath"/>
+		</java>
+		<java classname="${main.class}" dir="${basedir}" fork="true" failonerror="true" maxmemory="2g">
+			<arg line="-n 1000000"/>
+			<classpath refid="classpath"/>
+		</java>
+	</target>
+	
+	<target name="clean" description="Clean output directories">
+		<delete dir="${build.dir}"/>
+	</target>
+	
+</project>

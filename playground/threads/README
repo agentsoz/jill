@@ -1,0 +1,38 @@
+------------------------------------------------------------------------
+PLAYGROUND: Java Threads
+------------------------------------------------------------------------
+
+This benchmark creates N number of threads that do a basic computation
+task (counting in a loop). The threads are executed in a thread pool,
+of size NUM_PROCESSORS.
+
+
+1. COMPILING AND RUNNING THE BENCHMARK
+
+To compile and run the benchmark, do:
+   > ant
+
+
+2. BENCHMARKING REPORT
+
+Benchmark results are pasted below:
+
+     [java] usage: threadtest.Test
+     [java]   -h          show this help message and exit
+     [java]   -n threads  number of threads to create (default is 1000)
+     [java] 
+     [java] Created thread pool of size 4
+     [java] Finished executing 100 threads (14 ms)
+     [java] Created thread pool of size 4
+     [java] Finished executing 1000 threads (19 ms)
+     [java] Created thread pool of size 4
+     [java] Finished executing 10000 threads (115 ms)
+     [java] Created thread pool of size 4
+     [java] Finished executing 100000 threads (429 ms)
+     [java] Created thread pool of size 4
+     [java] Finished executing 1000000 threads (4711 ms)
+     [java] Created thread pool of size 4
+     [java] Finished executing 10000000 threads (86379 ms)
+
+------------------------------------------------------------------------
+
