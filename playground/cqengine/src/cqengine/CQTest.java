@@ -1,3 +1,4 @@
+package cqengine;
 import java.util.Random;
 
 import com.googlecode.cqengine.CQEngine;

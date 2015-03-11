@@ -3,7 +3,8 @@
 	<property name="build.dir" value="bin"/>
 	<property name="src.dir" value="src"/>
 	<property name="cqengine.jar" value="./dep/cqengine-1.2.6-all.jar"/>
-	
+	<property name="main.class" value="cqengine.CQTest"/>
+
         <path id="classpath">
            <pathelement path="${build.dir}"/>
            <pathelement path="${cqengine.jar}"/>
@@ -22,23 +23,23 @@
 	</target>
 
 	<target name="run" description="Run playground tests" depends="build">
-		<java classname="CQTest" dir="${basedir}" fork="true" failonerror="true" maxmemory="2g">
+		<java classname="${main.class}" dir="${basedir}" fork="true" failonerror="true" maxmemory="2g">
 			<arg line="-h"/>
 			<classpath refid="classpath"/>
 		</java>
-		<java classname="CQTest" dir="${basedir}" fork="true" failonerror="true" maxmemory="2g">
+		<java classname="${main.class}" dir="${basedir}" fork="true" failonerror="true" maxmemory="2g">
 			<arg line="-n 1000 -s 5"/>
 			<classpath refid="classpath"/>
 		</java>
-		<java classname="CQTest" dir="${basedir}" fork="true" failonerror="true" maxmemory="2g">
+		<java classname="${main.class}" dir="${basedir}" fork="true" failonerror="true" maxmemory="2g">
 			<arg line="-n 10000 -s 5"/>
 			<classpath refid="classpath"/>
 		</java>
-		<java classname="CQTest" dir="${basedir}" fork="true" failonerror="true" maxmemory="2g">
+		<java classname="${main.class}" dir="${basedir}" fork="true" failonerror="true" maxmemory="2g">
 			<arg line="-n 100000 -s 5"/>
 			<classpath refid="classpath"/>
 		</java>
-		<java classname="CQTest" dir="${basedir}" fork="true" failonerror="true" maxmemory="2g">
+		<java classname="${main.class}" dir="${basedir}" fork="true" failonerror="true" maxmemory="2g">
 			<arg line="-n 1000000 -s 5"/>
 			<classpath refid="classpath"/>
 		</java>
