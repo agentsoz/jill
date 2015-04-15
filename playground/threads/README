@@ -10,7 +10,7 @@ of size NUM_PROCESSORS.
 1. COMPILING AND RUNNING THE BENCHMARK
 
 To compile and run the benchmark, do:
-   > ant
+   > ./gradlew build
 
 
 2. BENCHMARKING REPORT
