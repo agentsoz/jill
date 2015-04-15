@@ -1,138 +1,113 @@
-<!--
-    MOBSS, Masses of BDI Agents for Social Simulation
-    Copyright (C) 2014 Dhirendra Singh
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-    Contact: Dhirendra Singh <dhi.singh@gmail.com>
--->
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-	<parent>
-		<groupId>mobss</groupId>
-		<artifactId>main</artifactId>
-		<version>0.1</version>
-	</parent>
+  <parent>
+    <groupId>agentsoz</groupId>
+    <artifactId>mobss-all</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
 
-	<groupId>mobss</groupId>
-	<artifactId>examples</artifactId>
-	<version>0.1</version>
-	<packaging>jar</packaging>
+  <name>MOBSS Examples</name>
+  <description>Masses of BDI-agents for Social Simulation</description>
 
-	<name>examples</name>
-	<url>mobss.bitbucket.org</url>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>mobss-examples</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
+  <dependencies>
+    <dependency>
+      <groupId>agentsoz</groupId>
+      <artifactId>mobss</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
 
-	<dependencies>
-		<dependency>
-			<groupId>mobss</groupId>
-			<artifactId>mobss</artifactId>
-			<version>0.1</version>
-		</dependency>
-	</dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.2.1</version>
+        <executions>
+          <execution>
+            <id>TestAgent-output</id>
+            <phase>integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>java</executable>
+              <arguments>
+                <argument>-classpath</argument>
+                <classpath />
+                <argument>-Xmx1g</argument>
+                <argument>-Xms1g</argument>
+                <argument>mobss.Main</argument>
+                <argument>-d</argument>
+                <argument>INFO</argument>
+                <argument>-l</argument>
+                <argument>TestAgent-output.log</argument>
+                <argument>-c</argument>
+                <argument>SimpleAgent.TestAgent</argument>
+                <argument>-n</argument>
+                <argument>1000</argument>
+                <argument>-i</argument>
+                <argument>20</argument>
+                <argument>-r</argument>
+                <argument>12345</argument>
+                <argument>-p</argument>
+                <argument>-d</argument>
+                <argument>-o</argument>
+                <argument>TestAgent-output.out</argument>
+              </arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>TestAgent-output-verify</id>
+            <phase>integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>diff</executable>
+              <arguments>
+                <argument>-q</argument>
+                <argument>TestAgent-output.out</argument>
+                <argument>./outputs/TestAgent1000.out</argument>
+              </arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>TestAgent-performance</id>
+            <phase>integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>java</executable>
+              <arguments>
+                <argument>-classpath</argument>
+                <classpath />
+                <argument>-Xmx1g</argument>
+                <argument>-Xms1g</argument>
+                <argument>mobss.Main</argument>
+                <argument>-d</argument>
+                <argument>INFO</argument>
+                <argument>-l</argument>
+                <argument>TestAgent-performance.log</argument>
+                <argument>-c</argument>
+                <argument>SimpleAgent.TestAgent</argument>
+                <argument>-n</argument>
+                <argument>1000000</argument>
+                <argument>-i</argument>
+                <argument>20</argument>
+              </arguments>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.2.1</version>
-				<executions>
-					<execution>
-						<id>TestAgent-output</id>
-						<phase>integration-test</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<configuration>
-							<executable>java</executable>
-							<arguments>
-								<argument>-classpath</argument>
-								<classpath />
-								<argument>-Xmx1g</argument>
-								<argument>-Xms1g</argument>
-								<argument>mobss.Main</argument>
-								<argument>-d</argument>
-								<argument>INFO</argument>
-								<argument>-l</argument>
-								<argument>TestAgent-output.log</argument>
-								<argument>-c</argument>
-								<argument>SimpleAgent.TestAgent</argument>
-								<argument>-n</argument>
-								<argument>1000</argument>
-								<argument>-i</argument>
-								<argument>20</argument>
-								<argument>-r</argument>
-								<argument>12345</argument>
-								<argument>-p</argument>
-								<argument>-d</argument>
-								<argument>-o</argument>
-								<argument>TestAgent-output.out</argument>
-							</arguments>
-						</configuration>
-					</execution>
-					<execution>
-						<id>TestAgent-output-verify</id>
-						<phase>integration-test</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<configuration>
-							<executable>diff</executable>
-							<arguments>
-								<argument>-q</argument>
-								<argument>TestAgent-output.out</argument>
-								<argument>./outputs/TestAgent1000.out</argument>
-							</arguments>
-						</configuration>
-					</execution>
-					<execution>
-						<id>TestAgent-performance</id>
-						<phase>integration-test</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<configuration>
-							<executable>java</executable>
-							<arguments>
-								<argument>-classpath</argument>
-								<classpath />
-								<argument>-Xmx1g</argument>
-								<argument>-Xms1g</argument>
-								<argument>mobss.Main</argument>
-								<argument>-d</argument>
-								<argument>INFO</argument>
-								<argument>-l</argument>
-								<argument>TestAgent-performance.log</argument>
-								<argument>-c</argument>
-								<argument>SimpleAgent.TestAgent</argument>
-								<argument>-n</argument>
-								<argument>1000000</argument>
-								<argument>-i</argument>
-								<argument>20</argument>
-							</arguments>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-
-	</build>
+  </build>
 </project>
