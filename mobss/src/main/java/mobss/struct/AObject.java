@@ -25,36 +25,79 @@ package mobss.struct;
 import mobss.config.GlobalConstant;
 import mobss.util.AString;
 
+/**
+ * AObject is meant to serve as a base class for all objects that require a
+ * unique identifier and a name. It stores this information in a compact form
+ * which is useful for in-memory storage.
+ * 
+ * @author dsingh
+ */
 public class AObject {
-	
 
+	/** 
+	 * The unique identifier for this object. 
+	 * Upto 2^31 unique ids are supported 
+	 */
 	private int id = GlobalConstant.NULLID;
+	
+	/** The String name of this object, stored as a compacted byte array */
 	private byte[] name;
 
+	/**
+	 * Constructs an AObject with the given str name and id of NULLID.
+	 * @param str the name of this object
+	 * @see GlobalConstant#NULLID
+	 */
 	public AObject(String str) {
 		this.name = AString.toBytes(str);
 	}
 	
+	/**
+	 * Gets the id of this object
+	 * @return the object id
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * Sets the id of this object
+	 * @param id the new id
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * Gets the name of this object
+	 * @return the object name
+	 */
 	public String getName() {
 		return AString.toString(name);
 	}
 
+	/**
+	 * Sets the name of this object
+	 * @param str the new name
+	 */
 	public void setName(String str) {
 		this.name = AString.toBytes(str);
 	}
 
+	/** 
+	 * Returns a String representation of this object
+	 */
 	public String toString() {
 		return AString.toString(name) + ":" + id;
 	}
 	
+	/**
+	 * Checks if two objects have the same name. The check is case sensitive.
+	 * @param obj1 the first object
+	 * @param obj2 the second object
+	 * @return true if the objects have the same non-null non-empty name, 
+	 * and false otherwise
+	 */
 	public static boolean isNameEqual(AObject obj1, AObject obj2) {
 		// Not equal if the names are null, or empty, or not the same size
 		if (obj1.name == null || 
