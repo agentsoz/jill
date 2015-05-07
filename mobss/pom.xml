@@ -3,7 +3,7 @@
 
   <parent>
     <groupId>agentsoz</groupId>
-    <artifactId>mobss-all</artifactId>
+    <artifactId>mobss-project</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>

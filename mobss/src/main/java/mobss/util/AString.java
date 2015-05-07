@@ -24,22 +24,56 @@ package mobss.util;
 
 import java.io.UnsupportedEncodingException;
 
+/**
+ * AString provides utility functions to convert a String object to a
+ * byte array for compressed in-memory storage. Storing String objects as 
+ * a byte array gives very significant memory savings, since String 
+ * objects have a large memory overhead (an empty String object still takes 
+ * 128 bytes, but takes no space in byte array format). This comes at the cost of 
+ * CPU cycles required to convert back to a String object before use, however 
+ * this processing overhead is very low.
+ *   
+ * @author dsingh
+ *
+ */
 public class AString {
 	
+	/** The java.nio.charset to use for converting to/from byte array*/
+	private static final String CHARSET = "UTF-8";
+	
+	/**
+	 * Encodes the String str into a sequence of bytes using the character set
+	 * specified in CHARSET, storing the result into a new byte array.
+	 * 
+	 * @param str the String to convert from
+	 * @return the new byte array, or null if conversion was unsuccessful 
+	 * @see String#getBytes(String)
+	 */
 	public static byte[] toBytes(String str) {
-		if (str != null) {
-			try {
-				return str.getBytes("UTF-8");
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
+		if (str == null) {
+			return null;
+		}
+		try {
+			return str.getBytes(CHARSET);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
 		}
 		return null;
 	}
 	
+	/**
+	 * Decodes the byte array bytes into a String using the character set
+	 * specified in CHARSET, storing the result into a new String.
+	 * 
+	 * @param bytes the byte array to decode
+	 * @return the new decoded String, or null if conversion was unsuccessful
+	 */
 	public static String toString(byte[] bytes) {
+		if (bytes == null) {
+			return null;
+		}
 		try {
-			return new String(bytes, "UTF-8");
+			return new String(bytes, CHARSET);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}

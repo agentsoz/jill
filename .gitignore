@@ -1,2 +1,8 @@
 *.log
 *.log.*
+*.out
+target/
+bin/
+build/
+.settings/
+.gradle
