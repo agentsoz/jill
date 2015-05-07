@@ -25,13 +25,13 @@ package mobss.util;
 import mobss.config.GlobalConstant;
 import mobss.struct.AObject;
 
-public class Catalog extends AObject{
+public class AObjectCatalog extends AObject{
 
 	private int nextid = GlobalConstant.NULLID+1;
 	private int increment;
 	private AObject[] objects;
 	
-	public Catalog(String name, int size, int inc) {
+	public AObjectCatalog(String name, int size, int inc) {
 		super(name);
 		increment = inc;
 		objects = new AObject[size];
@@ -45,9 +45,10 @@ public class Catalog extends AObject{
 	/**
 	 * Find an object by name. Can be very expensive for large catalogs,
 	 * since a name comparison is performed in sequence on the objects
-	 * in the catalog, until a match is found.
-	 * @param name
-	 * @return
+	 * in the catalog, until a match is found. Search is case sensitive.
+	 * 
+	 * @param name the name to find
+	 * @return an AObject with a matching name, or null if not found
 	 */
 	public AObject find(String name) {
 		for (int i = 0; i < nextid; i++) {
@@ -83,7 +84,7 @@ public class Catalog extends AObject{
 	}
 	
 	/**
-	 * Grows the Catalog by a factor of {@link Catalog#DEFAULT_INCREMENT}.
+	 * Grows the Catalog by a factor of {@link AObjectCatalog#DEFAULT_INCREMENT}.
 	 */
 	private void grow() {
  		AObject[] temp = new AObject[objects.length+increment];

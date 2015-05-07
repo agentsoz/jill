@@ -22,7 +22,7 @@ package mobss.core;
  * #L%
  */
 
-import mobss.util.Catalog;
+import mobss.util.AObjectCatalog;
 
 /**
  * A catalog of all known agent, goal and plan types
@@ -31,10 +31,10 @@ import mobss.util.Catalog;
  */
 public class GlobalState {
 
-	public static Catalog agentTypes = new Catalog("agentTypes", 5,5);
-	public static Catalog goalTypes = new Catalog("goalTypes", 10,5);
-	public static Catalog planTypes = new Catalog("planTypes", 20,5);
+	public static AObjectCatalog agentTypes = new AObjectCatalog("agentTypes", 5,5);
+	public static AObjectCatalog goalTypes = new AObjectCatalog("goalTypes", 10,5);
+	public static AObjectCatalog planTypes = new AObjectCatalog("planTypes", 20,5);
 	
-	public static Catalog agents;
+	public static AObjectCatalog agents;
 
 }

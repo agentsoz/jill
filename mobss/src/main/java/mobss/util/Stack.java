@@ -66,7 +66,7 @@ public class Stack{
 	}
 	
 	/**
-	 * Grows the Catalog by a factor of {@link Catalog#DEFAULT_INCREMENT}.
+	 * Grows the Catalog by a factor of {@link AObjectCatalog#DEFAULT_INCREMENT}.
 	 */
 	private void grow() {
  		Object[] temp = new Object[objects.length+increment];

@@ -35,7 +35,7 @@ import mobss.core.IntentionSelector;
 import mobss.core.ProgramLoader;
 import mobss.lang.Agent;
 import mobss.util.ArgumentsLoader;
-import mobss.util.Catalog;
+import mobss.util.AObjectCatalog;
 
 public class Main {
 
@@ -65,7 +65,7 @@ public class Main {
 		int NUMAGENTS = ArgumentsLoader.getNumAgents(); 
 		int INCREMENT = 10000;
 
-		GlobalState.agents = new Catalog("agents", NUMAGENTS, INCREMENT);
+		GlobalState.agents = new AObjectCatalog("agents", NUMAGENTS, INCREMENT);
 
 		long t0, t1;
 		

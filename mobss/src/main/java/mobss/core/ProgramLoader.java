@@ -35,7 +35,7 @@ import mobss.lang.PlanInfo;
 import mobss.struct.AgentType;
 import mobss.struct.GoalType;
 import mobss.struct.PlanType;
-import mobss.util.Catalog;
+import mobss.util.AObjectCatalog;
 
 
 
@@ -44,7 +44,7 @@ public class ProgramLoader {
 	private final static Logger logger = Logger.getLogger("");
 
 	
-	public static void load(String className, int num, Catalog agents) {
+	public static void load(String className, int num, AObjectCatalog agents) {
 		Class<?> aclass;
 		String msg = "";
 		try {
