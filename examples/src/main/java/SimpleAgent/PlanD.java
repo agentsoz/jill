@@ -22,10 +22,10 @@ package SimpleAgent;
  * #L%
  */
 
-import mobss.lang.Agent;
-import mobss.lang.Plan;
-import mobss.lang.PlanInfo;
-import mobss.lang.PlanStep;
+import jill.lang.Agent;
+import jill.lang.Plan;
+import jill.lang.PlanInfo;
+import jill.lang.PlanStep;
 
 @PlanInfo(handlesGoal="SimpleAgent.GoalA")
 public class PlanD extends Plan {

@@ -15,7 +15,7 @@
   </properties>
 
   <modules>
-    <module>mobss</module>
+    <module>jill</module>
     <module>examples</module>
   </modules>
 

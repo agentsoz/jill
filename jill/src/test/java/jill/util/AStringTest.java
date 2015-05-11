@@ -1,4 +1,4 @@
-package mobss.util;
+package jill.util;
 
 /*
  * #%L

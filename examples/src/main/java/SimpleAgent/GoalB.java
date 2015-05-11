@@ -22,8 +22,8 @@ package SimpleAgent;
  * #L%
  */
 
-import mobss.lang.Goal;
-import mobss.lang.GoalInfo;
+import jill.lang.Goal;
+import jill.lang.GoalInfo;
 
 @GoalInfo(hasPlans={"SimpleAgent.PlanB"})
 public class GoalB extends Goal {

@@ -24,8 +24,8 @@ package SimpleAgent;
 
 import java.io.PrintWriter;
 
-import mobss.lang.Agent;
-import mobss.lang.AgentInfo;
+import jill.lang.Agent;
+import jill.lang.AgentInfo;
 
 @AgentInfo(hasGoals={"SimpleAgent.GoalA","SimpleAgent.GoalB","SimpleAgent.GoalC"})
 public class TestAgent extends Agent {
