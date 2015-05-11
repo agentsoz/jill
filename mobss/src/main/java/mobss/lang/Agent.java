@@ -25,21 +25,21 @@ package mobss.lang;
 import java.io.PrintWriter;
 
 import mobss.struct.AObject;
-import mobss.util.Stack;
+import mobss.util.Stack255;
 
 
 public class Agent extends AObject {
 
 	private byte[] goals; // This agent's goal-plan tree
 
-	private Stack executionStack; // This agent's goal-plan execution stack
+	private Stack255 executionStack; // This agent's goal-plan execution stack
 	
 	public Agent(String str) {
 		super(str);
-		executionStack = new Stack((byte)1,(byte)1); // suffix 'es' for execution stack
+		executionStack = new Stack255((byte)1,(byte)1); // suffix 'es' for execution stack
 	}
 
-	public Stack getExecutionStack() {
+	public Stack255 getExecutionStack() {
 		return executionStack;
 	}
 

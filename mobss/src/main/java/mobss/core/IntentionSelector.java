@@ -30,7 +30,7 @@ import mobss.lang.Goal;
 import mobss.lang.Plan;
 import mobss.struct.GoalType;
 import mobss.struct.PlanType;
-import mobss.util.Stack;
+import mobss.util.Stack255;
 
 public class IntentionSelector implements Runnable {
 
@@ -55,7 +55,7 @@ public class IntentionSelector implements Runnable {
 		done = true;
 		ArrayList<Plan> options = new ArrayList<Plan>();
 		for (int i = start; i < start+size; i++) {
-			Stack agentExecutionStack = (Stack)((Agent)GlobalState.agents.get(i)).getExecutionStack();
+			Stack255 agentExecutionStack = (Stack255)((Agent)GlobalState.agents.get(i)).getExecutionStack();
 			int esSize = agentExecutionStack.size();
 			if (agentExecutionStack == null || esSize == 0) {
 				// Nothing to do for this agent
@@ -63,7 +63,7 @@ public class IntentionSelector implements Runnable {
 			}
 			
 			// Get the item at the top of the stack
-			Object node = (Object)agentExecutionStack.get(esSize-1);
+			Object node = (Object)agentExecutionStack.get((byte)(esSize-1));
 			
 			// If it is a plan then execute it
 			if (node instanceof Plan) {

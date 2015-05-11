@@ -84,7 +84,7 @@ public class AObjectCatalog extends AObject{
 	}
 	
 	/**
-	 * Grows the Catalog by a factor of {@link AObjectCatalog#DEFAULT_INCREMENT}.
+	 * Grows the Catalog by a factor of {@link #increment}.
 	 */
 	private void grow() {
  		AObject[] temp = new AObject[objects.length+increment];

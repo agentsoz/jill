@@ -22,10 +22,7 @@ package mobss.lang;
  * #L%
  */
 
-import mobss.struct.AStackObject;
-
-
-public class Goal extends AStackObject {
+public class Goal {
 
 	public Goal(String str) {
 	}

@@ -22,9 +22,7 @@ package mobss.lang;
  * #L%
  */
 
-import mobss.struct.AStackObject;
-
-public abstract class Plan extends AStackObject {
+public abstract class Plan {
 
 	private final Agent agent;
 	private byte index = 0;
