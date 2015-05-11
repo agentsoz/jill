@@ -2,7 +2,7 @@ package jill;
 
 /*
  * #%L
- * MOBSS, Masses of BDI-agents for Social Simulation
+ * Jill Cognitive Agents Platform
  * %%
  * Copyright (C) 2014 - 2015 by its authors. See AUTHORS file.
  * %%

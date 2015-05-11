@@ -50,7 +50,9 @@
           <configuration>
             <organizationName>AgentsOZ</organizationName>
             <copyrightOwners>by its authors. See AUTHORS file.</copyrightOwners>
-            <projectName>MOBSS, Masses of BDI-agents for Social Simulation</projectName>
+            <projectName>Jill Cognitive Agents Platform</projectName>
+            <canUpdateDescription>true</canUpdateDescription>
+            <canUpdateCopyright>true</canUpdateCopyright>
             <inceptionYear>2014</inceptionYear>
             <licenseName>lgpl_v3</licenseName>
           </configuration>
