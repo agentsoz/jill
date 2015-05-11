@@ -1,4 +1,4 @@
-package mobss.lang;
+package jill.lang;
 
 /*
  * #%L
@@ -22,10 +22,12 @@ package mobss.lang;
  * #L%
  */
 
-public class Goal {
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
-	public Goal(String str) {
-	}
-	
+@Retention(RetentionPolicy.RUNTIME)
+public @interface AgentInfo {
+
+	String[] hasGoals();
 
 }

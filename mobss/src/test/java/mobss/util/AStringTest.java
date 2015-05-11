@@ -23,6 +23,7 @@ package mobss.util;
  */
 
 import static org.junit.Assert.*;
+import jill.util.AString;
 
 import org.junit.After;
 import org.junit.Before;

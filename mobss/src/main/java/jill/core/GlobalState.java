@@ -1,4 +1,4 @@
-package mobss.lang;
+package jill.core;
 
 /*
  * #%L
@@ -22,12 +22,19 @@ package mobss.lang;
  * #L%
  */
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import jill.util.AObjectCatalog;
 
-@Retention(RetentionPolicy.RUNTIME)
-public @interface PlanInfo {
+/**
+ * A catalog of all known agent, goal and plan types
+ * @author dsingh
+ *
+ */
+public class GlobalState {
+
+	public static AObjectCatalog agentTypes = new AObjectCatalog("agentTypes", 5,5);
+	public static AObjectCatalog goalTypes = new AObjectCatalog("goalTypes", 10,5);
+	public static AObjectCatalog planTypes = new AObjectCatalog("planTypes", 20,5);
 	
-	String handlesGoal();
-	String[] postsGoals() default {};
+	public static AObjectCatalog agents;
+
 }

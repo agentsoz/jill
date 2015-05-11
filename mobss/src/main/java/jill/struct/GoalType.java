@@ -1,4 +1,4 @@
-package mobss.struct;
+package jill.struct;
 
 /*
  * #%L

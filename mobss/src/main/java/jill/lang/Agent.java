@@ -1,4 +1,4 @@
-package mobss.struct;
+package jill.lang;
 
 /*
  * #%L
@@ -22,42 +22,53 @@ package mobss.struct;
  * #L%
  */
 
-public class AgentType extends AObject{
-	
-	private Class<?> cAgent;
-	
+import java.io.PrintWriter;
+
+import jill.struct.AObject;
+import jill.util.Stack255;
+
+
+public class Agent extends AObject {
+
 	private byte[] goals; // This agent's goal-plan tree
 
-	public AgentType(String name) {
-		super(name);
+	private Stack255 executionStack; // This agent's goal-plan execution stack
+	
+	public Agent(String str) {
+		super(str);
+		executionStack = new Stack255((byte)1,(byte)1); // suffix 'es' for execution stack
 	}
 
-	public Class<?> getAgentClass() {
-		return cAgent;
+	public Stack255 getExecutionStack() {
+		return executionStack;
 	}
 
-	public void setAgentClass(Class<?> cAgent) {
-		this.cAgent = cAgent;
+
+	public void post(Goal goal) {
+		executionStack.push(goal);
+	}
+
+	public void start(PrintWriter writer, String params) {
 	}
 	
+	public void finish() {
+		
+	}
+
 	public byte[] getGoals() {
 		byte[] arr = new byte[goals.length];
 		for (int i = 0; i < arr.length; i++) {
-			arr[i] = (byte)(goals[i]);
+			arr[i] = goals[i];
 		}
 		return arr;
 	}
 
-	public void setGoals(byte[] arr) {
-		goals = new byte[arr.length];
-		for (int i = 0; i < arr.length; i++) {
-			goals[i] = arr[i];
+	public void setGoals(byte[] bs) {
+		goals = new byte[bs.length];
+		for (int i = 0; i < bs.length; i++) {
+			goals[i] = (byte)(bs[i] & 0x000f);
 		}
 	}
 
-	public void addGoal(byte goal) {
-		goals = GPType.grow(goals,1);
-		goals[goals.length-1] = goal;
-	}
+	
 }
-

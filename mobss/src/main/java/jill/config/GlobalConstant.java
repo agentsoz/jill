@@ -1,4 +1,4 @@
-package mobss.lang;
+package jill.config;
 
 /*
  * #%L
@@ -22,12 +22,12 @@ package mobss.lang;
  * #L%
  */
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
-@Retention(RetentionPolicy.RUNTIME)
-public @interface AgentInfo {
-
-	String[] hasGoals();
-
+public class GlobalConstant {
+	public static final int NULLID = -1;
+	public static final String APP_HEADER = 
+		    "MOBSS  Copyright (C) 2014  Dhirendra Singh" + "\n" +
+		    "This program comes with ABSOLUTELY NO WARRANTY." + "\n" +
+		    "This is free software, and you are welcome to redistribute it" + "\n" +
+		    "under certain conditions; for details see LICENSE file provided."
+		    ;
 }

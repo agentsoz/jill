@@ -1,4 +1,4 @@
-package mobss.struct;
+package jill.struct;
 
 /*
  * #%L
@@ -22,51 +22,42 @@ package mobss.struct;
  * #L%
  */
 
-public class GPType extends AObject{
-
-	private byte[] parents;
-	private byte[] children;
+public class AgentType extends AObject{
 	
-	public GPType(String str) {
-		super(str);
+	private Class<?> cAgent;
+	
+	private byte[] goals; // This agent's goal-plan tree
+
+	public AgentType(String name) {
+		super(name);
 	}
 
-	public byte[] getParents() {
-		byte[] arr = new byte[parents.length];
+	public Class<?> getAgentClass() {
+		return cAgent;
+	}
+
+	public void setAgentClass(Class<?> cAgent) {
+		this.cAgent = cAgent;
+	}
+	
+	public byte[] getGoals() {
+		byte[] arr = new byte[goals.length];
 		for (int i = 0; i < arr.length; i++) {
-			arr[i] = parents[i];
+			arr[i] = (byte)(goals[i]);
 		}
 		return arr;
 	}
 
-	public void addParent(byte parent) {
-		parents = grow(parents,1);
-		parents[parents.length-1] = parent;
-	}
-
-	
-	public byte[] getChildren() {
-		byte[] arr = new byte[children.length];
+	public void setGoals(byte[] arr) {
+		goals = new byte[arr.length];
 		for (int i = 0; i < arr.length; i++) {
-			arr[i] = children[i];
+			goals[i] = arr[i];
 		}
-		return arr;
 	}
 
-	public void addChild(byte child) {
-		children = grow(children,1);
-		children[children.length-1] = child;
+	public void addGoal(byte goal) {
+		goals = GPType.grow(goals,1);
+		goals[goals.length-1] = goal;
 	}
-
-
-	public static byte[] grow(byte[] bytes, int increment) {
-		if (bytes == null) {
-			return new byte[1];
-		}
- 		byte[] temp = new byte[bytes.length+increment];
-		System.arraycopy(bytes, 0, temp, 0, bytes.length);
-		return temp;
-	}
-
-
 }
+

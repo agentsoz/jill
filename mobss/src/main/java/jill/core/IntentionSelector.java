@@ -1,4 +1,4 @@
-package mobss.core;
+package jill.core;
 
 /*
  * #%L
@@ -25,12 +25,12 @@ package mobss.core;
 import java.util.ArrayList;
 import java.util.Random;
 
-import mobss.lang.Agent;
-import mobss.lang.Goal;
-import mobss.lang.Plan;
-import mobss.struct.GoalType;
-import mobss.struct.PlanType;
-import mobss.util.Stack255;
+import jill.lang.Agent;
+import jill.lang.Goal;
+import jill.lang.Plan;
+import jill.struct.GoalType;
+import jill.struct.PlanType;
+import jill.util.Stack255;
 
 public class IntentionSelector implements Runnable {
 

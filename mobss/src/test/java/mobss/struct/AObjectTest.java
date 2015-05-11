@@ -23,7 +23,8 @@ package mobss.struct;
  */
 
 import static org.junit.Assert.*;
-import mobss.config.GlobalConstant;
+import jill.config.GlobalConstant;
+import jill.struct.AObject;
 
 import org.junit.After;
 import org.junit.Before;

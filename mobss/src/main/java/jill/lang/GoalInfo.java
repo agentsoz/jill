@@ -1,4 +1,4 @@
-package mobss.lang;
+package jill.lang;
 
 /*
  * #%L
@@ -22,7 +22,11 @@ package mobss.lang;
  * #L%
  */
 
-public interface PlanStep {
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
-	public void step();
+
+@Retention(RetentionPolicy.RUNTIME)
+public @interface GoalInfo {
+	String[] hasPlans();
 }

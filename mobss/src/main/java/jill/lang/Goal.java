@@ -1,4 +1,4 @@
-package mobss.lang;
+package jill.lang;
 
 /*
  * #%L
@@ -22,39 +22,10 @@ package mobss.lang;
  * #L%
  */
 
-public abstract class Plan {
+public class Goal {
 
-	private final Agent agent;
-	private byte index = 0;
-
-	public Plan(Agent agent, String name) {
-		this.agent = agent;
-	}
-
-	public abstract String context();
-
-	public PlanStep[] body;
-	
-	public Agent getAgent() {
-		return agent;
+	public Goal(String str) {
 	}
 	
-	public void post(Goal goal) {
-		getAgent().post(goal);
-	}
-	
-	public void step() {
-		if (body == null || body.length == 0 || index < 0 || index >= body.length ) {
-			return;
-		}
-		body[index++].step();
-	}
-
-	public boolean hasfinished() {
-		if (body == null || body.length == 0 || index < 0 || index >= body.length ) {
-			return true;
-		}
-		return false;
-	}
 
 }

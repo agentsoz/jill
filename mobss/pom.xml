@@ -3,17 +3,17 @@
 
   <parent>
     <groupId>agentsoz</groupId>
-    <artifactId>mobss-project</artifactId>
+    <artifactId>jill-project</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>mobss</artifactId>
+  <artifactId>jill</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
-  <name>MOBSS Core</name>
-  <description>Masses of BDI-agents for Social Simulation</description>
+  <name>Jill Core</name>
+  <description>Jill cognitive agents (Core)</description>
 
 
 </project>

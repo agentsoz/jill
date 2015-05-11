@@ -1,4 +1,4 @@
-package mobss;
+package jill;
 
 /*
  * #%L
@@ -30,12 +30,12 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-import mobss.core.GlobalState;
-import mobss.core.IntentionSelector;
-import mobss.core.ProgramLoader;
-import mobss.lang.Agent;
-import mobss.util.ArgumentsLoader;
-import mobss.util.AObjectCatalog;
+import jill.core.GlobalState;
+import jill.core.IntentionSelector;
+import jill.core.ProgramLoader;
+import jill.lang.Agent;
+import jill.util.AObjectCatalog;
+import jill.util.ArgumentsLoader;
 
 public class Main {
 

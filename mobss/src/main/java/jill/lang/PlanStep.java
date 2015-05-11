@@ -1,4 +1,4 @@
-package mobss.config;
+package jill.lang;
 
 /*
  * #%L
@@ -22,12 +22,7 @@ package mobss.config;
  * #L%
  */
 
-public class GlobalConstant {
-	public static final int NULLID = -1;
-	public static final String APP_HEADER = 
-		    "MOBSS  Copyright (C) 2014  Dhirendra Singh" + "\n" +
-		    "This program comes with ABSOLUTELY NO WARRANTY." + "\n" +
-		    "This is free software, and you are welcome to redistribute it" + "\n" +
-		    "under certain conditions; for details see LICENSE file provided."
-		    ;
+public interface PlanStep {
+
+	public void step();
 }

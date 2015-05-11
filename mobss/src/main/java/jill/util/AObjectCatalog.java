@@ -1,4 +1,4 @@
-package mobss.util;
+package jill.util;
 
 /*
  * #%L
@@ -22,8 +22,8 @@ package mobss.util;
  * #L%
  */
 
-import mobss.config.GlobalConstant;
-import mobss.struct.AObject;
+import jill.config.GlobalConstant;
+import jill.struct.AObject;
 
 public class AObjectCatalog extends AObject{
 

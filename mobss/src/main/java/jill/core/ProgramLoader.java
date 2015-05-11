@@ -1,4 +1,4 @@
-package mobss.core;
+package jill.core;
 
 /*
  * #%L
@@ -25,17 +25,17 @@ package mobss.core;
 import java.lang.annotation.Annotation;
 import java.util.logging.Logger;
 
-import mobss.core.GlobalState;
-import mobss.lang.Agent;
-import mobss.lang.AgentInfo;
-import mobss.lang.Goal;
-import mobss.lang.GoalInfo;
-import mobss.lang.Plan;
-import mobss.lang.PlanInfo;
-import mobss.struct.AgentType;
-import mobss.struct.GoalType;
-import mobss.struct.PlanType;
-import mobss.util.AObjectCatalog;
+import jill.core.GlobalState;
+import jill.lang.Agent;
+import jill.lang.AgentInfo;
+import jill.lang.Goal;
+import jill.lang.GoalInfo;
+import jill.lang.Plan;
+import jill.lang.PlanInfo;
+import jill.struct.AgentType;
+import jill.struct.GoalType;
+import jill.struct.PlanType;
+import jill.util.AObjectCatalog;
 
 
 

@@ -1,4 +1,4 @@
-package mobss.struct;
+package jill.struct;
 
 /*
  * #%L
@@ -22,8 +22,8 @@ package mobss.struct;
  * #L%
  */
 
-import mobss.config.GlobalConstant;
-import mobss.util.AString;
+import jill.config.GlobalConstant;
+import jill.util.AString;
 
 /**
  * AObject is meant to serve as a base class for all objects that require a

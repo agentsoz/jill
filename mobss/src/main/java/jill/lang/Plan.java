@@ -1,4 +1,4 @@
-package mobss.core;
+package jill.lang;
 
 /*
  * #%L
@@ -22,19 +22,39 @@ package mobss.core;
  * #L%
  */
 
-import mobss.util.AObjectCatalog;
+public abstract class Plan {
 
-/**
- * A catalog of all known agent, goal and plan types
- * @author dsingh
- *
- */
-public class GlobalState {
+	private final Agent agent;
+	private byte index = 0;
 
-	public static AObjectCatalog agentTypes = new AObjectCatalog("agentTypes", 5,5);
-	public static AObjectCatalog goalTypes = new AObjectCatalog("goalTypes", 10,5);
-	public static AObjectCatalog planTypes = new AObjectCatalog("planTypes", 20,5);
+	public Plan(Agent agent, String name) {
+		this.agent = agent;
+	}
+
+	public abstract String context();
+
+	public PlanStep[] body;
 	
-	public static AObjectCatalog agents;
+	public Agent getAgent() {
+		return agent;
+	}
+	
+	public void post(Goal goal) {
+		getAgent().post(goal);
+	}
+	
+	public void step() {
+		if (body == null || body.length == 0 || index < 0 || index >= body.length ) {
+			return;
+		}
+		body[index++].step();
+	}
+
+	public boolean hasfinished() {
+		if (body == null || body.length == 0 || index < 0 || index >= body.length ) {
+			return true;
+		}
+		return false;
+	}
 
 }

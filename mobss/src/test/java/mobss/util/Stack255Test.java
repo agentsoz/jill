@@ -1,4 +1,4 @@
-package mobss.util;
+package jill.util;
 
 /*
  * #%L
@@ -23,6 +23,7 @@ package mobss.util;
  */
 
 import static org.junit.Assert.*;
+import jill.util.Stack255;
 
 import org.junit.After;
 import org.junit.Before;

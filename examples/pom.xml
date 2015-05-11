@@ -3,22 +3,22 @@
 
   <parent>
     <groupId>agentsoz</groupId>
-    <artifactId>mobss-project</artifactId>
+    <artifactId>jill-project</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
-  <name>MOBSS Examples</name>
-  <description>Masses of BDI-agents for Social Simulation</description>
+  <name>Jill Examples</name>
+  <description>Jill cognitive agents (examples)</description>
 
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>mobss-examples</artifactId>
+  <artifactId>jill-examples</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
       <groupId>agentsoz</groupId>
-      <artifactId>mobss</artifactId>
+      <artifactId>jill</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
   </dependencies>
@@ -43,7 +43,7 @@
                 <classpath />
                 <argument>-Xmx1g</argument>
                 <argument>-Xms1g</argument>
-                <argument>mobss.Main</argument>
+                <argument>jill.Main</argument>
                 <argument>-d</argument>
                 <argument>INFO</argument>
                 <argument>-l</argument>
@@ -91,7 +91,7 @@
                 <classpath />
                 <argument>-Xmx1g</argument>
                 <argument>-Xms1g</argument>
-                <argument>mobss.Main</argument>
+                <argument>jill.Main</argument>
                 <argument>-d</argument>
                 <argument>INFO</argument>
                 <argument>-l</argument>

@@ -1,4 +1,4 @@
-package mobss.lang;
+package jill.struct;
 
 /*
  * #%L
@@ -22,11 +22,38 @@ package mobss.lang;
  * #L%
  */
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import java.lang.reflect.Method;
 
+public class PlanType extends GPType{
+	private Class<?> cPlan;
+	private Method mContext;
+	private Method mBody;
+	
+	public PlanType(String name) {
+		super(name);
+	}
 
-@Retention(RetentionPolicy.RUNTIME)
-public @interface GoalInfo {
-	String[] hasPlans();
+	public Method getContext() {
+		return mContext;
+	}
+	
+	public void setContext(Method mContext) {
+		this.mContext = mContext;
+	}
+
+	public Method getBody() {
+		return mBody;
+	}
+	
+	public void setBody(Method mBody) {
+		this.mBody = mBody;
+	}
+
+	public Class<?> getPlanClass() {
+		return cPlan;
+	}
+
+	public void setPlanClass(Class<?> cPlan) {
+		this.cPlan = cPlan;
+	}	
 }

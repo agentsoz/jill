@@ -2,12 +2,12 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>agentsoz</groupId>
-  <artifactId>mobss-project</artifactId>
+  <artifactId>jill-project</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>MOBSS Project</name>
-  <description>Masses of BDI-agents for Social Simulation</description>
+  <name>Jill Project</name>
+  <description>Jill cognitive agents project</description>
   <url>agentsoz.github.io</url>
 
   <properties>

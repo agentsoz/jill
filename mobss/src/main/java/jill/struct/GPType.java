@@ -1,4 +1,4 @@
-package mobss.lang;
+package jill.struct;
 
 /*
  * #%L
@@ -22,53 +22,51 @@ package mobss.lang;
  * #L%
  */
 
-import java.io.PrintWriter;
+public class GPType extends AObject{
 
-import mobss.struct.AObject;
-import mobss.util.Stack255;
-
-
-public class Agent extends AObject {
-
-	private byte[] goals; // This agent's goal-plan tree
-
-	private Stack255 executionStack; // This agent's goal-plan execution stack
+	private byte[] parents;
+	private byte[] children;
 	
-	public Agent(String str) {
+	public GPType(String str) {
 		super(str);
-		executionStack = new Stack255((byte)1,(byte)1); // suffix 'es' for execution stack
 	}
 
-	public Stack255 getExecutionStack() {
-		return executionStack;
-	}
-
-
-	public void post(Goal goal) {
-		executionStack.push(goal);
-	}
-
-	public void start(PrintWriter writer, String params) {
-	}
-	
-	public void finish() {
-		
-	}
-
-	public byte[] getGoals() {
-		byte[] arr = new byte[goals.length];
+	public byte[] getParents() {
+		byte[] arr = new byte[parents.length];
 		for (int i = 0; i < arr.length; i++) {
-			arr[i] = goals[i];
+			arr[i] = parents[i];
 		}
 		return arr;
 	}
 
-	public void setGoals(byte[] bs) {
-		goals = new byte[bs.length];
-		for (int i = 0; i < bs.length; i++) {
-			goals[i] = (byte)(bs[i] & 0x000f);
-		}
+	public void addParent(byte parent) {
+		parents = grow(parents,1);
+		parents[parents.length-1] = parent;
 	}
 
 	
+	public byte[] getChildren() {
+		byte[] arr = new byte[children.length];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = children[i];
+		}
+		return arr;
+	}
+
+	public void addChild(byte child) {
+		children = grow(children,1);
+		children[children.length-1] = child;
+	}
+
+
+	public static byte[] grow(byte[] bytes, int increment) {
+		if (bytes == null) {
+			return new byte[1];
+		}
+ 		byte[] temp = new byte[bytes.length+increment];
+		System.arraycopy(bytes, 0, temp, 0, bytes.length);
+		return temp;
+	}
+
+
 }

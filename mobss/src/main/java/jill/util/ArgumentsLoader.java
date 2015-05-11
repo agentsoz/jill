@@ -1,4 +1,4 @@
-package mobss.util;
+package jill.util;
 
 /*
  * #%L
@@ -24,8 +24,8 @@ package mobss.util;
 
 import java.util.logging.Level;
 
-import mobss.Main;
-import mobss.config.GlobalConstant;
+import jill.Main;
+import jill.config.GlobalConstant;
 
 public class ArgumentsLoader {
 
