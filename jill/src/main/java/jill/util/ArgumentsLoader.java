@@ -135,7 +135,9 @@ public class ArgumentsLoader {
 			}	
 		}
 		// Abort if required args were not given
-		if (agentClass == null) {
+		if (args.length == 0) {
+			abort(null);
+		} else if (agentClass == null) {
 			abort("Some required options were not given");
 		}
 	}
@@ -165,7 +167,9 @@ public class ArgumentsLoader {
 	}
 
 	private static void abort(String err) {
-		System.err.println("\nERROR: " + err + "\n");
+		if (err != null) {
+			System.err.println("\nERROR: " + err + "\n");
+		}
 		System.out.println(usage());
 		System.exit(0);
 	}
