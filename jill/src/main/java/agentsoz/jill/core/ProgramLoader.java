@@ -1,4 +1,4 @@
-package jill.core;
+package agentsoz.jill.core;
 
 /*
  * #%L
@@ -25,17 +25,17 @@ package jill.core;
 import java.lang.annotation.Annotation;
 import java.util.logging.Logger;
 
-import jill.core.GlobalState;
-import jill.lang.Agent;
-import jill.lang.AgentInfo;
-import jill.lang.Goal;
-import jill.lang.GoalInfo;
-import jill.lang.Plan;
-import jill.lang.PlanInfo;
-import jill.struct.AgentType;
-import jill.struct.GoalType;
-import jill.struct.PlanType;
-import jill.util.AObjectCatalog;
+import agentsoz.jill.core.GlobalState;
+import agentsoz.jill.lang.Agent;
+import agentsoz.jill.lang.AgentInfo;
+import agentsoz.jill.lang.Goal;
+import agentsoz.jill.lang.GoalInfo;
+import agentsoz.jill.lang.Plan;
+import agentsoz.jill.lang.PlanInfo;
+import agentsoz.jill.struct.AgentType;
+import agentsoz.jill.struct.GoalType;
+import agentsoz.jill.struct.PlanType;
+import agentsoz.jill.util.AObjectCatalog;
 
 
 

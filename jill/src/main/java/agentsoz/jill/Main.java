@@ -1,4 +1,4 @@
-package jill;
+package agentsoz.jill;
 
 /*
  * #%L
@@ -30,12 +30,12 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-import jill.core.GlobalState;
-import jill.core.IntentionSelector;
-import jill.core.ProgramLoader;
-import jill.lang.Agent;
-import jill.util.AObjectCatalog;
-import jill.util.ArgumentsLoader;
+import agentsoz.jill.core.GlobalState;
+import agentsoz.jill.core.IntentionSelector;
+import agentsoz.jill.core.ProgramLoader;
+import agentsoz.jill.lang.Agent;
+import agentsoz.jill.util.AObjectCatalog;
+import agentsoz.jill.util.ArgumentsLoader;
 
 public class Main {
 

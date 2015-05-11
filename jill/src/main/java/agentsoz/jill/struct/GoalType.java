@@ -1,4 +1,4 @@
-package jill.lang;
+package agentsoz.jill.struct;
 
 /*
  * #%L
@@ -22,12 +22,17 @@ package jill.lang;
  * #L%
  */
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+public class GoalType extends GPType {
+	private Class<?> cGoal;
+	public GoalType(String name) {
+		super(name);
+	}
 
-@Retention(RetentionPolicy.RUNTIME)
-public @interface AgentInfo {
+	public Class<?> getGoalClass() {
+		return cGoal;
+	}
 
-	String[] hasGoals();
-
+	public void setGoalClass(Class<?> cGoal) {
+		this.cGoal = cGoal;
+	}
 }

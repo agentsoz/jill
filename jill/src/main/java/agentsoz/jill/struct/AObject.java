@@ -1,4 +1,4 @@
-package jill.struct;
+package agentsoz.jill.struct;
 
 /*
  * #%L
@@ -22,8 +22,8 @@ package jill.struct;
  * #L%
  */
 
-import jill.config.GlobalConstant;
-import jill.util.AString;
+import agentsoz.jill.config.GlobalConstant;
+import agentsoz.jill.util.AString;
 
 /**
  * AObject is meant to serve as a base class for all objects that require a

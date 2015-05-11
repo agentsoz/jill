@@ -1,4 +1,4 @@
-package jill.util;
+package agentsoz.jill.util;
 
 /*
  * #%L
@@ -24,8 +24,8 @@ package jill.util;
 
 import java.util.logging.Level;
 
-import jill.Main;
-import jill.config.GlobalConstant;
+import agentsoz.jill.Main;
+import agentsoz.jill.config.GlobalConstant;
 
 public class ArgumentsLoader {
 

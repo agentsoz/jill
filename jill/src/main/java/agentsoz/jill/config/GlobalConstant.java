@@ -1,4 +1,4 @@
-package jill.core;
+package agentsoz.jill.config;
 
 /*
  * #%L
@@ -22,19 +22,13 @@ package jill.core;
  * #L%
  */
 
-import jill.util.AObjectCatalog;
-
-/**
- * A catalog of all known agent, goal and plan types
- * @author dsingh
- *
- */
-public class GlobalState {
-
-	public static AObjectCatalog agentTypes = new AObjectCatalog("agentTypes", 5,5);
-	public static AObjectCatalog goalTypes = new AObjectCatalog("goalTypes", 10,5);
-	public static AObjectCatalog planTypes = new AObjectCatalog("planTypes", 20,5);
-	
-	public static AObjectCatalog agents;
-
+public class GlobalConstant {
+	public static final int NULLID = -1;
+	public static final String APP_HEADER = 
+		    "Jill Cognitive Agents Platform" + "\n" +
+	        "(C) 2014 - 2015 by its authors. See AUTHORS file." + "\n\n" +
+		    "This program comes with ABSOLUTELY NO WARRANTY." + "\n" +
+		    "This is free software, and you are welcome to redistribute it" + "\n" +
+		    "under certain conditions; for details see LICENSE file provided."
+		    ;
 }

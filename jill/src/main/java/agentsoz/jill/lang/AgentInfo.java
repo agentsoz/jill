@@ -1,4 +1,4 @@
-package jill.lang;
+package agentsoz.jill.lang;
 
 /*
  * #%L
@@ -25,8 +25,9 @@ package jill.lang;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-
 @Retention(RetentionPolicy.RUNTIME)
-public @interface GoalInfo {
-	String[] hasPlans();
+public @interface AgentInfo {
+
+	String[] hasGoals();
+
 }

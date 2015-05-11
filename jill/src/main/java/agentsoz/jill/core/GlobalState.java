@@ -1,4 +1,4 @@
-package jill.struct;
+package agentsoz.jill.core;
 
 /*
  * #%L
@@ -22,42 +22,19 @@ package jill.struct;
  * #L%
  */
 
-public class AgentType extends AObject{
+import agentsoz.jill.util.AObjectCatalog;
+
+/**
+ * A catalog of all known agent, goal and plan types
+ * @author dsingh
+ *
+ */
+public class GlobalState {
+
+	public static AObjectCatalog agentTypes = new AObjectCatalog("agentTypes", 5,5);
+	public static AObjectCatalog goalTypes = new AObjectCatalog("goalTypes", 10,5);
+	public static AObjectCatalog planTypes = new AObjectCatalog("planTypes", 20,5);
 	
-	private Class<?> cAgent;
-	
-	private byte[] goals; // This agent's goal-plan tree
+	public static AObjectCatalog agents;
 
-	public AgentType(String name) {
-		super(name);
-	}
-
-	public Class<?> getAgentClass() {
-		return cAgent;
-	}
-
-	public void setAgentClass(Class<?> cAgent) {
-		this.cAgent = cAgent;
-	}
-	
-	public byte[] getGoals() {
-		byte[] arr = new byte[goals.length];
-		for (int i = 0; i < arr.length; i++) {
-			arr[i] = (byte)(goals[i]);
-		}
-		return arr;
-	}
-
-	public void setGoals(byte[] arr) {
-		goals = new byte[arr.length];
-		for (int i = 0; i < arr.length; i++) {
-			goals[i] = arr[i];
-		}
-	}
-
-	public void addGoal(byte goal) {
-		goals = GPType.grow(goals,1);
-		goals[goals.length-1] = goal;
-	}
 }
-

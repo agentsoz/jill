@@ -23,12 +23,13 @@ package jill.struct;
  */
 
 import static org.junit.Assert.*;
-import jill.config.GlobalConstant;
-import jill.struct.AObject;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import agentsoz.jill.config.GlobalConstant;
+import agentsoz.jill.struct.AObject;
 
 public class AObjectTest {
 

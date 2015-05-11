@@ -1,4 +1,4 @@
-package jill.config;
+package agentsoz.jill.lang;
 
 /*
  * #%L
@@ -22,13 +22,12 @@ package jill.config;
  * #L%
  */
 
-public class GlobalConstant {
-	public static final int NULLID = -1;
-	public static final String APP_HEADER = 
-		    "Jill Cognitive Agents Platform" + "\n" +
-	        "(C) 2014 - 2015 by its authors. See AUTHORS file." + "\n\n" +
-		    "This program comes with ABSOLUTELY NO WARRANTY." + "\n" +
-		    "This is free software, and you are welcome to redistribute it" + "\n" +
-		    "under certain conditions; for details see LICENSE file provided."
-		    ;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+@Retention(RetentionPolicy.RUNTIME)
+public @interface PlanInfo {
+	
+	String handlesGoal();
+	String[] postsGoals() default {};
 }

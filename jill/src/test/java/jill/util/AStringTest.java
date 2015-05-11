@@ -23,11 +23,12 @@ package jill.util;
  */
 
 import static org.junit.Assert.*;
-import jill.util.AString;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import agentsoz.jill.util.AString;
 
 public class AStringTest {
 

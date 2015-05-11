@@ -1,4 +1,4 @@
-package jill.util;
+package agentsoz.jill.util;
 
 /*
  * #%L
@@ -22,8 +22,8 @@ package jill.util;
  * #L%
  */
 
-import jill.config.GlobalConstant;
-import jill.struct.AObject;
+import agentsoz.jill.config.GlobalConstant;
+import agentsoz.jill.struct.AObject;
 
 public class AObjectCatalog extends AObject{
 

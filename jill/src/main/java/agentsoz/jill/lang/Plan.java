@@ -1,4 +1,4 @@
-package jill.lang;
+package agentsoz.jill.lang;
 
 /*
  * #%L

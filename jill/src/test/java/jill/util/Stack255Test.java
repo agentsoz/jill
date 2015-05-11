@@ -23,11 +23,12 @@ package jill.util;
  */
 
 import static org.junit.Assert.*;
-import jill.util.Stack255;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import agentsoz.jill.util.Stack255;
 
 public class Stack255Test {
 

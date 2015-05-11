@@ -1,4 +1,4 @@
-package jill.lang;
+package agentsoz.jill.struct;
 
 /*
  * #%L
@@ -22,10 +22,42 @@ package jill.lang;
  * #L%
  */
 
-public class Goal {
+public class AgentType extends AObject{
+	
+	private Class<?> cAgent;
+	
+	private byte[] goals; // This agent's goal-plan tree
 
-	public Goal(String str) {
+	public AgentType(String name) {
+		super(name);
+	}
+
+	public Class<?> getAgentClass() {
+		return cAgent;
+	}
+
+	public void setAgentClass(Class<?> cAgent) {
+		this.cAgent = cAgent;
 	}
 	
+	public byte[] getGoals() {
+		byte[] arr = new byte[goals.length];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = (byte)(goals[i]);
+		}
+		return arr;
+	}
 
+	public void setGoals(byte[] arr) {
+		goals = new byte[arr.length];
+		for (int i = 0; i < arr.length; i++) {
+			goals[i] = arr[i];
+		}
+	}
+
+	public void addGoal(byte goal) {
+		goals = GPType.grow(goals,1);
+		goals[goals.length-1] = goal;
+	}
 }
+

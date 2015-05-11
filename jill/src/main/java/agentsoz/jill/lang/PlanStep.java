@@ -1,4 +1,4 @@
-package jill.struct;
+package agentsoz.jill.lang;
 
 /*
  * #%L
@@ -22,17 +22,7 @@ package jill.struct;
  * #L%
  */
 
-public class GoalType extends GPType {
-	private Class<?> cGoal;
-	public GoalType(String name) {
-		super(name);
-	}
+public interface PlanStep {
 
-	public Class<?> getGoalClass() {
-		return cGoal;
-	}
-
-	public void setGoalClass(Class<?> cGoal) {
-		this.cGoal = cGoal;
-	}
+	public void step();
 }

@@ -1,4 +1,4 @@
-package jill.core;
+package agentsoz.jill.core;
 
 /*
  * #%L
@@ -25,12 +25,12 @@ package jill.core;
 import java.util.ArrayList;
 import java.util.Random;
 
-import jill.lang.Agent;
-import jill.lang.Goal;
-import jill.lang.Plan;
-import jill.struct.GoalType;
-import jill.struct.PlanType;
-import jill.util.Stack255;
+import agentsoz.jill.lang.Agent;
+import agentsoz.jill.lang.Goal;
+import agentsoz.jill.lang.Plan;
+import agentsoz.jill.struct.GoalType;
+import agentsoz.jill.struct.PlanType;
+import agentsoz.jill.util.Stack255;
 
 public class IntentionSelector implements Runnable {
 

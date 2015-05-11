@@ -43,7 +43,7 @@
                 <classpath />
                 <argument>-Xmx1g</argument>
                 <argument>-Xms1g</argument>
-                <argument>jill.Main</argument>
+                <argument>agentsoz.jill.Main</argument>
                 <argument>-d</argument>
                 <argument>INFO</argument>
                 <argument>-l</argument>
@@ -91,7 +91,7 @@
                 <classpath />
                 <argument>-Xmx1g</argument>
                 <argument>-Xms1g</argument>
-                <argument>jill.Main</argument>
+                <argument>agentsoz.jill.Main</argument>
                 <argument>-d</argument>
                 <argument>INFO</argument>
                 <argument>-l</argument>
