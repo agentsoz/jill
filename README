@@ -1,6 +1,6 @@
 ==============================================================================
-MOBSS, Masses of BDI Agents for Social Simulation
-Copyright (C) 2014 Dhirendra Singh
+Jill Cognitive Agents Project
+Copyright (C) 2014 - 2015 by its authors. See AUTHORS file.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -12,8 +12,9 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Lesser Public
+License along with this program.  If not, see
+<http://www.gnu.org/licenses/lgpl-3.0.html>.
 
 Contact: Dhirendra Singh <dhi.singh@gmail.com>
 ==============================================================================
@@ -23,9 +24,9 @@ Contact: Dhirendra Singh <dhi.singh@gmail.com>
 ==============================================================================
 1.0 INTRODUCTION
 
-MocaBDI <http://mocabdi.bitbucket.org> is an open source initiate to deliver a 
-very fast and lightweight java-based BDI (Beliefs, Desires, Intentions) 
-execution engine for developing large-scale multi-agent systems. MocaBDI is:
+Jill <http://url> is an open source initiate to deliver a fast and lightweight
+java-based BDI-like (Beliefs, Desires, Intentions) execution engine for 
+developing large-scale multi-agent systems. Jill is:
 
 * A BDI execution engine: that supports complex BDI goal-plan behaviour 
   hierarchies in the PRS style (A Rao and M Georgeff. BDI Agents: from 
@@ -35,18 +36,18 @@ execution engine for developing large-scale multi-agent systems. MocaBDI is:
   deliver a very lightweight distribution (see 2.0 RELEASES for details)
   fit for inclusion in web-based and embedded-Java applications.
 
-* Fast: The MocaBDI BDI execution engine is very fast, and was designed from 
+* Fast: The Jill BDI execution engine is very fast, and was designed from 
   ground-up to handle millions of BDI agents (see 3.0 BENCHMARKS). 
 
-* Java-based: The programming of BDI agents in MocaBDI is done in 
+* Java-based: The programming of BDI agents in Jill is done in 
   pure Java, so users benefit from the various support tools that are available
   to Java developers, such as full integration with the Eclipse IDE.
-  MocaBDI itself is written in Java and is distributed as a JAR bundle which can
+  Jill itself is written in Java and is distributed as a JAR bundle which can
   be easily integrated into larger projects that require cognitive reasoning
   agents.
 
-* Open source: MocaBDI is released under the terms of the 
-  GNU General Public License <http://www.gnu.org/licenses/>.
+* Open source: Jill is released under the terms of the 
+  GNU General Lesser Public License <http://www.gnu.org/licenses/lgpl-3.0.html>.
   
 
 
@@ -58,7 +59,7 @@ The latest stable release as well as all previous releases are available at:
 
 Version  : 0.1
 Released : <date>   
-Binary   : mocabdi-0.1.jar (size 21K) 
+Binary   : jill-0.0.1.jar (size 38K) 
 Summary  : First stable release
 Features :
    *
@@ -70,12 +71,12 @@ Features :
 ==============================================================================
 3.0 BENCHMARKS
 
-Version    : 0.1
+Version    : 0.0.1
 Benchmark  : 1 million agents, 1GB java heap size, 20 execution cycles
 OS         : Linux Mint 13, 3.2.0-23-generic, x86_64
 Harware    : Macbook Pro, i5-2415M CPU (4x cores), 4GB RAM 
 Command    : java -Xms1g -Xmx1g \ 
-             -cp mocabdi-0.1.jar:examples-0.1.jar mocabdi.Main \
+             -cp Jill-0.1.jar:examples-0.1.jar Jill.Main \
              -d INFO \
              -l TestAgent.log \
              -c SimpleAgent.TestAgent \
@@ -88,7 +89,7 @@ Results    : Finished running 20 execution cycles with 1000000 agents (2521 ms)
 ==============================================================================
 4.0 DEVELOPERS
 
-MocaBDI uses Apache Maven (http://maven.apache.org) to manage the build process
+Jill uses Apache Maven (http://maven.apache.org) to manage the build process
 and the entire software life cycle. 
 
 * To get started with Maven see:
