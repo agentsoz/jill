@@ -26,6 +26,11 @@
         <version>4.12</version>
         <scope>test</scope>
       </dependency>
+      <dependency>
+        <groupId>com.googlecode.cqengine</groupId>
+        <artifactId>cqengine</artifactId>
+        <version>2.0.3</version>
+</dependency>
   </dependencies>
 
   <build>
