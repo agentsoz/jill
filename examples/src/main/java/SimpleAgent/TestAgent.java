@@ -38,14 +38,16 @@ public class TestAgent extends Agent {
 		super(str);
 	}
 
-	public void start(PrintWriter writer, String params) {
-		if (params != null && params.equals("-d")) {
+	@Override
+	public void start(PrintWriter writer, String[] params) {
+		if (params != null && params[0].equals("-d")) {
 			verbose = true;
 			this.writer = writer;
 		}
 		post(new GoalA("gA"));
 	}
 	
+	@Override
 	public void finish() {
 		/*
 		 * Check that some plan changed i.  Should print:

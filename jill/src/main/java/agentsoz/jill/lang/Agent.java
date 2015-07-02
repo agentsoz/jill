@@ -27,34 +27,87 @@ import java.io.PrintWriter;
 import agentsoz.jill.struct.AObject;
 import agentsoz.jill.util.Stack255;
 
-
+/**
+ * Base class for all BDI-like agents in the system. 
+ * @author dsingh
+ *
+ */
 public class Agent extends AObject {
 
+	/**
+	 * References to this agent's top level goals. 
+	 * <p>
+	 * For space efficiency, instead of storing
+	 * references to {@link Goal} objects, we store catalog IDs for goals in 
+	 * the {@link agentsoz.jill.core.GlobalState#goalTypes} catalog.
+	 * Since these references are of size byte, a maximum of 255 goal
+	 * types are supported in the system (globally, not per agent type). 
+	 * These 1-byte references give very significant savings in space over 
+	 * Java object references, which on a 64-bit machine take 8-bytes each.
+	 * <p>
+	 * NOTE: If a limit of 255 goal types in the system turns out to be 
+	 * insufficient, then an agent type reference could be added here (at the 
+	 * cost of another byte) and that would then allow 255 goal types 
+	 * per agent type.
+	 * 
+	 */
 	private byte[] goals; // This agent's goal-plan tree
 
-	private Stack255 executionStack; // This agent's goal-plan execution stack
-	
-	public Agent(String str) {
-		super(str);
-		executionStack = new Stack255((byte)1,(byte)1); // suffix 'es' for execution stack
+	/**
+	 * This agent's intention stack.
+	 * <p>
+	 * TODO: Currently, only a single intention stack is supported, which means
+	 * that an agent can only really have one top level goal instance. This is
+	 * to be extended to allow one stack per top level goal instance.
+	 * <p>
+	 * NOTE: This stack is of type {@link agentsoz.jill.util.Stack255} 
+	 * which supports a maximum of 255 objects. This means that the active 
+	 * goal-plan execution trace cannot be longer that 255. This should be more
+	 * than enough for even the most complex goal-plan trees, but can be an 
+	 * issue for recursive behaviours where a plan posts an instance of the 
+	 * same goal type that it handles.
+	 */
+	private Stack255 executionStack; 
+
+	/** 
+	 * Creates a new agent with the given name.
+	 * @param name the name of this agent; consider using concise names when
+	 * dealing with very large numbers of agents
+	 */
+	public Agent(String name) {
+		super(name);
+		executionStack = new Stack255((byte)1,(byte)1);
 	}
 
+	/**
+	 * Gets the {@link #executionStack} of this agent. 
+	 * @return this agent's execution stack
+	 */
 	public Stack255 getExecutionStack() {
 		return executionStack;
 	}
 
-
+	/**
+	 * Posts the given goal. This will trigger the BDI execution engine to 
+	 * generate applicable plan instances to handle this goal. One instance,
+	 * from the available options, will be selected and executed.
+	 * @param goal the goal that this agent should try to achieve
+	 */
 	public void post(Goal goal) {
 		executionStack.push(goal);
 	}
 
-	public void start(PrintWriter writer, String params) {
+	public void start(PrintWriter writer, String[] params) {
 	}
 	
 	public void finish() {
 		
 	}
 
+	/** 
+	 * Returns this agent's top level goals.
+	 * @return {@link Agent#goals}
+	 */
 	public byte[] getGoals() {
 		byte[] arr = new byte[goals.length];
 		for (int i = 0; i < arr.length; i++) {
@@ -63,6 +116,11 @@ public class Agent extends AObject {
 		return arr;
 	}
 
+	/**
+	 * Set's this agent's top level goals, i.e., {@link #goals}.
+	 * @param bs an array of goal IDs (must exist in the 
+	 * {@link agentsoz.jill.core.GlobalState#goalTypes} catalog.
+	 */
 	public void setGoals(byte[] bs) {
 		goals = new byte[bs.length];
 		for (int i = 0; i < bs.length; i++) {

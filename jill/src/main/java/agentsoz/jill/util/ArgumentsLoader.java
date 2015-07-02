@@ -174,8 +174,8 @@ public class ArgumentsLoader {
 		System.exit(0);
 	}
 
-	public static String getProgramArguments() {
-		return pargs ;
+	public static String[] getProgramArguments() {
+		return pargs.split(" ") ;
 	}
 
 	public static String getProgramOutputFile() {

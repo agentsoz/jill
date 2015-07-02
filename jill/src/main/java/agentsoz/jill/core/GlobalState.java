@@ -31,10 +31,28 @@ import agentsoz.jill.util.AObjectCatalog;
  */
 public class GlobalState {
 
+	/**
+	 * Catalog of all agent types in the system, loaded at runtime. 
+	 * Each entry in the catalog is assigned an automatically created ID.
+	 */
 	public static AObjectCatalog agentTypes = new AObjectCatalog("agentTypes", 5,5);
+	
+	/**
+	 * Catalog of all goal types in the system, loaded at runtime.
+	 * Each entry in the catalog is assigned an automatically created ID.
+	 */
 	public static AObjectCatalog goalTypes = new AObjectCatalog("goalTypes", 10,5);
+
+	/**
+	 * Catalog of all plan types in the system, loaded at runtime.
+	 * Each entry in the catalog is assigned an automatically created ID.
+	 */
 	public static AObjectCatalog planTypes = new AObjectCatalog("planTypes", 20,5);
 	
+	/**
+	 * Catalog of all initialised agents in the system.
+	 * Each entry in the catalog is assigned an automatically created ID.
+	 */
 	public static AObjectCatalog agents;
 
 }
