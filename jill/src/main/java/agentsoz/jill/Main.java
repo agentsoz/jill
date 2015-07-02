@@ -23,6 +23,7 @@ package agentsoz.jill;
  */
 
 import java.io.PrintWriter;
+import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -50,6 +51,9 @@ public class Main {
 
 		// Parse the command line options
 		ArgumentsLoader.parse(args);
+		
+		// Pause for key press from user if requested
+		if (ArgumentsLoader.doPauseForUserInput()) { pauseForUserInput(); }
 		
 		// Configure logging
 		try {
@@ -138,5 +142,16 @@ public class Main {
 		t1 = System.currentTimeMillis();
 		logger.info(": Terminated " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
 
+	}
+	
+	/**
+	 * Waits for user to press a key before continuing.
+	 * Useful for connecting to a profiler
+	 */
+	private static void pauseForUserInput() {
+		System.out.println("Press the Enter/Return key to continue..");
+		Scanner in = new Scanner(System.in);
+		in.nextLine();
+		in.close();
 	}
 }

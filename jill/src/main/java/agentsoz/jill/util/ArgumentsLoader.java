@@ -38,6 +38,7 @@ public class ArgumentsLoader {
 	private static String pargs = "";
 	private static long randomSeed = -1;
 	private static String pout = null;
+	private static boolean doPauseForUserInput = false;
 	
 	public static String usage() {
 		return GlobalConstant.APP_HEADER + "\n\n" +
@@ -51,7 +52,8 @@ public class ArgumentsLoader {
 			"   -o <outfile>      file for program output" + "\n" +
 			"   -p <pargs>        arguments string to pass to agent class (optional)" + "\n" +
 			"   -r <randseed>     seed to use for random number generator (optional)" + "\n" +
-			"   -t <numthreads>   number of threads used by execution engine (defaults to number of available cores)" + "\n"
+			"   -t <numthreads>   number of threads used by execution engine (defaults to number of available cores)" + "\n" +
+			"   -w                wait for Enter/Return key press (default is "+doPauseForUserInput+")"
 			;
 	}
 	
@@ -132,6 +134,9 @@ public class ArgumentsLoader {
 					}
 				}
 				break;
+			case "-w":
+				doPauseForUserInput = true;
+				break;
 			}	
 		}
 		// Abort if required args were not given
@@ -184,5 +189,9 @@ public class ArgumentsLoader {
 
 	public static long getRandomSeed() {
 		return randomSeed;
+	}
+
+	public static boolean doPauseForUserInput() {
+		return doPauseForUserInput;
 	}
 }
