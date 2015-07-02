@@ -1,4 +1,4 @@
-package jill.util;
+package agentsoz.jill.util;
 
 /*
  * #%L

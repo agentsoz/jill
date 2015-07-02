@@ -1,4 +1,4 @@
-package jill.struct;
+package agentsoz.jill.util;
 
 /*
  * #%L
@@ -28,10 +28,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import agentsoz.jill.config.GlobalConstant;
-import agentsoz.jill.struct.AObject;
+import agentsoz.jill.util.AString;
 
-public class AObjectTest {
+public class AStringTest {
 
 	@Before
 	public void setUp() throws Exception {
@@ -42,23 +41,46 @@ public class AObjectTest {
 	}
 
 	@Test
-	public void testDefaultsGettersSetters() {
-		AObject o = new AObject(null);
-		assertEquals(null, o.getName());
-		assertEquals(GlobalConstant.NULLID, o.getId());
-		o.setId(54321);
-		assertEquals(54321, o.getId());
-		o.setName("object1");
-		assertEquals("object1", o.getName());
+	public void testToBytesNullString() {
+		assertNull(AString.toBytes(null));
 	}
 
 	@Test
-	public void testIsNameEqual() {
-		assertFalse(AObject.isNameEqual(new AObject(null), new AObject(null)));
-		assertFalse(AObject.isNameEqual(new AObject("object1"), new AObject(null)));
-		assertFalse(AObject.isNameEqual(new AObject(null), new AObject("object2")));
-		assertFalse(AObject.isNameEqual(new AObject("object1"), new AObject("object2")));
-		assertFalse(AObject.isNameEqual(new AObject("object"), new AObject("object2")));
-		assertTrue(AObject.isNameEqual(new AObject("object"), new AObject("object")));
+	public void testToBytesEmptyString() {
+		byte[] result = AString.toBytes("");
+		byte[] expected = {};
+		assertNotNull(result);
+		assertArrayEquals(expected, result);
+	}
+
+	@Test
+	public void testToBytesABC() {
+		byte[] result = AString.toBytes("ABC");
+		byte[] expected = {0x41, 0x42, 0x43};
+		assertNotNull(result);
+		assertArrayEquals(expected, result);
+	}
+	
+	@Test
+	public void testToStringByteArrayNull() {
+		assertNull(AString.toString(null));
+	}
+
+	@Test
+	public void testToStringByteArrayEmpty() {
+		byte[] bytes = {};
+		String result = AString.toString(bytes);
+		String expected = "";
+		assertNotNull(result);
+		assertEquals(expected, result);
+	}
+
+	@Test
+	public void testToStringByteArrayABC() {
+		byte[] bytes = {0x41, 0x42, 0x43};
+		String result = AString.toString(bytes);
+		String expected = "ABC";
+		assertNotNull(result);
+		assertEquals(expected, result);
 	}
 }
