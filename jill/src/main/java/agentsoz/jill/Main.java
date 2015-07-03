@@ -29,20 +29,15 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
-
 import agentsoz.jill.core.GlobalState;
 import agentsoz.jill.core.IntentionSelector;
 import agentsoz.jill.core.ProgramLoader;
 import agentsoz.jill.lang.Agent;
 import agentsoz.jill.util.AObjectCatalog;
 import agentsoz.jill.util.ArgumentsLoader;
+import agentsoz.jill.util.Log;
 
 public class Main {
-
-	private final static Logger logger = Logger.getLogger("");
-	private static FileHandler fh = null;
-
 
 	/**
 	 * @param args
@@ -56,16 +51,9 @@ public class Main {
 		if (ArgumentsLoader.doPauseForUserInput()) { pauseForUserInput(); }
 		
 		// Configure logging
-		try {
-			fh = new FileHandler(ArgumentsLoader.getLogFile(), false);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		Logger thisLogger = Logger.getLogger("");
-		fh.setFormatter(new SimpleFormatter());
-		thisLogger.addHandler(fh);
-		thisLogger.setLevel(ArgumentsLoader.getLogLevel());                    
+        Log.createLogger("", ArgumentsLoader.getLogLevel(), ArgumentsLoader.getLogFile());
 
+		
 		int NUMAGENTS = ArgumentsLoader.getNumAgents(); 
 		int INCREMENT = 10000;
 
@@ -77,7 +65,7 @@ public class Main {
 		t0 = System.currentTimeMillis();
 		ProgramLoader.load(ArgumentsLoader.getAgentClass(), NUMAGENTS, GlobalState.agents);
 		t1 = System.currentTimeMillis();
-		logger.info(": Created " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
+		Log.info(": Created " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
 
 
 		// Redirect the agent program output if specified
@@ -99,7 +87,7 @@ public class Main {
 			agent.start(writer, ArgumentsLoader.getProgramArguments());
 		}
 		t1 = System.currentTimeMillis();
-		logger.info(": Started " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
+		Log.info(": Started " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
 
 		// Wait till we are all done
 		t0 = System.currentTimeMillis();
@@ -119,14 +107,14 @@ public class Main {
 			try {
 				executor.awaitTermination(10, TimeUnit.SECONDS);
 			} catch (InterruptedException e) {
-				logger.warning(e.getMessage());
+				Log.warn(e.getMessage());
 			}
 			if (cycles != -1) {
 				cycle++;
 			}
 		}
 		t1 = System.currentTimeMillis();
-		logger.info(": Finished running "+cycle+" execution cycles with " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
+		Log.info(": Finished running "+cycle+" execution cycles with " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
 
 		// Finish the agents
 		t0 = System.currentTimeMillis();
@@ -140,7 +128,7 @@ public class Main {
 			writer.close();
 		}
 		t1 = System.currentTimeMillis();
-		logger.info(": Terminated " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
+		Log.info(": Terminated " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
 
 	}
 	

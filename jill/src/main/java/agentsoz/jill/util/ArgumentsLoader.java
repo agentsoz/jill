@@ -22,15 +22,14 @@ package agentsoz.jill.util;
  * #L%
  */
 
-import java.util.logging.Level;
-
+import ch.qos.logback.classic.Level;
 import agentsoz.jill.Main;
 import agentsoz.jill.config.GlobalConstant;
 
 public class ArgumentsLoader {
 
 	private static String logFile = "Run.log";
-	private static Level logLevel = Level.WARNING;
+	private static Level logLevel = Level.INFO;
 	private static String agentClass = null;
 	private static int numAgents = 0;
 	private static int numCycles = -1;
@@ -70,7 +69,7 @@ public class ArgumentsLoader {
 				if (i+1 < args.length) {
 					i++;
 					try {
-						logLevel = Level.parse(args[i]);
+						logLevel = Level.toLevel(args[i]);
 					} catch(Exception e) {
 						abort("Unknown log level '"+args[i]+"'");
 					}

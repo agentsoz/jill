@@ -113,7 +113,7 @@ public class ProgramLoader {
 				PlanType ptype = (PlanType) GlobalState.planTypes.get(i);
 				annotation = ptype.getPlanClass().getAnnotation(PlanInfo.class);
 				PlanInfo pinfo = (PlanInfo) annotation;
-				if (!pinfo.postsGoals().equals("")) {
+				if (pinfo != null && !pinfo.postsGoals().equals("")) {
 					msg += "Plan "+ptype.getName()+" posts "+pinfo.postsGoals().length+" goals" + "\n";
 					// Find the goal
 					for (String goalname : pinfo.postsGoals()) {
