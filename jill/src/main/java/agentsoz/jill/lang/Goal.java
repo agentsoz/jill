@@ -1,5 +1,7 @@
 package agentsoz.jill.lang;
 
+import agentsoz.jill.util.AString;
+
 /*
  * #%L
  * Jill Cognitive Agents Platform
@@ -24,8 +26,13 @@ package agentsoz.jill.lang;
 
 public class Goal {
 
+	private byte[] name;
+
 	public Goal(String str) {
+		name = AString.toBytes(str);
 	}
 	
-
+	public String toString() {
+		return AString.toString(name);
+	}
 }

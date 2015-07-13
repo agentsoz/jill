@@ -27,8 +27,6 @@ import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
 import agentsoz.jill.core.GlobalState;
 import agentsoz.jill.core.IntentionSelector;
 import agentsoz.jill.core.ProgramLoader;
@@ -65,7 +63,7 @@ public class Main {
 		t0 = System.currentTimeMillis();
 		ProgramLoader.load(ArgumentsLoader.getAgentClass(), NUMAGENTS, GlobalState.agents);
 		t1 = System.currentTimeMillis();
-		Log.info(": Created " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
+		Log.info("Created " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
 
 
 		// Redirect the agent program output if specified
@@ -87,20 +85,23 @@ public class Main {
 			agent.start(writer, ArgumentsLoader.getProgramArguments());
 		}
 		t1 = System.currentTimeMillis();
-		Log.info(": Started " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
+		Log.info("Started " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
 
 		// Wait till we are all done
 		t0 = System.currentTimeMillis();
 		int cycles = ArgumentsLoader.getNumCycles();
 		int ncores = ArgumentsLoader.getNumThreads();
-		int poolsize = GlobalState.agents.size()/ncores;
+		int nagents = GlobalState.agents.size();
+		int poolsize = (nagents > ncores) ? (nagents/ncores) : 1;
+		int npools = (nagents > ncores) ? ncores : nagents;
 		int cycle = 0;
 		while (cycles == -1 || cycle  < cycles) {
 	        ExecutorService executor = Executors.newFixedThreadPool(ncores);
-	        for (int i = 0; i < ncores; i++) {
+	        for (int i = 0; i < npools; i++) {
 	        	int start = i*poolsize;
-	        	int size = (start+poolsize<=GlobalState.agents.size()) ? poolsize : 
-	        		poolsize - (GlobalState.agents.size()-start);
+	        	int size = (i+1 < npools) ? poolsize : GlobalState.agents.size()-start;
+	        	//int size = (start+poolsize<=GlobalState.agents.size()) ? poolsize : 
+	        	//	poolsize - (GlobalState.agents.size()-start);
 				executor.execute(new IntentionSelector(ArgumentsLoader.getRandomSeed(), start,size));
 	        }
 			executor.shutdown();
@@ -114,7 +115,7 @@ public class Main {
 			}
 		}
 		t1 = System.currentTimeMillis();
-		Log.info(": Finished running "+cycle+" execution cycles with " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
+		Log.info("Finished running "+cycle+" execution cycles with " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
 
 		// Finish the agents
 		t0 = System.currentTimeMillis();
@@ -128,7 +129,7 @@ public class Main {
 			writer.close();
 		}
 		t1 = System.currentTimeMillis();
-		Log.info(": Terminated " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
+		Log.info("Terminated " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
 
 	}
 	

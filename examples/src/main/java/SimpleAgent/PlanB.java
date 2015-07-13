@@ -22,6 +22,8 @@ package SimpleAgent;
  * #L%
  */
 
+import com.googlecode.cqengine.query.Query;
+
 import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.Plan;
 import agentsoz.jill.lang.PlanInfo;
@@ -35,8 +37,8 @@ public class PlanB extends Plan {
 		body = steps;
 	}
 	
-	public String context() {
-		return "someContext(M)";
+	public Query<?> context() {
+		return null;
 	}
 	
 	PlanStep[] steps = {

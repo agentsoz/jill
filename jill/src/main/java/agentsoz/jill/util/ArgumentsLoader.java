@@ -29,7 +29,7 @@ import agentsoz.jill.config.GlobalConstant;
 public class ArgumentsLoader {
 
 	private static String logFile = "Run.log";
-	private static Level logLevel = Level.INFO;
+	private static Level logLevel = Level.WARN;
 	private static String agentClass = null;
 	private static int numAgents = 0;
 	private static int numCycles = -1;

@@ -1,5 +1,7 @@
 package agentsoz.jill.lang;
 
+import com.googlecode.cqengine.query.Query;
+
 /*
  * #%L
  * Jill Cognitive Agents Platform
@@ -31,7 +33,7 @@ public abstract class Plan {
 		this.agent = agent;
 	}
 
-	public abstract String context();
+	public abstract Query<?> context();
 
 	public PlanStep[] body;
 	

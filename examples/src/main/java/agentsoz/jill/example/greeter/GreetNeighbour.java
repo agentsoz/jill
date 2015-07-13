@@ -1,4 +1,4 @@
-package SimpleAgent;
+package agentsoz.jill.example.greeter;
 
 /*
  * #%L
@@ -26,26 +26,28 @@ import com.googlecode.cqengine.query.Query;
 
 import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.Plan;
-import agentsoz.jill.lang.PlanInfo;
 import agentsoz.jill.lang.PlanStep;
 
-@PlanInfo(handlesGoal="SimpleAgent.GoalC")
-public class PlanC extends Plan {
-	
-	public PlanC(Agent agent, String name) {
+import static com.googlecode.cqengine.query.QueryFactory.*;
+
+public class GreetNeighbour extends Plan {
+
+	public GreetNeighbour(Agent agent, String name) {
 		super(agent, name);
 		body = steps;
 	}
-	
-	public Query<?> context() {
-		return null;
+
+	public Query<Neighbour> context() {
+		return all(Neighbour.class);
 	}
 	
 	PlanStep[] steps = {
 			new PlanStep() {
 				public void step() {
-					((TestAgent)getAgent()).setI(((TestAgent)getAgent()).getI() | 0x0004);
+					System.out.println("Hello Neighbour!");
 				}
 			},
 	};
+
+
 }

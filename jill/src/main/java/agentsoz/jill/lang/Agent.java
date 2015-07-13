@@ -25,6 +25,7 @@ package agentsoz.jill.lang;
 import java.io.PrintWriter;
 
 import agentsoz.jill.struct.AObject;
+import agentsoz.jill.util.Log;
 import agentsoz.jill.util.Stack255;
 
 /**
@@ -69,6 +70,10 @@ public class Agent extends AObject {
 	 */
 	private Stack255 executionStack; 
 
+	
+	private BeliefSet<?> beliefSet;
+
+	
 	/** 
 	 * Creates a new agent with the given name.
 	 * @param name the name of this agent; consider using concise names when
@@ -94,14 +99,20 @@ public class Agent extends AObject {
 	 * @param goal the goal that this agent should try to achieve
 	 */
 	public void post(Goal goal) {
+		Log.debug("Agent "+getName()+" posting goal " + goal);
 		executionStack.push(goal);
 	}
 
+	public void setBeliefSet(BeliefSet<?> beliefSet) {
+		this.beliefSet = beliefSet;
+	}
+	
 	public void start(PrintWriter writer, String[] params) {
+		Log.debug("Agent "+getName()+" is starting");
 	}
 	
 	public void finish() {
-		
+		Log.debug("Agent "+getName()+" is finishing");
 	}
 
 	/** 

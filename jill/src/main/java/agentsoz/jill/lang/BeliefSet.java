@@ -1,4 +1,4 @@
-package SimpleAgent;
+package agentsoz.jill.lang;
 
 /*
  * #%L
@@ -22,30 +22,24 @@ package SimpleAgent;
  * #L%
  */
 
+import com.googlecode.cqengine.ConcurrentIndexedCollection;
+import com.googlecode.cqengine.IndexedCollection;
 import com.googlecode.cqengine.query.Query;
+import com.googlecode.cqengine.resultset.ResultSet;
 
-import agentsoz.jill.lang.Agent;
-import agentsoz.jill.lang.Plan;
-import agentsoz.jill.lang.PlanInfo;
-import agentsoz.jill.lang.PlanStep;
+public class BeliefSet<T> {
 
-@PlanInfo(handlesGoal="SimpleAgent.GoalC")
-public class PlanC extends Plan {
+	private IndexedCollection<T> collection;
 	
-	public PlanC(Agent agent, String name) {
-		super(agent, name);
-		body = steps;
+	public BeliefSet() {
+		collection = new ConcurrentIndexedCollection<T>();
 	}
 	
-	public Query<?> context() {
-		return null;
+	public void add(T entry) {
+		collection.add(entry);
 	}
 	
-	PlanStep[] steps = {
-			new PlanStep() {
-				public void step() {
-					((TestAgent)getAgent()).setI(((TestAgent)getAgent()).getI() | 0x0004);
-				}
-			},
-	};
+	public ResultSet<T> query(Query<T> q) {
+		return collection.retrieve(q);
+	}
 }

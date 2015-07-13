@@ -134,7 +134,7 @@ public class ProgramLoader {
 			try {
 				for (int i = 0; i < num; i++) {
 					// Create a new instance (name prefix 'a' for agents)
-					Agent agent = (Agent)(aclass.getConstructor(String.class).newInstance("a"));
+					Agent agent = (Agent)(aclass.getConstructor(String.class).newInstance("a" + Integer.toString(i)));
 					// Assign the static goal plan tree hierarchy to this instance
 					agent.setGoals(atype.getGoals());
 					// Add this instance to the catalog of agent instances

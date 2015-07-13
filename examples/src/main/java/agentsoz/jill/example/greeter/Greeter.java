@@ -1,4 +1,4 @@
-package SimpleAgent;
+package agentsoz.jill.example.greeter;
 
 /*
  * #%L
@@ -22,30 +22,33 @@ package SimpleAgent;
  * #L%
  */
 
-import com.googlecode.cqengine.query.Query;
+import java.io.PrintWriter;
 
 import agentsoz.jill.lang.Agent;
-import agentsoz.jill.lang.Plan;
-import agentsoz.jill.lang.PlanInfo;
-import agentsoz.jill.lang.PlanStep;
+import agentsoz.jill.lang.AgentInfo;
+import agentsoz.jill.lang.BeliefSet;
 
-@PlanInfo(handlesGoal="SimpleAgent.GoalC")
-public class PlanC extends Plan {
-	
-	public PlanC(Agent agent, String name) {
-		super(agent, name);
-		body = steps;
+@AgentInfo(hasGoals={"agentsoz.jill.example.greeter.BeFriendly"})
+public class Greeter extends Agent {
+
+	public Greeter(String name) {
+		super(name);
 	}
 	
-	public Query<?> context() {
-		return null;
+	@Override
+	public void start(PrintWriter writer, String[] params) {
+		// Create a new belief set about neighbours
+		BeliefSet<Neighbour> neighbours = new BeliefSet<Neighbour>();
+
+		// Attach this belief set to this agent
+		this.setBeliefSet(neighbours);
+		
+		// Add beliefs about neighbours
+		neighbours.add(new Neighbour("Alex", Neighbour.Gender.Male, 17));
+		
+		// Post the goal to be friendly
+		post(new BeFriendly("BeFriendly"));
 	}
-	
-	PlanStep[] steps = {
-			new PlanStep() {
-				public void step() {
-					((TestAgent)getAgent()).setI(((TestAgent)getAgent()).getI() | 0x0004);
-				}
-			},
-	};
+
+
 }
