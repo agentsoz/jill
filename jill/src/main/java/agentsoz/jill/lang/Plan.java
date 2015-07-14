@@ -34,6 +34,7 @@ public abstract class Plan {
 	}
 
 	public abstract Query<?> context();
+	public abstract void setPlanVariables(Object var);
 
 	public PlanStep[] body;
 	

@@ -113,6 +113,16 @@ public class ArgumentsLoader {
 					pargs = args[i];
 				}
 				break;
+			case "-plan-select-limit":
+				if (i+1 < args.length) {
+					i++;
+					try {
+						GlobalConstant.PLAN_OPTIONS_INDEX_LIMIT = Integer.parseInt(args[i]);
+					} catch (Exception e) {
+						abort("Option value '"+args[i]+"' is not a number");
+					}
+				}
+				break;
 			case "-r":
 				if (i+1 < args.length) {
 					i++;

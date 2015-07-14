@@ -31,4 +31,20 @@ public class GlobalConstant {
 		    "This is free software, and you are welcome to redistribute it" + "\n" +
 		    "under certain conditions; for details see LICENSE file provided."
 		    ;
+	
+	/**
+	 * When multiple plan instances are applicable, and selection
+	 * policy is PLAN_SELECTION_RANDOM, then this number controls the
+	 * maximum index that can be selected. For instance, say 
+	 * this limit is set to 10. Now if, in some situation, a plan has
+	 * 100 possible plan instances that apply, then random selection 
+	 * will draw an index between 0-9 only, i.e., a random instance will
+	 * be drawn from the first 10 instances, and never from the remaining
+	 * 90 instances.
+	 * 
+	 * This limit can be changed at runtime using the -plan-select-limit
+	 * option. Increasing this limit, however, can have a very significant 
+	 * performance hit, so should be done only if necessary. 
+	 */
+	public static int PLAN_OPTIONS_INDEX_LIMIT = 10;
 }

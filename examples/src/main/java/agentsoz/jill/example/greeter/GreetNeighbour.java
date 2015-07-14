@@ -27,27 +27,33 @@ import com.googlecode.cqengine.query.Query;
 import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.Plan;
 import agentsoz.jill.lang.PlanStep;
-
 import static com.googlecode.cqengine.query.QueryFactory.*;
 
 public class GreetNeighbour extends Plan {
 
+	Neighbour neighbour;
+	
 	public GreetNeighbour(Agent agent, String name) {
 		super(agent, name);
 		body = steps;
 	}
 
+	@Override
 	public Query<Neighbour> context() {
 		return all(Neighbour.class);
 	}
 	
+	@Override
+	public void setPlanVariables(Object var) {
+		neighbour = (Neighbour)var;
+	}
+
 	PlanStep[] steps = {
 			new PlanStep() {
 				public void step() {
-					System.out.println("Hello Neighbour!");
+					System.out.println("Hello " + neighbour.getName() + "!");
 				}
 			},
 	};
-
 
 }

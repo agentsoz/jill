@@ -62,6 +62,10 @@ public class Neighbour {
 	public void setHouseNumber(int houseNumber) {
 		this.houseNumber = houseNumber;
 	}
+	
+	public String toString() {
+		return name + ", " + gender + ", " + Integer.toString(houseNumber);
+	}
 
 	public static final Attribute<Neighbour, String> NAME = new SimpleAttribute<Neighbour, String>("neighbour_name") {
         public String getValue(Neighbour n, QueryOptions queryOptions) { return n.getName(); }

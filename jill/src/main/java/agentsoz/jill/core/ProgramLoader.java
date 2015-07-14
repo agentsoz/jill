@@ -36,24 +36,21 @@ import agentsoz.jill.struct.AgentType;
 import agentsoz.jill.struct.GoalType;
 import agentsoz.jill.struct.PlanType;
 import agentsoz.jill.util.AObjectCatalog;
+import agentsoz.jill.util.Log;
 
 
 
 public class ProgramLoader {
 
-	private final static Logger logger = Logger.getLogger("");
-
-	
 	public static void load(String className, int num, AObjectCatalog agents) {
 		Class<?> aclass;
-		String msg = "";
 		try {
 			// Check that we have an Agent class, else abort
 			aclass = Class.forName(className);
 			if (aclass.getSuperclass() != Agent.class) {
 				abort("Class '"+className+"' does not extend "+Agent.class.getName());
 			}
-			msg += "Found class "+className+" of type "+Agent.class.getName() + "\n";
+			Log.info("Found class "+className+" of type "+Agent.class.getName());
 			// Save this agent type to the catalog of known agent types 
 			AgentType atype = new AgentType(className);
 			atype.setAgentClass(aclass);
@@ -75,7 +72,7 @@ public class ProgramLoader {
 					abort("Agent "+className+" uses "+goals[i]+" which is not of type Goal.");
 				}
 				// Found the goal class, so add this goal to the catalog of known goal types
-				msg += "Found class '"+gclass.getName()+"' of type "+Goal.class.getName() + "\n";
+				Log.info("Found class '"+gclass.getName()+"' of type "+Goal.class.getName());
 				GoalType gtype = new GoalType(gclass.getName());
 				gtype.setGoalClass(gclass);
 				GlobalState.goalTypes.push(gtype);
@@ -98,7 +95,7 @@ public class ProgramLoader {
 					}
 					
 					// Found the plan class, so add this plan to the catalog of known plan types
-					msg += "Found Plan "+pclass.getName()+" that handles Goal "+gclass.getName() + "\n";
+					Log.info("Found Plan "+pclass.getName()+" that handles Goal "+gclass.getName());
 					PlanType ptype = new PlanType(pclass.getName());
 					ptype.setPlanClass(pclass);
 					GlobalState.planTypes.push(ptype);
@@ -114,12 +111,12 @@ public class ProgramLoader {
 				annotation = ptype.getPlanClass().getAnnotation(PlanInfo.class);
 				PlanInfo pinfo = (PlanInfo) annotation;
 				if (pinfo != null && !pinfo.postsGoals().equals("")) {
-					msg += "Plan "+ptype.getName()+" posts "+pinfo.postsGoals().length+" goals" + "\n";
+					Log.info("Plan "+ptype.getName()+" posts "+pinfo.postsGoals().length+" goals");
 					// Find the goal
 					for (String goalname : pinfo.postsGoals()) {
 						GoalType gtype = (GoalType)GlobalState.goalTypes.find(goalname);
 						if (gtype == null) {
-							logger.severe(goalname + "not found in known goal types. Should not happen!");
+							Log.error(goalname + "not found in known goal types. Should not happen!");
 							continue;
 						}
 						// Found the goal posted by the plan, so setup the links
@@ -128,7 +125,6 @@ public class ProgramLoader {
 					}
 				}
 			}
-			logger.info(msg);
 			
 			// Now create the specified number of instances of this agent type
 			try {
@@ -152,7 +148,7 @@ public class ProgramLoader {
 	}
 
 	private static void abort(String err) {
-		logger.severe(err);
+		Log.error(err);
 		System.err.println(err + ". Aborting.");
 		System.exit(0);
 	}

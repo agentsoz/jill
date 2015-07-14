@@ -58,5 +58,9 @@ public class PlanA extends Plan {
 				}
 			},
 	};
-	
+
+	@Override
+	public void setPlanVariables(Object var) {
+		// TODO Auto-generated method stub
+	}
 }

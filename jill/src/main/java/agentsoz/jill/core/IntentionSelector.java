@@ -25,11 +25,16 @@ package agentsoz.jill.core;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.googlecode.cqengine.query.Query;
+import com.googlecode.cqengine.resultset.ResultSet;
+
+import agentsoz.jill.config.GlobalConstant;
 import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.Goal;
 import agentsoz.jill.lang.Plan;
 import agentsoz.jill.struct.GoalType;
 import agentsoz.jill.struct.PlanType;
+import agentsoz.jill.util.Log;
 import agentsoz.jill.util.Stack255;
 
 public class IntentionSelector implements Runnable {
@@ -55,7 +60,8 @@ public class IntentionSelector implements Runnable {
 		done = true;
 		ArrayList<Plan> options = new ArrayList<Plan>();
 		for (int i = start; i < start+size; i++) {
-			Stack255 agentExecutionStack = (Stack255)((Agent)GlobalState.agents.get(i)).getExecutionStack();
+			Agent agent = (Agent)GlobalState.agents.get(i);
+			Stack255 agentExecutionStack = (Stack255)(agent).getExecutionStack();
 			int esSize = agentExecutionStack.size();
 			if (agentExecutionStack == null || esSize == 0) {
 				// Nothing to do for this agent
@@ -94,9 +100,32 @@ public class IntentionSelector implements Runnable {
 				for(int p = 0; p < ptypes.length; p++) {
 					PlanType ptype = (PlanType)GlobalState.planTypes.get(ptypes[p]);
 					
-					// TODO: Here check that the context() holds
 					try {
+						// Create an object on this Plan type, so we can
+						// access its context condition
 						Plan planInstance = (Plan)(ptype.getPlanClass().getConstructor(Agent.class, String.class).newInstance(GlobalState.agents.get(i), "p"));
+						// Extract its context condition
+						Query<?> context = planInstance.context();
+						// TODO: Check if context is true, false, or a query
+						// Evaluate the context condition
+						if (context != null) {
+							ResultSet<?> matches = agent.queryBeliefSet(context);
+							int matchesCount = matches.size();
+							Log.trace(show(matches, 5));
+							// Select a binding
+							int limit = (matchesCount > GlobalConstant.PLAN_OPTIONS_INDEX_LIMIT) ?
+									GlobalConstant.PLAN_OPTIONS_INDEX_LIMIT : matchesCount;
+				    		int choice = rand.nextInt(limit);
+							Log.debug("Agent "+agent.getName()+" plan "+planInstance.getClass().getSimpleName()+" has "+matchesCount+" applicable instances; choosing index "+choice);
+							int index = 0;
+							for (Object binding : matches) {
+								if (index == choice) {
+									planInstance.setPlanVariables(binding);
+									break;
+								}
+								index++;
+							}
+						}
 						// Add it to the options
 						options.add(planInstance);
 					} catch (Exception e) {
@@ -118,4 +147,24 @@ public class IntentionSelector implements Runnable {
 		//logger.fine("Processed "+GlobalState.agentsIntentions.size()+" agents, added "+cNewPlansAdded+" plans to stack, executed "+cPlansExecuted+" plans.");
 		//return !done;
 	}
+	
+    /**
+     * Shows the first n results from the ResultSet r,
+     * or shows all if the size of the result set is less than n
+     * @param r
+     * @param n
+     */
+    private static String show(ResultSet<?> r, int n) {
+    	String s = "";
+    	int size = (r.size() > n) ? n : r.size();
+    	if (size > 0) {
+    		s += "Showing "+size+" results: ";
+    		for (Object o : r) {
+    			s += "|" + o.toString() + "|";
+    			if (--size <= 0) break;
+    		}
+    	}
+    	return s;
+    }
+
 }

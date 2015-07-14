@@ -23,32 +23,108 @@ package agentsoz.jill.example.greeter;
  */
 
 import java.io.PrintWriter;
+import java.util.Random;
 
+import agentsoz.jill.example.greeter.Neighbour.Gender;
 import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.AgentInfo;
 import agentsoz.jill.lang.BeliefSet;
+import agentsoz.jill.util.Log;
 
 @AgentInfo(hasGoals={"agentsoz.jill.example.greeter.BeFriendly"})
 public class Greeter extends Agent {
 
+	// Defaults
+	private static Random rand = new Random();
+	private static int numNeighbours = 1;
+	
 	public Greeter(String name) {
 		super(name);
 	}
 	
 	@Override
 	public void start(PrintWriter writer, String[] params) {
+		// Parse the arguments
+		parse(params);
+		
 		// Create a new belief set about neighbours
 		BeliefSet<Neighbour> neighbours = new BeliefSet<Neighbour>();
-
+		
 		// Attach this belief set to this agent
 		this.setBeliefSet(neighbours);
 		
 		// Add beliefs about neighbours
-		neighbours.add(new Neighbour("Alex", Neighbour.Gender.Male, 17));
-		
+		registerNeighbours(rand, numNeighbours);
+
 		// Post the goal to be friendly
 		post(new BeFriendly("BeFriendly"));
 	}
 
-
+	/**
+	 * Helper function to add beliefs about neighbours
+	 * @param rand random number generator to use
+	 * @param count number of beliefs to add
+	 */
+	private void registerNeighbours(Random rand, int count) {
+		final String[] MALES = {
+				"Alex", "Daniel", "John",
+				"Lionel", "Nick", "Oscar", "Paul",
+				"Rod", "Sam", "Tom"
+		};
+		final String[] FEMALES = {
+				"Alice", "Elisa", "Fiona", 
+				"Julia", "Kate", "Laura", "Margaret", 
+				"Nancy", "Pam", "Rachael"
+		};
+		final String[] MIDDLE = {
+				"A.", "B.", "C.", "D.", "E.", "F.", "G.", "H.", "I.", "J.", 
+				"K.", "L.", "M.", "N.", "O.", "P.", "Q.", "R.", "S.", "T.", 
+				"U.", "V.", "W.", "X.", "Y.", "Z." 
+		};
+		final String[] SURNAMES = {
+				"Anderson", "Brown", "Jones", "Martin", "Morton", 
+				"Smith", "Taylor", "White", "Williams", "Wilson",
+		};
+		@SuppressWarnings("unchecked")
+		BeliefSet<Neighbour> neighbours = (BeliefSet<Neighbour>)getBeliefSet();
+		int size = (count < 0) ? 0 : count;
+		for (int i = 0; i < size; i++) {
+			boolean male = (rand.nextDouble() < 0.5) ? true : false;
+			String name = male ? MALES[rand.nextInt(MALES.length)] : FEMALES[rand.nextInt(FEMALES.length)];
+			name += " " + MIDDLE[rand.nextInt(MIDDLE.length)] + " ";
+			name += SURNAMES[rand.nextInt(SURNAMES.length)]; 
+			Gender gender = male ? Gender.Male : Gender.Female;
+			int hnumber = i+1;
+			neighbours.add(new Neighbour(name, gender, hnumber));
+		}
+	}
+	
+    public static void parse(String[] args) {
+        for (int i = 0; i < args.length; i++) {
+                switch (args[i]) {
+                case "-seed":
+                	if (i + 1 < args.length) {
+                		i++;
+                		int seed = 0;
+                		try {
+                			seed = Integer.parseInt(args[i]);
+                    		rand = new Random(seed);
+                		} catch (Exception e) {
+                			Log.warn("Seed value '" + args[i] + "' is not a number");
+                		}
+                	}
+                	break;
+                case "-neighbourhoodSize":
+                	if (i + 1 < args.length) {
+                		i++;
+                      	try {
+                       		numNeighbours = Integer.parseInt(args[i]);
+                       	} catch (Exception e) {
+                       		Log.warn("Neighbourhood size value '" + args[i] + "' is not a number");
+                       	}
+                	}
+                	break;
+                }
+        }
+    }
 }

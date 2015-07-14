@@ -48,4 +48,9 @@ public class PlanD extends Plan {
 				}
 			},
 	};
+
+	@Override
+	public void setPlanVariables(Object var) {
+		// TODO Auto-generated method stub
+	}
 }

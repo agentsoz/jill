@@ -39,7 +39,8 @@ public class BeliefSet<T> {
 		collection.add(entry);
 	}
 	
-	public ResultSet<T> query(Query<T> q) {
-		return collection.retrieve(q);
+	@SuppressWarnings("unchecked")
+	public ResultSet<T> query(Query<?> q) {
+		return collection.retrieve((Query<T>) q);
 	}
 }

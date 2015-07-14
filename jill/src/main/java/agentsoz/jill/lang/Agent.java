@@ -24,6 +24,9 @@ package agentsoz.jill.lang;
 
 import java.io.PrintWriter;
 
+import com.googlecode.cqengine.query.Query;
+import com.googlecode.cqengine.resultset.ResultSet;
+
 import agentsoz.jill.struct.AObject;
 import agentsoz.jill.util.Log;
 import agentsoz.jill.util.Stack255;
@@ -107,6 +110,13 @@ public class Agent extends AObject {
 		this.beliefSet = beliefSet;
 	}
 	
+	public BeliefSet<?> getBeliefSet() {
+		return beliefSet;
+	}
+
+	public ResultSet<?> queryBeliefSet(Query<?> q) {
+		return (beliefSet == null) ? null : beliefSet.query(q);
+	}
 	public void start(PrintWriter writer, String[] params) {
 		Log.debug("Agent "+getName()+" is starting");
 	}
