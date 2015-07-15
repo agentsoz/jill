@@ -44,21 +44,21 @@
                 <argument>-Xmx1g</argument>
                 <argument>-Xms1g</argument>
                 <argument>agentsoz.jill.Main</argument>
-                <argument>-d</argument>
+                <argument>--debug-level</argument>
                 <argument>INFO</argument>
-                <argument>-l</argument>
+                <argument>--logfile</argument>
                 <argument>TestAgent-output.log</argument>
-                <argument>-c</argument>
+                <argument>--agent-class</argument>
                 <argument>SimpleAgent.TestAgent</argument>
-                <argument>-n</argument>
+                <argument>--num-agents</argument>
                 <argument>1000</argument>
                 <argument>-i</argument>
                 <argument>20</argument>
-                <argument>-r</argument>
+                <argument>--seed</argument>
                 <argument>12345</argument>
-                <argument>-p</argument>
+                <argument>--program-args</argument>
                 <argument>-d</argument>
-                <argument>-o</argument>
+                <argument>--outfile</argument>
                 <argument>TestAgent-output.out</argument>
               </arguments>
             </configuration>
@@ -92,13 +92,13 @@
                 <argument>-Xmx1g</argument>
                 <argument>-Xms1g</argument>
                 <argument>agentsoz.jill.Main</argument>
-                <argument>-d</argument>
+                <argument>--debug-level</argument>
                 <argument>INFO</argument>
-                <argument>-l</argument>
+                <argument>--logfile</argument>
                 <argument>TestAgent-performance.log</argument>
-                <argument>-c</argument>
+                <argument>--agent-class</argument>
                 <argument>SimpleAgent.TestAgent</argument>
-                <argument>-n</argument>
+                <argument>--num-agents</argument>
                 <argument>1000000</argument>
                 <argument>-i</argument>
                 <argument>20</argument>

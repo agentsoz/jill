@@ -39,17 +39,14 @@ import agentsoz.jill.util.Stack255;
 
 public class IntentionSelector implements Runnable {
 
-	//private final static Logger logger = Logger.getLogger("");
-
-	@SuppressWarnings("unused")
-	private boolean done = false;
-	
+	private int id;
 	private int start;
 	private int size;
 	
 	private Random rand;
 
-	public IntentionSelector(long l, int start, int size) {
+	public IntentionSelector(int id, long l, int start, int size) {
+		this.id = id;
 		this.start = start;
 		this.size = size;
 		this.rand = new Random(l);
@@ -57,7 +54,7 @@ public class IntentionSelector implements Runnable {
 
 
 	public void run() {
-		done = true;
+		boolean idle = true;
 		ArrayList<Plan> options = new ArrayList<Plan>();
 		for (int i = start; i < start+size; i++) {
 			Agent agent = (Agent)GlobalState.agents.get(i);
@@ -67,6 +64,9 @@ public class IntentionSelector implements Runnable {
 				// Nothing to do for this agent
 				continue;
 			}
+			
+			// At least one agent is active
+			idle = false;
 			
 			// Get the item at the top of the stack
 			Object node = (Object)agentExecutionStack.get((byte)(esSize-1));
@@ -79,12 +79,8 @@ public class IntentionSelector implements Runnable {
 					agentExecutionStack.pop();
 					// Pop the goal off the stack
 					agentExecutionStack.pop();
-					if (agentExecutionStack.size() != 0) {
-						done = false;
-					}
 				} else {
 					((Plan) node).step();
-					done = false;
 				}
 
 				continue;
@@ -113,8 +109,8 @@ public class IntentionSelector implements Runnable {
 							int matchesCount = matches.size();
 							Log.trace(show(matches, 5));
 							// Select a binding
-							int limit = (matchesCount > GlobalConstant.PLAN_OPTIONS_INDEX_LIMIT) ?
-									GlobalConstant.PLAN_OPTIONS_INDEX_LIMIT : matchesCount;
+							int limit = (matchesCount > GlobalConstant.PLAN_INSTANCES_LIMIT) ?
+									GlobalConstant.PLAN_INSTANCES_LIMIT : matchesCount;
 				    		int choice = rand.nextInt(limit);
 							Log.debug("Agent "+agent.getName()+" plan "+planInstance.getClass().getSimpleName()+" has "+matchesCount+" applicable instances; choosing index "+choice);
 							int index = 0;
@@ -134,19 +130,19 @@ public class IntentionSelector implements Runnable {
 				}
 				if (options.isEmpty()) {
 					// No plan options for this goal at this point in time, so move to the next agent
-					done = false;
 					continue;
 				}
 				// TODO: Pick a plan option using some policy (random for now)
 				int choice = rand.nextInt(options.size());
+				// Now push the plan on to the intention stack
 				agentExecutionStack.push(options.get(choice));
 				options.clear();
-				done = false;
+				
 			}
 		}
-		//logger.fine("Processed "+GlobalState.agentsIntentions.size()+" agents, added "+cNewPlansAdded+" plans to stack, executed "+cPlansExecuted+" plans.");
-		//return !done;
+		GlobalState.poolIdle[id] = idle;
 	}
+	
 	
     /**
      * Shows the first n results from the ResultSet r,

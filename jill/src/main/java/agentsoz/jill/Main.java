@@ -27,6 +27,8 @@ import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
+import agentsoz.jill.config.GlobalConstant;
 import agentsoz.jill.core.GlobalState;
 import agentsoz.jill.core.IntentionSelector;
 import agentsoz.jill.core.ProgramLoader;
@@ -89,20 +91,19 @@ public class Main {
 
 		// Wait till we are all done
 		t0 = System.currentTimeMillis();
-		int cycles = ArgumentsLoader.getNumCycles();
 		int ncores = ArgumentsLoader.getNumThreads();
 		int nagents = GlobalState.agents.size();
 		int poolsize = (nagents > ncores) ? (nagents/ncores) : 1;
 		int npools = (nagents > ncores) ? ncores : nagents;
+		GlobalState.poolIdle = new boolean[ncores];
 		int cycle = 0;
-		while (cycles == -1 || cycle  < cycles) {
+		do {
+			cycle++;
 	        ExecutorService executor = Executors.newFixedThreadPool(ncores);
 	        for (int i = 0; i < npools; i++) {
 	        	int start = i*poolsize;
 	        	int size = (i+1 < npools) ? poolsize : GlobalState.agents.size()-start;
-	        	//int size = (start+poolsize<=GlobalState.agents.size()) ? poolsize : 
-	        	//	poolsize - (GlobalState.agents.size()-start);
-				executor.execute(new IntentionSelector(ArgumentsLoader.getRandomSeed(), start,size));
+				executor.execute(new IntentionSelector(i, ArgumentsLoader.getRandomSeed(), start,size));
 	        }
 			executor.shutdown();
 			try {
@@ -110,10 +111,8 @@ public class Main {
 			} catch (InterruptedException e) {
 				Log.warn(e.getMessage());
 			}
-			if (cycles != -1) {
-				cycle++;
-			}
-		}
+		} while (GlobalConstant.EXIT_ON_IDLE && !isIdle());
+		
 		t1 = System.currentTimeMillis();
 		Log.info("Finished running "+cycle+" execution cycles with " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
 
@@ -131,6 +130,19 @@ public class Main {
 		t1 = System.currentTimeMillis();
 		Log.info("Terminated " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
 
+	}
+	
+	/**
+	 * Checks if the system is idle, i.e., all the agents are idle with
+	 * empty execution stacks
+	 * @return
+	 */
+	public static boolean isIdle() {
+		boolean idle = true;
+		for (int i = 0; i < GlobalState.poolIdle.length; i++) {
+			idle &= GlobalState.poolIdle[i];
+		}
+		return idle;
 	}
 	
 	/**

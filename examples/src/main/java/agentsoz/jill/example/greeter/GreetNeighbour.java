@@ -51,7 +51,7 @@ public class GreetNeighbour extends Plan {
 	PlanStep[] steps = {
 			new PlanStep() {
 				public void step() {
-					System.out.println("Hello " + neighbour.getName() + "!");
+					System.out.println(getAgent().getName() + " says hello " + neighbour.getName());
 				}
 			},
 	};

@@ -54,5 +54,10 @@ public class GlobalState {
 	 * Each entry in the catalog is assigned an automatically created ID.
 	 */
 	public static AObjectCatalog agents;
+	
+	/**
+	 * Used to mark if the pool of agents is idle or not
+	 */
+	public static boolean[] poolIdle;
 
 }
