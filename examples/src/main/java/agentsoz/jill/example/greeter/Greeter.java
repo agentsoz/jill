@@ -55,6 +55,7 @@ public class Greeter extends Agent {
 		
 		// Add beliefs about neighbours
 		registerNeighbours(rand, numNeighbours);
+		Log.debug("Agent " + getName() + " is initialising with " + numNeighbours + " neighbours");
 
 		// Post the goal to be friendly
 		post(new BeFriendly("BeFriendly"));

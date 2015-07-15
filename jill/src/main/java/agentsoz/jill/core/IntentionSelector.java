@@ -106,21 +106,8 @@ public class IntentionSelector implements Runnable {
 						// Evaluate the context condition
 						if (context != null) {
 							ResultSet<?> matches = agent.queryBeliefSet(context);
-							int matchesCount = matches.size();
-							Log.trace(show(matches, 5));
 							// Select a binding
-							int limit = (matchesCount > GlobalConstant.PLAN_INSTANCES_LIMIT) ?
-									GlobalConstant.PLAN_INSTANCES_LIMIT : matchesCount;
-				    		int choice = rand.nextInt(limit);
-							Log.debug("Agent "+agent.getName()+" plan "+planInstance.getClass().getSimpleName()+" has "+matchesCount+" applicable instances; choosing index "+choice);
-							int index = 0;
-							for (Object binding : matches) {
-								if (index == choice) {
-									planInstance.setPlanVariables(binding);
-									break;
-								}
-								index++;
-							}
+							planInstance.setPlanVariables(selectPlan(agent, planInstance, matches));
 						}
 						// Add it to the options
 						options.add(planInstance);
@@ -142,7 +129,41 @@ public class IntentionSelector implements Runnable {
 		}
 		GlobalState.poolIdle[id] = idle;
 	}
-	
+
+	/**
+	 * Selects a plan instance form the list, based on the global plan selection 
+	 * policy {@link GlobalConstant#PLAN_SELECTION_POLICY}
+	 * @param matches
+	 * @return
+	 */
+	private Object selectPlan(Agent agent, Plan planInstance, ResultSet<?> matches) {
+		int matchesCount = matches.size();
+		Log.trace(show(matches, 5));
+		// Select a binding
+		int choice = 0;
+		switch (GlobalConstant.PLAN_SELECTION_POLICY) {
+		case FIRST:
+			choice = 0;
+			break;
+		case RANDOM:
+			int limit = (matchesCount > GlobalConstant.PLAN_INSTANCES_LIMIT) ?
+					GlobalConstant.PLAN_INSTANCES_LIMIT : matchesCount;
+			choice = rand.nextInt(limit);
+			break;
+		case LAST:
+			choice = matchesCount - 1;
+			break;
+		};
+		Log.debug("Agent "+agent.getName()+" plan "+planInstance.getClass().getSimpleName()+" has "+matches.size()+" applicable instances; choosing instance "+choice);
+		int index = 0;
+		for (Object binding : matches) {
+			if (index == choice) {
+				return binding;
+			}
+			index++;
+		}
+		return null;
+	}
 	
     /**
      * Shows the first n results from the ResultSet r,
