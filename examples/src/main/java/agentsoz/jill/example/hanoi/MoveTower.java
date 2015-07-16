@@ -54,9 +54,9 @@ public class MoveTower extends Plan {
 				public void step() {
 					if (solve.disc == 1) {
 						Board board = ((Player)getAgent()).getBoard();
-						((Player)getAgent()).out.println("Moving disc " + solve.disc + " from pin " + solve.src + " to " + solve.dest);
+						Player.out.println("Moving disc " + solve.disc + " from pin " + solve.src + " to " + solve.dest);
 						board.move(solve.src, solve.dest);
-						((Player)getAgent()).out.println(board.toString());
+						Player.out.println(board.toString());
 					}
 				}
 			},
@@ -71,9 +71,9 @@ public class MoveTower extends Plan {
 				public void step() {
 					if (solve.disc != 1) {
 						Board board = ((Player)getAgent()).getBoard();
-						((Player)getAgent()).out.println("Moving disc " + solve.disc + " from pin " + solve.src + " to " + solve.dest);
+						Player.out.println("Moving disc " + solve.disc + " from pin " + solve.src + " to " + solve.dest);
 						board.move(solve.src, solve.dest);
-						((Player)getAgent()).out.println(board.toString());
+						Player.out.println(board.toString());
 					}
 				}
 			},
