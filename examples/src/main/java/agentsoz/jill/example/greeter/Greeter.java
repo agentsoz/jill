@@ -22,7 +22,7 @@ package agentsoz.jill.example.greeter;
  * #L%
  */
 
-import java.io.PrintWriter;
+import java.io.PrintStream;
 import java.util.Random;
 
 import agentsoz.jill.example.greeter.Neighbour.Gender;
@@ -43,7 +43,7 @@ public class Greeter extends Agent {
 	}
 	
 	@Override
-	public void start(PrintWriter writer, String[] params) {
+	public void start(PrintStream writer, String[] params) {
 		// Parse the arguments
 		parse(params);
 		

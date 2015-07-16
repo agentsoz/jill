@@ -1,4 +1,4 @@
-package SimpleAgent;
+package agentsoz.jill.example.hanoi;
 
 /*
  * #%L
@@ -22,36 +22,31 @@ package SimpleAgent;
  * #L%
  */
 
-import com.googlecode.cqengine.query.Query;
-
-import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.Goal;
-import agentsoz.jill.lang.Plan;
-import agentsoz.jill.lang.PlanInfo;
-import agentsoz.jill.lang.PlanStep;
+import agentsoz.jill.lang.GoalInfo;
 
-@PlanInfo(handlesGoal="SimpleAgent.GoalA")
-public class PlanD extends Plan {
-	
-	public PlanD(Agent agent, Goal goal, String name) {
-		super(agent, goal, name);
-		body = steps;
-	}
-	
-	public Query<?> context() {
-		return null;
-	}
-	
-	PlanStep[] steps = {
-			new PlanStep() {
-				public void step() {
-					((TestAgent)getAgent()).setI(((TestAgent)getAgent()).getI() | 0x0008);
-				}
-			},
-	};
+@GoalInfo(hasPlans={"agentsoz.jill.example.hanoi.MoveTower"})
+public class Solve extends Goal {
 
-	@Override
-	public void setPlanVariables(Object var) {
-		// TODO Auto-generated method stub
+	public int disc;
+	public int src;
+	public int dest;
+	public int spare;
+	
+	public Solve(String str) {
+		super(str);
 	}
+	
+	public Solve(String str, int disc, int src, int dest, int spare) {
+		this(str);
+		this.disc = disc;
+		this.src = src;
+		this.dest = dest;
+		this.spare = spare;
+	}
+
+	public String toString() {
+		return "solve(disc="+disc+", src="+src+", dest="+dest+", spare="+spare+")";
+	}
+	
 }

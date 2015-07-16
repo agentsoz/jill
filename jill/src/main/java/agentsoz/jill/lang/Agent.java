@@ -22,7 +22,7 @@ package agentsoz.jill.lang;
  * #L%
  */
 
-import java.io.PrintWriter;
+import java.io.PrintStream;
 
 import com.googlecode.cqengine.query.Query;
 import com.googlecode.cqengine.resultset.ResultSet;
@@ -117,7 +117,7 @@ public class Agent extends AObject {
 	public ResultSet<?> queryBeliefSet(Query<?> q) {
 		return (beliefSet == null) ? null : beliefSet.query(q);
 	}
-	public void start(PrintWriter writer, String[] params) {
+	public void start(PrintStream writer, String[] params) {
 		Log.debug("Agent "+getName()+" is starting");
 	}
 	

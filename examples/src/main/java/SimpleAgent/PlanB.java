@@ -25,6 +25,7 @@ package SimpleAgent;
 import com.googlecode.cqengine.query.Query;
 
 import agentsoz.jill.lang.Agent;
+import agentsoz.jill.lang.Goal;
 import agentsoz.jill.lang.Plan;
 import agentsoz.jill.lang.PlanInfo;
 import agentsoz.jill.lang.PlanStep;
@@ -32,8 +33,8 @@ import agentsoz.jill.lang.PlanStep;
 @PlanInfo(handlesGoal="SimpleAgent.GoalB")
 public class PlanB extends Plan {
 	
-	public PlanB(Agent agent, String name) {
-		super(agent, name);
+	public PlanB(Agent agent, Goal goal, String name) {
+		super(agent, goal, name);
 		body = steps;
 	}
 	

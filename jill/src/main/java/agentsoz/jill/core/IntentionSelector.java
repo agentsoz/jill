@@ -99,7 +99,7 @@ public class IntentionSelector implements Runnable {
 					try {
 						// Create an object on this Plan type, so we can
 						// access its context condition
-						Plan planInstance = (Plan)(ptype.getPlanClass().getConstructor(Agent.class, String.class).newInstance(GlobalState.agents.get(i), "p"));
+						Plan planInstance = (Plan)(ptype.getPlanClass().getConstructor(Agent.class, Goal.class, String.class).newInstance(GlobalState.agents.get(i), node, "p"));
 						// Extract its context condition
 						Query<?> context = planInstance.context();
 						// TODO: Check if context is true, false, or a query

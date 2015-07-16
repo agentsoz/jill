@@ -22,7 +22,7 @@ package agentsoz.jill;
  * #L%
  */
 
-import java.io.PrintWriter;
+import java.io.PrintStream;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -69,13 +69,15 @@ public class Main {
 
 
 		// Redirect the agent program output if specified
-		PrintWriter writer = null;
+		PrintStream writer = null;
 		if (ArgumentsLoader.getProgramOutputFile() != null) {
 			try {
-				writer = new PrintWriter(ArgumentsLoader.getProgramOutputFile(), "UTF-8");
+				writer = new PrintStream(ArgumentsLoader.getProgramOutputFile(), "UTF-8");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		} else {
+			writer = System.out;
 		}
 		
 		// Start the agents
@@ -96,6 +98,9 @@ public class Main {
 		int poolsize = (nagents > ncores) ? (nagents/ncores) : 1;
 		int npools = (nagents > ncores) ? ncores : nagents;
 		GlobalState.poolIdle = new boolean[ncores];
+		for (int k = 0; k < GlobalState.poolIdle.length; k++) {
+			GlobalState.poolIdle[k] = true;
+		}
 		int cycle = 0;
 		do {
 			cycle++;

@@ -23,7 +23,6 @@ package agentsoz.jill.core;
  */
 
 import java.lang.annotation.Annotation;
-import java.util.logging.Logger;
 
 import agentsoz.jill.core.GlobalState;
 import agentsoz.jill.lang.Agent;
@@ -58,10 +57,13 @@ public class ProgramLoader {
 
 			// Find the goals that this agent has
 			Annotation annotation = aclass.getAnnotation(AgentInfo.class);
+			if (annotation == null) {
+				abort("Agent "+className+" is missing the @AgentInfo(hasGoals={\"package.GoalClass1, package.GoalClass2, ...\"}) annotation. Without it, the BDI execution engine does not know anything about this agent's goals and plans.");
+			}
 			AgentInfo ainfo = (AgentInfo) annotation;
 			String[] goals = ainfo.hasGoals();
 			if (goals.length == 0) {
-				abort("Agent "+className+" does not have any goals defined.");
+				abort("Agent "+className+" does not have any goals defined. Was expecting something like @AgentInfo(hasGoals={\"package.GoalClass1, package.GoalClass2, ...\"}) annotation. Without it, the BDI execution engine does not know anything about this agent's goals and plans.");
 			}
 			
 			// First pass: get the goals and their plans (flat goal-plan list)
@@ -80,10 +82,13 @@ public class ProgramLoader {
 
 				// Find the plans that this goal has
 				annotation = gclass.getAnnotation(GoalInfo.class);
+				if (annotation == null) {
+					abort("Goal "+gclass.getName()+" is missing the @GoalInfo(hasPlans={\"package.PlanClass1, package.PlanClass2, ...\"}) annotation. Without it, the BDI execution engine does not know anything about which plans can handle this goal.");
+				}
 				GoalInfo ginfo = (GoalInfo) annotation;
 				String[] plans = ginfo.hasPlans();
 				if (plans.length == 0) {
-					abort("Goal "+gclass.getName()+" does not have any plans defined.");
+					abort("Goal "+gclass.getName()+" does not have any plans defined. Was expecting something like @GoalInfo(hasPlans={\"package.PlanClass1, package.PlanClass2, ...\"}) annotation. Without it, the BDI execution engine does not know anything about which plans can handle this goal.");
 				}
 
 				// Process the plans
@@ -149,7 +154,7 @@ public class ProgramLoader {
 
 	private static void abort(String err) {
 		Log.error(err);
-		System.err.println(err + ". Aborting.");
+		System.err.println(err);
 		System.exit(0);
 	}
 }

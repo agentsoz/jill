@@ -27,10 +27,12 @@ import com.googlecode.cqengine.query.Query;
 public abstract class Plan {
 
 	private final Agent agent;
+	private final Goal goal;
 	private byte index = 0;
 
-	public Plan(Agent agent, String name) {
+	public Plan(Agent agent, Goal goal, String name) {
 		this.agent = agent;
+		this.goal = goal;
 	}
 
 	public abstract Query<?> context();
@@ -40,6 +42,10 @@ public abstract class Plan {
 	
 	public Agent getAgent() {
 		return agent;
+	}
+	
+	public Goal getGoal() {
+		return goal;
 	}
 	
 	public void post(Goal goal) {

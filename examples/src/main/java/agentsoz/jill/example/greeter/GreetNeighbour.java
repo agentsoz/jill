@@ -25,6 +25,7 @@ package agentsoz.jill.example.greeter;
 import com.googlecode.cqengine.query.Query;
 
 import agentsoz.jill.lang.Agent;
+import agentsoz.jill.lang.Goal;
 import agentsoz.jill.lang.Plan;
 import agentsoz.jill.lang.PlanStep;
 import static com.googlecode.cqengine.query.QueryFactory.*;
@@ -33,8 +34,8 @@ public class GreetNeighbour extends Plan {
 
 	Neighbour neighbour;
 	
-	public GreetNeighbour(Agent agent, String name) {
-		super(agent, name);
+	public GreetNeighbour(Agent agent, Goal goal, String name) {
+		super(agent, goal, name);
 		body = steps;
 	}
 

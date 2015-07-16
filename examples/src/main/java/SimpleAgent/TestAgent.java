@@ -22,7 +22,7 @@ package SimpleAgent;
  * #L%
  */
 
-import java.io.PrintWriter;
+import java.io.PrintStream;
 
 import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.AgentInfo;
@@ -31,7 +31,7 @@ import agentsoz.jill.lang.AgentInfo;
 public class TestAgent extends Agent {
 
 	private int i = 0;
-	private PrintWriter writer = null;
+	private PrintStream writer = null;
 	private boolean verbose = false;
 	
 	public TestAgent(String str) {
@@ -39,7 +39,7 @@ public class TestAgent extends Agent {
 	}
 
 	@Override
-	public void start(PrintWriter writer, String[] params) {
+	public void start(PrintStream writer, String[] params) {
 		if (params != null && params[0].equals("-d")) {
 			verbose = true;
 			this.writer = writer;

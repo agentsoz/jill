@@ -1,4 +1,4 @@
-package SimpleAgent;
+package agentsoz.jill.example.hanoi;
 
 /*
  * #%L
@@ -27,41 +27,62 @@ import com.googlecode.cqengine.query.Query;
 import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.Goal;
 import agentsoz.jill.lang.Plan;
-import agentsoz.jill.lang.PlanInfo;
 import agentsoz.jill.lang.PlanStep;
 
-@PlanInfo(handlesGoal="SimpleAgent.GoalA", postsGoals={"SimpleAgent.GoalB", "SimpleAgent.GoalC"})
-public class PlanA extends Plan { 
+public class MoveTower extends Plan {
 
-	public PlanA(Agent agent, Goal goal, String name) {
+	Solve solve;
+	public MoveTower(Agent agent, Goal goal, String name) {
 		super(agent, goal, name);
+		solve = (Solve) goal;
 		body = steps;
 	}
 
+	@Override
 	public Query<?> context() {
-		return null;
+		return null; // null indicates true
+	}
+
+	@Override
+	public void setPlanVariables(Object var) {
+		// TODO Auto-generated method stub
+
 	}
 	
 	PlanStep[] steps = {
 			new PlanStep() {
 				public void step() {
-					((TestAgent)getAgent()).setI(((TestAgent)getAgent()).getI() | 0x0001);
+					if (solve.disc == 1) {
+						Board board = ((Player)getAgent()).getBoard();
+						((Player)getAgent()).out.println("Moving disc " + solve.disc + " from pin " + solve.src + " to " + solve.dest);
+						board.move(solve.src, solve.dest);
+						((Player)getAgent()).out.println(board.toString());
+					}
 				}
 			},
 			new PlanStep() {
 				public void step() {
-					post(new GoalB("gB"));
+					if (solve.disc != 1) {
+						post(new Solve("", solve.disc-1, solve.src, solve.spare, solve.dest));
+					}
 				}
 			},
 			new PlanStep() {
 				public void step() {
-					post(new GoalC("gC"));
+					if (solve.disc != 1) {
+						Board board = ((Player)getAgent()).getBoard();
+						((Player)getAgent()).out.println("Moving disc " + solve.disc + " from pin " + solve.src + " to " + solve.dest);
+						board.move(solve.src, solve.dest);
+						((Player)getAgent()).out.println(board.toString());
+					}
+				}
+			},
+			new PlanStep() {
+				public void step() {
+					if (solve.disc != 1) {
+						post(new Solve("", solve.disc-1, solve.spare, solve.dest, solve.src));
+					}
 				}
 			},
 	};
-
-	@Override
-	public void setPlanVariables(Object var) {
-		// TODO Auto-generated method stub
-	}
 }
