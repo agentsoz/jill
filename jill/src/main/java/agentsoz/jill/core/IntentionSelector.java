@@ -60,8 +60,13 @@ public class IntentionSelector implements Runnable {
 			Agent agent = (Agent)GlobalState.agents.get(i);
 			Stack255 agentExecutionStack = (Stack255)(agent).getExecutionStack();
 			int esSize = agentExecutionStack.size();
+			Log.trace("Agent " + agent.getName() + "'s execution stack is "+esSize+"/255 full");
 			if (agentExecutionStack == null || esSize == 0) {
 				// Nothing to do for this agent
+				continue;
+			}
+			if (esSize >= 255) {
+				Log.error("Agent " + agent.getName() + "'s execution stack has reached the maximum size of 255. Cannot continue.");
 				continue;
 			}
 			

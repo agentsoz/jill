@@ -73,7 +73,8 @@ public class Stack255{
 	 * @param index the position of the Object
 	 * @return the Object, or null if the index is invalid
 	 */
-	public Object get(int index) {
+	public Object get(int idx) {
+		int index = idx & 0xff;
 		if (isEmpty()) {
 			//System.err.println("index "+index+" is invalid as stack is empty");
 			return null;
