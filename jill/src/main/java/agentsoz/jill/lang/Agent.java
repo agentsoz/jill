@@ -27,6 +27,7 @@ import java.io.PrintStream;
 import com.googlecode.cqengine.query.Query;
 import com.googlecode.cqengine.resultset.ResultSet;
 
+import agentsoz.jill.core.GlobalState;
 import agentsoz.jill.struct.AObject;
 import agentsoz.jill.util.Log;
 import agentsoz.jill.util.Stack255;
@@ -105,7 +106,27 @@ public class Agent extends AObject {
 		Log.debug("Agent "+getName()+" posting goal " + goal);
 		executionStack.push(goal);
 	}
-
+	
+	public boolean send(int id, Goal msg) {
+		AObject obj = GlobalState.agents.get(id);
+		if (obj == null) {
+			Log.warn("Agent " + getName() + " attempted to send a message to unknown agent id '"+id+"'");
+			return false;
+		}
+		((Agent)obj).post(msg);
+		return true;
+	}
+	
+	public boolean send(String name, Goal msg) {
+		AObject obj = GlobalState.agents.find(name);
+		if (obj == null) {
+			Log.warn("Agent " + getName() + " attempted to send a message to unknown agent '"+name+"'");
+			return false;
+		}
+		((Agent)obj).post(msg);
+		return true;
+	}
+	
 	public void setBeliefSet(BeliefSet<?> beliefSet) {
 		this.beliefSet = beliefSet;
 	}
@@ -117,6 +138,7 @@ public class Agent extends AObject {
 	public ResultSet<?> queryBeliefSet(Query<?> q) {
 		return (beliefSet == null) ? null : beliefSet.query(q);
 	}
+	
 	public void start(PrintStream writer, String[] params) {
 		Log.debug("Agent "+getName()+" is starting");
 	}

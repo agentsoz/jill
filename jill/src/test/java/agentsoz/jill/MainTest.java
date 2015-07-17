@@ -77,4 +77,17 @@ public class MainTest {
 		assertTrue(out.toString().equals(output));
 	}
 
+	@Test
+	public void testPingPong() {
+		final String output = "ping!pong!";
+		String[] args = {
+			"--agent-class",
+			"agentsoz.jill.sendreceive.Talker",
+			"--num-agents",
+			"2",
+		};
+		Main.main(args);
+		assertTrue(out.toString().equals(output));
+	}
+
 }
