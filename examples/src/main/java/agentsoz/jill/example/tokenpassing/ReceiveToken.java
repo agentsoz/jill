@@ -1,4 +1,4 @@
-package agentsoz.jill.sendreceive;
+package agentsoz.jill.example.tokenpassing;
 
 /*
  * #%L
@@ -24,19 +24,17 @@ package agentsoz.jill.sendreceive;
 
 import com.googlecode.cqengine.query.Query;
 
+import agentsoz.jill.core.GlobalState;
 import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.Goal;
 import agentsoz.jill.lang.Plan;
 import agentsoz.jill.lang.PlanStep;
 
-public class HandleMessage extends Plan {
+public class ReceiveToken extends Plan {
 
-	MessageEvent msg;
-	
-	public HandleMessage(Agent agent, Goal goal, String name) {
+	public ReceiveToken(Agent agent, Goal goal, String name) {
 		super(agent, goal, name);
-		msg = (MessageEvent)goal;
-		body = steps;
+		body = steps;		
 	}
 
 	@Override
@@ -51,18 +49,27 @@ public class HandleMessage extends Plan {
 	PlanStep[] steps = {
 			new PlanStep() {
 				public void step() {
-					int sender = msg.getSenderID();
-					if (sender == 0) {
-						// Received a message from agent 0
-						System.out.print(msg.getContent());
-						// Reply to agent 0
-						getAgent().send(sender, new MessageEvent(getAgent().getId(), "pong!"));
-					} else if (sender == 1) {
-						// Received a message from agent 1
-						System.out.print(msg.getContent());
+					Token msg = (Token)getGoal();
+					int myid = getAgent().getId();
+					if (myid == 0) {
+						if (TokenAgent1.rounds != msg.getRound()) {
+							// Start the next round
+							msg.setAgent(1);
+							int newRound = msg.getRound()+1; 
+							msg.setRound(newRound);
+							TokenAgent1.out.print("\nround="+newRound+":\n>1");
+							getAgent().send(1, msg);
+						} else {
+							TokenAgent1.out.print(".");
+							// All done
+						}
+					} else if ( myid == msg.getAgent()) {
+						int nextAgent = (myid+1)%GlobalState.agents.size();
+						msg.setAgent(nextAgent);
+						TokenAgent1.out.print(">"+nextAgent);
+						getAgent().send(nextAgent, msg);
 					}
 				}
 			},
 	};
-
 }
