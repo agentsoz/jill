@@ -1,4 +1,4 @@
-package SimpleAgent;
+package agentsoz.jill.testprogram;
 
 /*
  * #%L
@@ -30,7 +30,7 @@ import agentsoz.jill.lang.Plan;
 import agentsoz.jill.lang.PlanInfo;
 import agentsoz.jill.lang.PlanStep;
 
-@PlanInfo(handlesGoal="SimpleAgent.GoalA", postsGoals={"SimpleAgent.GoalB", "SimpleAgent.GoalC"})
+@PlanInfo(postsGoals={"agentsoz.jill.testprogram.GoalB", "agentsoz.jill.testprogram.GoalC"})
 public class PlanA extends Plan { 
 
 	public PlanA(Agent agent, Goal goal, String name) {

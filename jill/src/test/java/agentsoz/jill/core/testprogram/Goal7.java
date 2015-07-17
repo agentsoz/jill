@@ -1,4 +1,7 @@
-package SimpleAgent;
+package agentsoz.jill.core.testprogram;
+
+import agentsoz.jill.lang.Goal;
+import agentsoz.jill.lang.GoalInfo;
 
 /*
  * #%L
@@ -22,12 +25,11 @@ package SimpleAgent;
  * #L%
  */
 
-import agentsoz.jill.lang.Goal;
-import agentsoz.jill.lang.GoalInfo;
+@GoalInfo(hasPlans={"some.nonexistent.PlanClass"})
+public class Goal7 extends Goal{
 
-@GoalInfo(hasPlans={"SimpleAgent.PlanC"})
-public class GoalC extends Goal {
-	public GoalC(String name) {
-		super(name);
+	public Goal7(String str) {
+		super(str);
+		// TODO Auto-generated constructor stub
 	}
 }

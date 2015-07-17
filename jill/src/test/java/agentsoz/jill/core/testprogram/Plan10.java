@@ -1,4 +1,11 @@
-package agentsoz.jill.lang;
+package agentsoz.jill.core.testprogram;
+
+import com.googlecode.cqengine.query.Query;
+
+import agentsoz.jill.lang.Agent;
+import agentsoz.jill.lang.Goal;
+import agentsoz.jill.lang.Plan;
+import agentsoz.jill.lang.PlanInfo;
 
 /*
  * #%L
@@ -22,10 +29,23 @@ package agentsoz.jill.lang;
  * #L%
  */
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+@PlanInfo(postsGoals={}) 
+public class Plan10 extends Plan {
 
-@Retention(RetentionPolicy.RUNTIME)
-public @interface PlanInfo {
-	String[] postsGoals();
+	public Plan10(Agent agent, Goal goal, String name) {
+		super(agent, goal, name);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public Query<?> context() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setPlanVariables(Object var) {
+		// TODO Auto-generated method stub
+		
+	} 
 }

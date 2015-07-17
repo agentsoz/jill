@@ -1,4 +1,11 @@
-package SimpleAgent;
+package agentsoz.jill.core.testprogram;
+
+import com.googlecode.cqengine.query.Query;
+
+import agentsoz.jill.lang.Agent;
+import agentsoz.jill.lang.Goal;
+import agentsoz.jill.lang.Plan;
+import agentsoz.jill.lang.PlanInfo;
 
 /*
  * #%L
@@ -22,12 +29,25 @@ package SimpleAgent;
  * #L%
  */
 
-import agentsoz.jill.lang.Goal;
-import agentsoz.jill.lang.GoalInfo;
+// This annotation is actually allowed.
+// It is the default value when the annotation is not given.
+@PlanInfo(postsGoals={"agentsoz.jill.core.testprogram.Goal12"}) 
+public class Plan12 extends Plan {
 
-@GoalInfo(hasPlans={"SimpleAgent.PlanB"})
-public class GoalB extends Goal {
-	public GoalB(String name) {
-		super(name);
+	public Plan12(Agent agent, Goal goal, String name) {
+		super(agent, goal, name);
+		// TODO Auto-generated constructor stub
 	}
+
+	@Override
+	public Query<?> context() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setPlanVariables(Object var) {
+		// TODO Auto-generated method stub
+		
+	} 
 }

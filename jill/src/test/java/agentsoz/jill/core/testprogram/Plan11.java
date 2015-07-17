@@ -1,4 +1,11 @@
-package agentsoz.jill.lang;
+package agentsoz.jill.core.testprogram;
+
+import com.googlecode.cqengine.query.Query;
+
+import agentsoz.jill.lang.Agent;
+import agentsoz.jill.lang.Goal;
+import agentsoz.jill.lang.Plan;
+import agentsoz.jill.lang.PlanInfo;
 
 /*
  * #%L
@@ -22,10 +29,25 @@ package agentsoz.jill.lang;
  * #L%
  */
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+// This annotation is actually allowed.
+// It is the default value when the annotation is not given.
+@PlanInfo(postsGoals={"some.nonexistent.GoalClass"}) 
+public class Plan11 extends Plan {
 
-@Retention(RetentionPolicy.RUNTIME)
-public @interface PlanInfo {
-	String[] postsGoals();
+	public Plan11(Agent agent, Goal goal, String name) {
+		super(agent, goal, name);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public Query<?> context() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setPlanVariables(Object var) {
+		// TODO Auto-generated method stub
+		
+	} 
 }

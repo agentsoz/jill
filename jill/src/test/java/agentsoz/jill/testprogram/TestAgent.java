@@ -1,4 +1,4 @@
-package SimpleAgent;
+package agentsoz.jill.testprogram;
 
 /*
  * #%L
@@ -27,7 +27,7 @@ import java.io.PrintStream;
 import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.AgentInfo;
 
-@AgentInfo(hasGoals={"SimpleAgent.GoalA","SimpleAgent.GoalB","SimpleAgent.GoalC"})
+@AgentInfo(hasGoals={"agentsoz.jill.testprogram.GoalA","agentsoz.jill.testprogram.GoalB","agentsoz.jill.testprogram.GoalC"})
 public class TestAgent extends Agent {
 
 	private int i = 0;

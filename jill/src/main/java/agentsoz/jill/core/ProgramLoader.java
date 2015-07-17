@@ -41,13 +41,14 @@ import agentsoz.jill.util.Log;
 
 public class ProgramLoader {
 
-	public static void load(String className, int num, AObjectCatalog agents) {
+	public static boolean load(String className, int num, AObjectCatalog agents) {
 		Class<?> aclass;
 		try {
 			// Check that we have an Agent class, else abort
 			aclass = Class.forName(className);
 			if (aclass.getSuperclass() != Agent.class) {
-				abort("Class '"+className+"' does not extend "+Agent.class.getName());
+				error("Class '"+className+"' does not extend "+Agent.class.getName());
+				return false;
 			}
 			Log.info("Found class "+className+" of type "+Agent.class.getName());
 			// Save this agent type to the catalog of known agent types 
@@ -58,12 +59,14 @@ public class ProgramLoader {
 			// Find the goals that this agent has
 			Annotation annotation = aclass.getAnnotation(AgentInfo.class);
 			if (annotation == null) {
-				abort("Agent "+className+" is missing the @AgentInfo(hasGoals={\"package.GoalClass1, package.GoalClass2, ...\"}) annotation. Without it, the BDI execution engine does not know anything about this agent's goals and plans.");
+				error("Agent "+className+" is missing the @AgentInfo(hasGoals={\"package.GoalClass1, package.GoalClass2, ...\"}) annotation. Without it, the BDI execution engine does not know anything about this agent's goals and plans.");
+				return false;
 			}
 			AgentInfo ainfo = (AgentInfo) annotation;
 			String[] goals = ainfo.hasGoals();
 			if (goals.length == 0) {
-				abort("Agent "+className+" does not have any goals defined. Was expecting something like @AgentInfo(hasGoals={\"package.GoalClass1, package.GoalClass2, ...\"}) annotation. Without it, the BDI execution engine does not know anything about this agent's goals and plans.");
+				error("Agent "+className+" does not have any goals defined. Was expecting something like @AgentInfo(hasGoals={\"package.GoalClass1, package.GoalClass2, ...\"}) annotation. Without it, the BDI execution engine does not know anything about this agent's goals and plans.");
+				return false;
 			}
 			
 			// First pass: get the goals and their plans (flat goal-plan list)
@@ -71,7 +74,8 @@ public class ProgramLoader {
 				Class<?> gclass = Class.forName(goals[i]);
 				// Abort if the specified goal is not of type Goal
 				if (gclass.getSuperclass() != Goal.class) {
-					abort("Agent "+className+" uses "+goals[i]+" which is not of type Goal.");
+					error("Agent "+className+" uses "+goals[i]+" which is not of type Goal.");
+					return false;
 				}
 				// Found the goal class, so add this goal to the catalog of known goal types
 				Log.info("Found class '"+gclass.getName()+"' of type "+Goal.class.getName());
@@ -83,12 +87,14 @@ public class ProgramLoader {
 				// Find the plans that this goal has
 				annotation = gclass.getAnnotation(GoalInfo.class);
 				if (annotation == null) {
-					abort("Goal "+gclass.getName()+" is missing the @GoalInfo(hasPlans={\"package.PlanClass1, package.PlanClass2, ...\"}) annotation. Without it, the BDI execution engine does not know anything about which plans can handle this goal.");
+					error("Goal "+gclass.getName()+" is missing the @GoalInfo(hasPlans={\"package.PlanClass1, package.PlanClass2, ...\"}) annotation. Without it, the BDI execution engine does not know anything about which plans can handle this goal.");
+					return false;
 				}
 				GoalInfo ginfo = (GoalInfo) annotation;
 				String[] plans = ginfo.hasPlans();
 				if (plans.length == 0) {
-					abort("Goal "+gclass.getName()+" does not have any plans defined. Was expecting something like @GoalInfo(hasPlans={\"package.PlanClass1, package.PlanClass2, ...\"}) annotation. Without it, the BDI execution engine does not know anything about which plans can handle this goal.");
+					error("Goal "+gclass.getName()+" does not have any plans defined. Was expecting something like @GoalInfo(hasPlans={\"package.PlanClass1, package.PlanClass2, ...\"}) annotation. Without it, the BDI execution engine does not know anything about which plans can handle this goal.");
+					return false;
 				}
 
 				// Process the plans
@@ -96,7 +102,8 @@ public class ProgramLoader {
 					Class<?> pclass = Class.forName(plans[j]);
 					// Abort if the specified plan is not of type Plan
 					if (pclass.getSuperclass() != Plan.class) {
-						abort("Goal "+gclass.getName()+" has plan "+pclass.getName()+" which is not of type Plan.");
+						error("Goal "+gclass.getName()+" has plan "+pclass.getName()+" which is not of type Plan.");
+						return false;
 					}
 					
 					// Found the plan class, so add this plan to the catalog of known plan types
@@ -115,14 +122,20 @@ public class ProgramLoader {
 				PlanType ptype = (PlanType) GlobalState.planTypes.get(i);
 				annotation = ptype.getPlanClass().getAnnotation(PlanInfo.class);
 				PlanInfo pinfo = (PlanInfo) annotation;
-				if (pinfo != null && !pinfo.postsGoals().equals("")) {
+				// A @PlanInfo is optional, and only present if this plan posts goals
+				if (pinfo != null) {
+					if (pinfo.postsGoals().length == 0) {
+						error("Plan "+ptype.getName()+" has incomplete @PlanInfo(postsGoals={\"package.GoalClass1\", \"package.GoalClass2\", ...})) annotation");
+						return false;
+					}
+				
 					Log.info("Plan "+ptype.getName()+" posts "+pinfo.postsGoals().length+" goals");
 					// Find the goal
 					for (String goalname : pinfo.postsGoals()) {
 						GoalType gtype = (GoalType)GlobalState.goalTypes.find(goalname);
 						if (gtype == null) {
-							Log.error(goalname + "not found in known goal types. Should not happen!");
-							continue;
+							error("Plan "+ptype.getName()+" posts goal " + goalname + "which is not a known goal type.");
+							return false;
 						}
 						// Found the goal posted by the plan, so setup the links
 						ptype.addChild((byte)gtype.getId());
@@ -143,18 +156,18 @@ public class ProgramLoader {
 				}
 				
 			} catch (Exception e) {
-				abort("ERROR: " + e.getMessage());
+				error(e.getMessage());
 			}
 			
 		} catch (ClassNotFoundException e) {
-			abort("Class not found: " + e.getMessage());
+			System.err.println("Class not found: " + e.getMessage());
+			return false;
 		}
-		return;
+		return true;
 	}
 
-	private static void abort(String err) {
-		Log.error(err);
+	private static void error(String err) {
 		System.err.println(err);
-		System.exit(0);
+		Log.error(err);
 	}
 }

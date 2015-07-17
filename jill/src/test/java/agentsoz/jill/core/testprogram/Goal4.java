@@ -1,4 +1,4 @@
-package SimpleAgent;
+package agentsoz.jill.core.testprogram;
 
 /*
  * #%L
@@ -22,36 +22,5 @@ package SimpleAgent;
  * #L%
  */
 
-import com.googlecode.cqengine.query.Query;
-
-import agentsoz.jill.lang.Agent;
-import agentsoz.jill.lang.Goal;
-import agentsoz.jill.lang.Plan;
-import agentsoz.jill.lang.PlanInfo;
-import agentsoz.jill.lang.PlanStep;
-
-@PlanInfo(handlesGoal="SimpleAgent.GoalB")
-public class PlanB extends Plan {
-	
-	public PlanB(Agent agent, Goal goal, String name) {
-		super(agent, goal, name);
-		body = steps;
-	}
-	
-	public Query<?> context() {
-		return null;
-	}
-	
-	PlanStep[] steps = {
-			new PlanStep() {
-				public void step() {
-					((TestAgent)getAgent()).setI(((TestAgent)getAgent()).getI() | 0x0002);
-				}
-			},
-	};
-
-	@Override
-	public void setPlanVariables(Object var) {
-		// TODO Auto-generated method stub
-	}
+public class Goal4 {
 }

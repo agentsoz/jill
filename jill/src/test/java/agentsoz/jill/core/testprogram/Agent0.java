@@ -1,4 +1,4 @@
-package agentsoz.jill.lang;
+package agentsoz.jill.core.testprogram;
 
 /*
  * #%L
@@ -22,10 +22,9 @@ package agentsoz.jill.lang;
  * #L%
  */
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+public class Agent0 {
 
-@Retention(RetentionPolicy.RUNTIME)
-public @interface PlanInfo {
-	String[] postsGoals();
+	public Agent0(String name) {
+	}
+
 }

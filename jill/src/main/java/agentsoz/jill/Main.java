@@ -57,13 +57,16 @@ public class Main {
 		int NUMAGENTS = ArgumentsLoader.getNumAgents(); 
 		int INCREMENT = 10000;
 
+		GlobalState.reset();
 		GlobalState.agents = new AObjectCatalog("agents", NUMAGENTS, INCREMENT);
 
 		long t0, t1;
 		
 		// Create the agents
 		t0 = System.currentTimeMillis();
-		ProgramLoader.load(ArgumentsLoader.getAgentClass(), NUMAGENTS, GlobalState.agents);
+		if (!ProgramLoader.load(ArgumentsLoader.getAgentClass(), NUMAGENTS, GlobalState.agents)) {
+			return;
+		}
 		t1 = System.currentTimeMillis();
 		Log.info("Created " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
 

@@ -1,4 +1,7 @@
-package agentsoz.jill.lang;
+package agentsoz.jill.core.testprogram;
+
+import agentsoz.jill.lang.Goal;
+import agentsoz.jill.lang.GoalInfo;
 
 /*
  * #%L
@@ -22,10 +25,11 @@ package agentsoz.jill.lang;
  * #L%
  */
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+@GoalInfo(hasPlans={"agentsoz.jill.core.testprogram.Plan10"})
+public class Goal10 extends Goal{
 
-@Retention(RetentionPolicy.RUNTIME)
-public @interface PlanInfo {
-	String[] postsGoals();
+	public Goal10(String str) {
+		super(str);
+		// TODO Auto-generated constructor stub
+	}
 }

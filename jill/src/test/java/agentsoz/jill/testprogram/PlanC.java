@@ -1,4 +1,4 @@
-package agentsoz.jill.lang;
+package agentsoz.jill.testprogram;
 
 /*
  * #%L
@@ -22,10 +22,34 @@ package agentsoz.jill.lang;
  * #L%
  */
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import com.googlecode.cqengine.query.Query;
 
-@Retention(RetentionPolicy.RUNTIME)
-public @interface PlanInfo {
-	String[] postsGoals();
+import agentsoz.jill.lang.Agent;
+import agentsoz.jill.lang.Goal;
+import agentsoz.jill.lang.Plan;
+import agentsoz.jill.lang.PlanStep;
+
+public class PlanC extends Plan {
+	
+	public PlanC(Agent agent, Goal goal, String name) {
+		super(agent, goal, name);
+		body = steps;
+	}
+	
+	public Query<?> context() {
+		return null;
+	}
+	
+	PlanStep[] steps = {
+			new PlanStep() {
+				public void step() {
+					((TestAgent)getAgent()).setI(((TestAgent)getAgent()).getI() | 0x0004);
+				}
+			},
+	};
+
+	@Override
+	public void setPlanVariables(Object var) {
+		// TODO Auto-generated method stub
+	}
 }

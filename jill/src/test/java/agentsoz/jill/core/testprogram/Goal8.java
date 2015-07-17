@@ -1,4 +1,7 @@
-package SimpleAgent;
+package agentsoz.jill.core.testprogram;
+
+import agentsoz.jill.lang.Goal;
+import agentsoz.jill.lang.GoalInfo;
 
 /*
  * #%L
@@ -22,36 +25,11 @@ package SimpleAgent;
  * #L%
  */
 
-import com.googlecode.cqengine.query.Query;
+@GoalInfo(hasPlans={"agentsoz.jill.core.testprogram.Plan8"})
+public class Goal8 extends Goal{
 
-import agentsoz.jill.lang.Agent;
-import agentsoz.jill.lang.Goal;
-import agentsoz.jill.lang.Plan;
-import agentsoz.jill.lang.PlanInfo;
-import agentsoz.jill.lang.PlanStep;
-
-@PlanInfo(handlesGoal="SimpleAgent.GoalA")
-public class PlanD extends Plan {
-	
-	public PlanD(Agent agent, Goal goal, String name) {
-		super(agent, goal, name);
-		body = steps;
-	}
-	
-	public Query<?> context() {
-		return null;
-	}
-	
-	PlanStep[] steps = {
-			new PlanStep() {
-				public void step() {
-					((TestAgent)getAgent()).setI(((TestAgent)getAgent()).getI() | 0x0008);
-				}
-			},
-	};
-
-	@Override
-	public void setPlanVariables(Object var) {
-		// TODO Auto-generated method stub
+	public Goal8(String str) {
+		super(str);
+		// TODO Auto-generated constructor stub
 	}
 }

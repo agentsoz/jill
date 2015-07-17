@@ -1,4 +1,4 @@
-package SimpleAgent;
+package agentsoz.jill.core.testprogram;
 
 /*
  * #%L
@@ -22,12 +22,12 @@ package SimpleAgent;
  * #L%
  */
 
-import agentsoz.jill.lang.Goal;
-import agentsoz.jill.lang.GoalInfo;
+import agentsoz.jill.lang.Agent;
 
-@GoalInfo(hasPlans={"SimpleAgent.PlanA", "SimpleAgent.PlanD"})
-public class GoalA extends Goal {
-	public GoalA(String name) {
+public class Agent1 extends Agent {
+
+	public Agent1(String name) {
 		super(name);
 	}
+
 }

@@ -35,19 +35,19 @@ public class GlobalState {
 	 * Catalog of all agent types in the system, loaded at runtime. 
 	 * Each entry in the catalog is assigned an automatically created ID.
 	 */
-	public static AObjectCatalog agentTypes = new AObjectCatalog("agentTypes", 5,5);
+	public static AObjectCatalog agentTypes;
 	
 	/**
 	 * Catalog of all goal types in the system, loaded at runtime.
 	 * Each entry in the catalog is assigned an automatically created ID.
 	 */
-	public static AObjectCatalog goalTypes = new AObjectCatalog("goalTypes", 10,5);
+	public static AObjectCatalog goalTypes;
 
 	/**
 	 * Catalog of all plan types in the system, loaded at runtime.
 	 * Each entry in the catalog is assigned an automatically created ID.
 	 */
-	public static AObjectCatalog planTypes = new AObjectCatalog("planTypes", 20,5);
+	public static AObjectCatalog planTypes;
 	
 	/**
 	 * Catalog of all initialised agents in the system.
@@ -60,4 +60,13 @@ public class GlobalState {
 	 */
 	public static boolean[] poolIdle;
 
+	/**
+	 * Resets the global state
+	 */
+	public static void reset() {
+		agentTypes = new AObjectCatalog("agentTypes", 5,5);
+		goalTypes = new AObjectCatalog("goalTypes", 10,5);
+		planTypes = new AObjectCatalog("planTypes", 20,5);
+		agents = null;
+	}
 }
