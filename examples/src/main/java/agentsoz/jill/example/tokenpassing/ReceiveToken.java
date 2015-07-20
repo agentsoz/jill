@@ -66,7 +66,7 @@ public class ReceiveToken extends Plan {
 					} else if ( myid == msg.getAgent()) {
 						int nextAgent = (myid+1)%GlobalState.agents.size();
 						msg.setAgent(nextAgent);
-						TokenAgent1.out.print(">"+nextAgent);
+						//TokenAgent1.out.print(">"+nextAgent);
 						getAgent().send(nextAgent, msg);
 					}
 				}

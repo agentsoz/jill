@@ -24,10 +24,13 @@ package agentsoz.jill.core;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
 
 import com.googlecode.cqengine.query.Query;
 import com.googlecode.cqengine.resultset.ResultSet;
 
+import agentsoz.jill.Main;
 import agentsoz.jill.config.GlobalConstant;
 import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.Goal;
@@ -44,16 +47,25 @@ public class IntentionSelector implements Runnable {
 	private int size;
 	
 	private Random rand;
-
-	public IntentionSelector(int id, long l, int start, int size) {
+	private CyclicBarrier entryBarrier;
+	private CyclicBarrier exitBarrier;
+	
+	public IntentionSelector(int id, long l, int start, int size, CyclicBarrier entryBarrier, CyclicBarrier exitBarrier) {
 		this.id = id;
 		this.start = start;
 		this.size = size;
 		this.rand = new Random(l);
+		this.entryBarrier = entryBarrier;
+		this.exitBarrier = exitBarrier;
 	}
 
-
-	public void run() {
+	public synchronized void run() {
+		do {
+	        try {
+	        	entryBarrier.await();
+			} catch (InterruptedException | BrokenBarrierException e) {
+				Log.error(e.getMessage());
+			}
 		boolean idle = true;
 		ArrayList<Plan> options = new ArrayList<Plan>();
 		for (int i = start; i < start+size; i++) {
@@ -133,6 +145,12 @@ public class IntentionSelector implements Runnable {
 			}
 		}
 		GlobalState.poolIdle[id] = idle;
+        try {
+        	exitBarrier.await();
+		} catch (InterruptedException | BrokenBarrierException e) {
+			Log.error(e.getMessage());
+		}
+		} while (GlobalConstant.EXIT_ON_IDLE && !Main.isIdle());
 	}
 
 	/**

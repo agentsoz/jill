@@ -24,9 +24,8 @@ package agentsoz.jill;
 
 import java.io.PrintStream;
 import java.util.Scanner;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
 
 import agentsoz.jill.config.GlobalConstant;
 import agentsoz.jill.core.GlobalState;
@@ -38,7 +37,7 @@ import agentsoz.jill.util.ArgumentsLoader;
 import agentsoz.jill.util.Log;
 
 public class Main {
-
+	
 	/**
 	 * @param args
 	 */
@@ -105,6 +104,7 @@ public class Main {
 			GlobalState.poolIdle[k] = true;
 		}
 		int cycle = 0;
+		/*
 		do {
 			cycle++;
 	        ExecutorService executor = Executors.newFixedThreadPool(ncores);
@@ -120,7 +120,29 @@ public class Main {
 				Log.warn(e.getMessage());
 			}
 		} while (GlobalConstant.EXIT_ON_IDLE && !isIdle());
-		
+		*/
+		CyclicBarrier entryBarrier = new CyclicBarrier(npools+1);
+		CyclicBarrier exitBarrier = new CyclicBarrier(npools+1);
+		IntentionSelector[] intentionSelectors = new IntentionSelector[ncores];
+        for (int i = 0; i < npools; i++) {
+        	int start = i*poolsize;
+        	int size = (i+1 < npools) ? poolsize : GlobalState.agents.size()-start;
+        	intentionSelectors[i] = new IntentionSelector(i, ArgumentsLoader.getRandomSeed(), start,size, entryBarrier, exitBarrier);
+        	new Thread(intentionSelectors[i]).start(); // start and wait at the entry barrier
+        }
+		do {
+			try {
+				entryBarrier.await(); // Threads start their step now
+			} catch (InterruptedException | BrokenBarrierException e) {
+				Log.error(e.getMessage());
+			} 
+			cycle++;
+			try {
+				exitBarrier.await(); // Threads finish their step now, and wait at next start
+			} catch (InterruptedException | BrokenBarrierException e) {
+				Log.error(e.getMessage());
+			} 
+		} while (GlobalConstant.EXIT_ON_IDLE && !isIdle());
 		t1 = System.currentTimeMillis();
 		Log.info("Finished running "+cycle+" execution cycles with " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
 
