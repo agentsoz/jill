@@ -5,7 +5,7 @@ DIR=`dirname "$0"`
 CP=${DIR}/../jill/target/jill-0.0.1-SNAPSHOT-jar-with-dependencies.jar:${DIR}/../examples/target/jill-examples-0.0.1-SNAPSHOT.jar:
 
 # Connect the BDI system
-CMD="java -cp ${CP} agentsoz.jill.Main -h"
+CMD="java -cp ${CP} agentsoz.jill.Main --help"
 echo $CMD; $CMD
 
 a=100000
