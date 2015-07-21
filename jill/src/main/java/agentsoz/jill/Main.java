@@ -43,7 +43,10 @@ public class Main {
 	 */
 	private static int poolsIdle;
 	private static int npools;
-	private static Object lock = new Object();
+	private static Object lockPoolsIdle = new Object();
+	
+	private static byte[] agentsIdle;
+	private static Object lockAgentsIdle = new Object();
 
 	/**
 	 * @param args
@@ -91,6 +94,7 @@ public class Main {
 		
 		// Start the agents
 		t0 = System.currentTimeMillis();
+		initAgentsIdleCache();
 		for (int i = 0; i < GlobalState.agents.size(); i++) {
 			// Get the agent
 			Agent agent = (Agent)GlobalState.agents.get(i);
@@ -149,7 +153,7 @@ public class Main {
 	}
 	
 	private static void resetPoolsIdle() {
-		synchronized(lock) {
+		synchronized(lockPoolsIdle) {
 			poolsIdle = 0;
 		}
 	}
@@ -159,7 +163,7 @@ public class Main {
 	 * @param state
 	 */
 	public static void addPoolIdleState(boolean isIdle) {
-		synchronized(lock) {
+		synchronized(lockPoolsIdle) {
 			if (isIdle) {
 				poolsIdle++;
 			}
@@ -170,7 +174,7 @@ public class Main {
 	 * Starts the intention selection threads that each handle a pool of agents
 	 * @return the number of threads started
 	 */
-	public static CyclicBarrier[] startIntentionSelectionThreads() {
+	private static CyclicBarrier[] startIntentionSelectionThreads() {
 		CyclicBarrier[] barriers = new CyclicBarrier[2];
 		int ncores = ArgumentsLoader.getNumThreads();
 		int nagents = GlobalState.agents.size();
@@ -187,6 +191,42 @@ public class Main {
         	new Thread(intentionSelectors[i]).start(); // start and wait at the entry barrier
         }
         return barriers;
+	}
+	
+	private static void initAgentsIdleCache() {
+		int nagents = GlobalState.agents.size();
+		int nBytes = (nagents/8)+1;
+		synchronized(lockAgentsIdle) {
+			// Initialise the agents idle cache
+			agentsIdle = new byte[nBytes];
+			// Set all agents to idle
+			for (int i = 0; i < agentsIdle.length; i++) {
+				agentsIdle[i] = (byte)0xff;
+			}
+		}
+	}
+	/**
+	 * Sets a bit in the agentsIdle cache, to mark if this agent is idle (or not).
+	 * @param agentId
+	 * @param isIdle
+	 */
+	public static void setAgentIdle(int agentId, boolean isIdle) {
+		int byteIndex = agentId/8;
+		int bitIndex = agentId%8;
+		int mask = ~(1 << bitIndex) & 0xff;
+		int state = ((isIdle) ? 1 : 0) << bitIndex;
+		synchronized(lockAgentsIdle) {
+			agentsIdle[byteIndex] &= mask; // clear the bit
+			agentsIdle[byteIndex] |= state; // set the bit
+		}
+	}
+	
+	public static boolean isAgentIdle(int agentId) {
+		int byteIndex = agentId/8;
+		int bitIndex = agentId%8;
+		int mask = 1 << bitIndex;
+		int state = (agentsIdle[byteIndex] & mask) >> bitIndex;
+		return (state == 1);
 	}
 	
 	/**
