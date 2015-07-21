@@ -42,7 +42,6 @@ import agentsoz.jill.util.Stack255;
 
 public class IntentionSelector implements Runnable {
 
-	private int id;
 	private int start;
 	private int size;
 	
@@ -50,8 +49,7 @@ public class IntentionSelector implements Runnable {
 	private CyclicBarrier entryBarrier;
 	private CyclicBarrier exitBarrier;
 	
-	public IntentionSelector(int id, long l, int start, int size, CyclicBarrier entryBarrier, CyclicBarrier exitBarrier) {
-		this.id = id;
+	public IntentionSelector(long l, int start, int size, CyclicBarrier entryBarrier, CyclicBarrier exitBarrier) {
 		this.start = start;
 		this.size = size;
 		this.rand = new Random(l);
@@ -144,13 +142,13 @@ public class IntentionSelector implements Runnable {
 				
 			}
 		}
-		GlobalState.poolIdle[id] = idle;
+		Main.addPoolIdleState(idle);
         try {
         	exitBarrier.await();
 		} catch (InterruptedException | BrokenBarrierException e) {
 			Log.error(e.getMessage());
 		}
-		} while (GlobalConstant.EXIT_ON_IDLE && !Main.isIdle());
+		} while (GlobalConstant.EXIT_ON_IDLE && !Main.arePoolsIdle());
 	}
 
 	/**

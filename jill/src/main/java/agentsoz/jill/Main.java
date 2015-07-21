@@ -37,7 +37,14 @@ import agentsoz.jill.util.ArgumentsLoader;
 import agentsoz.jill.util.Log;
 
 public class Main {
-	
+
+	/**
+	 * Used to mark if all the pools of agents are idle or not
+	 */
+	private static int poolsIdle;
+	private static int npools;
+	private static Object lock = new Object();
+
 	/**
 	 * @param args
 	 */
@@ -93,44 +100,15 @@ public class Main {
 		t1 = System.currentTimeMillis();
 		Log.info("Started " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
 
+		// Start the intention selection threads
+		CyclicBarrier[] barriers = startIntentionSelectionThreads();
+		CyclicBarrier entryBarrier = barriers[0], exitBarrier = barriers[1];
+
 		// Wait till we are all done
 		t0 = System.currentTimeMillis();
-		int ncores = ArgumentsLoader.getNumThreads();
-		int nagents = GlobalState.agents.size();
-		int poolsize = (nagents > ncores) ? (nagents/ncores) : 1;
-		int npools = (nagents > ncores) ? ncores : nagents;
-		GlobalState.poolIdle = new boolean[ncores];
-		for (int k = 0; k < GlobalState.poolIdle.length; k++) {
-			GlobalState.poolIdle[k] = true;
-		}
 		int cycle = 0;
-		/*
 		do {
-			cycle++;
-	        ExecutorService executor = Executors.newFixedThreadPool(ncores);
-	        for (int i = 0; i < npools; i++) {
-	        	int start = i*poolsize;
-	        	int size = (i+1 < npools) ? poolsize : GlobalState.agents.size()-start;
-				executor.execute(new IntentionSelector(i, ArgumentsLoader.getRandomSeed(), start,size));
-	        }
-			executor.shutdown();
-			try {
-				executor.awaitTermination(10, TimeUnit.SECONDS);
-			} catch (InterruptedException e) {
-				Log.warn(e.getMessage());
-			}
-		} while (GlobalConstant.EXIT_ON_IDLE && !isIdle());
-		*/
-		CyclicBarrier entryBarrier = new CyclicBarrier(npools+1);
-		CyclicBarrier exitBarrier = new CyclicBarrier(npools+1);
-		IntentionSelector[] intentionSelectors = new IntentionSelector[ncores];
-        for (int i = 0; i < npools; i++) {
-        	int start = i*poolsize;
-        	int size = (i+1 < npools) ? poolsize : GlobalState.agents.size()-start;
-        	intentionSelectors[i] = new IntentionSelector(i, ArgumentsLoader.getRandomSeed(), start,size, entryBarrier, exitBarrier);
-        	new Thread(intentionSelectors[i]).start(); // start and wait at the entry barrier
-        }
-		do {
+			resetPoolsIdle();
 			try {
 				entryBarrier.await(); // Threads start their step now
 			} catch (InterruptedException | BrokenBarrierException e) {
@@ -142,7 +120,7 @@ public class Main {
 			} catch (InterruptedException | BrokenBarrierException e) {
 				Log.error(e.getMessage());
 			} 
-		} while (GlobalConstant.EXIT_ON_IDLE && !isIdle());
+		} while (GlobalConstant.EXIT_ON_IDLE && !arePoolsIdle());
 		t1 = System.currentTimeMillis();
 		Log.info("Finished running "+cycle+" execution cycles with " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
 
@@ -163,16 +141,52 @@ public class Main {
 	}
 	
 	/**
-	 * Checks if the system is idle, i.e., all the agents are idle with
-	 * empty execution stacks
+	 * Checks if the system is idle, i.e., all the agents pools are idle
 	 * @return
 	 */
-	public static boolean isIdle() {
-		boolean idle = true;
-		for (int i = 0; i < GlobalState.poolIdle.length; i++) {
-			idle &= GlobalState.poolIdle[i];
+	public static boolean arePoolsIdle() {
+		return poolsIdle == npools;
+	}
+	
+	private static void resetPoolsIdle() {
+		synchronized(lock) {
+			poolsIdle = 0;
 		}
-		return idle;
+	}
+
+	/** 
+	 * Records the idle state of a pool 
+	 * @param state
+	 */
+	public static void addPoolIdleState(boolean isIdle) {
+		synchronized(lock) {
+			if (isIdle) {
+				poolsIdle++;
+			}
+		}
+	}
+	
+	/**
+	 * Starts the intention selection threads that each handle a pool of agents
+	 * @return the number of threads started
+	 */
+	public static CyclicBarrier[] startIntentionSelectionThreads() {
+		CyclicBarrier[] barriers = new CyclicBarrier[2];
+		int ncores = ArgumentsLoader.getNumThreads();
+		int nagents = GlobalState.agents.size();
+		int poolsize = (nagents > ncores) ? (nagents/ncores) : 1;
+		npools = (nagents > ncores) ? ncores : nagents;
+		barriers[0] = new CyclicBarrier(npools+1);
+		barriers[1] = new CyclicBarrier(npools+1);
+
+		IntentionSelector[] intentionSelectors = new IntentionSelector[ncores];
+        for (int i = 0; i < npools; i++) {
+        	int start = i*poolsize;
+        	int size = (i+1 < npools) ? poolsize : GlobalState.agents.size()-start;
+        	intentionSelectors[i] = new IntentionSelector(ArgumentsLoader.getRandomSeed(), start,size, barriers[0], barriers[1]);
+        	new Thread(intentionSelectors[i]).start(); // start and wait at the entry barrier
+        }
+        return barriers;
 	}
 	
 	/**

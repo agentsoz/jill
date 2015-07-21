@@ -56,11 +56,6 @@ public class GlobalState {
 	public static AObjectCatalog agents;
 	
 	/**
-	 * Used to mark if the pool of agents is idle or not
-	 */
-	public static boolean[] poolIdle;
-
-	/**
 	 * Resets the global state
 	 */
 	public static void reset() {
