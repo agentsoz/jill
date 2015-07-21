@@ -67,12 +67,18 @@ public class IntentionSelector implements Runnable {
 		boolean idle = true;
 		ArrayList<Plan> options = new ArrayList<Plan>();
 		for (int i = start; i < start+size; i++) {
+			// Nothing to do if this agent is idle
+			if (Main.isAgentIdle(i)) {
+				continue;
+			}
+			
 			Agent agent = (Agent)GlobalState.agents.get(i);
 			Stack255 agentExecutionStack = (Stack255)(agent).getExecutionStack();
 			int esSize = agentExecutionStack.size();
 			Log.trace("Agent " + agent.getName() + "'s execution stack is "+esSize+"/255 full");
 			if (agentExecutionStack == null || esSize == 0) {
-				// Nothing to do for this agent
+				// Mark this agent as idle
+				Main.setAgentIdle(i, true);
 				continue;
 			}
 			if (esSize >= 255) {

@@ -27,6 +27,7 @@ import java.io.PrintStream;
 import com.googlecode.cqengine.query.Query;
 import com.googlecode.cqengine.resultset.ResultSet;
 
+import agentsoz.jill.Main;
 import agentsoz.jill.core.GlobalState;
 import agentsoz.jill.struct.AObject;
 import agentsoz.jill.util.Log;
@@ -105,6 +106,7 @@ public class Agent extends AObject {
 	public void post(Goal goal) {
 		Log.debug("Agent "+getName()+" posting goal " + goal);
 		executionStack.push(goal);
+		Main.setAgentIdle(getId(), false);
 	}
 	
 	public boolean send(int id, Goal msg) {
