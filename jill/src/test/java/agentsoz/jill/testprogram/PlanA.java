@@ -22,7 +22,7 @@ package agentsoz.jill.testprogram;
  * #L%
  */
 
-import com.googlecode.cqengine.query.Query;
+import java.util.HashMap;
 
 import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.Goal;
@@ -38,8 +38,8 @@ public class PlanA extends Plan {
 		body = steps;
 	}
 
-	public Query<?> context() {
-		return null;
+	public boolean context() {
+		return true;
 	}
 	
 	PlanStep[] steps = {
@@ -61,7 +61,8 @@ public class PlanA extends Plan {
 	};
 
 	@Override
-	public void setPlanVariables(Object var) {
+	public void setPlanVariables(HashMap<String, Object> vars) {
 		// TODO Auto-generated method stub
+		
 	}
 }

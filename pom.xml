@@ -26,15 +26,15 @@
       <version>4.12</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>com.googlecode.cqengine</groupId>
-      <artifactId>cqengine</artifactId>
-      <version>2.0.3</version>
-    </dependency>
     <dependency> 
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
       <version>1.0.13</version>
+    </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>1.4.187</version>
     </dependency>
   </dependencies>
 

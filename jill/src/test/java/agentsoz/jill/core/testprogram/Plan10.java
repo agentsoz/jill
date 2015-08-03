@@ -1,6 +1,6 @@
 package agentsoz.jill.core.testprogram;
 
-import com.googlecode.cqengine.query.Query;
+import java.util.HashMap;
 
 import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.Goal;
@@ -38,13 +38,12 @@ public class Plan10 extends Plan {
 	}
 
 	@Override
-	public Query<?> context() {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean context() {
+		return true;
 	}
 
 	@Override
-	public void setPlanVariables(Object var) {
+	public void setPlanVariables(HashMap<String, Object> vars) {
 		// TODO Auto-generated method stub
 		
 	} 

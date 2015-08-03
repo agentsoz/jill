@@ -22,7 +22,7 @@ package agentsoz.jill.example.hanoi;
  * #L%
  */
 
-import com.googlecode.cqengine.query.Query;
+import java.util.HashMap;
 
 import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.Goal;
@@ -39,14 +39,13 @@ public class MoveTower extends Plan {
 	}
 
 	@Override
-	public Query<?> context() {
-		return null; // null indicates true
+	public boolean context() {
+		return true; // null indicates true
 	}
 
 	@Override
-	public void setPlanVariables(Object var) {
+	public void setPlanVariables(HashMap<String, Object> var) {
 		// TODO Auto-generated method stub
-
 	}
 	
 	PlanStep[] steps = {

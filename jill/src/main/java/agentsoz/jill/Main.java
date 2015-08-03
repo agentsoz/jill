@@ -23,6 +23,9 @@ package agentsoz.jill;
  */
 
 import java.io.PrintStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
@@ -48,6 +51,8 @@ public class Main {
 	private static byte[] agentsIdle;
 	private static Object lockAgentsIdle = new Object();
 
+	private static Connection connection;
+	
 	/**
 	 * @param args
 	 */
@@ -62,6 +67,11 @@ public class Main {
 		// Configure logging
         Log.createLogger("", ArgumentsLoader.getLogLevel(), ArgumentsLoader.getLogFile());
 
+        // Create the beliefs database
+        connection = openDBConnection();
+        if (connection == null) {
+        	return;
+        }
 		
 		int NUMAGENTS = ArgumentsLoader.getNumAgents(); 
 		int INCREMENT = 10000;
@@ -136,14 +146,32 @@ public class Main {
 			// Terminate the agent
 			agent.finish();
 		}
+		// Close the writer
 		if (writer != null) {
 			writer.close();
+		}
+		// Close the DB connection
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			Log.error(e.getMessage());
 		}
 		t1 = System.currentTimeMillis();
 		Log.info("Terminated " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
 
 	}
 	
+	private static Connection openDBConnection() {
+		Connection connection = null;
+		try {
+			Class.forName("org.h2.Driver");
+			connection = DriverManager.getConnection(GlobalConstant.H2_CONNECT);
+		} catch (ClassNotFoundException | SQLException e) {
+			Log.error(e.getMessage());
+		}
+		return connection;
+	}
+
 	/**
 	 * Checks if the system is idle, i.e., all the agents pools are idle
 	 * @return
@@ -238,5 +266,9 @@ public class Main {
 		Scanner in = new Scanner(System.in);
 		in.nextLine();
 		in.close();
+	}
+
+	public static Connection getConnection() {
+		return connection;
 	}
 }

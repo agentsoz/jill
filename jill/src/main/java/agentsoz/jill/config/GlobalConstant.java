@@ -73,4 +73,9 @@ public class GlobalConstant {
 	 * to false will force the system to run forever.  
 	 */
 	public static boolean EXIT_ON_IDLE = true;
+
+	/**
+	 * Agents beliefset (H2 database) connection string
+	 */
+	public static final String H2_CONNECT = "jdbc:h2:mem:agents;CACHE_SIZE=1048576"; 
 }

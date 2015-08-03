@@ -8,8 +8,8 @@ CP=${DIR}/../jill/target/jill-0.0.1-SNAPSHOT-jar-with-dependencies.jar:${DIR}/..
 CMD="java -cp ${CP} agentsoz.jill.Main --help"
 echo $CMD; $CMD
 
-a=100000
-b=50
+a=10000
+b=5
 ID=greeter-${a}a-${b}b
 echo ""
 echo "Running $a agents with $b neighbours each (see ${ID}.*)"
@@ -17,6 +17,8 @@ CMD="java -Xmx2g -Xms2g -cp ${CP} agentsoz.jill.Main --agent-class agentsoz.jill
 echo "Started at " `date`
 echo $CMD; eval $CMD > ${DIR}/${ID}.out
 echo "Finished at" `date`
+
+exit 
 
 a=50000
 b=100

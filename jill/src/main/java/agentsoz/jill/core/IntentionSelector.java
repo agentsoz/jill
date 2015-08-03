@@ -23,16 +23,15 @@ package agentsoz.jill.core;
  */
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
-import com.googlecode.cqengine.query.Query;
-import com.googlecode.cqengine.resultset.ResultSet;
-
 import agentsoz.jill.Main;
 import agentsoz.jill.config.GlobalConstant;
 import agentsoz.jill.lang.Agent;
+import agentsoz.jill.lang.BeliefSet;
 import agentsoz.jill.lang.Goal;
 import agentsoz.jill.lang.Plan;
 import agentsoz.jill.struct.GoalType;
@@ -121,14 +120,12 @@ public class IntentionSelector implements Runnable {
 						// Create an object on this Plan type, so we can
 						// access its context condition
 						Plan planInstance = (Plan)(ptype.getPlanClass().getConstructor(Agent.class, Goal.class, String.class).newInstance(GlobalState.agents.get(i), node, "p"));
-						// Extract its context condition
-						Query<?> context = planInstance.context();
-						// TODO: Check if context is true, false, or a query
 						// Evaluate the context condition
-						if (context != null) {
-							ResultSet<?> matches = agent.queryBeliefSet(context);
+						boolean context = planInstance.context();
+						if (context == true) {
 							// Select a binding
-							planInstance.setPlanVariables(selectPlan(agent, planInstance, matches));
+							selectPlanBinding(agent, planInstance.getClass().getSimpleName());
+							planInstance.setPlanVariables(getPlanVariables(agent));
 						}
 						// Add it to the options
 						options.add(planInstance);
@@ -163,9 +160,13 @@ public class IntentionSelector implements Runnable {
 	 * @param matches
 	 * @return
 	 */
-	private Object selectPlan(Agent agent, Plan planInstance, ResultSet<?> matches) {
-		int matchesCount = matches.size();
-		Log.trace(show(matches, 5));
+	private void selectPlanBinding(Agent agent, String planType) {
+		BeliefSet bs = agent.getBeliefSet();
+		if (bs == null) {
+			return;
+		}
+		int size = bs.getResultSetSize();
+		//Log.trace(show(matches, 5));
 		// Select a binding
 		int choice = 0;
 		switch (GlobalConstant.PLAN_SELECTION_POLICY) {
@@ -173,32 +174,35 @@ public class IntentionSelector implements Runnable {
 			choice = 0;
 			break;
 		case RANDOM:
-			int limit = (matchesCount > GlobalConstant.PLAN_INSTANCES_LIMIT) ?
-					GlobalConstant.PLAN_INSTANCES_LIMIT : matchesCount;
-			choice = rand.nextInt(limit);
+			choice = rand.nextInt(size);
 			break;
 		case LAST:
-			choice = matchesCount - 1;
+			choice = size - 1;
 			break;
 		};
-		Log.debug("Agent "+agent.getName()+" plan "+planInstance.getClass().getSimpleName()+" has "+matches.size()+" applicable instances; choosing instance "+choice);
-		int index = 0;
-		for (Object binding : matches) {
-			if (index == choice) {
-				return binding;
-			}
-			index++;
-		}
-		return null;
+		Log.debug("Agent "+agent.getName()+" plan "+planType+" has "+size+" applicable instances; choosing instance "+choice);
+		bs.selectResult(choice);
 	}
 	
-    /**
+	public HashMap<String, Object> getPlanVariables(Agent agent) {
+		HashMap<String, Object> vars= new HashMap<String, Object>();
+		BeliefSet bs = agent.getBeliefSet();
+		if (bs != null) {
+			HashMap<String, Class<?>> attributes = bs.getAttributes();
+			for (String attribute : attributes.keySet()) {
+				vars.put(attribute, bs.getResult(attribute, attributes.get(attribute)));
+			}
+		}
+		return vars;
+	}
+     /**
      * Shows the first n results from the ResultSet r,
      * or shows all if the size of the result set is less than n
      * @param r
      * @param n
      */
-    private static String show(ResultSet<?> r, int n) {
+	/*
+    private static String show(ResultSet r, int n) {
     	String s = "";
     	int size = (r.size() > n) ? n : r.size();
     	if (size > 0) {
@@ -210,5 +214,5 @@ public class IntentionSelector implements Runnable {
     	}
     	return s;
     }
-
+	*/
 }

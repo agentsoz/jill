@@ -1,6 +1,6 @@
 package agentsoz.jill.lang;
 
-import com.googlecode.cqengine.query.Query;
+import java.util.HashMap;
 
 /*
  * #%L
@@ -35,8 +35,8 @@ public abstract class Plan {
 		this.goal = goal;
 	}
 
-	public abstract Query<?> context();
-	public abstract void setPlanVariables(Object var);
+	public abstract boolean context();
+	public abstract void setPlanVariables(HashMap<String,Object> vars);
 
 	public PlanStep[] body;
 	

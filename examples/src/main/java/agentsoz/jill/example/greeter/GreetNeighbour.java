@@ -22,37 +22,45 @@ package agentsoz.jill.example.greeter;
  * #L%
  */
 
-import com.googlecode.cqengine.query.Query;
+import java.util.HashMap;
 
 import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.Goal;
 import agentsoz.jill.lang.Plan;
 import agentsoz.jill.lang.PlanStep;
-import static com.googlecode.cqengine.query.QueryFactory.*;
 
 public class GreetNeighbour extends Plan {
 
-	Neighbour neighbour;
+	String neighbour;
 	
 	public GreetNeighbour(Agent agent, Goal goal, String name) {
 		super(agent, goal, name);
 		body = steps;
+		neighbour = "Unknown";
 	}
 
 	@Override
-	public Query<Neighbour> context() {
-		return all(Neighbour.class);
+	public boolean context() {
+		return getAgent().getBeliefSet().all();
 	}
 	
 	@Override
-	public void setPlanVariables(Object var) {
-		neighbour = (Neighbour)var;
+	public void setPlanVariables(HashMap<String, Object> vars) {
+		for (String attribute: vars.keySet()) {
+			switch (attribute) {
+			case "name":
+				neighbour = (String)(vars.get(attribute));
+				break;
+			default:
+				break;
+			}
+		}
 	}
 
 	PlanStep[] steps = {
 			new PlanStep() {
 				public void step() {
-					System.out.println(getAgent().getName() + " says hello " + neighbour.getName());
+					System.out.println(getAgent().getName() + " says hello " + neighbour);
 				}
 			},
 	};

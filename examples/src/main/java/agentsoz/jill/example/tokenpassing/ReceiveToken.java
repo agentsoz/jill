@@ -22,7 +22,7 @@ package agentsoz.jill.example.tokenpassing;
  * #L%
  */
 
-import com.googlecode.cqengine.query.Query;
+import java.util.HashMap;
 
 import agentsoz.jill.core.GlobalState;
 import agentsoz.jill.lang.Agent;
@@ -38,12 +38,12 @@ public class ReceiveToken extends Plan {
 	}
 
 	@Override
-	public Query<?> context() {
-		return null;
+	public boolean context() {
+		return true;
 	}
 
 	@Override
-	public void setPlanVariables(Object var) {
+	public void setPlanVariables(HashMap<String, Object> vars) {
 	}
 
 	PlanStep[] steps = {

@@ -22,7 +22,7 @@ package agentsoz.jill.sendreceive;
  * #L%
  */
 
-import com.googlecode.cqengine.query.Query;
+import java.util.HashMap;
 
 import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.Goal;
@@ -40,12 +40,8 @@ public class HandleMessage extends Plan {
 	}
 
 	@Override
-	public Query<?> context() {
-		return null;
-	}
-
-	@Override
-	public void setPlanVariables(Object var) {
+	public boolean context() {
+		return true;
 	}
 
 	PlanStep[] steps = {
@@ -64,5 +60,11 @@ public class HandleMessage extends Plan {
 				}
 			},
 	};
+
+	@Override
+	public void setPlanVariables(HashMap<String, Object> vars) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

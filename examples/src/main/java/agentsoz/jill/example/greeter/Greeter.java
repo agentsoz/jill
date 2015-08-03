@@ -25,7 +25,6 @@ package agentsoz.jill.example.greeter;
 import java.io.PrintStream;
 import java.util.Random;
 
-import agentsoz.jill.example.greeter.Neighbour.Gender;
 import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.AgentInfo;
 import agentsoz.jill.lang.BeliefSet;
@@ -48,8 +47,12 @@ public class Greeter extends Agent {
 		parse(params);
 		
 		// Create a new belief set about neighbours
-		BeliefSet<Neighbour> neighbours = new BeliefSet<Neighbour>();
-		
+		BeliefSet neighbours = new BeliefSet(getId(), "neighbours");
+		neighbours.buildAttribute("name", String.class, false);
+		neighbours.buildAttribute("gender", String.class, false);
+		neighbours.buildAttribute("housenumber", Integer.class, true);
+		neighbours.create();
+
 		// Attach this belief set to this agent
 		this.setBeliefSet(neighbours);
 		
@@ -86,17 +89,16 @@ public class Greeter extends Agent {
 				"Anderson", "Brown", "Jones", "Martin", "Morton", 
 				"Smith", "Taylor", "White", "Williams", "Wilson",
 		};
-		@SuppressWarnings("unchecked")
-		BeliefSet<Neighbour> neighbours = (BeliefSet<Neighbour>)getBeliefSet();
+		BeliefSet neighbours = getBeliefSet();
 		int size = (count < 0) ? 0 : count;
 		for (int i = 0; i < size; i++) {
 			boolean male = (rand.nextDouble() < 0.5) ? true : false;
 			String name = male ? MALES[rand.nextInt(MALES.length)] : FEMALES[rand.nextInt(FEMALES.length)];
 			name += " " + MIDDLE[rand.nextInt(MIDDLE.length)] + " ";
 			name += SURNAMES[rand.nextInt(SURNAMES.length)]; 
-			Gender gender = male ? Gender.Male : Gender.Female;
+			String gender = male ? "male" : "female";
 			int hnumber = i+1;
-			neighbours.add(new Neighbour(name, gender, hnumber));
+			neighbours.addBelief(name, gender, hnumber);
 		}
 	}
 	
