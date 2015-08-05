@@ -23,6 +23,8 @@ package agentsoz.jill.core.beliefbase;
  */
 
 import ch.qos.logback.classic.Level;
+import agentsoz.jill.core.GlobalState;
+import agentsoz.jill.core.beliefbase.abs.ABeliefStore;
 import agentsoz.jill.core.beliefbase.h2.H2BeliefBase;
 import agentsoz.jill.util.Log;
 
@@ -71,6 +73,8 @@ public abstract class BeliefBase {
 	}
 
 	public class BeliefBaseException extends Exception{
+		private static final long serialVersionUID = -2198448974372743421L;
+
 		public BeliefBaseException(String msg) {
 			super(msg);
 		}
@@ -79,7 +83,7 @@ public abstract class BeliefBase {
 	public static void main(String[] args) throws BeliefBaseException {
 		// Configure logging
         Log.createLogger("", Level.INFO, "BeliefBase.log");
-		BeliefBase bb = new H2BeliefBase("jdbc:h2:mem:agents;CACHE_SIZE=1048576");
+        //BeliefBase bb = new H2BeliefBase("jdbc:h2:mem:agents;CACHE_SIZE=1048576");
 		
 		String bs1 = "neighbour";
 		String bs2 = "hascar";
@@ -88,6 +92,7 @@ public abstract class BeliefBase {
 		
 		int nAGENTS = 1000;
 		int nNEIGHBOURS = 1000;
+		BeliefBase bb = new ABeliefStore(nAGENTS);
 		Log.info("Initialising "+nAGENTS+" agents with "+nNEIGHBOURS+" beliefs each");
 		BeliefSetField[] fields1 = {
 				bb.new BeliefSetField("name", String.class, true),
@@ -106,7 +111,7 @@ public abstract class BeliefBase {
 			Log.debug("Created belief set '"+bs1+"' ("+(t1-t0)+" ms)");
 			t0 = System.currentTimeMillis();
 			for (int j = 0; j < nNEIGHBOURS; j++) {
-				bb.addBelief(i, bs1, "agent"+((i+1)*j), ((j%2)==0)?"male":"female");
+				bb.addBelief(i, bs1, "agent"+j, ((j%2)==0)?"male":"female");
 			}
 			t1 = System.currentTimeMillis();
 			Log.debug("Agent "+i+" added "+nNEIGHBOURS+" beliefs to belief set '"+bs1+"' ("+(t1-t0)+" ms)");
