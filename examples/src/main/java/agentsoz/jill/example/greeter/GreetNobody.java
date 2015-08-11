@@ -22,14 +22,39 @@ package agentsoz.jill.example.greeter;
  * #L%
  */
 
+import java.util.HashMap;
+
+import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.Goal;
-import agentsoz.jill.lang.GoalInfo;
+import agentsoz.jill.lang.Plan;
+import agentsoz.jill.lang.PlanStep;
 
-@GoalInfo(hasPlans={"agentsoz.jill.example.greeter.GreetNeighbour", "agentsoz.jill.example.greeter.GreetNobody"})
-public class BeFriendly extends Goal {
+public class GreetNobody extends Plan {
 
-	public BeFriendly(String str) {
-		super(str);
+	String neighbour;
+
+	public GreetNobody(Agent agent, Goal goal, String name) {
+		super(agent, goal, name);
+		body = steps;
+		neighbour = "Unknown";
 	}
-	
+
+	@Override
+	public boolean context() {
+		return true;
+	}
+
+	@Override
+	public void setPlanVariables(HashMap<String, Object> vars) {
+		// TODO Auto-generated method stub
+	}
+
+	PlanStep[] steps = {
+			new PlanStep() {
+				public void step() {
+					System.out.println(getAgent().getName() + " says, \"hello, is there any body out there?\"");
+				}
+			},
+	};
+
 }

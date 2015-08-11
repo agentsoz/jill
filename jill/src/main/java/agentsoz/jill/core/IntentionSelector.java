@@ -147,10 +147,11 @@ public class IntentionSelector implements Runnable {
 				}
 				if (options.isEmpty()) {
 					// No plan options for this goal at this point in time, so move to the next agent
+					Log.info("Agent "+agent.getName()+" has no applicable plans for goal "+gtype+" and will continue to wait indeifnitely");
 					continue;
 				}
-				// TODO: Pick a plan option using some policy (random for now)
-				int choice = rand.nextInt(options.size());
+				// TODO: Pick a plan option using specified policy
+				int choice = selectIndex(options.size(), GlobalConstant.PLAN_SELECTION_POLICY);
 				// Now push the plan on to the intention stack
 				agentExecutionStack.push(options.get(choice));
 				options.clear();
