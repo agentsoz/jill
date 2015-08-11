@@ -24,10 +24,12 @@ package agentsoz.jill.example.greeter;
 
 import java.util.HashMap;
 
+import agentsoz.jill.core.beliefbase.BeliefBaseException;
 import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.Goal;
 import agentsoz.jill.lang.Plan;
 import agentsoz.jill.lang.PlanStep;
+import agentsoz.jill.util.Log;
 
 public class GreetNeighbour extends Plan {
 
@@ -41,7 +43,12 @@ public class GreetNeighbour extends Plan {
 
 	@Override
 	public boolean context() {
-		return getAgent().getBeliefSet().all();
+		try {
+			return getAgent().eval("neighbour.gender = male");
+		} catch (BeliefBaseException e) {
+			Log.error(e.getMessage());
+		}
+		return false;
 	}
 	
 	@Override

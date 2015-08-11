@@ -25,9 +25,10 @@ package agentsoz.jill.example.greeter;
 import java.io.PrintStream;
 import java.util.Random;
 
+import agentsoz.jill.core.beliefbase.BeliefBaseException;
+import agentsoz.jill.core.beliefbase.BeliefSetField;
 import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.AgentInfo;
-import agentsoz.jill.lang.BeliefSet;
 import agentsoz.jill.util.Log;
 
 @AgentInfo(hasGoals={"agentsoz.jill.example.greeter.BeFriendly"})
@@ -36,7 +37,7 @@ public class Greeter extends Agent {
 	// Defaults
 	private static Random rand = new Random();
 	private static int numNeighbours = 1;
-	
+	private static final String beliefset = "neighbour";
 	public Greeter(String name) {
 		super(name);
 	}
@@ -47,29 +48,33 @@ public class Greeter extends Agent {
 		parse(params);
 		
 		// Create a new belief set about neighbours
-		BeliefSet neighbours = new BeliefSet(getId(), "neighbours");
-		neighbours.buildAttribute("name", String.class, false);
-		neighbours.buildAttribute("gender", String.class, false);
-		neighbours.buildAttribute("housenumber", Integer.class, true);
-		neighbours.create();
+		BeliefSetField[] fields = {
+				new BeliefSetField("name", String.class, true),
+				new BeliefSetField("gender", String.class, false),
+		};
 
-		// Attach this belief set to this agent
-		this.setBeliefSet(neighbours);
+		try {
+			// Attach this belief set to this agent
+			this.createBeliefSet(beliefset, fields);
 		
-		// Add beliefs about neighbours
-		registerNeighbours(rand, numNeighbours);
-		Log.debug("Agent " + getName() + " is initialising with " + numNeighbours + " neighbours");
+			// Add beliefs about neighbours
+			registerNeighbours(rand, numNeighbours);
+			Log.debug("Agent " + getName() + " is initialising with " + numNeighbours + " neighbours");
 
-		// Post the goal to be friendly
-		post(new BeFriendly("BeFriendly"));
+			// Post the goal to be friendly
+			post(new BeFriendly("BeFriendly"));
+		} catch (BeliefBaseException e) {
+			Log.error(e.getMessage());
+		}
 	}
 
 	/**
 	 * Helper function to add beliefs about neighbours
 	 * @param rand random number generator to use
 	 * @param count number of beliefs to add
+	 * @throws BeliefBaseException 
 	 */
-	private void registerNeighbours(Random rand, int count) {
+	private void registerNeighbours(Random rand, int count) throws BeliefBaseException {
 		final String[] MALES = {
 				"Alex", "Daniel", "John",
 				"Lionel", "Nick", "Oscar", "Paul",
@@ -89,7 +94,6 @@ public class Greeter extends Agent {
 				"Anderson", "Brown", "Jones", "Martin", "Morton", 
 				"Smith", "Taylor", "White", "Williams", "Wilson",
 		};
-		BeliefSet neighbours = getBeliefSet();
 		int size = (count < 0) ? 0 : count;
 		for (int i = 0; i < size; i++) {
 			boolean male = (rand.nextDouble() < 0.5) ? true : false;
@@ -97,8 +101,7 @@ public class Greeter extends Agent {
 			name += " " + MIDDLE[rand.nextInt(MIDDLE.length)] + " ";
 			name += SURNAMES[rand.nextInt(SURNAMES.length)]; 
 			String gender = male ? "male" : "female";
-			int hnumber = i+1;
-			neighbours.addBelief(name, gender, hnumber);
+			this.addBelief(beliefset, name, gender);
 		}
 	}
 	

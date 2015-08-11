@@ -24,14 +24,18 @@ package agentsoz.jill.core;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Random;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
 import agentsoz.jill.Main;
 import agentsoz.jill.config.GlobalConstant;
+import agentsoz.jill.config.GlobalConstant.PlanSelectionPolicy;
+import agentsoz.jill.core.beliefbase.Belief;
+import agentsoz.jill.core.beliefbase.BeliefBaseException;
+import agentsoz.jill.core.beliefbase.abs.ABeliefStore;
 import agentsoz.jill.lang.Agent;
-import agentsoz.jill.lang.BeliefSet;
 import agentsoz.jill.lang.Goal;
 import agentsoz.jill.lang.Plan;
 import agentsoz.jill.struct.GoalType;
@@ -120,15 +124,23 @@ public class IntentionSelector implements Runnable {
 						// Create an object on this Plan type, so we can
 						// access its context condition
 						Plan planInstance = (Plan)(ptype.getPlanClass().getConstructor(Agent.class, Goal.class, String.class).newInstance(GlobalState.agents.get(i), node, "p"));
+						// Clear previously buffered context results if any
+						agent.clearLastResults();
 						// Evaluate the context condition
 						boolean context = planInstance.context();
 						if (context == true) {
-							// Select a binding
-							selectPlanBinding(agent, planInstance.getClass().getSimpleName());
-							planInstance.setPlanVariables(getPlanVariables(agent));
+							// Get the results of context query just performed
+							HashSet<Belief> results = agent.getLastResults();
+							if (results != null && !results.isEmpty()) {
+								// Select a result based on the plan selection policy
+								int choice = selectIndex(results.size(), GlobalConstant.PLAN_SELECTION_POLICY);
+								Log.debug("Agent "+agent.getName()+" plan "+ptype+" has "+results.size()+" applicable instances; choosing instance "+choice);
+								// Set the plan variables
+								setPlanVariables(agent, planInstance, results, choice);
+							}
+							// Add it to the options
+							options.add(planInstance);
 						}
-						// Add it to the options
-						options.add(planInstance);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}					
@@ -155,21 +167,17 @@ public class IntentionSelector implements Runnable {
 	}
 
 	/**
-	 * Selects a plan instance form the list, based on the global plan selection 
+	 * Selects an index in the range 0 .. size-1, based on the plan selection 
 	 * policy {@link GlobalConstant#PLAN_SELECTION_POLICY}
-	 * @param matches
+	 * 
+	 * @param size
+	 * @param policy
 	 * @return
 	 */
-	private void selectPlanBinding(Agent agent, String planType) {
-		BeliefSet bs = agent.getBeliefSet();
-		if (bs == null) {
-			return;
-		}
-		int size = bs.getResultSetSize();
-		//Log.trace(show(matches, 5));
-		// Select a binding
+	private int selectIndex(int size, PlanSelectionPolicy policy) {
+		assert(size>=0);
 		int choice = 0;
-		switch (GlobalConstant.PLAN_SELECTION_POLICY) {
+		switch (policy) {
 		case FIRST:
 			choice = 0;
 			break;
@@ -177,23 +185,39 @@ public class IntentionSelector implements Runnable {
 			choice = rand.nextInt(size);
 			break;
 		case LAST:
-			choice = size - 1;
+			choice = (size>0) ? size-1 : 0;
 			break;
 		};
-		Log.debug("Agent "+agent.getName()+" plan "+planType+" has "+size+" applicable instances; choosing instance "+choice);
-		bs.selectResult(choice);
+		return choice;
 	}
+
 	
-	public HashMap<String, Object> getPlanVariables(Agent agent) {
+	private void setPlanVariables(Agent agent, Plan planInstance, HashSet<Belief> results, int choice ) {
+		assert(agent != null && planInstance != null & results != null);
+		assert (choice >= 0 && choice < results.size());
 		HashMap<String, Object> vars= new HashMap<String, Object>();
-		BeliefSet bs = agent.getBeliefSet();
-		if (bs != null) {
-			HashMap<String, Class<?>> attributes = bs.getAttributes();
-			for (String attribute : attributes.keySet()) {
-				vars.put(attribute, bs.getResult(attribute, attributes.get(attribute)));
+		Belief belief = null;
+		int index = 0;
+		for (Belief b : results) {
+			if (index == choice) {
+				belief = b;
+				break;
 			}
+			index++;
 		}
-		return vars;
+		Object[] tuple = belief.getTuple();
+		assert(tuple != null);
+		index = 0;
+		for (Object o : belief.getTuple()) {
+			try {
+				String fieldname = ABeliefStore.getFieldName(agent.getId(), belief.getBeliefset(), index);
+				vars.put(fieldname, o);
+			} catch (BeliefBaseException e) {
+				Log.error("Agent "+agent.getId()+" could not retrive belief set field: " + e.getMessage());
+			}
+			index++;
+		}
+		planInstance.setPlanVariables(vars);
 	}
      /**
      * Shows the first n results from the ResultSet r,

@@ -23,10 +23,16 @@ package agentsoz.jill.lang;
  */
 
 import java.io.PrintStream;
+import java.util.HashSet;
 
 import agentsoz.jill.Main;
 import agentsoz.jill.core.GlobalState;
+import agentsoz.jill.core.beliefbase.Belief;
+import agentsoz.jill.core.beliefbase.BeliefBase;
+import agentsoz.jill.core.beliefbase.BeliefBaseException;
+import agentsoz.jill.core.beliefbase.BeliefSetField;
 import agentsoz.jill.struct.AObject;
+import agentsoz.jill.util.AObjectCatalog;
 import agentsoz.jill.util.Log;
 import agentsoz.jill.util.Stack255;
 
@@ -73,8 +79,9 @@ public class Agent extends AObject {
 	private Stack255 executionStack; 
 
 	
-	private BeliefSet beliefSet;
-
+	private static BeliefBase beliefbase;
+	private static AObjectCatalog agents;
+	private HashSet<Belief> lastresult;
 	
 	/** 
 	 * Creates a new agent with the given name.
@@ -84,6 +91,9 @@ public class Agent extends AObject {
 	public Agent(String name) {
 		super(name);
 		executionStack = new Stack255((byte)1,(byte)1);
+		beliefbase = GlobalState.beliefbase;
+		agents = GlobalState.agents;
+		lastresult = null;
 	}
 
 	/**
@@ -107,7 +117,7 @@ public class Agent extends AObject {
 	}
 	
 	public boolean send(int id, Goal msg) {
-		AObject obj = GlobalState.agents.get(id);
+		AObject obj = agents.get(id);
 		if (obj == null) {
 			Log.warn("Agent " + getName() + " attempted to send a message to unknown agent id '"+id+"'");
 			return false;
@@ -117,7 +127,7 @@ public class Agent extends AObject {
 	}
 	
 	public boolean send(String name, Goal msg) {
-		AObject obj = GlobalState.agents.find(name);
+		AObject obj = agents.find(name);
 		if (obj == null) {
 			Log.warn("Agent " + getName() + " attempted to send a message to unknown agent '"+name+"'");
 			return false;
@@ -126,14 +136,6 @@ public class Agent extends AObject {
 		return true;
 	}
 	
-	public void setBeliefSet(BeliefSet beliefSet) {
-		this.beliefSet = beliefSet;
-	}
-	
-	public BeliefSet getBeliefSet() {
-		return beliefSet;
-	}
-
 	public void start(PrintStream writer, String[] params) {
 		Log.debug("Agent "+getName()+" is starting");
 	}
@@ -166,5 +168,50 @@ public class Agent extends AObject {
 		}
 	}
 
+	/**
+	 * Creates a new belief set with the given fields.
+	 * <p>
+	 * Example usage:
+	 * <pre>
+	 * BeliefSetField[] fields = {
+	 * 	new BeliefSetField("name", String.class, true),
+	 * 	new BeliefSetField("gender", String.class, false),
+	 * };
+	 * createBeliefSet("neighbour", fields);
+	 * </pre>
+	 * @param name a name for this new belief set 
+	 * @param fields an array of belief set fields (see {@link #BeliefSetField}) 
+	 * @throws BeliefBaseException
+	 */
+	public void createBeliefSet(String name, BeliefSetField[] fields) throws BeliefBaseException {
+		beliefbase.createBeliefSet(getId(), name, fields);
+	}
 	
+	/** 
+	 * Adds a new belief to the specified belief set
+	 * @param beliefsetName the belief set to add the belief to; must have been created previously using {@link #createBeliefSet(String, BeliefSetField[])
+	 * @param tuple parameter list of field values; types must match the specification in {@link #createBeliefSet(String, BeliefSetField[])
+	 * @throws BeliefBaseException
+	 */
+	public void addBelief(String beliefsetName, Object... tuple) throws BeliefBaseException {
+		beliefbase.addBelief(getId(), beliefsetName, tuple);
+	}
+	
+	public boolean eval(String query) throws BeliefBaseException {
+		boolean result = beliefbase.eval(getId(), query);
+		lastresult = (result) ? beliefbase.query(getId(), query) : new HashSet<Belief>();
+		return result;
+	}
+	
+	public HashSet<Belief> getLastResults() {
+		return lastresult;
+	}
+
+	public void clearLastResults() {
+		if (lastresult != null) {
+			lastresult.clear();
+		}
+		lastresult = null;
+	}
+
 }

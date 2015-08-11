@@ -22,19 +22,21 @@ package agentsoz.jill.core.beliefbase.abs;
  * #L%
  */
 
-import java.sql.PreparedStatement;
-import java.util.ArrayList;
+import java.io.Console;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import agentsoz.jill.core.beliefbase.Belief;
+import agentsoz.jill.core.beliefbase.BeliefSet;
 import agentsoz.jill.core.beliefbase.BeliefBase;
-import agentsoz.jill.core.beliefbase.BeliefBase.BeliefBaseException;
+import agentsoz.jill.core.beliefbase.BeliefBaseException;
+import agentsoz.jill.core.beliefbase.BeliefSetField;
 import agentsoz.jill.util.Log;
 
 public class ABeliefStore extends BeliefBase {
 
-	private static final int MAX_BELIEF_SETS = 255;
-	
 	public enum Operator {
 		EQ,
 		NE,
@@ -42,21 +44,18 @@ public class ABeliefStore extends BeliefBase {
 		GT,
 	}
 
-	private int nagents;
-	private static HashMap<String, ABeliefSet> beliefsets;
-	private static HashMap<ABelief, Integer> beliefs;
+	private static HashMap<String, BeliefSet> beliefsets;
+	private static HashMap<Integer, BeliefSet> beliefsetsByID;
+	private static HashMap<Belief, Integer> beliefs;
 	private static HashMap<String, AQuery> queries;
-	private static HashMap<String, HashSet<ABelief>> cachedresults;
-	private static ArrayList<BitVector> beliefs2agents;
+	private static HashMap<String, HashSet<Belief>> cachedresults;
 	private static BitVector[] agents2beliefs;
-	
 	public ABeliefStore(int nagents) {
-		this.nagents = nagents;
-		beliefsets = new HashMap<String, ABeliefSet>();	
-		beliefs = new HashMap<ABelief, Integer>();
+		beliefsets = new HashMap<String, BeliefSet>();	
+		beliefsetsByID = new HashMap<Integer, BeliefSet>();	
+		beliefs = new HashMap<Belief, Integer>();
 		queries = new HashMap<String, AQuery>();
-		cachedresults = new HashMap<String, HashSet<ABelief>>();
-		beliefs2agents = new ArrayList<BitVector>();
+		cachedresults = new HashMap<String, HashSet<Belief>>();
 		agents2beliefs = new BitVector[nagents];
 	}
 
@@ -66,8 +65,14 @@ public class ABeliefStore extends BeliefBase {
 		if (beliefsets.containsKey(name)) {
 			return false;
 		}
-		// Add the beliefset to the list of beliefsets and assign it an index
-		beliefsets.put(name, new ABeliefSet(beliefsets.size(), name, fields));
+		// Add the beliefset to the list of beliefsets
+		BeliefSet bs = new BeliefSet(beliefsets.size(), name, fields);
+		synchronized (beliefsets) {
+			beliefsets.put(name, bs);
+		}
+		synchronized (beliefsetsByID) {
+			beliefsetsByID.put(bs.getId(), bs);
+		}
 		return true;
 	}
 
@@ -78,13 +83,15 @@ public class ABeliefStore extends BeliefBase {
 		if (!beliefsets.containsKey(beliefsetName)) {
 			throw new BeliefBaseException("Belief set '"+beliefsetName+"' does not exist");
 		}
-		// Create a new ABelief
-		ABelief belief = new ABelief(beliefsets.get(beliefsetName).getId(), tuple);
+		// Create a new Belief
+		Belief belief = new Belief(beliefsets.get(beliefsetName).getId(), tuple);
 		// Add it to the list of beliefs
 		int id;
 		if (!beliefs.containsKey(belief)) {
 			id = beliefs.size();
-			beliefs.put(belief, id);
+			synchronized(beliefs) {
+				beliefs.put(belief, id);
+			}
 		} else {
 			id = beliefs.get(belief);
 		}
@@ -95,96 +102,175 @@ public class ABeliefStore extends BeliefBase {
 		}
 		bits.setBit(id, true);
 		agents2beliefs[agentid] = bits;
+		// Update the cached results
+		for (String query : cachedresults.keySet()) {
+			HashSet<Belief> results = cachedresults.get(query);
+			if (match(belief, queries.get(query))) {
+				results.add(belief);
+			}
+		}
 		return true;
 	}
 
-	public boolean eval(int agentid, String strop, Object...args) throws BeliefBaseException {
-		if (strop == null) {
-			throw new BeliefBaseException(logsuffix(agentid) + "belief operation was 'null'");
-		}
-		Operator op = null;
-		try {
-			op = Operator.valueOf(strop.toUpperCase());
-		} catch (Exception e) {
-			throw new BeliefBaseException(logsuffix(agentid) + "unknown belief operation '"+op+"'");
-		}
-		switch(op) {
-		case EQ:
-			return evalEQ(agentid, args);
-		default:
-			throw new BeliefBaseException(logsuffix(agentid) + "unknown belief operation '"+op+"'");
-		}
+	@Override
+	public boolean eval(int agentid, String key) throws BeliefBaseException {
+		return !query(agentid, key).isEmpty();
 	}
-
-	private boolean evalEQ(int agentid, Object[] args) throws BeliefBaseException{
-		if (args.length != 3) {
-			throw new BeliefBaseException(logsuffix(agentid) + "belief operation 'eq' requires two arguments ("+args.length+" given)");
-		}
-		if (!(args[0] instanceof String)) {
-			throw new BeliefBaseException(logsuffix(agentid) + "belief operation 'eq' : first argument (belief set name) should be of type String ("+args[0].getClass().getName()+" given)");
-		}
-		if (!(args[1] instanceof String)) {
-			throw new BeliefBaseException(logsuffix(agentid) + "belief operation 'eq' : second argument (belief set attribute) should be of type String ("+args[1].getClass().getName()+" given)");
-		}
-		if (args[1] == null) {
-			throw new BeliefBaseException(logsuffix(agentid) + "belief operation 'eq' : second argument is 'null'");
-		}
-		if (!beliefsets.containsKey(args[0])) {
-			throw new BeliefBaseException(logsuffix(agentid) + "belief set '"+args[0]+"' does not exist");
-		}
-		// Get the query if it already exists
-		String key = args[0] + "." + args[1] + Operator.EQ.toString() + args[2].toString();
+	
+	@Override
+	public HashSet<Belief> query(int agentid, String key) throws BeliefBaseException {
+        // Get the cached query if we have seen it before, else parse it
 		AQuery query = null;
 		if (queries.containsKey(key)) {
 			query = queries.get(key);
 		} else {
-			// Query does not exist so construct it
-			ABeliefSet beliefset = beliefsets.get(args[0]);
-			int id = beliefset.getId();
-			Operator op = Operator.EQ;
-			int field = -1;
-			Class<?> type = null;
-			BeliefSetField[] fields = beliefset.getFields(); 
-			for (int i = 0; i < fields.length; i++) {
-				if (args[1].equals(fields[i].getName())) {
-					field = i;
-					type = fields[i].getType();
-					break;
+			// Valid queries have the following syntax
+			// beliefset.field OP value
+			// where OP is one of =, !=, <, or >
+			if (key == null) {
+				throw new BeliefBaseException(logsuffix(agentid) + "'null' query");
+			}
+			Pattern pattern = Pattern.compile("(\\w+)\\.(\\w+)\\s*([=<>(!=)])\\s*(.+)");
+	        Matcher matcher = pattern.matcher(key);
+	        if (!matcher.matches()) {
+				throw new BeliefBaseException(logsuffix(agentid) + "invalid query '"+key+"' : syntax not of the form beliefset.field <op> value");
+	        }
+			String sBeliefset = matcher.group(1);
+			String sField = matcher.group(2);
+			String sOp = matcher. group(3);
+			String sVal = matcher.group(4);
+			try {
+				query = parseQuery(agentid, sBeliefset, sField, sOp, sVal);
+				// writes to queries should be synchronised
+				synchronized(queries) {
+					queries.put(key, query);
 				}
+			} catch (Exception e) {
+				throw new BeliefBaseException(logsuffix(agentid) + "invalid query '"+key+"' : " + e.getMessage()); 				
 			}
-			if (field == -1) {
-				throw new BeliefBaseException(logsuffix(agentid) + "belief operation 'eq' : second argument (belief set attribute) is not known '"+args[1]+"'");
-			}
-			query = new AQuery(id, field, op, args[2]);
-			queries.put(key, query);
-			// Now perform the query and extract the beliefs that match
-			HashSet<ABelief> results = new HashSet<ABelief>();
-			for (ABelief belief : beliefs.keySet()) {
-				if (match(belief, query)) {
-					results.add(belief);
-				}
-			}
-			// Cache the results
-			cachedresults.put(key, results);
 		}
+		// Get the cached results if they exist, 
+		// else perform the query and cache the results
+		HashSet<Belief> results = null;
+		if (cachedresults.containsKey(key)) {
+			results = cachedresults.get(key);
+		} else {
+			results = performQuery(query, beliefs);
+			synchronized(cachedresults) {
+				cachedresults.put(key, results);
+			}
+		}
+		
+		// Finally, filter the results for this agent
+		HashSet<Belief> matches = filterResultsForAgent(agentid, beliefs, results);
+		Log.debug("Agent "+agentid+" found "+matches.size()+" matches for the query");
+
+		return matches;
+	}
+
+	private AQuery parseQuery(int agentid, String sBeliefset, String sField, String sOp, String sVal) throws BeliefBaseException {
+		if (!beliefsets.containsKey(sBeliefset)) {
+			throw new BeliefBaseException("belief set '"+sBeliefset+"' does not exist");
+		}
+		BeliefSet beliefset = beliefsets.get(sBeliefset);
+		int id = beliefset.getId();
+		Operator op = (sOp.equals("=")) ? Operator.EQ :
+			(sOp.equals("<")) ? Operator.LT :
+				(sOp.equals(">")) ? Operator.GT :
+					Operator.NE;
+		int field = -1;
+		Class<?> type = null;
+		BeliefSetField[] fields = beliefset.getFields(); 
+		for (int i = 0; i < fields.length; i++) {
+			if (sField.equals(fields[i].getName())) {
+				field = i;
+				type = fields[i].getType();
+				break;
+			}
+		}
+		if (field == -1) {
+			throw new BeliefBaseException("belief set field '"+sField+"' does not exist");
+		}
+		Object val = null;
+		try {
+			val = string2type(type, sVal);
+		} catch (BeliefBaseException e) {
+			throw new BeliefBaseException(logsuffix(agentid) + e.getMessage());
+		}
+		return new AQuery(id, field, op, val);
+	}
+	
+	private static HashSet<Belief> performQuery(AQuery query, HashMap<Belief, Integer> beliefs) {
+		assert(query != null);
+		assert(beliefs != null);
+		HashSet<Belief> results = new HashSet<Belief>();
+		for (Belief belief : beliefs.keySet()) {
+			if (match(belief, query)) {
+				results.add(belief);
+			}
+		}
+		return results;
+	}
+	
+	private static HashSet<Belief> filterResultsForAgent(int agentid, HashMap<Belief, Integer> beliefs, HashSet<Belief> results) {
+		assert (results != null);
 		// Finally, check if this result holds true for this agent
 		BitVector agentbeliefs = agents2beliefs[agentid];
-		int matches = 0;
-		for (ABelief belief : cachedresults.get(key)) {
+		HashSet<Belief> matches = new HashSet<Belief>();
+		for (Belief belief : results) {
 			int beliefID = beliefs.get(belief);
 			// check if the agent has this belief
 			if (agentbeliefs.isSet(beliefID)) {
-				matches++;
+				matches.add(belief);
 			}				
 		}
-		if (matches > 0) {
-			System.out.println("Agent "+agentid+" found "+matches+" matches for the query");
-			return true;
+		return matches;
+	}
+
+	private Object string2type(Class<?> type, String str) throws BeliefBaseException {
+		Object val = null;
+		String stype = type.getName();
+		try {
+			switch(stype) {
+			case "java.lang.String":
+				val = str;
+				break;
+			case "java.lang.Integer":
+				val = Integer.valueOf(str);
+				break;
+			case "java.lang.Double":
+				val = Double.valueOf(str);
+				break;
+			case "java.lang.Boolean":
+				val = Boolean.valueOf(str);
+				break;
+			}
+		} catch (Exception e) {
+			throw new BeliefBaseException("value '"+str+"' is not of type " + stype);
 		}
-		return false;
+		return val;
 	}
 	
-	private boolean match(ABelief belief, AQuery query) {
+	public static String getType(Object o) {
+		if (o == null) {
+			return null;
+		}
+		String type = null;
+		if (o instanceof String ||
+			o instanceof Integer ||
+			o instanceof Double ||
+			o instanceof Boolean) 
+		{
+			type = o.getClass().getName();
+		}
+		return type;
+	}
+	
+
+	
+	private static boolean match(Belief belief, AQuery query) {
+		assert(belief != null);
+		assert(query != null);
 		if ( belief.getBeliefset() != query.getBeliefset()) {
 			return false;
 		}
@@ -198,13 +284,54 @@ public class ABeliefStore extends BeliefBase {
 		}
 		return false;
 	}
+	
 	private String logsuffix(int agentid) {
 		return getClass().getSimpleName() + ": agent "+agentid+": ";
 	}
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
+	public static void main(String[] args) throws BeliefBaseException {
+		BeliefBase bb = new ABeliefStore(100);
+		bb.eval(0, "neighbour.age < 31");
+
+		Console console = System.console();
+        if (console == null) {
+            System.err.println("No console.");
+            System.exit(1);
+        }
+        while (true) {
+
+            Pattern pattern = 
+            Pattern.compile(console.readLine("%nEnter your regex: "));
+
+            Matcher matcher = 
+            pattern.matcher(console.readLine("Enter input string to search: "));
+
+            boolean found = false;
+            while (matcher.find()) {
+                console.format("I found the text" +
+                    " \"%s\" starting at " +
+                    "index %d and ending at index %d.%n",
+                    matcher.group(),
+                    matcher.start(),
+                    matcher.end());
+                found = true;
+            }
+            if(!found){
+                console.format("No match found.%n");
+            }
+        }		
+	}
+
+	public static String getFieldName(int agentid, int beliefset, int index) throws BeliefBaseException{
+		if (beliefset < 0 || beliefset > beliefsets.size()) {
+			throw new BeliefBaseException("belief set id "+beliefset+" is invalid");
+		}
+		BeliefSetField[] bsf = beliefsetsByID.get(beliefset).getFields();
+		if (index < 0 || index >= bsf.length) {
+			throw new BeliefBaseException("belief set field id "+index+" is invalid");
+		}
+		return bsf[index].getName();
 	}
 
 }

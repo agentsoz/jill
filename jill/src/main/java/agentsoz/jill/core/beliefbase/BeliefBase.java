@@ -22,64 +22,19 @@ package agentsoz.jill.core.beliefbase;
  * #L%
  */
 
+import java.util.HashSet;
+
 import ch.qos.logback.classic.Level;
-import agentsoz.jill.core.GlobalState;
 import agentsoz.jill.core.beliefbase.abs.ABeliefStore;
-import agentsoz.jill.core.beliefbase.h2.H2BeliefBase;
 import agentsoz.jill.util.Log;
 
 public abstract class BeliefBase {
 
 	public abstract boolean createBeliefSet(int agentid, String name, BeliefSetField[] fields) throws BeliefBaseException;
 	public abstract boolean addBelief(int agentid, String beliefsetName, Object... tuple) throws BeliefBaseException;
-	public abstract boolean eval(int agentid, String op, Object... args) throws BeliefBaseException;
-
-	public class BeliefSetField {
-		private String name;
-		private Class<?> type;
-		private boolean isPrimary;
-		
-		public BeliefSetField(String name, Class<?> type, boolean isPrimary) {
-			super();
-			this.name = name;
-			this.type = type;
-			this.isPrimary = isPrimary;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
-		}
-
-		public Class<?> getType() {
-			return type;
-		}
-
-		public void setType(Class<?> type) {
-			this.type = type;
-		}
-
-		public boolean isPrimary() {
-			return isPrimary;
-		}
-
-		public void setPrimary(boolean isPrimary) {
-			this.isPrimary = isPrimary;
-		}
-
-	}
-
-	public class BeliefBaseException extends Exception{
-		private static final long serialVersionUID = -2198448974372743421L;
-
-		public BeliefBaseException(String msg) {
-			super(msg);
-		}
-	}
-
+	public abstract boolean eval(int agentid, String query) throws BeliefBaseException;
+	public abstract HashSet<Belief> query(int agentid, String key) throws BeliefBaseException;
+	
 	public static void main(String[] args) throws BeliefBaseException {
 		// Configure logging
         Log.createLogger("", Level.INFO, "BeliefBase.log");
@@ -90,17 +45,17 @@ public abstract class BeliefBase {
 
 		long t0, t1, t2, t3;
 		
-		int nAGENTS = 1000;
+		int nAGENTS = 100000;
 		int nNEIGHBOURS = 1000;
 		BeliefBase bb = new ABeliefStore(nAGENTS);
 		Log.info("Initialising "+nAGENTS+" agents with "+nNEIGHBOURS+" beliefs each");
 		BeliefSetField[] fields1 = {
-				bb.new BeliefSetField("name", String.class, true),
-				bb.new BeliefSetField("gender", String.class, false),
+				new BeliefSetField("name", String.class, true),
+				new BeliefSetField("gender", String.class, false),
 		};
 		BeliefSetField[] fields2 = {
-				bb.new BeliefSetField("name", String.class, true),
-				bb.new BeliefSetField("car", Boolean.class, false),
+				new BeliefSetField("name", String.class, true),
+				new BeliefSetField("car", Boolean.class, false),
 		};
 
 		t2 = System.currentTimeMillis();
@@ -127,7 +82,7 @@ public abstract class BeliefBase {
 			Log.debug("Created belief set '"+bs2+"' ("+(t1-t0)+" ms)");
 			t0 = System.currentTimeMillis();
 			for (int j = 0; j < nNEIGHBOURS; j++) {
-				bb.addBelief(i, bs2, "agent"+((i+1)*j), ((j%2)==0)?new Boolean(true): new Boolean(false));
+				bb.addBelief(i, bs2, "agent"+j, ((j%2)==0)?new Boolean(true): new Boolean(false));
 			}
 			t1 = System.currentTimeMillis();
 			Log.debug("Agent "+i+" added "+nNEIGHBOURS+" beliefs to belief set '"+bs2+"' ("+(t1-t0)+" ms)");
@@ -141,23 +96,49 @@ public abstract class BeliefBase {
 		a=0; n=0;
 		ns="agent"+n;
 		t0 = System.currentTimeMillis();
-		bb.eval(a, "eq", bs1, "name", ns);
+		//bb.eval(a, "eq", bs1, "name", ns);
+		bb.eval(a, bs1+".name="+ns);
 		t1 = System.currentTimeMillis();
 		Log.info("Agent "+a+" searched for "+bs1+".name="+ns+" ("+(t1-t0)+" ms)");
 
 		a=0; n=nNEIGHBOURS-1;
 		ns="agent"+n;
 		t0 = System.currentTimeMillis();
-		bb.eval(a, "eq", bs1, "name", ns);
+		//bb.eval(a, "eq", bs1, "name", ns);
+		bb.eval(a, bs1+".name="+ns);
 		t1 = System.currentTimeMillis();
 		Log.info("Agent "+a+" searched for "+bs1+".name="+ns+" ("+(t1-t0)+" ms)");
 
 		a=nAGENTS-1; n=nNEIGHBOURS-1;
 		ns="agent"+n;
 		t0 = System.currentTimeMillis();
-		bb.eval(a, "eq", bs1, "name", ns);
+		//bb.eval(a, "eq", bs1, "name", ns);
+		bb.eval(a, bs1+".name="+ns);
 		t1 = System.currentTimeMillis();
 		Log.info("Agent "+a+" searched for "+bs1+".name="+ns+" ("+(t1-t0)+" ms)");
 
+		a=0; n=0;
+		ns="agent"+n;
+		t0 = System.currentTimeMillis();
+		//bb.eval(a, "eq", bs1, "name", ns);
+		bb.eval(a, bs1+".name="+ns);
+		t1 = System.currentTimeMillis();
+		Log.info("Agent "+a+" searched for "+bs1+".name="+ns+" ("+(t1-t0)+" ms)");
+
+		a=0; n=nNEIGHBOURS-1;
+		ns="agent"+n;
+		t0 = System.currentTimeMillis();
+		//bb.eval(a, "eq", bs1, "name", ns);
+		bb.eval(a, bs1+".name="+ns);
+		t1 = System.currentTimeMillis();
+		Log.info("Agent "+a+" searched for "+bs1+".name="+ns+" ("+(t1-t0)+" ms)");
+
+		a=nAGENTS-1; n=nNEIGHBOURS-1;
+		ns="agent"+n;
+		t0 = System.currentTimeMillis();
+		//bb.eval(a, "eq", bs1, "name", ns);
+		bb.eval(a, bs1+".name="+ns);
+		t1 = System.currentTimeMillis();
+		Log.info("Agent "+a+" searched for "+bs1+".name="+ns+" ("+(t1-t0)+" ms)");
 	}
 }

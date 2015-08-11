@@ -22,6 +22,7 @@ package agentsoz.jill.core;
  * #L%
  */
 
+import agentsoz.jill.core.beliefbase.abs.ABeliefStore;
 import agentsoz.jill.util.AObjectCatalog;
 
 /**
@@ -54,6 +55,11 @@ public class GlobalState {
 	 * Each entry in the catalog is assigned an automatically created ID.
 	 */
 	public static AObjectCatalog agents;
+
+	/**
+	 * The central belief base to store all beliefs of all agents
+	 */
+	public static ABeliefStore beliefbase;
 	
 	/**
 	 * Resets the global state
@@ -63,5 +69,6 @@ public class GlobalState {
 		goalTypes = new AObjectCatalog("goalTypes", 10,5);
 		planTypes = new AObjectCatalog("planTypes", 20,5);
 		agents = null;
+		beliefbase = null;
 	}
 }

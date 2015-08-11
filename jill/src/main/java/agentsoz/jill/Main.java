@@ -23,9 +23,6 @@ package agentsoz.jill;
  */
 
 import java.io.PrintStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
@@ -34,6 +31,7 @@ import agentsoz.jill.config.GlobalConstant;
 import agentsoz.jill.core.GlobalState;
 import agentsoz.jill.core.IntentionSelector;
 import agentsoz.jill.core.ProgramLoader;
+import agentsoz.jill.core.beliefbase.abs.ABeliefStore;
 import agentsoz.jill.lang.Agent;
 import agentsoz.jill.util.AObjectCatalog;
 import agentsoz.jill.util.ArgumentsLoader;
@@ -51,8 +49,6 @@ public class Main {
 	private static byte[] agentsIdle;
 	private static Object lockAgentsIdle = new Object();
 
-	private static Connection connection;
-	
 	/**
 	 * @param args
 	 */
@@ -67,18 +63,14 @@ public class Main {
 		// Configure logging
         Log.createLogger("", ArgumentsLoader.getLogLevel(), ArgumentsLoader.getLogFile());
 
-        // Create the beliefs database
-        connection = openDBConnection();
-        if (connection == null) {
-        	return;
-        }
-		
 		int NUMAGENTS = ArgumentsLoader.getNumAgents(); 
 		int INCREMENT = 10000;
 
 		GlobalState.reset();
 		GlobalState.agents = new AObjectCatalog("agents", NUMAGENTS, INCREMENT);
 
+		// Create the central belief base
+		GlobalState.beliefbase = new ABeliefStore(NUMAGENTS);
 		long t0, t1;
 		
 		// Create the agents
@@ -150,28 +142,11 @@ public class Main {
 		if (writer != null) {
 			writer.close();
 		}
-		// Close the DB connection
-		try {
-			connection.close();
-		} catch (SQLException e) {
-			Log.error(e.getMessage());
-		}
 		t1 = System.currentTimeMillis();
 		Log.info("Terminated " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
 
 	}
 	
-	private static Connection openDBConnection() {
-		Connection connection = null;
-		try {
-			Class.forName("org.h2.Driver");
-			connection = DriverManager.getConnection(GlobalConstant.H2_CONNECT);
-		} catch (ClassNotFoundException | SQLException e) {
-			Log.error(e.getMessage());
-		}
-		return connection;
-	}
-
 	/**
 	 * Checks if the system is idle, i.e., all the agents pools are idle
 	 * @return
@@ -268,7 +243,4 @@ public class Main {
 		in.close();
 	}
 
-	public static Connection getConnection() {
-		return connection;
-	}
 }
