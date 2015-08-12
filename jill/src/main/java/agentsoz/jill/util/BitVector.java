@@ -1,4 +1,4 @@
-package agentsoz.jill.core.beliefbase.abs;
+package agentsoz.jill.util;
 
 /*
  * #%L

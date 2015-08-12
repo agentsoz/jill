@@ -35,6 +35,7 @@ import agentsoz.jill.core.beliefbase.abs.ABeliefStore;
 import agentsoz.jill.lang.Agent;
 import agentsoz.jill.util.AObjectCatalog;
 import agentsoz.jill.util.ArgumentsLoader;
+import agentsoz.jill.util.BitVector;
 import agentsoz.jill.util.Log;
 
 public class Main {
@@ -42,12 +43,10 @@ public class Main {
 	/**
 	 * Used to mark if all the pools of agents are idle or not
 	 */
-	private static int poolsIdle;
 	private static int npools;
-	private static Object lockPoolsIdle = new Object();
-	
-	private static byte[] agentsIdle;
-	private static Object lockAgentsIdle = new Object();
+	private static int poolsize;
+	private static BitVector[] agentsIdle;
+	private static Integer poolsIdle = 0;
 
 	/**
 	 * @param args
@@ -94,9 +93,12 @@ public class Main {
 			writer = System.out;
 		}
 		
+		// Start the intention selection threads
+		CyclicBarrier[] barriers = startIntentionSelectionThreads();
+		CyclicBarrier entryBarrier = barriers[0], exitBarrier = barriers[1];
+
 		// Start the agents
 		t0 = System.currentTimeMillis();
-		initAgentsIdleCache();
 		for (int i = 0; i < GlobalState.agents.size(); i++) {
 			// Get the agent
 			Agent agent = (Agent)GlobalState.agents.get(i);
@@ -106,9 +108,6 @@ public class Main {
 		t1 = System.currentTimeMillis();
 		Log.info("Started " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
 
-		// Start the intention selection threads
-		CyclicBarrier[] barriers = startIntentionSelectionThreads();
-		CyclicBarrier entryBarrier = barriers[0], exitBarrier = barriers[1];
 
 		// Wait till we are all done
 		t0 = System.currentTimeMillis();
@@ -156,7 +155,7 @@ public class Main {
 	}
 	
 	private static void resetPoolsIdle() {
-		synchronized(lockPoolsIdle) {
+		synchronized(poolsIdle) {
 			poolsIdle = 0;
 		}
 	}
@@ -166,7 +165,7 @@ public class Main {
 	 * @param state
 	 */
 	public static void addPoolIdleState(boolean isIdle) {
-		synchronized(lockPoolsIdle) {
+		synchronized(poolsIdle) {
 			if (isIdle) {
 				poolsIdle++;
 			}
@@ -181,7 +180,7 @@ public class Main {
 		CyclicBarrier[] barriers = new CyclicBarrier[2];
 		int ncores = ArgumentsLoader.getNumThreads();
 		int nagents = GlobalState.agents.size();
-		int poolsize = (nagents > ncores) ? (nagents/ncores) : 1;
+		poolsize = (nagents > ncores) ? (nagents/ncores) : 1;
 		npools = (nagents > ncores) ? ncores : nagents;
 		barriers[0] = new CyclicBarrier(npools+1);
 		barriers[1] = new CyclicBarrier(npools+1);
@@ -193,11 +192,20 @@ public class Main {
         	intentionSelectors[i] = new IntentionSelector(ArgumentsLoader.getRandomSeed(), start,size, barriers[0], barriers[1]);
         	new Thread(intentionSelectors[i]).start(); // start and wait at the entry barrier
         }
+        
+        // Initialise the agents idle cache
+		agentsIdle = new BitVector[npools];
+        for (int i = 0; i < npools; i++) {
+        	agentsIdle[i] = new BitVector(poolsize, 512);
+			// Set all agents to idle
+			for (int j = 0; j < poolsize; j++) {
+				agentsIdle[i].setBit(j, true);
+			}
+        }
         return barriers;
 	}
-	
-	private static void initAgentsIdleCache() {
-		int nagents = GlobalState.agents.size();
+	/*
+	private static void initAgentsIdleCache(int nagents, int npools) {
 		int nBytes = (nagents/8)+1;
 		synchronized(lockAgentsIdle) {
 			// Initialise the agents idle cache
@@ -208,12 +216,18 @@ public class Main {
 			}
 		}
 	}
+	*/
 	/**
 	 * Sets a bit in the agentsIdle cache, to mark if this agent is idle (or not).
 	 * @param agentId
 	 * @param isIdle
 	 */
 	public static void setAgentIdle(int agentId, boolean isIdle) {
+		
+		int poolid = agentId/poolsize;
+		int bit = agentId%poolsize;
+		agentsIdle[poolid].setBit(bit, isIdle);
+		/*
 		int byteIndex = agentId/8;
 		int bitIndex = agentId%8;
 		int mask = ~(1 << bitIndex) & 0xff;
@@ -222,14 +236,20 @@ public class Main {
 			agentsIdle[byteIndex] &= mask; // clear the bit
 			agentsIdle[byteIndex] |= state; // set the bit
 		}
+		*/
 	}
 	
 	public static boolean isAgentIdle(int agentId) {
+		int poolid = agentId/poolsize;
+		int bit = agentId%poolsize;
+		return agentsIdle[poolid].isSet(bit);
+		/*
 		int byteIndex = agentId/8;
 		int bitIndex = agentId%8;
 		int mask = 1 << bitIndex;
 		int state = (agentsIdle[byteIndex] & mask) >> bitIndex;
 		return (state == 1);
+		*/
 	}
 	
 	/**

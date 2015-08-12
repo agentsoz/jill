@@ -35,6 +35,7 @@ import agentsoz.jill.core.beliefbase.BeliefSet;
 import agentsoz.jill.core.beliefbase.BeliefBase;
 import agentsoz.jill.core.beliefbase.BeliefBaseException;
 import agentsoz.jill.core.beliefbase.BeliefSetField;
+import agentsoz.jill.util.BitVector;
 import agentsoz.jill.util.Log;
 
 public class ABeliefStore extends BeliefBase {
