@@ -30,9 +30,9 @@ import agentsoz.jill.lang.Goal;
 import agentsoz.jill.lang.Plan;
 import agentsoz.jill.lang.PlanStep;
 
-public class ReceiveToken extends Plan {
+public class ReceiveToken1 extends Plan {
 
-	public ReceiveToken(Agent agent, Goal goal, String name) {
+	public ReceiveToken1(Agent agent, Goal goal, String name) {
 		super(agent, goal, name);
 		body = steps;		
 	}
@@ -49,26 +49,26 @@ public class ReceiveToken extends Plan {
 	PlanStep[] steps = {
 			new PlanStep() {
 				public void step() {
-					Token msg = (Token)getGoal();
+					Token1 msg = (Token1)getGoal();
 					int myid = getAgent().getId();
+					// Agent0 is the book keeper
 					if (myid == 0) {
+						// Check if we are done with the rounds
 						if (TokenAgent1.rounds != msg.getRound()) {
-							// Start the next round
-							msg.setAgent(1);
+							// Not done, so start the next round
 							int newRound = msg.getRound()+1; 
 							msg.setRound(newRound);
 							TokenAgent1.out.print("\nround="+newRound+":\n>1");
-							getAgent().send(1, msg);
 						} else {
+							// All done, so return
 							TokenAgent1.out.print(".");
-							// All done
+							return;
 						}
-					} else if ( myid == msg.getAgent()) {
-						int nextAgent = (myid+1)%GlobalState.agents.size();
-						msg.setAgent(nextAgent);
-						//TokenAgent1.out.print(">"+nextAgent);
-						getAgent().send(nextAgent, msg);
 					}
+					// Send the token to the next agent
+					int nextAgent = (myid+1)%GlobalState.agents.size();
+					msg.setAgent(nextAgent);
+					getAgent().send(nextAgent, msg);
 				}
 			},
 	};

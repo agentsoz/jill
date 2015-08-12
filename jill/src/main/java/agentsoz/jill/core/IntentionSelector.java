@@ -103,6 +103,10 @@ public class IntentionSelector implements Runnable {
 					agentExecutionStack.pop();
 					// Pop the goal off the stack
 					agentExecutionStack.pop();
+					if (agentExecutionStack.isEmpty()) {
+						// Mark this agent as idle
+						Main.setAgentIdle(i, true);
+					}
 				} else {
 					((Plan) node).step();
 				}

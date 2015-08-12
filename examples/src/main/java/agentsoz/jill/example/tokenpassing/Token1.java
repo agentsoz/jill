@@ -25,17 +25,17 @@ package agentsoz.jill.example.tokenpassing;
 import agentsoz.jill.lang.Goal;
 import agentsoz.jill.lang.GoalInfo;
 
-@GoalInfo(hasPlans={"agentsoz.jill.example.tokenpassing.ReceiveToken"})
-public class Token extends Goal {
+@GoalInfo(hasPlans={"agentsoz.jill.example.tokenpassing.ReceiveToken1"})
+public class Token1 extends Goal {
 
 	private int round;
 	private int agent;
 	
-	public Token(String str) {
+	public Token1(String str) {
 		super(str);
 	}
 	
-	public Token(int round, int agent) {
+	public Token1(int round, int agent) {
 		this(null);
 		this.agent = agent;
 		this.round = round;
