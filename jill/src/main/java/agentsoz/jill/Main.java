@@ -70,7 +70,7 @@ public class Main {
 		GlobalState.agents = new AObjectCatalog("agents", NUMAGENTS, INCREMENT);
 
 		// Create the central belief base
-		GlobalState.beliefbase = new ABeliefStore(NUMAGENTS);
+		GlobalState.beliefbase = new ABeliefStore(NUMAGENTS, ArgumentsLoader.getNumThreads());
 		long t0, t1;
 		
 		// Create the agents

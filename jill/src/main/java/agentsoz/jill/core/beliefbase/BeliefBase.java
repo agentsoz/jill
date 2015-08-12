@@ -45,9 +45,9 @@ public abstract class BeliefBase {
 
 		long t0, t1, t2, t3;
 		
-		int nAGENTS = 100000;
+		int nAGENTS = 10000;
 		int nNEIGHBOURS = 1000;
-		BeliefBase bb = new ABeliefStore(nAGENTS);
+		BeliefBase bb = new ABeliefStore(nAGENTS, 4);
 		Log.info("Initialising "+nAGENTS+" agents with "+nNEIGHBOURS+" beliefs each");
 		BeliefSetField[] fields1 = {
 				new BeliefSetField("name", String.class, true),

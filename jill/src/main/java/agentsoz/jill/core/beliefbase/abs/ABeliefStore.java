@@ -23,8 +23,10 @@ package agentsoz.jill.core.beliefbase.abs;
  */
 
 import java.io.Console;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,6 +39,7 @@ import agentsoz.jill.util.Log;
 
 public class ABeliefStore extends BeliefBase {
 
+	private static final float loadfactor = 0.9f;
 	public enum Operator {
 		EQ,
 		NE,
@@ -44,18 +47,18 @@ public class ABeliefStore extends BeliefBase {
 		GT,
 	}
 
-	private static HashMap<String, BeliefSet> beliefsets;
-	private static HashMap<Integer, BeliefSet> beliefsetsByID;
-	private static HashMap<Belief, Integer> beliefs;
-	private static HashMap<String, AQuery> queries;
-	private static HashMap<String, HashSet<Belief>> cachedresults;
+	private static ConcurrentHashMap<String, BeliefSet> beliefsets;
+	private static ConcurrentHashMap<Integer, BeliefSet> beliefsetsByID;
+	private static ConcurrentHashMap<Belief, Integer> beliefs;
+	private static ConcurrentHashMap<String, AQuery> queries;
+	private static ConcurrentHashMap<String, Set<Belief>> cachedresults;
 	private static BitVector[] agents2beliefs;
-	public ABeliefStore(int nagents) {
-		beliefsets = new HashMap<String, BeliefSet>();	
-		beliefsetsByID = new HashMap<Integer, BeliefSet>();	
-		beliefs = new HashMap<Belief, Integer>();
-		queries = new HashMap<String, AQuery>();
-		cachedresults = new HashMap<String, HashSet<Belief>>();
+	public ABeliefStore(int nagents, int nthreads) {
+		beliefsets = new ConcurrentHashMap<String, BeliefSet>(1, loadfactor, nthreads);	
+		beliefsetsByID = new ConcurrentHashMap<Integer, BeliefSet>(beliefsets.size(), loadfactor, nthreads);	
+		beliefs = new ConcurrentHashMap<Belief, Integer>(nagents*10, loadfactor, nthreads);
+		queries = new ConcurrentHashMap<String, AQuery>(64, loadfactor, nthreads);
+		cachedresults = new ConcurrentHashMap<String, Set<Belief>>(queries.size(), loadfactor, nthreads);
 		agents2beliefs = new BitVector[nagents];
 	}
 
@@ -67,12 +70,8 @@ public class ABeliefStore extends BeliefBase {
 		}
 		// Add the beliefset to the list of beliefsets
 		BeliefSet bs = new BeliefSet(beliefsets.size(), name, fields);
-		synchronized (beliefsets) {
-			beliefsets.put(name, bs);
-		}
-		synchronized (beliefsetsByID) {
-			beliefsetsByID.put(bs.getId(), bs);
-		}
+		beliefsets.put(name, bs);
+		beliefsetsByID.put(bs.getId(), bs);
 		return true;
 	}
 
@@ -89,9 +88,7 @@ public class ABeliefStore extends BeliefBase {
 		int id;
 		if (!beliefs.containsKey(belief)) {
 			id = beliefs.size();
-			synchronized(beliefs) {
-				beliefs.put(belief, id);
-			}
+			beliefs.put(belief, id);
 		} else {
 			id = beliefs.get(belief);
 		}
@@ -104,7 +101,7 @@ public class ABeliefStore extends BeliefBase {
 		agents2beliefs[agentid] = bits;
 		// Update the cached results
 		for (String query : cachedresults.keySet()) {
-			HashSet<Belief> results = cachedresults.get(query);
+			Set<Belief> results = cachedresults.get(query);
 			if (match(belief, queries.get(query))) {
 				results.add(belief);
 			}
@@ -141,24 +138,19 @@ public class ABeliefStore extends BeliefBase {
 			String sVal = matcher.group(4);
 			try {
 				query = parseQuery(agentid, sBeliefset, sField, sOp, sVal);
-				// writes to queries should be synchronised
-				synchronized(queries) {
-					queries.put(key, query);
-				}
+				queries.put(key, query);
 			} catch (Exception e) {
 				throw new BeliefBaseException(logsuffix(agentid) + "invalid query '"+key+"' : " + e.getMessage()); 				
 			}
 		}
 		// Get the cached results if they exist, 
 		// else perform the query and cache the results
-		HashSet<Belief> results = null;
+		Set<Belief> results = null;
 		if (cachedresults.containsKey(key)) {
 			results = cachedresults.get(key);
 		} else {
 			results = performQuery(query, beliefs);
-			synchronized(cachedresults) {
-				cachedresults.put(key, results);
-			}
+			cachedresults.put(key, results);
 		}
 		
 		// Finally, filter the results for this agent
@@ -200,11 +192,11 @@ public class ABeliefStore extends BeliefBase {
 		return new AQuery(id, field, op, val);
 	}
 	
-	private static HashSet<Belief> performQuery(AQuery query, HashMap<Belief, Integer> beliefs) {
+	private static Set<Belief> performQuery(AQuery query, ConcurrentHashMap<Belief, Integer> beliefs2) {
 		assert(query != null);
-		assert(beliefs != null);
-		HashSet<Belief> results = new HashSet<Belief>();
-		for (Belief belief : beliefs.keySet()) {
+		assert(beliefs2 != null);
+		Set<Belief> results = Collections.newSetFromMap(new ConcurrentHashMap<Belief, Boolean>());
+		for (Belief belief : beliefs2.keySet()) {
 			if (match(belief, query)) {
 				results.add(belief);
 			}
@@ -212,13 +204,13 @@ public class ABeliefStore extends BeliefBase {
 		return results;
 	}
 	
-	private static HashSet<Belief> filterResultsForAgent(int agentid, HashMap<Belief, Integer> beliefs, HashSet<Belief> results) {
+	private static HashSet<Belief> filterResultsForAgent(int agentid, ConcurrentHashMap<Belief, Integer> beliefs2, Set<Belief> results) {
 		assert (results != null);
 		// Finally, check if this result holds true for this agent
 		BitVector agentbeliefs = agents2beliefs[agentid];
 		HashSet<Belief> matches = new HashSet<Belief>();
 		for (Belief belief : results) {
-			int beliefID = beliefs.get(belief);
+			int beliefID = beliefs2.get(belief);
 			// check if the agent has this belief
 			if (agentbeliefs.isSet(beliefID)) {
 				matches.add(belief);
@@ -291,7 +283,7 @@ public class ABeliefStore extends BeliefBase {
 
 
 	public static void main(String[] args) throws BeliefBaseException {
-		BeliefBase bb = new ABeliefStore(100);
+		BeliefBase bb = new ABeliefStore(100, 4);
 		bb.eval(0, "neighbour.age < 31");
 
 		Console console = System.console();
