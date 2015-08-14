@@ -73,4 +73,12 @@ public class BitVector {
 		System.arraycopy(bits, 0, temp, 0, bits.length);
 		bits = temp;
 	}
+	
+	public String toString() {
+		String s = "";
+		for (int i = 0; i < bits.length; i++) {
+			s += Integer.toHexString(bits[i]);
+		}
+		return s;
+	}
 }
