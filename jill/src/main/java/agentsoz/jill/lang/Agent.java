@@ -112,7 +112,7 @@ public class Agent extends AObject {
 	 */
 	public void post(Goal goal) {
 		synchronized(executionStack) {
-			Log.debug("Agent "+getName()+" posting goal " + goal.getClass().getSimpleName());
+			Log.debug("Agent "+getId()+" posting goal " + goal.getClass().getSimpleName());
 			executionStack.push(goal);
 			Main.setAgentIdle(getId(), false);
 		}
@@ -121,7 +121,7 @@ public class Agent extends AObject {
 	public boolean send(int id, Goal msg) {
 		AObject obj = agents.get(id);
 		if (obj == null) {
-			Log.warn("Agent " + getName() + " attempted to send a message to unknown agent id '"+id+"'");
+			Log.warn("Agent " + getId() + " attempted to send a message to unknown agent id '"+id+"'");
 			return false;
 		}
 		Log.debug("Agent " + getId() + " is sending message of type "+msg.getClass().getSimpleName()+" to agent "+id);
@@ -137,7 +137,7 @@ public class Agent extends AObject {
 	public boolean send(String name, Goal msg) {
 		AObject obj = agents.find(name);
 		if (obj == null) {
-			Log.warn("Agent " + getName() + " attempted to send a message to unknown agent '"+name+"'");
+			Log.warn("Agent " + getId() + " attempted to send a message to unknown agent '"+name+"'");
 			return false;
 		}
 		((Agent)obj).post(msg);
@@ -145,11 +145,11 @@ public class Agent extends AObject {
 	}
 	
 	public void start(PrintStream writer, String[] params) {
-		Log.debug("Agent "+getName()+" is starting");
+		Log.debug("Agent "+getId()+" is starting");
 	}
 	
 	public void finish() {
-		Log.debug("Agent "+getName()+" is finishing");
+		Log.debug("Agent "+getId()+" is finishing");
 	}
 
 	/** 

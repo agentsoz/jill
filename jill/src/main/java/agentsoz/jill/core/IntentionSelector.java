@@ -78,14 +78,14 @@ public class IntentionSelector implements Runnable {
 			Agent agent = (Agent)GlobalState.agents.get(i);
 			Stack255 agentExecutionStack = (Stack255)(agent).getExecutionStack();
 			int esSize = agentExecutionStack.size();
-			Log.trace("Agent " + agent.getName() + "'s execution stack is "+esSize+"/255 full");
+			Log.trace("Agent " + agent.getId() + "'s execution stack is "+esSize+"/255 full");
 			if (agentExecutionStack == null || esSize == 0) {
 				// Mark this agent as idle
 				Main.setAgentIdle(i, true);
 				continue;
 			}
 			if (esSize >= 255) {
-				Log.error("Agent " + agent.getName() + "'s execution stack has reached the maximum size of 255. Cannot continue.");
+				Log.error("Agent " + agent.getId() + "'s execution stack has reached the maximum size of 255. Cannot continue.");
 				continue;
 			}
 			
@@ -142,7 +142,7 @@ public class IntentionSelector implements Runnable {
 							if (results != null && !results.isEmpty()) {
 								// Select a result based on the plan selection policy
 								int choice = selectIndex(results.size(), GlobalConstant.PLAN_SELECTION_POLICY);
-								Log.debug("Agent "+agent.getName()+" plan "+ptype+" has "+results.size()+" applicable instances; choosing instance "+choice);
+								Log.debug("Agent "+agent.getId()+" plan "+ptype+" has "+results.size()+" applicable instances; choosing instance "+choice);
 								// Set the plan variables
 								setPlanVariables(agent, planInstance, results, choice);
 							}
@@ -155,14 +155,14 @@ public class IntentionSelector implements Runnable {
 				}
 				if (options.isEmpty()) {
 					// No plan options for this goal at this point in time, so move to the next agent
-					Log.info("Agent "+agent.getName()+" has no applicable plans for goal "+gtype+" and will continue to wait indefinitely");
+					Log.info("Agent "+agent.getId()+" has no applicable plans for goal "+gtype+" and will continue to wait indefinitely");
 					continue;
 				}
 				// TODO: Pick a plan option using specified policy
 				int choice = selectIndex(options.size(), GlobalConstant.PLAN_SELECTION_POLICY);
 				// Now push the plan on to the intention stack
 				synchronized(agentExecutionStack) {
-					Log.debug("Agent "+agent.getName()+" choose an instance of plan "+options.get(choice).getClass().getSimpleName()+" to handle goal "+gtype.getClass().getSimpleName());
+					Log.debug("Agent "+agent.getId()+" choose an instance of plan "+options.get(choice).getClass().getSimpleName()+" to handle goal "+gtype.getClass().getSimpleName());
 					agentExecutionStack.push(options.get(choice));
 				}
 				options.clear();
