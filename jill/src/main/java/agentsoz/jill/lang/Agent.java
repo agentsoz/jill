@@ -90,7 +90,7 @@ public class Agent extends AObject {
 	 */
 	public Agent(String name) {
 		super(name);
-		executionStack = new Stack255((byte)1,(byte)1);
+		executionStack = new Stack255((byte)8,(byte)2);
 		beliefbase = GlobalState.beliefbase;
 		agents = GlobalState.agents;
 		lastresult = null;
