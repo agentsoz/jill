@@ -47,8 +47,8 @@ public class BitVector {
 		int bitIndex = bit%32;
 		int mask = ~(1 << bitIndex) & 0xffffffff;
 		int state = ((val) ? 1 : 0) << bitIndex;
-			bits[arrIndex] &= mask; // clear the bit
-			bits[arrIndex] |= state; // set the bit
+		bits[arrIndex] &= mask; // clear the bit
+		bits[arrIndex] |= state; // set the bit
 	}
 	
 	public boolean isSet(int bit) {

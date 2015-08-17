@@ -54,7 +54,7 @@ public class Stack255{
 	 * at runtime is expensive (it requires an array copy using
 	 * {@link System#arraycopy(Object,int,Object,int,int) System.arraycopy(...)}). 
 	 * 
-	 * The maximum capacity of the stack is 256 (the size of one byte).
+	 * The maximum capacity of the stack is 255 (the size of one byte).
 	 * There is no provision to shrink the stack at the moment.
 	 * 
 	 * @param initialCapacity the initial capacity of the stack
