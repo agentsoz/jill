@@ -47,26 +47,42 @@ public class IntentionSelector implements Runnable {
 
 	private int start;
 	private int size;
+	private int poolid;
 	
 	private Random rand;
 	private CyclicBarrier entryBarrier;
 	private CyclicBarrier exitBarrier;
 	
-	public IntentionSelector(long l, int start, int size, CyclicBarrier entryBarrier, CyclicBarrier exitBarrier) {
+	private Object lock; 
+	private boolean hasMessage;
+	private boolean isIdle;
+	private boolean shutdown;
+	
+	public IntentionSelector(int poolid, long l, int start, int size, CyclicBarrier entryBarrier, CyclicBarrier exitBarrier) {
 		this.start = start;
 		this.size = size;
 		this.rand = new Random(l);
 		this.entryBarrier = entryBarrier;
 		this.exitBarrier = exitBarrier;
+		this.poolid = poolid;
+		this.lock = new Object();
+		this.hasMessage = false;
+		this.isIdle = false;
+		this.shutdown = false;
 	}
 
-	public synchronized void run() {
+	public void run() {
+		boolean tryagain;
+		int messagesCount = Main.getMessagesCount();
 		do {
+			tryagain = false;
+			/*
 	        try {
 	        	entryBarrier.await();
 			} catch (InterruptedException | BrokenBarrierException e) {
 				Log.error(e.getMessage());
 			}
+			*/
 		boolean idle = true;
 		ArrayList<Plan> options = new ArrayList<Plan>();
 		for (int i = start; i < start+size; i++) {
@@ -99,6 +115,8 @@ public class IntentionSelector implements Runnable {
 			if (node instanceof Plan) {
 				// If done then pop this plan/goal
 				if (((Plan) node).hasfinished()) {
+					Log.debug("Agent " + agent.getId() + " finished executing plan "+node.getClass().getSimpleName());
+					synchronized(agentExecutionStack) {
 					// Pop the plan off the stack
 					agentExecutionStack.pop();
 					// Pop the goal off the stack
@@ -107,7 +125,9 @@ public class IntentionSelector implements Runnable {
 						// Mark this agent as idle
 						Main.setAgentIdle(i, true);
 					}
+					}
 				} else {
+					Log.debug("Agent " + agent.getId() + " is executing a step of plan "+node.getClass().getSimpleName());
 					((Plan) node).step();
 				}
 
@@ -151,24 +171,80 @@ public class IntentionSelector implements Runnable {
 				}
 				if (options.isEmpty()) {
 					// No plan options for this goal at this point in time, so move to the next agent
-					Log.info("Agent "+agent.getName()+" has no applicable plans for goal "+gtype+" and will continue to wait indeifnitely");
+					Log.info("Agent "+agent.getName()+" has no applicable plans for goal "+gtype+" and will continue to wait indefinitely");
 					continue;
 				}
 				// TODO: Pick a plan option using specified policy
 				int choice = selectIndex(options.size(), GlobalConstant.PLAN_SELECTION_POLICY);
 				// Now push the plan on to the intention stack
-				agentExecutionStack.push(options.get(choice));
+				synchronized(agentExecutionStack) {
+					Log.debug("Agent "+agent.getName()+" choose an instance of plan "+options.get(choice).getClass().getSimpleName()+" to handle goal "+gtype.getClass().getSimpleName());
+					agentExecutionStack.push(options.get(choice));
+				}
 				options.clear();
 				
 			}
 		}
-		Main.addPoolIdleState(idle);
+
+		if (idle) {
+		synchronized(lock) {
+			while (idle && !hasMessage) {
+				try {
+					Log.debug("Intention selector "+poolid+" is idle; will wait on external message");
+					//Main.incrementPoolsIdle();
+					isIdle = true;
+					Main.flagPoolIdle();
+					lock.wait();
+					isIdle = false;
+					//Main.decrementPoolsIdle();
+					Log.debug("Intention selector "+poolid+" just woke up on external message");
+				} catch (InterruptedException e) {
+					Log.error("Intention selector "+poolid+" failed to wait on external message: " + e.getMessage());
+				}
+			}
+			hasMessage = false;
+		}
+		if (shutdown) {
+			break;
+		}
+		}
+		// if all the agents are idle, then go to sleep till some external
+		// message comes in
+		/*
+		if (idle && (messagesCount == Main.getMessagesCount()) && !Main.arePoolsIdle()) {
+			synchronized(Main.poolsIdle) {
+				try {
+					// we are idle, so increment the pools idle count
+					Main.incrementPoolsIdle();
+					// if we just made all pools idle
+					if (Main.arePoolsIdle()) {
+						// signal others to finish
+						Main.notifyPoolsFinished();
+					} else {
+						// else wait till some other thread updated pools idle
+						Log.debug("Intention selector "+poolid+" is idle; will wait on external message");
+						Main.poolsIdle.wait();	
+						Log.debug("Intention selector "+poolid+" just woke up on external message");
+						tryagain = true;
+						messagesCount = Main.getMessagesCount();
+
+					}
+				} catch (InterruptedException e) {
+					Log.error("Intention selector "+poolid+" failed to wait on external message: " + e.getMessage());
+				}
+			}
+		} 
+		*/
+		/*
         try {
         	exitBarrier.await();
 		} catch (InterruptedException | BrokenBarrierException e) {
 			Log.error(e.getMessage());
 		}
-		} while (GlobalConstant.EXIT_ON_IDLE && !Main.arePoolsIdle());
+		*/
+		} while(true);
+		//} while (!GlobalConstant.EXIT_ON_IDLE || tryagain || (GlobalConstant.EXIT_ON_IDLE && !Main.arePoolsIdle()));
+		//Log.debug("Intention selector "+poolid+" is exiting");
 	}
 
 	/**
@@ -223,6 +299,27 @@ public class IntentionSelector implements Runnable {
 			index++;
 		}
 		planInstance.setPlanVariables(vars);
+	}
+	
+	public void flagMessage() {
+		synchronized(lock) {
+			Log.debug("Intention selector " + poolid+ " received a new message");
+			hasMessage = true;
+			lock.notify();
+		}
+	}
+	
+	public boolean isIdle() {
+		return isIdle && !hasMessage;
+	}
+	
+	public void shutdown() {
+		synchronized(lock) {
+			Log.debug("Intention selector " + poolid+ " received shutdown message");
+			shutdown = true;
+			hasMessage = true;
+			lock.notify();
+		}
 	}
      /**
      * Shows the first n results from the ResultSet r,

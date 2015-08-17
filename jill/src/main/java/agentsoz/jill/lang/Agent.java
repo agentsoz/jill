@@ -111,9 +111,11 @@ public class Agent extends AObject {
 	 * @param goal the goal that this agent should try to achieve
 	 */
 	public void post(Goal goal) {
-		Log.debug("Agent "+getName()+" posting goal " + goal);
-		executionStack.push(goal);
-		Main.setAgentIdle(getId(), false);
+		synchronized(executionStack) {
+			Log.debug("Agent "+getName()+" posting goal " + goal.getClass().getSimpleName());
+			executionStack.push(goal);
+			Main.setAgentIdle(getId(), false);
+		}
 	}
 	
 	public boolean send(int id, Goal msg) {
@@ -122,7 +124,15 @@ public class Agent extends AObject {
 			Log.warn("Agent " + getName() + " attempted to send a message to unknown agent id '"+id+"'");
 			return false;
 		}
+		Log.debug("Agent " + getId() + " is sending message of type "+msg.getClass().getSimpleName()+" to agent "+id);
 		((Agent)obj).post(msg);
+		//Main.resetPoolsIdle();
+		//Main.incrementMessagesCount();
+		int fromPool = Main.poolid(getId());
+		int toPool = Main.poolid(id);
+		if (fromPool != toPool) {
+			Main.flagMessageTo(toPool);
+		}
 		return true;
 	}
 	

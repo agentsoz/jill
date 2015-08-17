@@ -26,6 +26,7 @@ import java.io.PrintStream;
 import java.util.Scanner;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import agentsoz.jill.config.GlobalConstant;
 import agentsoz.jill.core.GlobalState;
@@ -46,8 +47,11 @@ public class Main {
 	private static int npools;
 	private static int poolsize;
 	private static BitVector[] agentsIdle;
-	private static Integer poolsIdle = 0;
-
+	private static IntentionSelector[] intentionSelectors;
+	public static AtomicInteger poolsIdle = new AtomicInteger();
+	public static Object poolsFinished = new Object(); 
+	public static AtomicInteger messagesCount = new AtomicInteger();
+	
 	/**
 	 * @param args
 	 */
@@ -94,7 +98,7 @@ public class Main {
 		}
 		
 		// Start the intention selection threads
-		CyclicBarrier[] barriers = startIntentionSelectionThreads();
+		CyclicBarrier[] barriers = initIntentionSelectionThreads();
 		CyclicBarrier entryBarrier = barriers[0], exitBarrier = barriers[1];
 
 		// Start the agents
@@ -108,10 +112,27 @@ public class Main {
 		t1 = System.currentTimeMillis();
 		Log.info("Started " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
 
+		// Start the intention selection threads
+		startIntentionSelectionThreads();
 
 		// Wait till we are all done
 		t0 = System.currentTimeMillis();
 		int cycle = 0;
+		
+		synchronized(poolsIdle) {
+			while(!arePoolsIdle()) {
+				try {
+					poolsIdle.wait(100);
+				} catch (InterruptedException e) {
+					Log.error("Failed to wait on termination condition: " + e.getMessage());
+				}
+			}
+		}
+		
+		// Now shut down the threads
+		shutdownIntentionSelectionThreads();
+		
+		/*
 		do {
 			resetPoolsIdle();
 			try {
@@ -126,6 +147,7 @@ public class Main {
 				Log.error(e.getMessage());
 			} 
 		} while (GlobalConstant.EXIT_ON_IDLE && !arePoolsIdle());
+		*/
 		t1 = System.currentTimeMillis();
 		Log.info("Finished running "+cycle+" execution cycles with " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
 
@@ -151,12 +173,32 @@ public class Main {
 	 * @return
 	 */
 	public static boolean arePoolsIdle() {
-		return poolsIdle == npools;
+		boolean idle = true;
+		for (int i = 0; i < npools; i++) {
+			idle &= (intentionSelectors[i] == null) || intentionSelectors[i].isIdle();
+		}
+		return idle;
+	}
+
+	public static boolean arePoolsFinished() {
+		boolean finished = true;
+		for (int i = 0; i < intentionSelectors.length; i++) {
+			finished &= (intentionSelectors[i] == null);
+		}
+		return finished;
+	}
+
+	public static void notifyPoolsFinished() {
+		synchronized(poolsFinished) {
+			poolsFinished.notify();
+		}
 	}
 	
-	private static void resetPoolsIdle() {
+	public static void resetPoolsIdle() {
 		synchronized(poolsIdle) {
-			poolsIdle = 0;
+			poolsIdle.set(0);
+			Log.debug("Reset pools idle to "+0);
+			poolsIdle.notifyAll();
 		}
 	}
 
@@ -164,19 +206,39 @@ public class Main {
 	 * Records the idle state of a pool 
 	 * @param state
 	 */
-	public static void addPoolIdleState(boolean isIdle) {
+	public static void incrementPoolsIdle() {
 		synchronized(poolsIdle) {
-			if (isIdle) {
-				poolsIdle++;
+			if (poolsIdle.get() < npools) {
+				int val = poolsIdle.incrementAndGet();
+				Log.debug("Incremented pools idle to "+val);
+				if (val == npools) {
+					poolsIdle.notifyAll();
+				}
 			}
 		}
 	}
 	
+	public static void decrementPoolsIdle() {
+		if (poolsIdle.get() > 0) {
+			synchronized(poolsIdle) {
+				int val = poolsIdle.decrementAndGet();
+				Log.debug("Decremented pools idle to "+val);
+				poolsIdle.notifyAll();
+			}
+		}
+	}
+
+	public static void flagPoolIdle() {
+		synchronized(poolsIdle) {
+			poolsIdle.notifyAll();
+		}
+	}
+
 	/**
 	 * Starts the intention selection threads that each handle a pool of agents
 	 * @return the number of threads started
 	 */
-	private static CyclicBarrier[] startIntentionSelectionThreads() {
+	private static CyclicBarrier[] initIntentionSelectionThreads() {
 		CyclicBarrier[] barriers = new CyclicBarrier[2];
 		int ncores = ArgumentsLoader.getNumThreads();
 		int nagents = GlobalState.agents.size();
@@ -185,12 +247,11 @@ public class Main {
 		barriers[0] = new CyclicBarrier(npools+1);
 		barriers[1] = new CyclicBarrier(npools+1);
 
-		IntentionSelector[] intentionSelectors = new IntentionSelector[ncores];
+		intentionSelectors = new IntentionSelector[ncores];
         for (int i = 0; i < npools; i++) {
         	int start = i*poolsize;
         	int size = (i+1 < npools) ? poolsize : GlobalState.agents.size()-start;
-        	intentionSelectors[i] = new IntentionSelector(ArgumentsLoader.getRandomSeed(), start,size, barriers[0], barriers[1]);
-        	new Thread(intentionSelectors[i]).start(); // start and wait at the entry barrier
+        	intentionSelectors[i] = new IntentionSelector(i, ArgumentsLoader.getRandomSeed(), start,size, barriers[0], barriers[1]);
         }
         
         // Initialise the agents idle cache
@@ -204,6 +265,19 @@ public class Main {
         }
         return barriers;
 	}
+	
+	private static void startIntentionSelectionThreads() {
+        for (int i = 0; i < npools; i++) {
+        	new Thread(intentionSelectors[i]).start(); // start and wait at the entry barrier
+        }
+	}
+
+	private static void shutdownIntentionSelectionThreads() {
+        for (int i = 0; i < npools; i++) {
+        	intentionSelectors[i].shutdown(); 
+        }
+	}
+
 	/*
 	private static void initAgentsIdleCache(int nagents, int npools) {
 		int nBytes = (nagents/8)+1;
@@ -224,9 +298,11 @@ public class Main {
 	 */
 	public static void setAgentIdle(int agentId, boolean isIdle) {
 		
-		int poolid = agentId/poolsize;
-		int bit = agentId%poolsize;
-		agentsIdle[poolid].setBit(bit, isIdle);
+		int poolid = poolid(agentId);
+		int bit = agentId%poolsize(poolid);
+		synchronized(agentsIdle[poolid]) {
+			agentsIdle[poolid].setBit(bit, isIdle);
+		}
 		/*
 		int byteIndex = agentId/8;
 		int bitIndex = agentId%8;
@@ -240,8 +316,8 @@ public class Main {
 	}
 	
 	public static boolean isAgentIdle(int agentId) {
-		int poolid = agentId/poolsize;
-		int bit = agentId%poolsize;
+		int poolid = poolid(agentId);
+		int bit = poolsize(poolid);
 		return agentsIdle[poolid].isSet(bit);
 		/*
 		int byteIndex = agentId/8;
@@ -250,6 +326,18 @@ public class Main {
 		int state = (agentsIdle[byteIndex] & mask) >> bitIndex;
 		return (state == 1);
 		*/
+	}
+	
+	private static int poolsize(int poolid) {
+		return (poolid+1 < npools) ? poolsize : GlobalState.agents.size()-poolid*poolsize;
+	}
+	
+	public static int poolid(int agentid) {
+		int poolid = agentid/poolsize;
+		if (poolid+1 > npools) {
+			poolid = npools-1;
+		}
+		return poolid;
 	}
 	
 	/**
@@ -261,6 +349,19 @@ public class Main {
 		Scanner in = new Scanner(System.in);
 		in.nextLine();
 		in.close();
+	}
+
+	public static int getMessagesCount() {
+		return messagesCount.get();
+	}
+	public static void incrementMessagesCount() {
+		messagesCount.incrementAndGet();
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void flagMessageTo(int toPool) {
+		intentionSelectors[toPool].flagMessage();
 	}
 
 }
