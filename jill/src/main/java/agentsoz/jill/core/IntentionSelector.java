@@ -26,8 +26,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
-import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CyclicBarrier;
 
 import agentsoz.jill.Main;
 import agentsoz.jill.config.GlobalConstant;
@@ -50,20 +48,16 @@ public class IntentionSelector implements Runnable {
 	private int poolid;
 	
 	private Random rand;
-	private CyclicBarrier entryBarrier;
-	private CyclicBarrier exitBarrier;
 	
 	private Object lock; 
 	private boolean hasMessage;
 	private boolean isIdle;
 	private boolean shutdown;
 	
-	public IntentionSelector(int poolid, long l, int start, int size, CyclicBarrier entryBarrier, CyclicBarrier exitBarrier) {
+	public IntentionSelector(int poolid, long l, int start, int size) {
 		this.start = start;
 		this.size = size;
 		this.rand = new Random(l);
-		this.entryBarrier = entryBarrier;
-		this.exitBarrier = exitBarrier;
 		this.poolid = poolid;
 		this.lock = new Object();
 		this.hasMessage = false;
@@ -72,17 +66,7 @@ public class IntentionSelector implements Runnable {
 	}
 
 	public void run() {
-		boolean tryagain;
-		int messagesCount = Main.getMessagesCount();
 		do {
-			tryagain = false;
-			/*
-	        try {
-	        	entryBarrier.await();
-			} catch (InterruptedException | BrokenBarrierException e) {
-				Log.error(e.getMessage());
-			}
-			*/
 		boolean idle = true;
 		ArrayList<Plan> options = new ArrayList<Plan>();
 		for (int i = start; i < start+size; i++) {
@@ -208,43 +192,8 @@ public class IntentionSelector implements Runnable {
 			break;
 		}
 		}
-		// if all the agents are idle, then go to sleep till some external
-		// message comes in
-		/*
-		if (idle && (messagesCount == Main.getMessagesCount()) && !Main.arePoolsIdle()) {
-			synchronized(Main.poolsIdle) {
-				try {
-					// we are idle, so increment the pools idle count
-					Main.incrementPoolsIdle();
-					// if we just made all pools idle
-					if (Main.arePoolsIdle()) {
-						// signal others to finish
-						Main.notifyPoolsFinished();
-					} else {
-						// else wait till some other thread updated pools idle
-						Log.debug("Intention selector "+poolid+" is idle; will wait on external message");
-						Main.poolsIdle.wait();	
-						Log.debug("Intention selector "+poolid+" just woke up on external message");
-						tryagain = true;
-						messagesCount = Main.getMessagesCount();
-
-					}
-				} catch (InterruptedException e) {
-					Log.error("Intention selector "+poolid+" failed to wait on external message: " + e.getMessage());
-				}
-			}
-		} 
-		*/
-		/*
-        try {
-        	exitBarrier.await();
-		} catch (InterruptedException | BrokenBarrierException e) {
-			Log.error(e.getMessage());
-		}
-		*/
 		} while(true);
-		//} while (!GlobalConstant.EXIT_ON_IDLE || tryagain || (GlobalConstant.EXIT_ON_IDLE && !Main.arePoolsIdle()));
-		//Log.debug("Intention selector "+poolid+" is exiting");
+		Log.debug("Intention selector "+poolid+" is exiting");
 	}
 
 	/**
@@ -321,24 +270,4 @@ public class IntentionSelector implements Runnable {
 			lock.notify();
 		}
 	}
-     /**
-     * Shows the first n results from the ResultSet r,
-     * or shows all if the size of the result set is less than n
-     * @param r
-     * @param n
-     */
-	/*
-    private static String show(ResultSet r, int n) {
-    	String s = "";
-    	int size = (r.size() > n) ? n : r.size();
-    	if (size > 0) {
-    		s += "Showing "+size+" results: ";
-    		for (Object o : r) {
-    			s += "|" + o.toString() + "|";
-    			if (--size <= 0) break;
-    		}
-    	}
-    	return s;
-    }
-	*/
 }

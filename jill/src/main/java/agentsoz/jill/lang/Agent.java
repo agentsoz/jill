@@ -126,8 +126,6 @@ public class Agent extends AObject {
 		}
 		Log.debug("Agent " + getId() + " is sending message of type "+msg.getClass().getSimpleName()+" to agent "+id);
 		((Agent)obj).post(msg);
-		//Main.resetPoolsIdle();
-		//Main.incrementMessagesCount();
 		int fromPool = Main.poolid(getId());
 		int toPool = Main.poolid(id);
 		if (fromPool != toPool) {
