@@ -58,7 +58,7 @@ public class BitVector {
 		}
 		int bitIndex = bit%32;
 		int mask = 1 << bitIndex;
-		int state = (bits[arrIndex] & mask) >> bitIndex;
+		int state = ((bits[arrIndex] & mask) >> bitIndex) & 0x1;
 		return (state == 1);
 	}
 
