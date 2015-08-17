@@ -235,7 +235,7 @@ public class Main {
 	
 	public static boolean isAgentIdle(int agentId) {
 		int poolid = poolid(agentId);
-		int bit = poolsize(poolid);
+		int bit = agentId%poolsize(poolid);
 		return agentsIdle[poolid].isSet(bit);
 	}
 	
