@@ -14,6 +14,12 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
+  <scm>
+    <connection>scm:git:ssh://git@bitbucket.org/dhixsingh/jill.git</connection>
+    <developerConnection>scm:git:ssh://git@bitbucket.org/dhixsingh/jill.git</developerConnection>
+    <url>https://bitbucket.org/dhixsingh/jill.git</url>
+  </scm>  
+  
   <modules>
     <module>jill</module>
     <module>examples</module>
@@ -43,6 +49,11 @@
 
   <build>
       <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>2.5.2</version>
+        </plugin>
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.1</version>
