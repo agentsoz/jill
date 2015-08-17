@@ -1,9 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>agentsoz</groupId>
   <artifactId>jill-project</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.2.0</version>
   <packaging>pom</packaging>
 
   <name>Jill Project</name>
@@ -18,6 +17,7 @@
     <connection>scm:git:ssh://git@bitbucket.org/dhixsingh/jill.git</connection>
     <developerConnection>scm:git:ssh://git@bitbucket.org/dhixsingh/jill.git</developerConnection>
     <url>https://bitbucket.org/dhixsingh/jill.git</url>
+    <tag>jill-project-0.2.0</tag>
   </scm>  
   
   <modules>
@@ -123,7 +123,7 @@
                       </goals>
                     </pluginExecutionFilter>
                     <action>
-                      <ignore></ignore>
+                      <ignore />
                     </action>
                   </pluginExecution>
                 </pluginExecutions>
