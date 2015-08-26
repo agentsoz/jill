@@ -44,8 +44,8 @@ public class TokenAgent1 extends Agent {
 		parse(params);
 		out = writer;
 		if (getId() == 0) {
-			TokenAgent1.out.print("round=1:\n>1");
-			send(1, new Token1(1,1));
+			Log.info("round 1");
+			send(1, new Token1(1,1, System.currentTimeMillis()));
 		}
 	}
 

@@ -29,6 +29,7 @@ import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.Goal;
 import agentsoz.jill.lang.Plan;
 import agentsoz.jill.lang.PlanStep;
+import agentsoz.jill.util.Log;
 
 public class ReceiveToken1 extends Plan {
 
@@ -58,10 +59,12 @@ public class ReceiveToken1 extends Plan {
 							// Not done, so start the next round
 							int newRound = msg.getRound()+1; 
 							msg.setRound(newRound);
-							TokenAgent1.out.print("\nround="+newRound+":\n>1");
+							Log.info("round " + newRound);
 						} else {
 							// All done, so return
-							TokenAgent1.out.print(".");
+							Log.info("rounds complete");
+                            long ms = System.currentTimeMillis() - msg.getStartTime();
+                            TokenAgent1.out.println(GlobalState.agents.size() + " " + (double)ms/TokenAgent1.rounds);
 							return;
 						}
 					}
