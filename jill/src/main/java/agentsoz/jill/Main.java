@@ -33,7 +33,6 @@ import agentsoz.jill.core.beliefbase.abs.ABeliefStore;
 import agentsoz.jill.lang.Agent;
 import agentsoz.jill.util.AObjectCatalog;
 import agentsoz.jill.util.ArgumentsLoader;
-import agentsoz.jill.util.BitVector;
 import agentsoz.jill.util.Log;
 
 public class Main {
@@ -43,7 +42,6 @@ public class Main {
 	 */
 	private static int npools;
 	private static int poolsize;
-	private static BitVector[] agentsIdle;
 	private static IntentionSelector[] intentionSelectors;
 	public static AtomicInteger poolsIdle = new AtomicInteger();
 	
@@ -115,7 +113,6 @@ public class Main {
 
 		// Wait till we are all done
 		t0 = System.currentTimeMillis();
-		int cycle = 0;
 		
 		synchronized(poolsIdle) {
 			while(!arePoolsIdle()) {
@@ -195,16 +192,6 @@ public class Main {
         	int size = (i+1 < npools) ? poolsize : GlobalState.agents.size()-start;
         	intentionSelectors[i] = new IntentionSelector(i, ArgumentsLoader.getRandomSeed(), start,size);
         }
-        
-        // Initialise the agents idle cache
-		agentsIdle = new BitVector[npools];
-        for (int i = 0; i < npools; i++) {
-        	agentsIdle[i] = new BitVector(poolsize, 512);
-			// Set all agents to idle
-			for (int j = 0; j < poolsize; j++) {
-				agentsIdle[i].setBit(j, true);
-			}
-        }
 	}
 
 	private static void startIntentionSelectionThreads() {
@@ -225,24 +212,10 @@ public class Main {
 	 * @param isIdle
 	 */
 	public static void setAgentIdle(int agentId, boolean isIdle) {
-		
 		int poolid = poolid(agentId);
-		int bit = agentId%poolsize(poolid);
-		synchronized(agentsIdle[poolid]) {
-			agentsIdle[poolid].setBit(bit, isIdle);
-		}
+		intentionSelectors[poolid].setAgentIdle(agentId, isIdle);
 	}
-	
-	public static boolean isAgentIdle(int agentId) {
-		int poolid = poolid(agentId);
-		int bit = agentId%poolsize(poolid);
-		return agentsIdle[poolid].isSet(bit);
-	}
-	
-	private static int poolsize(int poolid) {
-		return (poolid+1 < npools) ? poolsize : GlobalState.agents.size()-poolid*poolsize;
-	}
-	
+
 	public static int poolid(int agentid) {
 		int poolid = agentid/poolsize;
 		if (poolid+1 > npools) {

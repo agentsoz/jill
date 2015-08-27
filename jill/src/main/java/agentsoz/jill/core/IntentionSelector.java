@@ -43,10 +43,8 @@ import agentsoz.jill.util.Stack255;
 
 public class IntentionSelector implements Runnable {
 
-	private int start;
-	private int size;
 	private int poolid;
-	
+	private HashSet<Integer> activeAgents;
 	private Random rand;
 	
 	private Object lock; 
@@ -55,25 +53,26 @@ public class IntentionSelector implements Runnable {
 	private boolean shutdown;
 	
 	public IntentionSelector(int poolid, long l, int start, int size) {
-		this.start = start;
-		this.size = size;
 		this.rand = new Random(l);
 		this.poolid = poolid;
 		this.lock = new Object();
 		this.hasMessage = false;
 		this.isIdle = false;
 		this.shutdown = false;
+		activeAgents = new HashSet<Integer> ();
 	}
 
 	public void run() {
+		HashSet<Integer> toRemove = new HashSet<Integer>();
 		do {
 		boolean idle = true;
 		ArrayList<Plan> options = new ArrayList<Plan>();
-		for (int i = start; i < start+size; i++) {
+		for (Integer i : activeAgents) {
+		//for (int i = start; i < start+size; i++) {
 			// Nothing to do if this agent is idle
-			if (Main.isAgentIdle(i)) {
-				continue;
-			}
+			//if (Main.isAgentIdle(i)) {
+			//	continue;
+			//}
 			
 			Agent agent = (Agent)GlobalState.agents.get(i);
 			Stack255 agentExecutionStack = (Stack255)(agent).getExecutionStack();
@@ -81,7 +80,8 @@ public class IntentionSelector implements Runnable {
 			Log.trace("Agent " + agent.getId() + "'s execution stack is "+esSize+"/255 full");
 			if (agentExecutionStack == null || esSize == 0) {
 				// Mark this agent as idle
-				Main.setAgentIdle(i, true);
+				//Main.setAgentIdle(i, true);
+				toRemove.add(i);
 				continue;
 			}
 			if (esSize >= 255) {
@@ -107,7 +107,8 @@ public class IntentionSelector implements Runnable {
 					agentExecutionStack.pop();
 					if (agentExecutionStack.isEmpty()) {
 						// Mark this agent as idle
-						Main.setAgentIdle(i, true);
+						//Main.setAgentIdle(i, true);
+						toRemove.add(i);
 					}
 					}
 				} else {
@@ -168,6 +169,15 @@ public class IntentionSelector implements Runnable {
 				options.clear();
 				
 			}
+		}
+
+		if (!toRemove.isEmpty()) {
+			synchronized(activeAgents) {
+				for (int i : toRemove) {
+					activeAgents.remove(i);
+				}
+			}
+			toRemove.clear();
 		}
 
 		if (idle) {
@@ -268,6 +278,21 @@ public class IntentionSelector implements Runnable {
 			shutdown = true;
 			hasMessage = true;
 			lock.notify();
+		}
+	}
+
+	public void setAgentIdle(int agentId, boolean idle) {
+		// If agent is becoming active, and not already active
+		if (!idle && !activeAgents.contains(agentId)) {
+			synchronized(activeAgents) {
+				activeAgents.add(agentId);
+			}
+		}
+		// If agent is becoming idle, and not already idle
+		if (idle && activeAgents.contains(agentId)) {
+			synchronized(activeAgents) {
+				activeAgents.remove(agentId);
+			}
 		}
 	}
 }
