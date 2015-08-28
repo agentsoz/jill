@@ -3,7 +3,7 @@
   <parent>
     <groupId>agentsoz</groupId>
     <artifactId>jill-project</artifactId>
-    <version>0.2.1</version>
+    <version>0.2.2-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
@@ -12,13 +12,13 @@
 
   <modelVersion>4.0.0</modelVersion>
   <artifactId>jill-examples</artifactId>
-  <version>0.2.1</version>
+  <version>0.2.2-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
       <groupId>agentsoz</groupId>
       <artifactId>jill</artifactId>
-      <version>0.2.1</version>
+      <version>0.2.2-SNAPSHOT</version>
     </dependency>
   </dependencies>
 </project>
