@@ -24,12 +24,16 @@ package agentsoz.jill.core.beliefbase;
 
 import java.util.Arrays;
 
-public class Belief {
+import agentsoz.jill.struct.AObject;
+
+public class Belief extends AObject {
 
 	private int beliefset;
 	private Object[] tuple;
 	
-	public Belief(int beliefset, Object[] tuple) {
+	public Belief(int id, int beliefset, Object[] tuple) {
+		super(null);
+		setId(id);
 		this.beliefset = beliefset;
 		this.tuple = tuple;
 	}

@@ -35,8 +35,8 @@ import agentsoz.jill.core.beliefbase.BeliefSet;
 import agentsoz.jill.core.beliefbase.BeliefBase;
 import agentsoz.jill.core.beliefbase.BeliefBaseException;
 import agentsoz.jill.core.beliefbase.BeliefSetField;
-import agentsoz.jill.util.BitVector;
 import agentsoz.jill.util.Log;
+import agentsoz.jill.util.SparseBitSet;
 
 public class ABeliefStore extends BeliefBase {
 
@@ -51,16 +51,18 @@ public class ABeliefStore extends BeliefBase {
 	private static ConcurrentHashMap<String, BeliefSet> beliefsets;
 	private static ConcurrentHashMap<Integer, BeliefSet> beliefsetsByID;
 	private static ConcurrentHashMap<Belief, Integer> beliefs;
+	private static ConcurrentHashMap<Integer, Belief> beliefsByID;
 	private static ConcurrentHashMap<String, AQuery> queries;
 	private static ConcurrentHashMap<String, Set<Belief>> cachedresults;
-	private static BitVector[] agents2beliefs;
+	private static SparseBitSet[] agents2beliefs;
 	public ABeliefStore(int nagents, int nthreads) {
 		beliefsets = new ConcurrentHashMap<String, BeliefSet>(1, loadfactor, nthreads);	
 		beliefsetsByID = new ConcurrentHashMap<Integer, BeliefSet>(beliefsets.size(), loadfactor, nthreads);	
 		beliefs = new ConcurrentHashMap<Belief, Integer>(nagents*10, loadfactor, nthreads);
+		beliefsByID = new ConcurrentHashMap<Integer, Belief>(beliefs.size(), loadfactor, nthreads);	
 		queries = new ConcurrentHashMap<String, AQuery>(64, loadfactor, nthreads);
 		cachedresults = new ConcurrentHashMap<String, Set<Belief>>(queries.size(), loadfactor, nthreads);
-		agents2beliefs = new BitVector[nagents];
+		agents2beliefs = new SparseBitSet[nagents];
 	}
 
 	@Override
@@ -84,21 +86,23 @@ public class ABeliefStore extends BeliefBase {
 			throw new BeliefBaseException("Belief set '"+beliefsetName+"' does not exist");
 		}
 		// Create a new Belief
-		Belief belief = new Belief(beliefsets.get(beliefsetName).getId(), tuple);
+		Belief belief = new Belief(beliefs.size(), beliefsets.get(beliefsetName).getId(), tuple);
 		// Add it to the list of beliefs
 		int id;
 		if (!beliefs.containsKey(belief)) {
 			id = beliefs.size();
 			beliefs.put(belief, id);
+			beliefsByID.put(belief.getId(), belief);
+
 		} else {
 			id = beliefs.get(belief);
 		}
 		// Add it to the agents beliefs
-		BitVector bits = agents2beliefs[agentid];
+		SparseBitSet bits = agents2beliefs[agentid];
 		if (bits == null) {
-			bits = new BitVector();
+			bits = new SparseBitSet();
 		}
-		bits.setBit(id, true);
+		bits.set(id);
 		agents2beliefs[agentid] = bits;
 		// Update the cached results
 		for (String query : cachedresults.keySet()) {
@@ -208,14 +212,23 @@ public class ABeliefStore extends BeliefBase {
 	private static HashSet<Belief> filterResultsForAgent(int agentid, ConcurrentHashMap<Belief, Integer> beliefs2, Set<Belief> results) {
 		assert (results != null);
 		// Finally, check if this result holds true for this agent
-		BitVector agentbeliefs = agents2beliefs[agentid];
+		SparseBitSet agentbeliefs = agents2beliefs[agentid];
 		HashSet<Belief> matches = new HashSet<Belief>();
+		/*
 		for (Belief belief : results) {
 			int beliefID = beliefs2.get(belief);
 			// check if the agent has this belief
-			if (agentbeliefs.isSet(beliefID)) {
+			if (agentbeliefs.get(beliefID)) {
 				matches.add(belief);
 			}				
+		}
+		*/
+		for (int i = agentbeliefs.nextSetBit(0); i >=0 ; i = agentbeliefs.nextSetBit(i+1)) {
+			// check if this belief exists in the results set
+			Belief belief = beliefsByID.get(i);
+			if (results.contains(belief)) {
+				matches.add(belief);
+			}
 		}
 		return matches;
 	}
@@ -271,7 +284,8 @@ public class ABeliefStore extends BeliefBase {
 		case EQ:
 			Object lhs = belief.getTuple()[query.getField()];
 			Object rhs = query.getValue();
-			return lhs.equals(rhs);
+			// Match wildcard or exact string
+			return rhs.equals("*") || lhs.equals(rhs);
 		default:
 			break;
 		}
