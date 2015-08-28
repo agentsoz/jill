@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>agentsoz</groupId>
   <artifactId>jill-project</artifactId>
-  <version>0.2.1-SNAPSHOT</version>
+  <version>0.2.1</version>
   <packaging>pom</packaging>
 
   <name>Jill Project</name>
@@ -17,7 +17,7 @@
     <connection>scm:git:ssh://git@bitbucket.org/dhixsingh/jill.git</connection>
     <developerConnection>scm:git:ssh://git@bitbucket.org/dhixsingh/jill.git</developerConnection>
     <url>https://bitbucket.org/dhixsingh/jill.git</url>
-    <tag>HEAD</tag>
+    <tag>jill-project-0.2.1</tag>
   </scm>  
   
   <modules>
