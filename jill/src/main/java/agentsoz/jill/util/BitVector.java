@@ -28,6 +28,18 @@ public class BitVector {
 	private int growSizeInInts;
 	private int[] bits; // Java ints are 32-bits
 	
+	// Save the 32-bit masks to avoid bit-shifting to compute the mask
+	private static final int[] checkmask = {
+		0x00000001, 0x00000002, 0x00000004, 0x00000008, 
+		0x00000010, 0x00000020, 0x00000040, 0x00000080,
+		0x00000100, 0x00000200, 0x00000400, 0x00000800, 
+		0x00001000, 0x00002000, 0x00004000, 0x00008000,
+		0x00010000, 0x00020000, 0x00040000, 0x00080000,
+		0x00100000, 0x00200000, 0x00400000, 0x00800000,
+		0x01000000, 0x02000000, 0x04000000, 0x08000000,
+		0x10000000, 0x20000000, 0x40000000, 0x80000000,
+	};
+	
 	public BitVector() {
 		this(1024, 256); 
 	}
@@ -39,30 +51,33 @@ public class BitVector {
 		this.growSizeInInts = (growSizeinBits/32)+1;
 	}
 
-	public void setBit(int bit, boolean val) {
+	public void setBit(int bit) {
 		int arrIndex = bit/32;
 		if (bits.length <= arrIndex) {
 			grow((arrIndex+1)-bits.length);
 		}
 		int bitIndex = bit%32;
-		int mask = ~(1 << bitIndex) & 0xffffffff;
-		int state = ((val) ? 1 : 0) << bitIndex;
-		bits[arrIndex] &= mask; // clear the bit
-		bits[arrIndex] |= state; // set the bit
+		bits[arrIndex] |= checkmask[bitIndex];
 	}
-	
+
+	public void clearBit(int bit) {
+		int arrIndex = bit/32;
+		if (bits.length <= arrIndex) {
+			grow((arrIndex+1)-bits.length);
+		}
+		int bitIndex = bit%32;
+		bits[arrIndex] &= ~checkmask[bitIndex];
+	}
+
 	public boolean isSet(int bit) {
 		int arrIndex = bit/32;
 		if (bits.length <= arrIndex) {
 			return false;
 		}
 		int bitIndex = bit%32;
-		int mask = 1 << bitIndex;
-		int state = ((bits[arrIndex] & mask) >> bitIndex) & 0x1;
-		return (state == 1);
+		return (bits[arrIndex] & checkmask[bitIndex]) != 0;
 	}
 
-	
 	/**
 	 * Grow to given size
 	 */
