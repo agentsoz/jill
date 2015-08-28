@@ -25,54 +25,75 @@ package agentsoz.jill.example.tokenpassing;
 import java.util.HashMap;
 
 import agentsoz.jill.core.GlobalState;
+import agentsoz.jill.core.beliefbase.BeliefBaseException;
 import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.Goal;
 import agentsoz.jill.lang.Plan;
 import agentsoz.jill.lang.PlanStep;
 import agentsoz.jill.util.Log;
 
-public class ReceiveToken2 extends Plan {
+public class ReceiveToken3 extends Plan {
 
-	public ReceiveToken2(Agent agent, Goal goal, String name) {
+	private String neighbour;
+	
+	public ReceiveToken3(Agent agent, Goal goal, String name) {
 		super(agent, goal, name);
 		body = steps;		
 	}
 
 	@Override
 	public boolean context() {
-		int myid = getAgent().getId();
-		Token2 goal = (Token2)getGoal();
-		return (myid == goal.getAgent());
+		Agent agent = getAgent();
+		int myid = agent.getId();
+		int goalid = ((Token3)getGoal()).getAgent();
+		try {
+			return (myid == goalid) && agent.eval("neighbour.name = *");
+		} catch (BeliefBaseException e) {
+			Log.error(e.getMessage());
+		}
+		return false;
 	}
 
 	@Override
 	public void setPlanVariables(HashMap<String, Object> vars) {
+		for (String attribute: vars.keySet()) {
+			switch (attribute) {
+			case "name":
+				neighbour = (String)(vars.get(attribute));
+				break;
+			default:
+				break;
+			}
+		}
 	}
 
 	PlanStep[] steps = {
 			new PlanStep() {
 				public void step() {
-					Token2 msg = (Token2)getGoal();
+					Token3 msg = (Token3)getGoal();
 					int myid = getAgent().getId();
-					// Agent0 is the book keeper
-					if (myid == 0) {
+					// Agent performaing the last hop is the book keeper
+					if (msg.getHops() == GlobalState.agents.size()) {
 						// Check if we are done with the rounds
-						if (TokenAgent2.rounds != msg.getRound()) {
+						if (TokenAgent3.rounds != msg.getRound()) {
 							// Not done, so start the next round
 							int newRound = msg.getRound()+1; 
 							msg.setRound(newRound);
+							msg.setHops(1);
 							Log.info("round " + newRound);
 						} else {
 							// All done, so return
 							Log.info("rounds complete");
                             long ms = System.currentTimeMillis() - msg.getStartTime();
-                            TokenAgent2.out.println(GlobalState.agents.size() + " " + (double)ms/TokenAgent2.rounds);
+                            TokenAgent3.out.println(GlobalState.agents.size() + " " + (double)ms/TokenAgent3.rounds);
 							return;
 						}
 					}
 					// Send the token to the next agent
-					int nextAgent = (myid+1)%GlobalState.agents.size();
+					//int nextAgent = (myid+1)%GlobalState.agents.size();
+					int nextAgent = Integer.parseInt(neighbour);
 					msg.setAgent(nextAgent);
+					msg.setHops(msg.getHops()+1);
 					getAgent().send(nextAgent, msg);
 				}
 			},

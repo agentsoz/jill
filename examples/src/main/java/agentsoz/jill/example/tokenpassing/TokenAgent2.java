@@ -44,12 +44,8 @@ public class TokenAgent2 extends Agent {
 		parse(params);
 		out = writer;
 		if (getId() == 0) {
-			TokenAgent2.out.print("round=1\n");
-			try {
-				send(1, new Token2(1,1));
-			} catch (Exception e) {
-				System.err.println("Agent 0 failed to send a message to agent 1: "+e.getMessage());
-			}
+			Log.info("round 1");
+			send(1, new Token2(1,1, System.currentTimeMillis()));
 		}
 	}
 

@@ -25,23 +25,26 @@ package agentsoz.jill.example.tokenpassing;
 import agentsoz.jill.lang.Goal;
 import agentsoz.jill.lang.GoalInfo;
 
-@GoalInfo(hasPlans={"agentsoz.jill.example.tokenpassing.ReceiveToken2"})
-public class Token2 extends Goal {
+@GoalInfo(hasPlans={"agentsoz.jill.example.tokenpassing.ReceiveToken3"})
+public class Token3 extends Goal {
 
 	private int round;
 	private int agent;
+	private int hops;
 	private long startTime;
-	public Token2(String str) {
+
+	public Token3(String str) {
 		super(str);
 	}
 	
-	public Token2(int round, int agent) {
+	public Token3(int round, int agent) {
 		this(null);
 		this.agent = agent;
 		this.round = round;
+		setHops(0);
 	}
 	
-	public Token2(int round, int agent, long startTime) {
+	public Token3(int round, int agent, long startTime) {
 		this(round, agent);
 		this.startTime = startTime;
 	}
@@ -64,5 +67,13 @@ public class Token2 extends Goal {
 
 	public long getStartTime() {
 		return startTime;
+	}
+
+	public int getHops() {
+		return hops;
+	}
+
+	public void setHops(int hops) {
+		this.hops = hops;
 	}
 }
