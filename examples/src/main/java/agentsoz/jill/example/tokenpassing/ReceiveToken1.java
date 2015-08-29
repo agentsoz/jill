@@ -63,8 +63,6 @@ public class ReceiveToken1 extends Plan {
 						} else {
 							// All done, so return
 							Log.info("rounds complete");
-                            long ms = System.currentTimeMillis() - msg.getStartTime();
-                            TokenAgent1.out.println(GlobalState.agents.size() + " " + (double)ms/TokenAgent1.rounds);
 							return;
 						}
 					}

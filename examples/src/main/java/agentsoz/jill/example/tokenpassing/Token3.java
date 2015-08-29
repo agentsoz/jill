@@ -31,7 +31,6 @@ public class Token3 extends Goal {
 	private int round;
 	private int agent;
 	private int hops;
-	private long startTime;
 
 	public Token3(String str) {
 		super(str);
@@ -44,11 +43,6 @@ public class Token3 extends Goal {
 		setHops(0);
 	}
 	
-	public Token3(int round, int agent, long startTime) {
-		this(round, agent);
-		this.startTime = startTime;
-	}
-
 	public int getAgent() {
 		return agent;
 	}
@@ -63,10 +57,6 @@ public class Token3 extends Goal {
 
 	public void setRound(int round) {
 		this.round = round;
-	}
-
-	public long getStartTime() {
-		return startTime;
 	}
 
 	public int getHops() {

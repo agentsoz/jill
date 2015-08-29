@@ -45,7 +45,7 @@ public class TokenAgent1 extends Agent {
 		out = writer;
 		if (getId() == 0) {
 			Log.info("round 1");
-			send(1, new Token1(1,1, System.currentTimeMillis()));
+			send(1, new Token1(1,1));
 		}
 	}
 

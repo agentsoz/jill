@@ -27,7 +27,6 @@ import java.io.PrintStream;
 import agentsoz.jill.core.GlobalState;
 import agentsoz.jill.core.beliefbase.BeliefBaseException;
 import agentsoz.jill.core.beliefbase.BeliefSetField;
-import agentsoz.jill.example.greeter.BeFriendly;
 import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.AgentInfo;
 import agentsoz.jill.util.Log;
@@ -40,7 +39,7 @@ public class TokenAgent3 extends Agent {
 
 	// Defaults 
 	public static int rounds = 1;
-	private static int neighbourhood = 1;
+	private static int neighbourhood = 2;
 
 	public TokenAgent3(String str) {
 		super(str);
@@ -60,18 +59,25 @@ public class TokenAgent3 extends Agent {
 			// Attach this belief set to this agent
 			this.createBeliefSet(beliefset, fields);
 		
-			// Add beliefs about neighbours
 			int numAgents = GlobalState.agents.size();
-            for (int i=-neighbourhood; i<=neighbourhood; i++){
-            	if (i==0) { continue; }
-            	this.addBelief(beliefset, Integer.toString((getId()+i+numAgents)%numAgents));
+
+			// Cannot have more neighbours than agents
+			if (neighbourhood >= numAgents) {
+				Log.error("Agent " + getName() + " cannot add "+neighbourhood+" neighbours, when there are only "+numAgents+" agents all up");
+				System.exit(-1);
+			}
+			// Add beliefs about neighbours
+            for (int i=1; i<=neighbourhood; i++){
+            	int neighbour = (getId()+i)%numAgents;
+            	this.addBelief(beliefset, Integer.toString(neighbour));
+                Log.debug("Agent " + getName() + " added neighbour " + neighbour);
             }
             Log.debug("Agent " + getName() + " is initialising with neighbourhood size of " + neighbourhood + " on each side (so "+(neighbourhood*2)+" neighbours)");
 
     		// Let Agent 0 start the token passing
     		if (getId() == 0) {
     			Log.info("round 1");
-    			Token3 token = new Token3(1,1, System.currentTimeMillis());
+    			Token3 token = new Token3(1,1);
     			token.setHops(1);
     			send(1, token);
     		}
