@@ -76,7 +76,7 @@ public class Main {
 			return;
 		}
 		t1 = System.currentTimeMillis();
-		Log.info("Created " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
+		Log.info("Created " + GlobalState.agents.size() + " agents in "+(t1-t0)+" ms");
 
 		// Initialise the thread pools
 		initIntentionSelectionPools(NUMAGENTS, ArgumentsLoader.getNumThreads());
@@ -106,7 +106,7 @@ public class Main {
 			agent.start(writer, ArgumentsLoader.getProgramArguments());
 		}
 		t1 = System.currentTimeMillis();
-		Log.info("Started " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
+		Log.info("Started " + GlobalState.agents.size() + " agents in "+(t1-t0)+" ms");
 
 		// Start the intention selection threads
 		startIntentionSelectionThreads();
@@ -125,7 +125,7 @@ public class Main {
 		}
 		
 		t1 = System.currentTimeMillis();
-		Log.info("Finished running " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
+		Log.info("Finished running " + GlobalState.agents.size() + " agents in "+(t1-t0)+" ms");
 
 		// Now shut down the threads
 		shutdownIntentionSelectionThreads();
@@ -144,7 +144,7 @@ public class Main {
 			writer.close();
 		}
 		t1 = System.currentTimeMillis();
-		Log.info("Terminated " + GlobalState.agents.size() + " agents ("+(t1-t0)+" ms)");
+		Log.info("Terminated " + GlobalState.agents.size() + " agents in "+(t1-t0)+" ms");
 
 	}
 	

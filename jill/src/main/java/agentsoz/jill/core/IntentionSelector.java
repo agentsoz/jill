@@ -45,6 +45,8 @@ public class IntentionSelector implements Runnable {
 
 	private int poolid;
 	private HashSet<Integer> activeAgents;
+	HashSet<Integer> extToRemove;
+	HashSet<Integer> extToAdd;
 	private Random rand;
 	
 	private Object lock; 
@@ -60,6 +62,8 @@ public class IntentionSelector implements Runnable {
 		this.isIdle = false;
 		this.shutdown = false;
 		activeAgents = new HashSet<Integer> ();
+		extToRemove = new HashSet<Integer>();
+		extToAdd = new HashSet<Integer>();
 	}
 
 	public void run() {
@@ -67,6 +71,22 @@ public class IntentionSelector implements Runnable {
 		do {
 		boolean idle = true;
 		ArrayList<Plan> options = new ArrayList<Plan>();
+		synchronized(extToRemove) {
+			if (!extToRemove.isEmpty()) {
+				for (int i : extToRemove) {
+					activeAgents.remove(i);
+				}
+				extToRemove.clear();
+			}
+		}
+		synchronized(extToAdd) {
+			if (!extToAdd.isEmpty()) {
+				for (int i : extToAdd) {
+					activeAgents.add(i);
+				}
+				extToAdd.clear();
+			}
+		}
 		for (Integer i : activeAgents) {
 		//for (int i = start; i < start+size; i++) {
 			// Nothing to do if this agent is idle
@@ -172,10 +192,8 @@ public class IntentionSelector implements Runnable {
 		}
 
 		if (!toRemove.isEmpty()) {
-			synchronized(activeAgents) {
-				for (int i : toRemove) {
-					activeAgents.remove(i);
-				}
+			for (int i : toRemove) {
+				activeAgents.remove(i);
 			}
 			toRemove.clear();
 		}
@@ -281,17 +299,19 @@ public class IntentionSelector implements Runnable {
 		}
 	}
 
+	//FIXME: Threading issue when external threads changes activeagents
+	// and this thread is still iterating over activeagents
 	public void setAgentIdle(int agentId, boolean idle) {
 		// If agent is becoming active, and not already active
-		if (!idle && !activeAgents.contains(agentId)) {
-			synchronized(activeAgents) {
-				activeAgents.add(agentId);
+		if (!idle /*&& !activeAgents.contains(agentId)*/) {
+			synchronized(extToAdd) {
+				extToAdd.add(agentId);
 			}
 		}
 		// If agent is becoming idle, and not already idle
-		if (idle && activeAgents.contains(agentId)) {
-			synchronized(activeAgents) {
-				activeAgents.remove(agentId);
+		if (idle /*&& activeAgents.contains(agentId)*/) {
+			synchronized(extToRemove) {
+				extToRemove.add(agentId);
 			}
 		}
 	}
