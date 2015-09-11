@@ -152,7 +152,7 @@
             <source>1.7</source>
             <target>1.7</target>
             <autoVersionSubmodules>true</autoVersionSubmodules>
-            <useReleaseProfile>false</useReleaseProfile>
+            <useReleaseProfile>true</useReleaseProfile>
             <releaseProfiles>release</releaseProfiles>
             <goals>deploy</goals>
           </configuration>
