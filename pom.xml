@@ -14,11 +14,19 @@
   </properties>
 
   <scm>
-    <connection>scm:git:ssh://git@bitbucket.org/dhixsingh/jill.git</connection>
-    <developerConnection>scm:git:ssh://git@bitbucket.org/dhixsingh/jill.git</developerConnection>
-    <url>https://bitbucket.org/dhixsingh/jill.git</url>
+    <connection>scm:git:https://github.com/agentsoz/jill.git</connection>
+    <developerConnection>scm:git:https://github.com/agentsoz/jill.git</developerConnection>
+    <url>https://github.com/agentsoz/jill.git</url>
     <tag>HEAD</tag>
   </scm>  
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
+
   
   <modules>
     <module>jill</module>
@@ -47,8 +55,71 @@
     </dependency>
   </dependencies>
 
+<profiles>
+  <profile> 
+    <id>release</id>
+    <build>
+    <plugins>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-source-plugin</artifactId>
+      <version>2.2.1</version>
+      <executions>
+        <execution>
+          <id>attach-sources</id>
+          <goals>
+            <goal>jar-no-fork</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-javadoc-plugin</artifactId>
+      <version>2.9.1</version>
+      <executions>
+        <execution>
+          <id>attach-javadocs</id>
+          <goals>
+            <goal>jar</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-gpg-plugin</artifactId>
+      <version>1.5</version>
+      <executions>
+        <execution>
+          <id>sign-artifacts</id>
+          <phase>verify</phase>
+          <goals>
+            <goal>sign</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+    </plugins>
+    </build>
+  </profile>
+</profiles>
+
   <build>
       <plugins>
+        <!-- Begin SONATYPE setup : http://central.sonatype.org/pages/apache-maven.html -->
+        <plugin>
+          <groupId>org.sonatype.plugins</groupId>
+          <artifactId>nexus-staging-maven-plugin</artifactId>
+          <version>1.6.3</version>
+          <extensions>true</extensions>
+          <configuration>
+            <serverId>ossrh</serverId>
+            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+            <autoReleaseAfterClose>false</autoReleaseAfterClose>
+          </configuration>
+        </plugin>    
+        <!-- Maven release plugin -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-release-plugin</artifactId>
@@ -60,8 +131,13 @@
           <configuration>
             <source>1.7</source>
             <target>1.7</target>
+            <autoVersionSubmodules>true</autoVersionSubmodules>
+            <useReleaseProfile>false</useReleaseProfile>
+            <releaseProfiles>release</releaseProfiles>
+            <goals>deploy</goals>
           </configuration>
         </plugin>
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
