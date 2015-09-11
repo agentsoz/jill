@@ -22,14 +22,14 @@ package io.github.agentsoz.jill.example.tokenpassing;
  * #L%
  */
 
-import java.io.PrintStream;
+import io.github.agentsoz.jill.core.GlobalState;
+import io.github.agentsoz.jill.core.beliefbase.BeliefBaseException;
+import io.github.agentsoz.jill.core.beliefbase.BeliefSetField;
+import io.github.agentsoz.jill.lang.Agent;
+import io.github.agentsoz.jill.lang.AgentInfo;
+import io.github.agentsoz.jill.util.Log;
 
-import agentsoz.jill.core.GlobalState;
-import agentsoz.jill.core.beliefbase.BeliefBaseException;
-import agentsoz.jill.core.beliefbase.BeliefSetField;
-import agentsoz.jill.lang.Agent;
-import agentsoz.jill.lang.AgentInfo;
-import agentsoz.jill.util.Log;
+import java.io.PrintStream;
 
 @AgentInfo(hasGoals={"io.github.agentsoz.jill.example.tokenpassing.Token3"})
 public class TokenAgent3 extends Agent {

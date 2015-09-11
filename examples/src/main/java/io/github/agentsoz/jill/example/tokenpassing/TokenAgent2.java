@@ -22,11 +22,11 @@ package io.github.agentsoz.jill.example.tokenpassing;
  * #L%
  */
 
-import java.io.PrintStream;
+import io.github.agentsoz.jill.lang.Agent;
+import io.github.agentsoz.jill.lang.AgentInfo;
+import io.github.agentsoz.jill.util.Log;
 
-import agentsoz.jill.lang.Agent;
-import agentsoz.jill.lang.AgentInfo;
-import agentsoz.jill.util.Log;
+import java.io.PrintStream;
 
 @AgentInfo(hasGoals={"io.github.agentsoz.jill.example.tokenpassing.Token2"})
 public class TokenAgent2 extends Agent {

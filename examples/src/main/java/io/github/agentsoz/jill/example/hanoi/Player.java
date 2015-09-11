@@ -22,12 +22,12 @@ package io.github.agentsoz.jill.example.hanoi;
  * #L%
  */
 
+import io.github.agentsoz.jill.lang.Agent;
+import io.github.agentsoz.jill.lang.AgentInfo;
+import io.github.agentsoz.jill.util.Log;
+
 import java.io.PrintStream;
 import java.util.Random;
-
-import agentsoz.jill.lang.Agent;
-import agentsoz.jill.lang.AgentInfo;
-import agentsoz.jill.util.Log;
 
 @AgentInfo(hasGoals={"io.github.agentsoz.jill.example.hanoi.Solve"})
 public class Player extends Agent {

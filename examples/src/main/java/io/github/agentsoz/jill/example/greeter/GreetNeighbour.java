@@ -22,14 +22,14 @@ package io.github.agentsoz.jill.example.greeter;
  * #L%
  */
 
-import java.util.HashMap;
+import io.github.agentsoz.jill.core.beliefbase.BeliefBaseException;
+import io.github.agentsoz.jill.lang.Agent;
+import io.github.agentsoz.jill.lang.Goal;
+import io.github.agentsoz.jill.lang.Plan;
+import io.github.agentsoz.jill.lang.PlanStep;
+import io.github.agentsoz.jill.util.Log;
 
-import agentsoz.jill.core.beliefbase.BeliefBaseException;
-import agentsoz.jill.lang.Agent;
-import agentsoz.jill.lang.Goal;
-import agentsoz.jill.lang.Plan;
-import agentsoz.jill.lang.PlanStep;
-import agentsoz.jill.util.Log;
+import java.util.HashMap;
 
 public class GreetNeighbour extends Plan {
 

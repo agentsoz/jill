@@ -22,10 +22,10 @@ package io.github.agentsoz.jill.example.hanoi;
  * #L%
  */
 
+import io.github.agentsoz.jill.util.Log;
+
 import java.util.ArrayList;
 import java.util.Random;
-
-import agentsoz.jill.util.Log;
 
 public class Board {
 	

@@ -25,7 +25,7 @@
           </descriptorRefs>
           <archive>
             <manifest>
-              <mainClass>agentsoz.jill.Main</mainClass>
+              <mainClass>io.github.agentsoz.jill.Main</mainClass>
             </manifest>
           </archive>
         </configuration>
@@ -46,7 +46,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>agentsoz.jill.Main</mainClass>
+              <mainClass>io.github.agentsoz.jill.Main</mainClass>
             </manifest>
           </archive>
         </configuration>

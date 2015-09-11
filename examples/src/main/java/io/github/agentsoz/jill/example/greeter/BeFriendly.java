@@ -22,8 +22,8 @@ package io.github.agentsoz.jill.example.greeter;
  * #L%
  */
 
-import agentsoz.jill.lang.Goal;
-import agentsoz.jill.lang.GoalInfo;
+import io.github.agentsoz.jill.lang.Goal;
+import io.github.agentsoz.jill.lang.GoalInfo;
 
 @GoalInfo(hasPlans={"io.github.agentsoz.jill.example.greeter.GreetNeighbour", "io.github.agentsoz.jill.example.greeter.GreetNobody"})
 public class BeFriendly extends Goal {

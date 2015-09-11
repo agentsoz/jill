@@ -22,12 +22,12 @@ package io.github.agentsoz.jill.example.hanoi;
  * #L%
  */
 
-import java.util.HashMap;
+import io.github.agentsoz.jill.lang.Agent;
+import io.github.agentsoz.jill.lang.Goal;
+import io.github.agentsoz.jill.lang.Plan;
+import io.github.agentsoz.jill.lang.PlanStep;
 
-import agentsoz.jill.lang.Agent;
-import agentsoz.jill.lang.Goal;
-import agentsoz.jill.lang.Plan;
-import agentsoz.jill.lang.PlanStep;
+import java.util.HashMap;
 
 public class MoveTower extends Plan {
 

@@ -22,14 +22,14 @@ package io.github.agentsoz.jill.example.tokenpassing;
  * #L%
  */
 
-import java.util.HashMap;
+import io.github.agentsoz.jill.core.GlobalState;
+import io.github.agentsoz.jill.lang.Agent;
+import io.github.agentsoz.jill.lang.Goal;
+import io.github.agentsoz.jill.lang.Plan;
+import io.github.agentsoz.jill.lang.PlanStep;
+import io.github.agentsoz.jill.util.Log;
 
-import agentsoz.jill.core.GlobalState;
-import agentsoz.jill.lang.Agent;
-import agentsoz.jill.lang.Goal;
-import agentsoz.jill.lang.Plan;
-import agentsoz.jill.lang.PlanStep;
-import agentsoz.jill.util.Log;
+import java.util.HashMap;
 
 public class ReceiveToken2 extends Plan {
 

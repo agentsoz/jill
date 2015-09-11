@@ -22,8 +22,8 @@ package io.github.agentsoz.jill.example.hanoi;
  * #L%
  */
 
-import agentsoz.jill.lang.Goal;
-import agentsoz.jill.lang.GoalInfo;
+import io.github.agentsoz.jill.lang.Goal;
+import io.github.agentsoz.jill.lang.GoalInfo;
 
 @GoalInfo(hasPlans={"io.github.agentsoz.jill.example.hanoi.MoveTower"})
 public class Solve extends Goal {
