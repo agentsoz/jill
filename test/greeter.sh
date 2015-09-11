@@ -2,7 +2,7 @@
 
 DIR=`dirname "$0"`
 
-CP=${DIR}/../jill/target/jill-0.2.3-SNAPSHOT-jar-with-dependencies.jar:${DIR}/../examples/target/jill-examples-0.2.3-SNAPSHOT.jar:
+CP=${DIR}/../jill/target/jill-0.2.5-jar-with-dependencies.jar:${DIR}/../examples/target/jill-examples-0.2.5.jar:
 
 # Connect the BDI system
 CMD="java -cp ${CP} io.github.agentsoz.jill.Main --help"

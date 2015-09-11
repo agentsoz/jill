@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>agentsoz</groupId>
+  <groupId>io.github.agentsoz</groupId>
   <artifactId>jill-project</artifactId>
   <version>0.2.5-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>Jill Project</name>
+  <name>${project.groupId}:${project.artifactId}</name>
   <description>Jill cognitive agents project</description>
   <url>agentsoz.github.io</url>
 
@@ -19,6 +19,22 @@
     <url>https://github.com/agentsoz/jill.git</url>
     <tag>HEAD</tag>
   </scm>  
+
+  <licenses>
+    <license>
+      <name>GNU General Lesser Public License, Version 3.0</name>
+      <url>http://www.gnu.org/licenses/lgpl-3.0.html</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Dhirendra Singh</name>
+      <email>dhi.singh@gmail.com</email>
+      <organization>AgentsOZ</organization>
+      <organizationUrl>http://agentsoz.github.io</organizationUrl>
+    </developer>
+  </developers>
 
   <distributionManagement>
     <snapshotRepository>
