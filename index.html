@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Jill by agentsoz</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Jill</h1>
+        <p class="header"></p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/agentsoz/jill/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/agentsoz/jill/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/agentsoz/jill">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/agentsoz">agentsoz</a></p>
+
+
+      </header>
+      <section>
+        <h1>
+<a id="who-is-jill" class="anchor" href="#who-is-jill" aria-hidden="true"><span class="octicon octicon-link"></span></a>Who, is Jill?</h1>
+
+<p>Or rather, what. Jill is a fast, scalable, and lightweight execution engine, written in Java, for programming cognitive agents in the BDI tradition.</p>
+
+<p>Say what? </p>
+
+<p>Okay, if you know object oriented programming, then we are talking about its newer cousin called <a href="https://en.wikipedia.org/wiki/Agent-oriented_programming">agent-oriented programming</a>, which loosely fits within the field of <a href="https://en.wikipedia.org/wiki/Artificial_intelligence">artificial intelligence</a> research. That's a paradigm shift for the programmer, just like object-oriented programming was compared to structural programming before that. So replace objects with agents, fields with beliefs, and methods with plans, and you're half way there. </p>
+
+<h2>
+<a id="what-is-bdi" class="anchor" href="#what-is-bdi" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is BDI?</h2>
+
+<p>BDI programming is a style of agent oriented programming. BDI, which stands for Belief-Desire-Intention, is a cognitive framework for implementing practical reasoning in computer programs. It has its roots in philosophy, and is based on <a href="https://philosophy.stanford.edu/people/michael-bratman">Bratman's</a> theory of human practical reasoning and <a href="https://en.wikipedia.org/wiki/Daniel_Dennett">Dennett's</a> theory of intentional systems. A BDI agent is characterised by an informational state (<em>beliefs</em>) about the world, a motivational state (<em>desires</em>) or objectives in the world, and a deliberative state (<em>intentions</em>) or commitments that are current in the world. It uses these mental attitudes to rationalise its actions, much like humans do (that last part is debatable). </p>
+
+<p>Conceptually, BDI programs achieve their goals and react to different situations by matching pre-programmed abstract recipes, or <em>plans</em>, to the situation. For example, a programmer may provide two plans that could be used to get to work. While one plan may involve cycling to work, the other may require catching the bus. Which one of these will be used by the agent will depend on the situation, such as whether the agent believes it is going to rain or not. BDI agent systems are particularly well suited for dynamic environments where enabling conditions for a course of action can change quickly.</p>
+
+<p>There is a nice overview of BDI systems in Chapter 2 of <a href="https://researchbank.rmit.edu.au/eserv/rmit:160114/Singh.pdf">my PhD thesis</a>, if you want a quick tour of BDI concepts and research in the last two decades.  </p>
+
+<h2>
+<a id="why-jill" class="anchor" href="#why-jill" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why Jill?</h2>
+
+<p>A plethora of BDI systems exist already, we hear you say. <a href="http://aosgrp.com/products/jack/">JACK</a>. <a href="http://www.activecomponents.org/bin/view/About/Features">Jadex</a>. <a href="http://jason.sourceforge.net/wp/">Jason</a>. And <a href="https://en.wikipedia.org/wiki/Belief%E2%80%93desire%E2%80%93intention_software_model#BDI_agent_implementations">friends</a>. So why do we need yet-another-BDI-engine? We should have called it Y-a-b-e anyway, you add.</p>
+
+<p>That's a fair question. When we started integrating cognitive (BDI) agents with <a href="https://en.wikipedia.org/wiki/Social_simulation">social (agent-based) simulations</a>, we happily used the existing systems for many years. In fact, we still maintain and use an integration framework we developed, for coupling off-the-shelf BDI systems (like <a href="http://aosgrp.com/products/jack/">JACK</a> and <a href="http://www.activecomponents.org/bin/view/About/Features">Jadex</a>), with off-the-shelf ABMs (like <a href="repast.sourceforge.net">Repast</a>, and <a href="www.matsim.org">MATSim</a>.) </p>
+
+<p>Eventually, however, we started hitting a bottleneck as we began playing with larger simulations. Most existing BDI systems are just not built for scale. So over the years, we drew up our specifications. We wanted something scalable, fast, lightweight, open-source, extendible, and Java-based. We wanted a million BDI agents. Running on our not-so-state-of-the-art laptops with 2 GB of RAM. </p>
+
+<p>So out in the <a href="https://en.wikipedia.org/wiki/Outback">outback</a>, Jill was born. Now she is old enough to join the playground.</p>
+
+<h2>
+<a id="why-java" class="anchor" href="#why-java" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why Java?</h2>
+
+<p>Rewind. Did we say <em>fast</em>, <em>scalable</em>, and <em>Java</em> all in the same breath? Surely, if we are talking optimised code, then Java is not the best choice? Wouldn't one want a native program and not something that runs within the Java Virtual Machine? Wouldn't the Java Garbage Collector kill performance before one could say, <em>cheese and crackers</em>? </p>
+
+<p>We don't disagree. These are real concerns. Indeed, C or C++ for instance, might be better candidates. However, here's the thing. In the end, Jill wasn't to live in a void. By design, we wanted something that could be easily plugged into agent-based simulation platforms. Incidentally, many of our target platforms (like Repast, MATSim, NetLogo) live in a Java ecosystem. While it is possible for native programs to interact with Java through the Java Native Interface, Java-Native calls have insignificant overheads, and a poorly designed interface could easily kill any benefits of the native program. It also makes the entire development process slower, since one has to then consider OS specific issues in the entire life cycle. Plus we wanted the user set up to be as simple as possible. Drop in the JAR file, and <a href="https://en.wikipedia.org/wiki/Bob%27s_your_uncle">Jill's your aunt</a>.</p>
+
+<p>So in the end it was a strategic decision more than anything else, to use Java. That said, Jill is no <a href="https://en.wikipedia.org/wiki/Echidna">Echidna</a> either, <a href="https://en.wikipedia.org/wiki/Emu">Emu</a> more like, and outruns its friends when it comes to performance.</p>
+
+<h2>
+<a id="whats-the-catch" class="anchor" href="#whats-the-catch" aria-hidden="true"><span class="octicon octicon-link"></span></a>What's the catch?</h2>
+
+<p>Nothing really, other than that Jill is still young. She is everyone's baby sister, and does not have all the advanced features of the big boys yet. But she is developing fast, and what she does she does pretty well.</p>
+
+<h1>
+<a id="how-do-i-use-it" class="anchor" href="#how-do-i-use-it" aria-hidden="true"><span class="octicon octicon-link"></span></a>How do I use it?</h1>
+
+<p>In a nutshell, you put the Jill release JAR on your classpath, and start coding. The programs you write are still Java programs, but you extend the agent specific classes that Jill provides and add Java annotations to your code so Jill knows how all the elements of your agent program fit together.</p>
+
+<p>Jill is available from <a href="http://search.maven.org/">Maven's Central Repository</a>. We assume you know how to use maven, but if not, here is a <a href="https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html">five minute tutorial</a>. To use Jill, just add the dependency to your <code>pom.xml</code>.</p>
+
+<pre><code>&lt;dependencies&gt;
+    ...
+    &lt;dependency&gt;
+        &lt;groupId&gt;io.github.agentsoz&lt;/groupId&gt;
+        &lt;artifactId&gt;jill&lt;/artifactId&gt;
+        &lt;version&gt;0.2.2&lt;/version&gt;
+    &lt;/dependency&gt;
+    ...
+&lt;/dependencies&gt;
+</code></pre>
+
+<p>That's it. You're ready to write your first agent program in Jill. Let's to that now.. (<em>to be continued</em>).</p>
+
+<h1>
+<a id="contact" class="anchor" href="#contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contact</h1>
+
+<p>For more information contact Dhirendra Singh (<a href="https://github.com/dhixsingh" class="user-mention">@dhixsingh</a>).</p>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
+  </body>
+</html>
