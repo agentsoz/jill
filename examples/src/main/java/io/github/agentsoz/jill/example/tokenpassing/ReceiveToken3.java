@@ -1,4 +1,4 @@
-package agentsoz.jill.example.greeter;
+package io.github.agentsoz.jill.example.tokenpassing;
 
 /*
  * #%L
@@ -24,6 +24,7 @@ package agentsoz.jill.example.greeter;
 
 import java.util.HashMap;
 
+import agentsoz.jill.core.GlobalState;
 import agentsoz.jill.core.beliefbase.BeliefBaseException;
 import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.Goal;
@@ -31,26 +32,28 @@ import agentsoz.jill.lang.Plan;
 import agentsoz.jill.lang.PlanStep;
 import agentsoz.jill.util.Log;
 
-public class GreetNeighbour extends Plan {
+public class ReceiveToken3 extends Plan {
 
-	String neighbour;
+	private String neighbour;
 	
-	public GreetNeighbour(Agent agent, Goal goal, String name) {
+	public ReceiveToken3(Agent agent, Goal goal, String name) {
 		super(agent, goal, name);
-		body = steps;
-		neighbour = "Unknown";
+		body = steps;		
 	}
 
 	@Override
 	public boolean context() {
+		Agent agent = getAgent();
+		int myid = agent.getId();
+		int goalid = ((Token3)getGoal()).getAgent();
 		try {
-			return getAgent().eval("neighbour.gender = male");
+			return (myid == goalid) && agent.eval("neighbour.name = *");
 		} catch (BeliefBaseException e) {
 			Log.error(e.getMessage());
 		}
 		return false;
 	}
-	
+
 	@Override
 	public void setPlanVariables(HashMap<String, Object> vars) {
 		for (String attribute: vars.keySet()) {
@@ -67,9 +70,30 @@ public class GreetNeighbour extends Plan {
 	PlanStep[] steps = {
 			new PlanStep() {
 				public void step() {
-					System.out.println(getAgent().getName() + " says hello " + neighbour);
+					Token3 msg = (Token3)getGoal();
+					int myid = getAgent().getId();
+					// Agent performaing the last hop is the book keeper
+					if (msg.getHops() == GlobalState.agents.size()) {
+						// Check if we are done with the rounds
+						if (TokenAgent3.rounds != msg.getRound()) {
+							// Not done, so start the next round
+							int newRound = msg.getRound()+1; 
+							msg.setRound(newRound);
+							msg.setHops(1);
+							Log.info("round " + newRound);
+						} else {
+							// All done, so return
+							Log.info("rounds complete");
+							return;
+						}
+					}
+					// Send the token to the next agent
+					//int nextAgent = (myid+1)%GlobalState.agents.size();
+					int nextAgent = Integer.parseInt(neighbour);
+					msg.setAgent(nextAgent);
+					msg.setHops(msg.getHops()+1);
+					getAgent().send(nextAgent, msg);
 				}
 			},
 	};
-
 }

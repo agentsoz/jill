@@ -1,4 +1,4 @@
-package agentsoz.jill.example.tokenpassing;
+package io.github.agentsoz.jill.example.tokenpassing;
 
 /*
  * #%L
@@ -31,16 +31,18 @@ import agentsoz.jill.lang.Plan;
 import agentsoz.jill.lang.PlanStep;
 import agentsoz.jill.util.Log;
 
-public class ReceiveToken1 extends Plan {
+public class ReceiveToken2 extends Plan {
 
-	public ReceiveToken1(Agent agent, Goal goal, String name) {
+	public ReceiveToken2(Agent agent, Goal goal, String name) {
 		super(agent, goal, name);
 		body = steps;		
 	}
 
 	@Override
 	public boolean context() {
-		return true;
+		int myid = getAgent().getId();
+		Token2 goal = (Token2)getGoal();
+		return (myid == goal.getAgent());
 	}
 
 	@Override
@@ -50,12 +52,12 @@ public class ReceiveToken1 extends Plan {
 	PlanStep[] steps = {
 			new PlanStep() {
 				public void step() {
-					Token1 msg = (Token1)getGoal();
+					Token2 msg = (Token2)getGoal();
 					int myid = getAgent().getId();
 					// Agent0 is the book keeper
 					if (myid == 0) {
 						// Check if we are done with the rounds
-						if (TokenAgent1.rounds != msg.getRound()) {
+						if (TokenAgent2.rounds != msg.getRound()) {
 							// Not done, so start the next round
 							int newRound = msg.getRound()+1; 
 							msg.setRound(newRound);

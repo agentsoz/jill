@@ -1,4 +1,4 @@
-package agentsoz.jill.example.greeter;
+package io.github.agentsoz.jill.example.greeter;
 
 /*
  * #%L
@@ -31,7 +31,7 @@ import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.AgentInfo;
 import agentsoz.jill.util.Log;
 
-@AgentInfo(hasGoals={"agentsoz.jill.example.greeter.BeFriendly"})
+@AgentInfo(hasGoals={"io.github.agentsoz.jill.example.greeter.BeFriendly"})
 public class Greeter extends Agent {
 
 	// Defaults

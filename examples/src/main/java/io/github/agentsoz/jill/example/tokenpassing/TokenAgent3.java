@@ -1,4 +1,4 @@
-package agentsoz.jill.example.tokenpassing;
+package io.github.agentsoz.jill.example.tokenpassing;
 
 /*
  * #%L
@@ -31,7 +31,7 @@ import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.AgentInfo;
 import agentsoz.jill.util.Log;
 
-@AgentInfo(hasGoals={"agentsoz.jill.example.tokenpassing.Token3"})
+@AgentInfo(hasGoals={"io.github.agentsoz.jill.example.tokenpassing.Token3"})
 public class TokenAgent3 extends Agent {
 
 	public static PrintStream out;

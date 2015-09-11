@@ -1,4 +1,4 @@
-package agentsoz.jill.example.tokenpassing;
+package io.github.agentsoz.jill.example.greeter;
 
 /*
  * #%L
@@ -25,35 +25,11 @@ package agentsoz.jill.example.tokenpassing;
 import agentsoz.jill.lang.Goal;
 import agentsoz.jill.lang.GoalInfo;
 
-@GoalInfo(hasPlans={"agentsoz.jill.example.tokenpassing.ReceiveToken2"})
-public class Token2 extends Goal {
+@GoalInfo(hasPlans={"io.github.agentsoz.jill.example.greeter.GreetNeighbour", "io.github.agentsoz.jill.example.greeter.GreetNobody"})
+public class BeFriendly extends Goal {
 
-	private int round;
-	private int agent;
-
-	public Token2(String str) {
+	public BeFriendly(String str) {
 		super(str);
 	}
 	
-	public Token2(int round, int agent) {
-		this(null);
-		this.agent = agent;
-		this.round = round;
-	}
-	
-	public int getAgent() {
-		return agent;
-	}
-	
-	public void setAgent(int agent) {
-		this.agent = agent;
-	}
-
-	public int getRound() {
-		return round;
-	}
-
-	public void setRound(int round) {
-		this.round = round;
-	}
 }

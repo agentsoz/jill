@@ -1,4 +1,4 @@
-package agentsoz.jill.example.hanoi;
+package io.github.agentsoz.jill.example.hanoi;
 
 /*
  * #%L
@@ -25,7 +25,7 @@ package agentsoz.jill.example.hanoi;
 import agentsoz.jill.lang.Goal;
 import agentsoz.jill.lang.GoalInfo;
 
-@GoalInfo(hasPlans={"agentsoz.jill.example.hanoi.MoveTower"})
+@GoalInfo(hasPlans={"io.github.agentsoz.jill.example.hanoi.MoveTower"})
 public class Solve extends Goal {
 
 	public int disc;

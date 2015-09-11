@@ -1,4 +1,4 @@
-package agentsoz.jill.example.hanoi;
+package io.github.agentsoz.jill.example.hanoi;
 
 /*
  * #%L
@@ -29,7 +29,7 @@ import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.AgentInfo;
 import agentsoz.jill.util.Log;
 
-@AgentInfo(hasGoals={"agentsoz.jill.example.hanoi.Solve"})
+@AgentInfo(hasGoals={"io.github.agentsoz.jill.example.hanoi.Solve"})
 public class Player extends Agent {
 
 	public static PrintStream out;

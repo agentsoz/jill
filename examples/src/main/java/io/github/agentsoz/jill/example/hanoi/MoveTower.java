@@ -1,4 +1,4 @@
-package agentsoz.jill.example.hanoi;
+package io.github.agentsoz.jill.example.hanoi;
 
 /*
  * #%L

@@ -1,4 +1,4 @@
-package agentsoz.jill.example.tokenpassing;
+package io.github.agentsoz.jill.example.tokenpassing;
 
 /*
  * #%L
@@ -28,14 +28,14 @@ import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.AgentInfo;
 import agentsoz.jill.util.Log;
 
-@AgentInfo(hasGoals={"agentsoz.jill.example.tokenpassing.Token2"})
-public class TokenAgent2 extends Agent {
+@AgentInfo(hasGoals={"io.github.agentsoz.jill.example.tokenpassing.Token1"})
+public class TokenAgent1 extends Agent {
 
 	// Defaults 
 	public static int rounds = 1;
 	public static PrintStream out;
 	
-	public TokenAgent2(String str) {
+	public TokenAgent1(String str) {
 		super(str);
 	}
 
@@ -45,7 +45,7 @@ public class TokenAgent2 extends Agent {
 		out = writer;
 		if (getId() == 0) {
 			Log.info("round 1");
-			send(1, new Token2(1,1));
+			send(1, new Token1(1,1));
 		}
 	}
 

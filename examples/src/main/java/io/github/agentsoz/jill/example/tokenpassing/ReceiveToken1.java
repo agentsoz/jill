@@ -1,4 +1,4 @@
-package agentsoz.jill.example.greeter;
+package io.github.agentsoz.jill.example.tokenpassing;
 
 /*
  * #%L
@@ -24,19 +24,18 @@ package agentsoz.jill.example.greeter;
 
 import java.util.HashMap;
 
+import agentsoz.jill.core.GlobalState;
 import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.Goal;
 import agentsoz.jill.lang.Plan;
 import agentsoz.jill.lang.PlanStep;
+import agentsoz.jill.util.Log;
 
-public class GreetNobody extends Plan {
+public class ReceiveToken1 extends Plan {
 
-	String neighbour;
-
-	public GreetNobody(Agent agent, Goal goal, String name) {
+	public ReceiveToken1(Agent agent, Goal goal, String name) {
 		super(agent, goal, name);
-		body = steps;
-		neighbour = "Unknown";
+		body = steps;		
 	}
 
 	@Override
@@ -46,15 +45,32 @@ public class GreetNobody extends Plan {
 
 	@Override
 	public void setPlanVariables(HashMap<String, Object> vars) {
-		// TODO Auto-generated method stub
 	}
 
 	PlanStep[] steps = {
 			new PlanStep() {
 				public void step() {
-					System.out.println(getAgent().getName() + " says, \"hello, is there any body out there?\"");
+					Token1 msg = (Token1)getGoal();
+					int myid = getAgent().getId();
+					// Agent0 is the book keeper
+					if (myid == 0) {
+						// Check if we are done with the rounds
+						if (TokenAgent1.rounds != msg.getRound()) {
+							// Not done, so start the next round
+							int newRound = msg.getRound()+1; 
+							msg.setRound(newRound);
+							Log.info("round " + newRound);
+						} else {
+							// All done, so return
+							Log.info("rounds complete");
+							return;
+						}
+					}
+					// Send the token to the next agent
+					int nextAgent = (myid+1)%GlobalState.agents.size();
+					msg.setAgent(nextAgent);
+					getAgent().send(nextAgent, msg);
 				}
 			},
 	};
-
 }

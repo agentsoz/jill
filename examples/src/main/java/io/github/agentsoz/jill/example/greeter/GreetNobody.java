@@ -1,4 +1,4 @@
-package agentsoz.jill.example.tokenpassing;
+package io.github.agentsoz.jill.example.greeter;
 
 /*
  * #%L
@@ -22,37 +22,39 @@ package agentsoz.jill.example.tokenpassing;
  * #L%
  */
 
+import java.util.HashMap;
+
+import agentsoz.jill.lang.Agent;
 import agentsoz.jill.lang.Goal;
-import agentsoz.jill.lang.GoalInfo;
+import agentsoz.jill.lang.Plan;
+import agentsoz.jill.lang.PlanStep;
 
-@GoalInfo(hasPlans={"agentsoz.jill.example.tokenpassing.ReceiveToken1"})
-public class Token1 extends Goal {
+public class GreetNobody extends Plan {
 
-	private int round;
-	private int agent;
-	public Token1(String str) {
-		super(str);
-	}
-	
-	public Token1(int round, int agent) {
-		this(null);
-		this.agent = agent;
-		this.round = round;
+	String neighbour;
+
+	public GreetNobody(Agent agent, Goal goal, String name) {
+		super(agent, goal, name);
+		body = steps;
+		neighbour = "Unknown";
 	}
 
-	public int getAgent() {
-		return agent;
-	}
-	
-	public void setAgent(int agent) {
-		this.agent = agent;
+	@Override
+	public boolean context() {
+		return true;
 	}
 
-	public int getRound() {
-		return round;
+	@Override
+	public void setPlanVariables(HashMap<String, Object> vars) {
+		// TODO Auto-generated method stub
 	}
 
-	public void setRound(int round) {
-		this.round = round;
-	}
+	PlanStep[] steps = {
+			new PlanStep() {
+				public void step() {
+					System.out.println(getAgent().getName() + " says, \"hello, is there any body out there?\"");
+				}
+			},
+	};
+
 }
