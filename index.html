@@ -31,9 +31,9 @@
       </header>
       <section>
         <h1>
-<a id="who-is-jill" class="anchor" href="#who-is-jill" aria-hidden="true"><span class="octicon octicon-link"></span></a>Who, is Jill?</h1>
+<a id="who-is-jill" class="anchor" href="#who-is-jill" aria-hidden="true"><span class="octicon octicon-link"></span></a>Who is Jill?</h1>
 
-<p>Or rather, what. Jill is a fast, scalable, and lightweight execution engine, written in Java, for programming cognitive agents in the BDI tradition.</p>
+<p>Rather, what. Jill is a fast, scalable, and lightweight execution engine, written in Java, for programming cognitive agents in the BDI tradition.</p>
 
 <p>Say what? </p>
 
@@ -62,9 +62,9 @@
 <h2>
 <a id="why-java" class="anchor" href="#why-java" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why Java?</h2>
 
-<p>Rewind. Did we say <em>fast</em>, <em>scalable</em>, and <em>Java</em> all in the same breath? Surely, if we are talking optimised code, then Java is not the best choice? Wouldn't one want a native program and not something that runs within the Java Virtual Machine? Wouldn't the Java Garbage Collector kill performance before one could say, <em>cheese and crackers</em>? </p>
+<p>Rewind. Did we say <em>fast</em>, <em>scalable</em>, and <em>Java</em> all in the same breath? Surely, if we are talking optimised code, then Java is not the best choice? Wouldn't one want a native program and not something that runs within the Java Virtual Machine? Wouldn't the Java Garbage Collector kill performance before one could say, cheese and crackers? </p>
 
-<p>We don't disagree. These are real concerns. Indeed, C or C++ for instance, might be better candidates. However, here's the thing. In the end, Jill wasn't to live in a void. By design, we wanted something that could be easily plugged into agent-based simulation platforms. Incidentally, many of our target platforms (like Repast, MATSim, NetLogo) live in a Java ecosystem. While it is possible for native programs to interact with Java through the Java Native Interface, Java-Native calls have insignificant overheads, and a poorly designed interface could easily kill any benefits of the native program. It also makes the entire development process slower, since one has to then consider OS specific issues in the entire life cycle. Plus we wanted the user set up to be as simple as possible. Drop in the JAR file, and <a href="https://en.wikipedia.org/wiki/Bob%27s_your_uncle">Jill's your aunt</a>.</p>
+<p>We don't disagree. These are real concerns. Indeed, C or C++ for instance, might be better candidates. However, here's the thing. In the end, Jill wasn't to live in a void. By design, we wanted something that could be easily plugged into agent-based simulation platforms. Incidentally, many of our target platforms (like Repast, MATSim, NetLogo) live in a Java ecosystem. While it is possible for native programs to interact with Java through the Java Native Interface, these calls have insignificant overheads, and a poorly designed interface could easily kill any benefits of the native program. It also makes the entire development process more involved, since one has to then consider OS specific issues in the entire life cycle. Plus we wanted the user set up to be as simple as possible. Drop in the JAR file, and <a href="https://en.wikipedia.org/wiki/Bob%27s_your_uncle">Jill's your aunt</a>.</p>
 
 <p>So in the end it was a strategic decision more than anything else, to use Java. That said, Jill is no <a href="https://en.wikipedia.org/wiki/Echidna">Echidna</a> either, <a href="https://en.wikipedia.org/wiki/Emu">Emu</a> more like, and outruns its friends when it comes to performance.</p>
 
@@ -91,7 +91,44 @@
 &lt;/dependencies&gt;
 </code></pre>
 
-<p>That's it. You're ready to write your first agent program in Jill. Let's to that now.. (<em>to be continued</em>).</p>
+<p>That's it. You're ready to write your first agent program in Jill. Let's do that now.</p>
+
+<h1>
+<a id="hello-jill" class="anchor" href="#hello-jill" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hello Jill!</h1>
+
+<p>Keeping with tradition, our first agent program will print Hello <del>World</del> Jill! </p>
+
+<p>Before we start, remember that the process of writing agent programs in Jill is no different to writing Java programs. You do not need to change your Java development workflow in any way. In fact, we ourselves use <a href="http://www.eclipse.org/downloads/packages/eclipse-ide-java-developers/lunasr2">Eclipse/Maven</a> to write all our agent programs in Jill. </p>
+
+<p>The instructions below assume you are working with Eclipse/Maven, so your mileage will vary if your set up is different. That said, any Java workflow should be fine, as long as you have the Jill JAR on your classpath. (If you are not using Maven, then you can <a href="https://repo1.maven.org/maven2/io/github/agentsoz/jill/">download the JAR directly from Maven's Central Repository</a>.)</p>
+
+<p>First, the concepts.</p>
+
+<p>Every BDI agent program in Jill has three parts: </p>
+
+<ul>
+<li>a new agent class (<code>extends io.github.agentsoz.jill.lang.Agent</code>), </li>
+<li>the agents goals (each <code>extends io.github.agentsoz.jill.lang.Goal</code>), and </li>
+<li>its plans (each <code>extends io.github.agentsoz.jill.lang.Plan</code>).</li>
+</ul>
+
+<p>As a minimum, you need one of each to get going. So to build our greeter agent, we will create a new agent type (in a new class called <code>Greeter.java</code>), give it a goal to greet people (in <code>Greet.java</code>) and add a plan that it can use to achieve this goal (in <code>SayHello.java</code>). Let us look at these one by one.</p>
+
+<h3>
+<a id="the-greeter-agent-greeterjava" class="anchor" href="#the-greeter-agent-greeterjava" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Greeter agent <code>Greeter.java</code>
+</h3>
+
+<p>Here is the most basic agent program that you could compile in Jill. All it does is extend the Jill <code>Agent</code> class, and add a constructor.</p>
+
+<pre><code>package greeter;
+import io.github.agentsoz.jill.lang.Agent;
+
+public class Greeter extends Agent {
+    public Greeter(String name) {
+        super(name);
+    }
+}
+</code></pre>
 
 <h1>
 <a id="contact" class="anchor" href="#contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contact</h1>
