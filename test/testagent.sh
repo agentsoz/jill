@@ -2,7 +2,7 @@
 
 DIR=`dirname "$0"`
 
-CP=${DIR}/../jill/target/jill-0.3.0-jar-with-dependencies.jar:${DIR}/../examples/target/jill-examples-0.3.0.jar:${DIR}/../jill/target/test-classes
+CP=${DIR}/../jill/target/jill-0.3.1-SNAPSHOT-jar-with-dependencies.jar:${DIR}/../examples/target/jill-examples-0.3.1-SNAPSHOT.jar:${DIR}/../jill/target/test-classes
 
 CMD="java -cp ${CP} io.github.agentsoz.jill.Main --help"
 echo $CMD; eval $CMD

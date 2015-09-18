@@ -116,6 +116,7 @@ public class Agent extends AObject {
 			executionStack.push(goal);
 			Main.setAgentIdle(getId(), false);
 		}
+		Main.flagMessageTo(Main.poolid(getId()));
 	}
 	
 	public boolean send(int id, Goal msg) {
@@ -126,11 +127,6 @@ public class Agent extends AObject {
 		}
 		Log.debug("Agent " + getId() + " is sending message of type "+msg.getClass().getSimpleName()+" to agent "+id);
 		((Agent)obj).post(msg);
-		int fromPool = Main.poolid(getId());
-		int toPool = Main.poolid(id);
-		if (fromPool != toPool) {
-			Main.flagMessageTo(toPool);
-		}
 		return true;
 	}
 	

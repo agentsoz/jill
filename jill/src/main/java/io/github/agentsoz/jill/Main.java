@@ -44,11 +44,27 @@ public class Main {
 	private static int poolsize;
 	private static IntentionSelector[] intentionSelectors;
 	public static AtomicInteger poolsIdle = new AtomicInteger();
+	private static PrintStream writer;
 	
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		
+		// Initialise the system with the given arguments
+		init(args);
+		
+		// Start the engine
+		start();
+		
+		// Wait until the agents become idle
+		waitUntilIdle();
+
+		// finish up
+		finish();
+	}
+	
+	public static void init(String[] args) {
 
 		// Parse the command line options
 		ArgumentsLoader.parse(args);
@@ -83,7 +99,6 @@ public class Main {
 
 
 		// Redirect the agent program output if specified
-		PrintStream writer = null;
 		if (ArgumentsLoader.getProgramOutputFile() != null) {
 			try {
 				writer = new PrintStream(ArgumentsLoader.getProgramOutputFile(), "UTF-8");
@@ -96,23 +111,29 @@ public class Main {
 		
 		// Start the intention selection threads
 		initIntentionSelectionThreads();
-
+		
+	}
+	
+	public static void start() {
 		// Start the agents
-		t0 = System.currentTimeMillis();
+		long t0 = System.currentTimeMillis();
 		for (int i = 0; i < GlobalState.agents.size(); i++) {
 			// Get the agent
 			Agent agent = (Agent)GlobalState.agents.get(i);
 			// Start the agent
 			agent.start(writer, ArgumentsLoader.getProgramArguments());
 		}
-		t1 = System.currentTimeMillis();
+		long t1 = System.currentTimeMillis();
 		Log.info("Started " + GlobalState.agents.size() + " agents in "+(t1-t0)+" ms");
 
 		// Start the intention selection threads
 		startIntentionSelectionThreads();
-
+		
+	}
+	
+	public static void waitUntilIdle() {
 		// Wait till we are all done
-		t0 = System.currentTimeMillis();
+		long t0 = System.currentTimeMillis();
 		
 		synchronized(poolsIdle) {
 			while(!arePoolsIdle()) {
@@ -124,15 +145,16 @@ public class Main {
 			}
 		}
 		
-		t1 = System.currentTimeMillis();
+		long t1 = System.currentTimeMillis();
 		Log.info("Finished running " + GlobalState.agents.size() + " agents in "+(t1-t0)+" ms");
+	}
 
+	public static void finish() {
 		// Now shut down the threads
 		shutdownIntentionSelectionThreads();
-		
 
 		// Finish the agents
-		t0 = System.currentTimeMillis();
+		long t0 = System.currentTimeMillis();
 		for (int i = 0; i < GlobalState.agents.size(); i++) {
 			// Get the agent
 			Agent agent = (Agent)GlobalState.agents.get(i);
@@ -143,9 +165,8 @@ public class Main {
 		if (writer != null) {
 			writer.close();
 		}
-		t1 = System.currentTimeMillis();
+		long t1 = System.currentTimeMillis();
 		Log.info("Terminated " + GlobalState.agents.size() + " agents in "+(t1-t0)+" ms");
-
 	}
 	
 	/**
@@ -174,7 +195,7 @@ public class Main {
 		}
 	}
 
-	private static void initIntentionSelectionPools(int nagents, int ncores) {
+	public static void initIntentionSelectionPools(int nagents, int ncores) {
 		poolsize = (nagents > ncores) ? (nagents/ncores) : 1;
 		npools = (nagents > ncores) ? ncores : nagents;
 	}
@@ -184,7 +205,7 @@ public class Main {
 	 * Starts the intention selection threads that each handle a pool of agents
 	 * @return the number of threads started
 	 */
-	private static void initIntentionSelectionThreads() {
+	public static void initIntentionSelectionThreads() {
 		int ncores = ArgumentsLoader.getNumThreads();
 		intentionSelectors = new IntentionSelector[ncores];
         for (int i = 0; i < npools; i++) {
@@ -194,13 +215,13 @@ public class Main {
         }
 	}
 
-	private static void startIntentionSelectionThreads() {
+	public static void startIntentionSelectionThreads() {
         for (int i = 0; i < npools; i++) {
         	new Thread(intentionSelectors[i]).start(); // start and wait at the entry barrier
         }
 	}
 
-	private static void shutdownIntentionSelectionThreads() {
+	public static void shutdownIntentionSelectionThreads() {
         for (int i = 0; i < npools; i++) {
         	intentionSelectors[i].shutdown(); 
         }
