@@ -69,157 +69,153 @@ public class IntentionSelector implements Runnable {
 	public void run() {
 		HashSet<Integer> toRemove = new HashSet<Integer>();
 		do {
-		boolean idle = true;
-		ArrayList<Plan> options = new ArrayList<Plan>();
-		synchronized(extToRemove) {
-			if (!extToRemove.isEmpty()) {
-				for (int i : extToRemove) {
-					activeAgents.remove(i);
-				}
-				extToRemove.clear();
-			}
-		}
-		synchronized(extToAdd) {
-			if (!extToAdd.isEmpty()) {
-				for (int i : extToAdd) {
-					activeAgents.add(i);
-				}
-				extToAdd.clear();
-			}
-		}
-		for (Integer i : activeAgents) {
-		//for (int i = start; i < start+size; i++) {
-			// Nothing to do if this agent is idle
-			//if (Main.isAgentIdle(i)) {
-			//	continue;
-			//}
-			
-			Agent agent = (Agent)GlobalState.agents.get(i);
-			Stack255 agentExecutionStack = (Stack255)(agent).getExecutionStack();
-			int esSize = agentExecutionStack.size();
-			Log.trace("Agent " + agent.getId() + "'s execution stack is "+esSize+"/255 full");
-			if (agentExecutionStack == null || esSize == 0) {
-				// Mark this agent as idle
-				//Main.setAgentIdle(i, true);
-				toRemove.add(i);
-				continue;
-			}
-			if (esSize >= 255) {
-				Log.error("Agent " + agent.getId() + "'s execution stack has reached the maximum size of 255. Cannot continue.");
-				continue;
-			}
-			
-			// At least one agent is active
-			idle = false;
-			
-			// Get the item at the top of the stack
-			Object node = (Object)agentExecutionStack.get((byte)(esSize-1));
-			
-			// If it is a plan then execute it
-			if (node instanceof Plan) {
-				// If done then pop this plan/goal
-				if (((Plan) node).hasfinished()) {
-					Log.debug("Agent " + agent.getId() + " finished executing plan "+node.getClass().getSimpleName());
-					synchronized(agentExecutionStack) {
-					// Pop the plan off the stack
-					agentExecutionStack.pop();
-					// Pop the goal off the stack
-					agentExecutionStack.pop();
-					if (agentExecutionStack.isEmpty()) {
-						// Mark this agent as idle
-						//Main.setAgentIdle(i, true);
-						toRemove.add(i);
+			boolean idle = true;
+			ArrayList<Plan> options = new ArrayList<Plan>();
+			synchronized(extToRemove) {
+				if (!extToRemove.isEmpty()) {
+					for (int i : extToRemove) {
+						activeAgents.remove(i);
 					}
-					}
-				} else {
-					Log.debug("Agent " + agent.getId() + " is executing a step of plan "+node.getClass().getSimpleName());
-					((Plan) node).step();
+					extToRemove.clear();
 				}
+			}
+			synchronized(extToAdd) {
+				if (!extToAdd.isEmpty()) {
+					for (int i : extToAdd) {
+						activeAgents.add(i);
+					}
+					extToAdd.clear();
+				}
+			}
 
-				continue;
-			}
-			
-			// If it is a goal then find a plan for it and put it on the stack
-			if (node instanceof Goal) {
-				options.clear();
-				// Get the goal type for this goal
-				GoalType gtype = (GoalType)GlobalState.goalTypes.find(node.getClass().getName());
-				byte[] ptypes = gtype.getChildren();
-				assert(ptypes != null);
-				for(int p = 0; p < ptypes.length; p++) {
-					PlanType ptype = (PlanType)GlobalState.planTypes.get(ptypes[p]);
-					
-					try {
-						// Create an object on this Plan type, so we can
-						// access its context condition
-						Plan planInstance = (Plan)(ptype.getPlanClass().getConstructor(Agent.class, Goal.class, String.class).newInstance(GlobalState.agents.get(i), node, "p"));
-						// Clear previously buffered context results if any
-						agent.clearLastResults();
-						// Evaluate the context condition
-						boolean context = planInstance.context();
-						if (context == true) {
-							// Get the results of context query just performed
-							HashSet<Belief> results = agent.getLastResults();
-							if (results != null && !results.isEmpty()) {
-								// Select a result based on the plan selection policy
-								int choice = selectIndex(results.size(), GlobalConstant.PLAN_SELECTION_POLICY);
-								Log.debug("Agent "+agent.getId()+" plan "+ptype+" has "+results.size()+" applicable instances; choosing instance "+choice);
-								// Set the plan variables
-								setPlanVariables(agent, planInstance, results, choice);
-							}
-							// Add it to the options
-							options.add(planInstance);
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					}					
-				}
-				if (options.isEmpty()) {
-					// No plan options for this goal at this point in time, so move to the next agent
-					Log.debug("Agent "+agent.getId()+" has no applicable plans for goal "+gtype+" and will continue to wait indefinitely");
+			for (Integer i : activeAgents) {
+
+				Agent agent = (Agent)GlobalState.agents.get(i);
+				Stack255 agentExecutionStack = (Stack255)(agent).getExecutionStack();
+				int esSize = agentExecutionStack.size();
+				Log.trace("Agent " + agent.getId() + "'s execution stack is "+esSize+"/255 full");
+				if (agentExecutionStack == null || esSize == 0) {
+					// Mark this agent as idle
+					//Main.setAgentIdle(i, true);
+					toRemove.add(i);
 					continue;
 				}
-				// TODO: Pick a plan option using specified policy
-				int choice = selectIndex(options.size(), GlobalConstant.PLAN_SELECTION_POLICY);
-				// Now push the plan on to the intention stack
-				synchronized(agentExecutionStack) {
-					Log.debug("Agent "+agent.getId()+" choose an instance of plan "+options.get(choice).getClass().getSimpleName()+" to handle goal "+gtype.getClass().getSimpleName());
-					agentExecutionStack.push(options.get(choice));
+				if (esSize >= 255) {
+					Log.error("Agent " + agent.getId() + "'s execution stack has reached the maximum size of 255. Cannot continue.");
+					continue;
 				}
-				options.clear();
-				
-			}
-		}
 
-		if (!toRemove.isEmpty()) {
-			for (int i : toRemove) {
-				activeAgents.remove(i);
-			}
-			toRemove.clear();
-		}
+				// At least one agent is active
+				idle = false;
 
-		if (idle) {
-		synchronized(lock) {
-			while (idle && !hasMessage) {
-				try {
-					Log.debug("Intention selector "+poolid+" is idle; will wait on external message");
-					//Main.incrementPoolsIdle();
-					isIdle = true;
-					Main.flagPoolIdle();
-					lock.wait();
-					isIdle = false;
-					//Main.decrementPoolsIdle();
-					Log.debug("Intention selector "+poolid+" just woke up on external message");
-				} catch (InterruptedException e) {
-					Log.error("Intention selector "+poolid+" failed to wait on external message: " + e.getMessage());
+				// Get the item at the top of the stack
+				Object node = (Object)agentExecutionStack.get((byte)(esSize-1));
+
+				// If it is a plan then execute it
+				if (node instanceof Plan) {
+					// If done then pop this plan/goal
+					if (((Plan) node).hasfinished()) {
+						Log.debug("Agent " + agent.getId() + " finished executing plan "+node.getClass().getSimpleName());
+						synchronized(agentExecutionStack) {
+							// Pop the plan off the stack
+							agentExecutionStack.pop();
+							// Pop the goal off the stack
+							agentExecutionStack.pop();
+							if (agentExecutionStack.isEmpty()) {
+								// Mark this agent as idle
+								//Main.setAgentIdle(i, true);
+								toRemove.add(i);
+							}
+						}
+					} else {
+						Log.debug("Agent " + agent.getId() + " is executing a step of plan "+node.getClass().getSimpleName());
+						((Plan) node).step();
+					}
+
+					continue;
+				}
+
+				// If it is a goal then find a plan for it and put it on the stack
+				if (node instanceof Goal) {
+					options.clear();
+					// Get the goal type for this goal
+					GoalType gtype = (GoalType)GlobalState.goalTypes.find(node.getClass().getName());
+					byte[] ptypes = gtype.getChildren();
+					assert(ptypes != null);
+					for(int p = 0; p < ptypes.length; p++) {
+						PlanType ptype = (PlanType)GlobalState.planTypes.get(ptypes[p]);
+
+						try {
+							// Create an object on this Plan type, so we can
+							// access its context condition
+							Plan planInstance = (Plan)(ptype.getPlanClass().getConstructor(Agent.class, Goal.class, String.class).newInstance(GlobalState.agents.get(i), node, "p"));
+							// Clear previously buffered context results if any
+							agent.clearLastResults();
+							// Evaluate the context condition
+							boolean context = planInstance.context();
+							if (context == true) {
+								// Get the results of context query just performed
+								HashSet<Belief> results = agent.getLastResults();
+								if (results != null && !results.isEmpty()) {
+									// Select a result based on the plan selection policy
+									int choice = selectIndex(results.size(), GlobalConstant.PLAN_SELECTION_POLICY);
+									Log.debug("Agent "+agent.getId()+" plan "+ptype+" has "+results.size()+" applicable instances; choosing instance "+choice);
+									// Set the plan variables
+									setPlanVariables(agent, planInstance, results, choice);
+								}
+								// Add it to the options
+								options.add(planInstance);
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}					
+					}
+					if (options.isEmpty()) {
+						// No plan options for this goal at this point in time, so move to the next agent
+						Log.debug("Agent "+agent.getId()+" has no applicable plans for goal "+gtype+" and will continue to wait indefinitely");
+						continue;
+					}
+					// TODO: Pick a plan option using specified policy
+					int choice = selectIndex(options.size(), GlobalConstant.PLAN_SELECTION_POLICY);
+					// Now push the plan on to the intention stack
+					synchronized(agentExecutionStack) {
+						Log.debug("Agent "+agent.getId()+" choose an instance of plan "+options.get(choice).getClass().getSimpleName()+" to handle goal "+gtype.getClass().getSimpleName());
+						agentExecutionStack.push(options.get(choice));
+					}
+					options.clear();
+
 				}
 			}
-			hasMessage = false;
-		}
-		if (shutdown) {
-			break;
-		}
-		}
+
+			if (!toRemove.isEmpty()) {
+				for (int i : toRemove) {
+					activeAgents.remove(i);
+				}
+				toRemove.clear();
+			}
+
+			if (idle) {
+				synchronized(lock) {
+					while (idle && !hasMessage) {
+						try {
+							Log.debug("Intention selector "+poolid+" is idle; will wait on external message");
+							//Main.incrementPoolsIdle();
+							isIdle = true;
+							Main.flagPoolIdle();
+							lock.wait();
+							isIdle = false;
+							//Main.decrementPoolsIdle();
+							Log.debug("Intention selector "+poolid+" just woke up on external message");
+						} catch (InterruptedException e) {
+							Log.error("Intention selector "+poolid+" failed to wait on external message: " + e.getMessage());
+						}
+					}
+					hasMessage = false;
+				}
+				if (shutdown) {
+					break;
+				}
+			}
 		} while(true);
 		Log.debug("Intention selector "+poolid+" is exiting");
 	}
