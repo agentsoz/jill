@@ -46,7 +46,7 @@ public class ProgramLoader {
 		try {
 			// Check that we have an Agent class, else abort
 			aclass = Class.forName(className);
-			if (aclass.getSuperclass() != Agent.class) {
+			if (!Agent.class.isAssignableFrom(aclass)) {
 				error("Class '"+className+"' does not extend "+Agent.class.getName());
 				return false;
 			}
@@ -73,7 +73,7 @@ public class ProgramLoader {
 			for (int i = 0; i < goals.length; i++) {
 				Class<?> gclass = Class.forName(goals[i]);
 				// Abort if the specified goal is not of type Goal
-				if (gclass.getSuperclass() != Goal.class) {
+				if (!Goal.class.isAssignableFrom(gclass)) {
 					error("Agent "+className+" uses "+goals[i]+" which is not of type Goal.");
 					return false;
 				}
@@ -101,7 +101,7 @@ public class ProgramLoader {
 				for (int j = 0; j < plans.length; j++) {
 					Class<?> pclass = Class.forName(plans[j]);
 					// Abort if the specified plan is not of type Plan
-					if (pclass.getSuperclass() != Plan.class) {
+					if (!Plan.class.isAssignableFrom(pclass)) {
 						error("Goal "+gclass.getName()+" has plan "+pclass.getName()+" which is not of type Plan.");
 						return false;
 					}
