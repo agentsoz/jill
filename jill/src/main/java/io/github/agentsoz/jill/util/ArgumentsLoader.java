@@ -22,59 +22,52 @@ package io.github.agentsoz.jill.util;
  * #L%
  */
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
+
 import io.github.agentsoz.jill.Main;
+import io.github.agentsoz.jill.config.Config;
 import io.github.agentsoz.jill.config.GlobalConstant;
-import ch.qos.logback.classic.Level;
 
 public class ArgumentsLoader {
 
-	private static String logFile = "Run.log";
-	private static Level logLevel = Level.WARN;
-	private static String agentClass = null;
-	private static int numAgents = 0;
-	private static int numThreads = Runtime.getRuntime().availableProcessors();
-	private static String pargs = "";
-	private static long randomSeed = -1;
-	private static String pout = null;
-	private static boolean doPauseForUserInput = false;
+	private static String configFile = null;
+	private static String configString = null;
+	private static Config config = null;
 	
 	public static String usage() {
 		return GlobalConstant.APP_HEADER + "\n\n" +
 			"usage: " + Main.class.getName() + 
 			"  [options] --agent-class <agentclass> --num-agents <numagents>" + "\n" +
-			"   --agent-class <agentclass>        agent class to load" + "\n" +
-			"   --debug-level <debuglevel>        debug level (ERROR, WARN, INFO, DEBUG, or TRACE)" + "\n" +
+			"   --config <string>                 load configuration from string" + "\n" +
+			"   --configfile <file>               load configuration from file" + "\n" +
 			"   --exit-on-idle <boolean>          forces system exit when all agents are idle (default is '"+GlobalConstant.EXIT_ON_IDLE+"')\n" +
 			"   --help                            print this usage message and exit \n" +
-			"   --logfile <logfile>               file for logging output" + "\n" +
-			"   --num-agents  <numagent>          number of agents to create (of type <agentclass>)" + "\n" +
-			"   --outfile <outfile>               file for program output" + "\n" +
-			"   --program-args <pargs>            arguments string to pass to agent class (optional)" + "\n" +
 			"   --plan-selection-policy <policy>  policy for selecting from plan instances (FIRST, RANDOM, or LAST (default is '"+GlobalConstant.PLAN_SELECTION_POLICY+"')\n" +
-			"   --plan-instances-limit <number>   maximum number of applicable plan instances to consider (default is '"+GlobalConstant.PLAN_INSTANCES_LIMIT+"')\n" +
-			"   --seed <randseed>                 seed to use for random number generator (optional)" + "\n" +
-			"   --threads <numthreads>            number of threads used by execution engine (defaults to number of available cores)" + "\n" +
-			"   --wait-on-startup                 wait for Enter/Return key press (default is "+doPauseForUserInput+")" + "\n"
+			"   --plan-instances-limit <number>   maximum number of applicable plan instances to consider (default is '"+GlobalConstant.PLAN_INSTANCES_LIMIT+"')\n"
 			;
 	}
 	
 	public static void parse(String[] args) {
 		for (int i = 0; i < args.length; i++) {
 			switch(args[i]) {
-			case "--agent-class":
+			case "--config":
 				if (i+1 < args.length) {
 					i++;
-					agentClass = args[i];
+					configString = args[i];
+					config = loadConfigFromString(args[i]);
 				}
 				break;
-			case "--debug-level":
+			case "--configfile":
 				if (i+1 < args.length) {
 					i++;
-					try {
-						logLevel = Level.toLevel(args[i]);
-					} catch(Exception e) {
-						abort("Unknown log level '"+args[i]+"'");
-					}
+					configFile = args[i];
+					config = loadConfigFromFile(args[i]);
 				}
 				break;
 			case "--exit-on-idle":
@@ -89,34 +82,6 @@ public class ArgumentsLoader {
 				
 			case "--help":
 				abort(null);
-				break;
-			case "--logfile":
-				if (i+1 < args.length) {
-					i++;
-					logFile = args[i];
-				}
-				break;
-			case "--num-agents":
-				if (i+1 < args.length) {
-					i++;
-					try {
-						numAgents = Integer.parseInt(args[i]);
-					} catch (Exception e) {
-						abort("Option value '"+args[i]+"' is not a number");
-					}
-				}
-				break;
-			case "--outfile":
-				if (i+1 < args.length) {
-					i++;
-					pout = args[i];
-				}
-				break;
-			case "--program-args":
-				if (i+1 < args.length) {
-					i++;
-					pargs = args[i];
-				}
 				break;
 			case "--plan-selection-policy":
 				if (i+1 < args.length) {
@@ -138,59 +103,16 @@ public class ArgumentsLoader {
 					}
 				}
 				break;
-			case "--seed":
-				if (i+1 < args.length) {
-					i++;
-					try {
-						randomSeed = Long.parseLong(args[i]);
-					} catch (Exception e) {
-						abort("Option value '"+args[i]+"' is not a number");
-					}
-				}
-				break;
-			case "--threads":
-				if (i+1 < args.length) {
-					i++;
-					try {
-						numThreads = Integer.parseInt(args[i]);
-					} catch (Exception e) {
-						abort("Option value '"+args[i]+"' is not a number");
-					}
-				}
-				break;
-			case "--wait-on-startup":
-				doPauseForUserInput = true;
-				break;
 			}	
 		}
 		// Abort if required args were not given
-		if (args.length == 0) {
-			abort(null);
-		} else if (agentClass == null) {
-			abort("Some required options were not given");
+		if (config == null) {
+			abort("Configuration file or string was not given");
+		} else if (config.getAgents() == null || config.getAgents().isEmpty()) {
+			abort("Configuration is missing agents specification");
 		}
 	}
 
-	public static int getNumThreads() {
-		return numThreads;
-	}
-
-	public static String getLogFile() {
-		return logFile;
-	}
-
-	public static Level getLogLevel() {
-		return logLevel;
-	}
-
-	public static String getAgentClass() {
-		return agentClass;
-	}
-
-	public static int getNumAgents() {
-		return numAgents;
-	}
-	
 	private static void abort(String err) {
 		if (err != null) {
 			System.err.println("\nERROR: " + err + "\n");
@@ -199,19 +121,72 @@ public class ArgumentsLoader {
 		System.exit(0);
 	}
 
-	public static String[] getProgramArguments() {
-		return pargs.split(" ") ;
+	public static String[] getExtensions() {
+		return new String[0];
+	}
+	
+	public static Config getConfig() {
+		return config;
 	}
 
-	public static String getProgramOutputFile() {
-		return pout ;
+	/**
+	 * Loads the Jill startup configuration object.
+	 * <p>
+	 * Configuration is specified at run time via one of the following two 
+	 * options:
+	 * <ul>
+	 * <li>{@code --config <string>}</li>
+	 * <li>{@code --configfile <file>}</li>
+	 * </ul>
+	 * The contents of {@code <string>} or {@code <file>} are parsed in exactly 
+	 * the same way. The expected syntax is JSON format. If both options are 
+	 * specified, then last specified option will overrule.
+	 * </p>
+	 * @return the Jill startup configuration object
+	 */
+	static Config loadConfigFromString(String str) {
+		Gson g = new Gson();
+		Config c = null;
+		try {
+			c = g.fromJson(str, Config.class);
+		} catch (JsonSyntaxException e) {
+			abort("Invalid JSON syntax in "+configFile+": " + e.getMessage());
+		} catch (JsonIOException e) {
+			abort("Could not read config from "+configFile+": " + e.getMessage());
+		} catch (Exception e) {
+			abort("Could not load config file "+configFile+": " + e.getMessage());
+		}
+		return c;
+	}
+	
+	static Config loadConfigFromFile(String str) {
+		Gson g = new Gson();
+		Config c = null;
+		try {
+			c = g.fromJson(new BufferedReader(new FileReader(str)), Config.class);
+		} catch (JsonSyntaxException e) {
+			abort("Invalid JSON syntax in "+configFile+": " + e.getMessage());
+		} catch (JsonIOException e) {
+			abort("Could not read config from "+configFile+": " + e.getMessage());
+		} catch (FileNotFoundException e) {
+			abort("Config file "+configFile+" not found: " + e.getMessage());
+		} catch (Exception e) {
+			abort("Could not load config file "+configFile+": " + e.getMessage());
+		}
+		return c;
 	}
 
-	public static long getRandomSeed() {
-		return randomSeed;
+	public static void setConfigFile(String configFile) {
+		ArgumentsLoader.configFile = configFile;
 	}
 
-	public static boolean doPauseForUserInput() {
-		return doPauseForUserInput;
+	public static void setConfigString(String configString) {
+		ArgumentsLoader.configString = configString;
+	}
+	
+	public static void reset() {
+		config = null;
+		configFile = null;
+		configString = null;
 	}
 }

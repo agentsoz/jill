@@ -8,7 +8,21 @@ CMD="java -cp ${CP} io.github.agentsoz.jill.Main --help"
 echo $CMD; eval $CMD
 
 a=1000000
-CMD="java -Xmx2g -Xms2g -cp ${CP} io.github.agentsoz.jill.Main --agent-class io.github.agentsoz.jill.testprogram.TestAgent --logfile ${DIR}/testagent-$a.log --outfile ${DIR}/testagent-$a.out --debug-level INFO --num-agents $a" 
+CFG='"{
+programOutputFile : \"'${DIR}'/testagent-'$a'.out\",
+logFile : \"'${DIR}'/testagent-'$a'.log\",
+logLevel : \"INFO\",
+agents:
+ [
+  {
+   classname : io.github.agentsoz.jill.testprogram.TestAgent, 
+   args : [\"\"], 
+   count: '$a'
+  }
+ ]
+}"'
+#CMD="java -Xmx2g -Xms2g -cp ${CP} io.github.agentsoz.jill.Main --agent-class io.github.agentsoz.jill.testprogram.TestAgent --logfile ${DIR}/testagent-$a.log --outfile ${DIR}/testagent-$a.out --debug-level INFO --num-agents $a"
+CMD="java -Xmx2g -Xms2g -cp ${CP} io.github.agentsoz.jill.Main --config $CFG" 
 echo "Started at " `date`
 echo $CMD; eval $CMD > /dev/null
 echo "Finished at" `date`

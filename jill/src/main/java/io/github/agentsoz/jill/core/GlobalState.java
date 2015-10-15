@@ -22,7 +22,10 @@ package io.github.agentsoz.jill.core;
  * #L%
  */
 
+import java.util.HashSet;
+
 import io.github.agentsoz.jill.core.beliefbase.abs.ABeliefStore;
+import io.github.agentsoz.jill.lang.JillExtension;
 import io.github.agentsoz.jill.util.AObjectCatalog;
 
 /**
@@ -62,6 +65,11 @@ public class GlobalState {
 	public static ABeliefStore beliefbase;
 	
 	/**
+	 * The list of registered external event handlers (jill extensions) 
+	 */
+	public static HashSet<JillExtension> eventHandlers = new HashSet<JillExtension>();
+	
+	/**
 	 * Resets the global state
 	 */
 	public static void reset() {
@@ -70,5 +78,6 @@ public class GlobalState {
 		planTypes = new AObjectCatalog("planTypes", 20,5);
 		agents = null;
 		beliefbase = null;
+		eventHandlers = new HashSet<JillExtension>();
 	}
 }

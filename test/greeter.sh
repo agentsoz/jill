@@ -13,7 +13,20 @@ b=5
 ID=greeter-${a}a-${b}b
 echo ""
 echo "Running $a agents with $b neighbours each (see ${ID}.*)"
-CMD="java -Xmx2g -Xms2g -cp ${CP} io.github.agentsoz.jill.Main --agent-class io.github.agentsoz.jill.example.greeter.Greeter --logfile ${DIR}/${ID}.log --debug-level DEBUG --program-args \"-neighbourhoodSize $b\" --num-agents $a --plan-selection-policy FIRST"
+CFG='"{
+programOutputFile : \"'${DIR}'/'${ID}'.out\",
+logFile : \"'${DIR}'/'${ID}'.log\",
+logLevel : \"INFO\",
+agents:
+ [
+  {
+   classname : io.github.agentsoz.jill.example.greeter.Greeter, 
+   args : [-neighbourhoodSize, '$b'], 
+   count: '$a'
+  }
+ ]
+}"'
+CMD="java -cp ${CP} io.github.agentsoz.jill.Main --plan-selection-policy FIRST --config $CFG" 
 echo "Started at " `date`
 echo $CMD; eval $CMD > ${DIR}/${ID}.out
 echo "Finished at" `date`
@@ -23,7 +36,20 @@ b=100
 ID=greeter-${a}a-${b}b
 echo ""
 echo "Running $a agents with $b neighbours each (see ${ID}.*)"
-CMD="java -Xmx2g -Xms2g -cp ${CP} io.github.agentsoz.jill.Main --agent-class io.github.agentsoz.jill.example.greeter.Greeter --logfile ${DIR}/${ID}.log --debug-level INFO --program-args \"-neighbourhoodSize $b\" --num-agents $a --plan-selection-policy FIRST"
+CFG='"{
+programOutputFile : \"'${DIR}'/'${ID}'.out\",
+logFile : \"'${DIR}'/'${ID}'.log\",
+logLevel : \"INFO\",
+agents:
+ [
+  {
+   classname : io.github.agentsoz.jill.example.greeter.Greeter, 
+   args : [-neighbourhoodSize, '$b'], 
+   count: '$a'
+  }
+ ]
+}"'
+CMD="java -cp ${CP} io.github.agentsoz.jill.Main --plan-selection-policy FIRST --config $CFG" 
 echo "Started at " `date`
 echo $CMD; eval $CMD > ${DIR}/${ID}.out
 echo "Finished at" `date`
@@ -33,7 +59,20 @@ b=500
 ID=greeter-${a}a-${b}b
 echo ""
 echo "Running $a agents with $b neighbours each (see ${ID}.*)"
-CMD="java -Xmx2g -Xms2g -cp ${CP} io.github.agentsoz.jill.Main --agent-class io.github.agentsoz.jill.example.greeter.Greeter --logfile ${DIR}/${ID}.log --debug-level INFO --program-args \"-neighbourhoodSize $b\" --num-agents $a --plan-selection-policy FIRST"
+CFG='"{
+programOutputFile : \"'${DIR}'/'${ID}'.out\",
+logFile : \"'${DIR}'/'${ID}'.log\",
+logLevel : \"INFO\",
+agents:
+ [
+  {
+   classname : io.github.agentsoz.jill.example.greeter.Greeter, 
+   args : [-neighbourhoodSize, '$b'], 
+   count: '$a'
+  }
+ ]
+}"'
+CMD="java -cp ${CP} io.github.agentsoz.jill.Main --plan-selection-policy FIRST --config $CFG" 
 echo "Started at " `date`
 echo $CMD; eval $CMD > ${DIR}/${ID}.out
 echo "Finished at" `date`

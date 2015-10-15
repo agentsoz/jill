@@ -27,6 +27,7 @@ import io.github.agentsoz.jill.lang.Agent;
 import io.github.agentsoz.jill.lang.AgentInfo;
 import io.github.agentsoz.jill.lang.Goal;
 import io.github.agentsoz.jill.lang.GoalInfo;
+import io.github.agentsoz.jill.lang.JillExtension;
 import io.github.agentsoz.jill.lang.Plan;
 import io.github.agentsoz.jill.lang.PlanInfo;
 import io.github.agentsoz.jill.struct.AgentType;
@@ -41,7 +42,7 @@ import java.lang.annotation.Annotation;
 
 public class ProgramLoader {
 
-	public static boolean load(String className, int num, AObjectCatalog agents) {
+	public static boolean loadAgent(String className, int num, AObjectCatalog agents) throws Exception {
 		Class<?> aclass;
 		try {
 			// Check that we have an Agent class, else abort
@@ -160,14 +161,36 @@ public class ProgramLoader {
 			}
 			
 		} catch (ClassNotFoundException e) {
-			System.err.println("Class not found: " + e.getMessage());
-			return false;
+			error("Class not found: " + e.getMessage());
 		}
 		return true;
 	}
+	
+	public static JillExtension loadExtension(String className) throws Exception {
+		JillExtension extension = null;
+		Class<?> eclass;
+		try {
+			// Check that we have the extension class, else abort
+			eclass = Class.forName(className);
+			if (!JillExtension.class.isAssignableFrom(eclass)) {
+				error("Class '"+className+"' does not implement "+JillExtension.class.getName());
+				return null;
+			}
+			Log.info("Loading extension "+className);
+			extension = (JillExtension)(eclass.newInstance());
+		} catch (ClassNotFoundException e) {
+			System.err.println("Class not found: " + e.getMessage());
+		} catch (InstantiationException | IllegalAccessException e) {
+			System.err.println("Could not create new instance of "+className+": " + e.getMessage());
+		}
+		return extension;
+	}
+	
+	
 
-	private static void error(String err) {
+	private static void error(String err) throws Exception {
 		System.err.println(err);
 		Log.error(err);
+		throw new Exception(err);
 	}
 }

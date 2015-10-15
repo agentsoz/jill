@@ -3,7 +3,7 @@
 DIR=`dirname "$0"`
 
 OUTDIR=${DIR}/tokenpassing-results
-mkdir tokenpassing-results
+mkdir -p ${OUTDIR}
 
 CP=${DIR}/../jill/target/jill-0.3.1-SNAPSHOT-jar-with-dependencies.jar:${DIR}/../examples/target/jill-examples-0.3.1-SNAPSHOT.jar
 
@@ -16,7 +16,20 @@ v=1
 ID=tokenpassing${v}-${a}a-${r}r
 echo ""
 echo "Running token passing version $v between $a agents for $r rounds (see ${ID}.*)"
-CMD="java -Xmx2g -Xms2g -cp ${CP} io.github.agentsoz.jill.Main --agent-class io.github.agentsoz.jill.example.tokenpassing.TokenAgent$v --logfile ${OUTDIR}/${ID}.log --outfile ${OUTDIR}/${ID}.out --debug-level INFO --program-args \"-rounds $r\" --num-agents $a"
+CFG='"{
+programOutputFile : \"'${OUTDIR}'/'${ID}'.out\",
+logFile : \"'${OUTDIR}'/'${ID}'.log\",
+logLevel : \"INFO\",
+agents:
+ [
+  {
+   classname : io.github.agentsoz.jill.example.tokenpassing.TokenAgent'$v', 
+   args : [-rounds, '$r'], 
+   count: '$a'
+  }
+ ]
+}"'
+CMD="java -cp ${CP} io.github.agentsoz.jill.Main --config $CFG" 
 echo "Started at " `date`
 echo $CMD; eval $CMD > /dev/null
 echo "Finished at" `date`
@@ -25,7 +38,20 @@ v=2
 ID=tokenpassing${v}-${a}a-${r}r
 echo ""
 echo "Running token passing version $v between $a agents for $r rounds (see ${ID}.*)"
-CMD="java -Xmx2g -Xms2g -cp ${CP} io.github.agentsoz.jill.Main --agent-class io.github.agentsoz.jill.example.tokenpassing.TokenAgent$v --logfile ${OUTDIR}/${ID}.log --outfile ${OUTDIR}/${ID}.out --debug-level INFO --program-args \"-rounds $r\" --num-agents $a"
+CFG='"{
+programOutputFile : \"'${OUTDIR}'/'${ID}'.out\",
+logFile : \"'${OUTDIR}'/'${ID}'.log\",
+logLevel : \"INFO\",
+agents:
+ [
+  {
+   classname : io.github.agentsoz.jill.example.tokenpassing.TokenAgent'$v', 
+   args : [-rounds, '$r'], 
+   count: '$a'
+  }
+ ]
+}"'
+CMD="java -cp ${CP} io.github.agentsoz.jill.Main --config $CFG" 
 echo "Started at " `date`
 echo $CMD; eval $CMD > /dev/null
 echo "Finished at" `date`
@@ -37,7 +63,20 @@ v=1
 ID=tokenpassing${v}-${a}a-${r}r
 echo ""
 echo "Running token passing version $v between $a agents for $r rounds (see ${ID}.*)"
-CMD="java -Xmx2g -Xms2g -cp ${CP} io.github.agentsoz.jill.Main --agent-class io.github.agentsoz.jill.example.tokenpassing.TokenAgent$v --logfile ${OUTDIR}/${ID}.log --outfile ${OUTDIR}/${ID}.out --debug-level INFO --program-args \"-rounds $r\" --num-agents $a"
+CFG='"{
+programOutputFile : \"'${OUTDIR}'/'${ID}'.out\",
+logFile : \"'${OUTDIR}'/'${ID}'.log\",
+logLevel : \"INFO\",
+agents:
+ [
+  {
+   classname : io.github.agentsoz.jill.example.tokenpassing.TokenAgent'$v', 
+   args : [-rounds, '$r'], 
+   count: '$a'
+  }
+ ]
+}"'
+CMD="java -cp ${CP} io.github.agentsoz.jill.Main --config $CFG" 
 echo "Started at " `date`
 echo $CMD; eval $CMD > /dev/null
 echo "Finished at" `date`
@@ -46,7 +85,20 @@ v=2
 ID=tokenpassing${v}-${a}a-${r}r
 echo ""
 echo "Running token passing version $v between $a agents for $r rounds (see ${ID}.*)"
-CMD="java -Xmx2g -Xms2g -cp ${CP} io.github.agentsoz.jill.Main --agent-class io.github.agentsoz.jill.example.tokenpassing.TokenAgent$v --logfile ${OUTDIR}/${ID}.log --outfile ${OUTDIR}/${ID}.out --debug-level INFO --program-args \"-rounds $r\" --num-agents $a"
+CFG='"{
+programOutputFile : \"'${OUTDIR}'/'${ID}'.out\",
+logFile : \"'${OUTDIR}'/'${ID}'.log\",
+logLevel : \"INFO\",
+agents:
+ [
+  {
+   classname : io.github.agentsoz.jill.example.tokenpassing.TokenAgent'$v', 
+   args : [-rounds, '$r'], 
+   count: '$a'
+  }
+ ]
+}"'
+CMD="java -cp ${CP} io.github.agentsoz.jill.Main --config $CFG" 
 echo "Started at " `date`
 echo $CMD; eval $CMD > /dev/null
 echo "Finished at" `date`

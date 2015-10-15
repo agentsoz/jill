@@ -22,11 +22,13 @@ package io.github.agentsoz.jill;
  * #L%
  */
 
+import io.github.agentsoz.jill.config.Config;
 import io.github.agentsoz.jill.core.GlobalState;
 import io.github.agentsoz.jill.core.IntentionSelector;
 import io.github.agentsoz.jill.core.ProgramLoader;
 import io.github.agentsoz.jill.core.beliefbase.abs.ABeliefStore;
 import io.github.agentsoz.jill.lang.Agent;
+import io.github.agentsoz.jill.lang.JillExtension;
 import io.github.agentsoz.jill.util.AObjectCatalog;
 import io.github.agentsoz.jill.util.ArgumentsLoader;
 import io.github.agentsoz.jill.util.Log;
@@ -48,34 +50,45 @@ public class Main {
 	
 	/**
 	 * @param args
+	 * @throws Exception 
 	 */
 	public static void main(String[] args) {
-		
-		// Initialise the system with the given arguments
-		init(args);
-		
-		// Start the engine
-		start();
-		
-		// Wait until the agents become idle
-		waitUntilIdle();
+		try {
+			// Parse the command line options
+			ArgumentsLoader.parse(args);
 
-		// finish up
-		finish();
+			// Load the configuration 
+			Config config = ArgumentsLoader.getConfig();
+			
+			// Initialise the system with the given arguments
+			init(config);
+			
+			// load all extensions
+			loadExtensions(config);
+			
+			// Start the engine
+			start(config);
+			
+			// Wait until the agents become idle
+			waitUntilIdle();
+
+			// finish up
+			finish();
+		} catch (Exception e) {}
 	}
 	
-	public static void init(String[] args) {
+	public static void init(Config config) throws Exception {
 
-		// Parse the command line options
-		ArgumentsLoader.parse(args);
-		
 		// Pause for key press from user if requested
-		if (ArgumentsLoader.doPauseForUserInput()) { pauseForUserInput(); }
+		if (config.isDoPauseForUserInput()) { pauseForUserInput(); }
 		
 		// Configure logging
-        Log.createLogger("", ArgumentsLoader.getLogLevel(), ArgumentsLoader.getLogFile());
+        Log.createLogger("", config.getLogLevel(), config.getLogFile());
 
-		int NUMAGENTS = ArgumentsLoader.getNumAgents(); 
+		int NUMAGENTS = 0;
+		for (Config.AgentTypeData agentType : config.getAgents()) {
+			NUMAGENTS += agentType.getCount();
+		}
 		int INCREMENT = 10000;
 
 		GlobalState.reset();
@@ -83,25 +96,25 @@ public class Main {
 
 		
 		// Create the central belief base
-		GlobalState.beliefbase = new ABeliefStore(NUMAGENTS, ArgumentsLoader.getNumThreads());
+		GlobalState.beliefbase = new ABeliefStore(NUMAGENTS, config.getNumThreads());
 		long t0, t1;
 		
 		// Create the agents
 		t0 = System.currentTimeMillis();
-		if (!ProgramLoader.load(ArgumentsLoader.getAgentClass(), NUMAGENTS, GlobalState.agents)) {
-			return;
+		for (Config.AgentTypeData agentType : config.getAgents()) {
+			ProgramLoader.loadAgent(agentType.getClassname(), agentType.getCount(), GlobalState.agents);
 		}
 		t1 = System.currentTimeMillis();
 		Log.info("Created " + GlobalState.agents.size() + " agents in "+(t1-t0)+" ms");
 
 		// Initialise the thread pools
-		initIntentionSelectionPools(NUMAGENTS, ArgumentsLoader.getNumThreads());
+		initIntentionSelectionPools(NUMAGENTS, config.getNumThreads());
 
 
 		// Redirect the agent program output if specified
-		if (ArgumentsLoader.getProgramOutputFile() != null) {
+		if (config.getProgramOutputFile() != null) {
 			try {
-				writer = new PrintStream(ArgumentsLoader.getProgramOutputFile(), "UTF-8");
+				writer = new PrintStream(config.getProgramOutputFile(), "UTF-8");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -109,19 +122,25 @@ public class Main {
 			writer = System.out;
 		}
 		
-		// Start the intention selection threads
-		initIntentionSelectionThreads();
+		// Initialise the intention selection threads
+		initIntentionSelectionThreads(config);
 		
 	}
 	
-	public static void start() {
+	public static void start(Config config) {
 		// Start the agents
 		long t0 = System.currentTimeMillis();
-		for (int i = 0; i < GlobalState.agents.size(); i++) {
-			// Get the agent
-			Agent agent = (Agent)GlobalState.agents.get(i);
-			// Start the agent
-			agent.start(writer, ArgumentsLoader.getProgramArguments());
+		int i = -1;
+		for (Config.AgentTypeData agentType : config.getAgents()) {
+			i++;
+			String[] args = (agentType.getArgs() == null || agentType.getArgs().isEmpty()) ?
+					new String[0] : agentType.getArgs().toArray(new String[agentType.getArgs().size()]);
+			for (int j = i; j < i+agentType.getCount(); j++) {
+				// Get the agent
+				Agent agent = (Agent)GlobalState.agents.get(j);
+				// Start the agent
+				agent.start(writer, args);
+			}
 		}
 		long t1 = System.currentTimeMillis();
 		Log.info("Started " + GlobalState.agents.size() + " agents in "+(t1-t0)+" ms");
@@ -169,6 +188,20 @@ public class Main {
 		Log.info("Terminated " + GlobalState.agents.size() + " agents in "+(t1-t0)+" ms");
 	}
 	
+	private static void loadExtensions(Config config) throws Exception {
+		if(config.getExtensions() == null) {
+			return;
+		}
+		for (Config.ExtensionData extensionData : config.getExtensions()) {
+			JillExtension extension = ProgramLoader.loadExtension(extensionData.getClassname());
+			if (extension != null) {
+				registerExtension(extension);
+			}
+		}
+	}
+
+
+	
 	/**
 	 * Checks if the system is idle, i.e., all the agents pools are idle
 	 * @return
@@ -205,13 +238,13 @@ public class Main {
 	 * Starts the intention selection threads that each handle a pool of agents
 	 * @return the number of threads started
 	 */
-	public static void initIntentionSelectionThreads() {
-		int ncores = ArgumentsLoader.getNumThreads();
+	public static void initIntentionSelectionThreads(Config config) {
+		int ncores = config.getNumThreads();
 		intentionSelectors = new IntentionSelector[ncores];
         for (int i = 0; i < npools; i++) {
         	int start = i*poolsize;
         	int size = (i+1 < npools) ? poolsize : GlobalState.agents.size()-start;
-        	intentionSelectors[i] = new IntentionSelector(i, ArgumentsLoader.getRandomSeed(), start,size);
+        	intentionSelectors[i] = new IntentionSelector(i, config.getRandomSeed(), start,size);
         }
 	}
 
@@ -260,4 +293,12 @@ public class Main {
 		intentionSelectors[toPool].flagMessage();
 	}
 
+	public static void registerExtension(JillExtension extension) {
+		if (extension != null) {
+			GlobalState.eventHandlers.add(extension);
+			Log.info("Registered Jill extension: " + extension);
+		} else {
+			Log.warn("Cannot register null extension; will ignore.");
+		}
+	}
 }

@@ -1,0 +1,37 @@
+{
+ "logFile"  : "log.file",
+ "logLevel" : "INFO",
+ 
+ "programOutputFile" : "program.out",
+ 
+ "numThreads" : 4,
+ 
+ "randomSeed" : 12321,
+ 
+ "doPauseForUserInput" : false,
+   
+ "agents" :
+  [
+   {
+    "classname" : "package.AgentType1",
+    "args"      : [ "at1a", "at1 b", "at1c" ],
+    "count"     : 10000
+   },
+   {
+    "classname" : "package.AgentType2",
+    "args"      : [ "at2a", "at2b", "at2c" ],
+    "count"     : 1000
+   }
+  ],
+ "extensions" : 
+  [
+   {
+    "classname" : "TestExtension1",
+    "args"      : [ "--seed", "13579" ]
+   },
+   {
+    "classname" : "TestExtension2",
+    "args"      : [ "--name", "Test Extension 2", "--num", "12345" ]
+   }
+  ]
+}
