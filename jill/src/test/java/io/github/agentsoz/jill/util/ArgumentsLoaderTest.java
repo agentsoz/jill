@@ -124,11 +124,15 @@ public class ArgumentsLoaderTest {
 			BufferedReader reader = new BufferedReader(new FileReader(configFile));
 			String line = reader.readLine();
 			while(line != null) {
+				line = line.replaceAll("(?://.*)","");
 				filecontents += line;
 				line = reader.readLine();
 			}
 			reader.close();
+			// remove spaces from the read file
 			filecontents = filecontents.replaceAll("\\s+","");
+			// remove java commments from the read file
+			filecontents = filecontents.replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)","");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

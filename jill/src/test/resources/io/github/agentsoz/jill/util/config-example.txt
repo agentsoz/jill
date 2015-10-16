@@ -1,28 +1,114 @@
+// -------------------------------------------------------------------------
+// Sample Jill Configuration File
+// 
+// The following configuration is valid JSON syntax, and specifies the contents 
+// of the Jill configuration object io.github.agentsoz.jill.config.Config.
+//
+// For syntax help, see https://sites.google.com/site/gson/gson-user-guide.
+// Note that quoting everything with '"' is not always necessary.
+//  
+// -------------------------------------------------------------------------
+
+
 {
- "logFile"  : "log.file",
+ // ------------------------------------------------------------------------
+ // Specifies the path to the Jill log file.
+ // The directory <somedir> must exist. If <jill.log> already exists,
+ // it will be overwritten.
+ // ------------------------------------------------------------------------
+
+ "logFile"  : "./somedir/jill.log",
+
+ // ------------------------------------------------------------------------
+ // Specifies the log file verbosity. Should be one of,
+ // ERROR, WARN, INFO, DEBUG, TRACE
+ // ------------------------------------------------------------------------
+
  "logLevel" : "INFO",
+  
+ // ------------------------------------------------------------------------
+ // Specifies the path to the Jill user (agent) program log file.
+ // The directory <somedir> must exist. If <program.out> already exists,
+ // it will be overwritten.
+ // To send agent program output to this file, use the PrintStream writer given 
+ // to the agent program's start() function. See the Towers of Hanoi example
+ // in examples/src/main/java/io/github/agentsoz/jill/example/hanoi/Player.java
+ // for how this is done: 
+ // ------------------------------------------------------------------------
+
+ "programOutputFile" : "./somedir/program.out",
  
- "programOutputFile" : "program.out",
+ // ------------------------------------------------------------------------
+ // By default, Jill runs in multi-threaded mode for optimal performance.
+ // You can tell it to run in single-threaded mode by restricting the number
+ // of threads to one.
+ // ------------------------------------------------------------------------
+
+ "numThreads" : 1,
  
- "numThreads" : 4,
- 
+ // ------------------------------------------------------------------------
+ // The random seed to use for the Jill runtime. This can be used to precisely
+ // reproduce Jill system runs. User programs may wish to use the same seed
+ // for their random number generators, in which case two Jill runs with the
+ // same random seed will produce exactly the same outputs.
+ // ------------------------------------------------------------------------
+
  "randomSeed" : 12321,
  
+ // ------------------------------------------------------------------------
+ // If specified, Jill will wait at startup for a key press, before progressing. 
+ // Useful for connecting a profiler or debugger to the running Jill process
+ // ------------------------------------------------------------------------
+
  "doPauseForUserInput" : false,
    
+ // ------------------------------------------------------------------------
+ // Specifies a list (of the form [{},{},...]) of agent types to load.
+ // The agents are specified by the following fields:
+ // classname: 
+ //    The fully qualified class name for the agent type (must 
+ //    extend io.github.agentsoz.jill.lang.Agent 
+ // args: 
+ //    The arguments to pass to the agent program on initialisation.
+ //    If the program does not take arguments, then an empty array must
+ //    be used, i.e., args:[\"\"].
+ // count : 
+ //    The number of the agents of this type that should be created. The order
+ //    is which agent types are specified will determine the agent ids. In the 
+ //    example below, 100 agents of type package.AgentType1 will be created, 
+ //    with the unique ids from 0..99. Following this, 50 agents of type 
+ //    package.AgentType2 will be created, with unique ids from 100..149. 
+ // ------------------------------------------------------------------------
+
  "agents" :
   [
    {
     "classname" : "package.AgentType1",
     "args"      : [ "at1a", "at1 b", "at1c" ],
-    "count"     : 10000
+    "count"     : 100
    },
    {
     "classname" : "package.AgentType2",
     "args"      : [ "at2a", "at2b", "at2c" ],
-    "count"     : 1000
+    "count"     : 50
    }
   ],
+  
+ // ------------------------------------------------------------------------
+ // Specifies a list (of the form [{},{},...]) of Jill extensions to load.
+ // Jill extensions to load. Extensions are exactly that, they extend Jill
+ // core functionality with new features.
+ // Extensions are specified by the following fields:
+ // classname: 
+ //    The fully qualified class name for the e type (must 
+ //    implement io.github.agentsoz.jill.lang.JillExtension 
+ // args: 
+ //    The arguments to pass to the extension on initialisation.
+ //    If the extension does not take arguments, then an empty array must
+ //    be used, i.e., args:[\"\"].
+ // 
+ // ------------------------------------------------------------------------
+  
  "extensions" : 
   [
    {
