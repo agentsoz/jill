@@ -36,8 +36,6 @@ import io.github.agentsoz.jill.config.GlobalConstant;
 
 public class ArgumentsLoader {
 
-	private static String configFile = null;
-	private static String configString = null;
 	private static Config config = null;
 	
 	public static String usage() {
@@ -59,14 +57,12 @@ public class ArgumentsLoader {
 			case "--config":
 				if (i+1 < args.length) {
 					i++;
-					configString = args[i];
 					config = loadConfigFromString(args[i]);
 				}
 				break;
 			case "--configfile":
 				if (i+1 < args.length) {
 					i++;
-					configFile = args[i];
 					config = loadConfigFromFile(args[i]);
 				}
 				break;
@@ -150,11 +146,11 @@ public class ArgumentsLoader {
 		try {
 			c = g.fromJson(str, Config.class);
 		} catch (JsonSyntaxException e) {
-			abort("Invalid JSON syntax in "+configFile+": " + e.getMessage());
+			abort("Invalid JSON syntax in "+str+": " + e.getMessage());
 		} catch (JsonIOException e) {
-			abort("Could not read config from "+configFile+": " + e.getMessage());
+			abort("Could not read config from "+str+": " + e.getMessage());
 		} catch (Exception e) {
-			abort("Could not load config file "+configFile+": " + e.getMessage());
+			abort("Could not load config file "+str+": " + e.getMessage());
 		}
 		return c;
 	}
@@ -165,28 +161,18 @@ public class ArgumentsLoader {
 		try {
 			c = g.fromJson(new BufferedReader(new FileReader(str)), Config.class);
 		} catch (JsonSyntaxException e) {
-			abort("Invalid JSON syntax in "+configFile+": " + e.getMessage());
+			abort("Invalid JSON syntax in "+str+": " + e.getMessage());
 		} catch (JsonIOException e) {
-			abort("Could not read config from "+configFile+": " + e.getMessage());
+			abort("Could not read config from "+str+": " + e.getMessage());
 		} catch (FileNotFoundException e) {
-			abort("Config file "+configFile+" not found: " + e.getMessage());
+			abort("Config file "+str+" not found: " + e.getMessage());
 		} catch (Exception e) {
-			abort("Could not load config file "+configFile+": " + e.getMessage());
+			abort("Could not load config file "+str+": " + e.getMessage());
 		}
 		return c;
 	}
 
-	public static void setConfigFile(String configFile) {
-		ArgumentsLoader.configFile = configFile;
-	}
-
-	public static void setConfigString(String configString) {
-		ArgumentsLoader.configString = configString;
-	}
-	
 	public static void reset() {
 		config = null;
-		configFile = null;
-		configString = null;
 	}
 }

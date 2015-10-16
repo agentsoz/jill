@@ -82,9 +82,7 @@ public class ArgumentsLoaderTest {
 	@Test
 	public void testLoadNullConfig() {
 		// Config is null if no file has been specified
-		ArgumentsLoader.setConfigFile(null);
-		ArgumentsLoader.setConfigString(null);
-		Config c = ArgumentsLoader.getConfig();
+		Config c = ArgumentsLoader.loadConfigFromString(null);
 		assertNull(c);
 	}
 
@@ -113,7 +111,6 @@ public class ArgumentsLoaderTest {
 	@Test
 	public void testLoadConfigFromFile() {
 		// Load a sample config file
-		ArgumentsLoader.setConfigFile(configFile);
 		Config c = ArgumentsLoader.loadConfigFromFile(configFile);
 		assertNotNull(c);
 		
