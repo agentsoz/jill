@@ -51,6 +51,7 @@
   <modules>
     <module>jill</module>
     <module>examples</module>
+    <module>extensions/template</module>
   </modules>
 
   <dependencies>
@@ -177,6 +178,7 @@
             <canUpdateCopyright>true</canUpdateCopyright>
             <inceptionYear>2014</inceptionYear>
             <licenseName>lgpl_v3</licenseName>
+            <licenseFile>${basedir}/COPYING.LESSER</licenseFile>
           </configuration>
           <executions>
             <execution>
