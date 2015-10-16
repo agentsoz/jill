@@ -71,7 +71,7 @@ public class ReceiveToken3 extends Plan {
 			new PlanStep() {
 				public void step() {
 					Token3 msg = (Token3)getGoal();
-					int myid = getAgent().getId();
+					//int myid = getAgent().getId();
 					// Agent performaing the last hop is the book keeper
 					if (msg.getHops() == GlobalState.agents.size()) {
 						// Check if we are done with the rounds
