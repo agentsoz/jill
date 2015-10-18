@@ -55,35 +55,15 @@ developing large-scale multi-agent systems. Jill is:
 2.0 RELEASES
 
 The latest stable release as well as all previous releases are available at:
-<download-url>.
+https://github.com/agentsoz/jill/releases
 
-Version  : 0.1
-Released : <date>   
-Binary   : jill-0.0.1.jar (size 38K) 
-Summary  : First stable release
-Features :
-   *
-   *
-   *
-
+<release-history>
 
 
 ==============================================================================
 3.0 BENCHMARKS
 
-Version    : 0.0.1
-Benchmark  : 1 million agents, 1GB java heap size, 20 execution cycles
-OS         : Linux Mint 13, 3.2.0-23-generic, x86_64
-Harware    : Macbook Pro, i5-2415M CPU (4x cores), 4GB RAM 
-Command    : java -Xms1g -Xmx1g \ 
-             -cp Jill-0.1.jar:examples-0.1.jar Jill.Main \
-             -d INFO \
-             -l TestAgent.log \
-             -c SimpleAgent.TestAgent \
-             -n 1000000 \
-             -i 20
-Results    : Finished running 20 execution cycles with 1000000 agents (2521 ms)
-
+...
 
 
 ==============================================================================
@@ -99,9 +79,9 @@ and the entire software life cycle.
   https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
 
 * To checkout the latest sources:
-  git pull <repo-url>
+  git clone https://github.com/agentsoz/jill.git
 
-* To build, test (unit tests), package, verify (integration tests), and install (locally):
+* To build, test (unit tests), and install (locally):
   mvn clean install
 
 * To build the source and Javadoc archives:
