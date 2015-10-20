@@ -169,6 +169,11 @@ public class Main {
 	}
 
 	public static void finish() {
+		// Terminate the extensions first
+		for (JillExtension extension : GlobalState.eventHandlers) {
+			extension.finish();
+		}
+		
 		// Now shut down the threads
 		shutdownIntentionSelectionThreads();
 
@@ -196,12 +201,11 @@ public class Main {
 			JillExtension extension = ProgramLoader.loadExtension(extensionData.getClassname());
 			if (extension != null) {
 				registerExtension(extension);
+				extension.init(extensionData.getArgs().toArray(new String[0]));;
 			}
 		}
 	}
 
-
-	
 	/**
 	 * Checks if the system is idle, i.e., all the agents pools are idle
 	 * @return
