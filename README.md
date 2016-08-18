@@ -1,6 +1,7 @@
 # Jill
 
-## 1.0 About
+
+## About
 
 Jill <http://url> is an open source initiate to deliver a fast and lightweight
 java-based BDI-like (Beliefs, Desires, Intentions) execution engine for 
@@ -11,11 +12,11 @@ developing large-scale multi-agent systems. Jill is:
   theory to practice. In ICMAS, volume 95, pages 312–319, 1995).
 
 * Lightweight: the design and implementation is heavily optimised to 
-  deliver a very lightweight distribution (see 2.0 RELEASES for details)
+  deliver a very lightweight distribution (see [Releases](#releases) for details)
   fit for inclusion in web-based and embedded-Java applications.
 
 * Fast: The Jill BDI execution engine is very fast, and was designed from 
-  ground-up to handle millions of BDI agents (see 3.0 BENCHMARKS). 
+  ground-up to handle millions of BDI agents (see [Benchmarks](#benchmarks)). 
 
 * Java-based: The programming of BDI agents in Jill is done in 
   pure Java, so users benefit from the various support tools that are available
@@ -28,16 +29,16 @@ developing large-scale multi-agent systems. Jill is:
   GNU General Lesser Public License <http://www.gnu.org/licenses/lgpl-3.0.html>.
   
 
-## 2.0 Releases
+## Releases
 
 The latest stable release as well as all previous releases are available at:
 https://github.com/agentsoz/jill/releases
 
 
-## 3.0 Benchmarks
+## Benchmarks
 
 
-## 4.0 Developers
+## Developers
 
 Jill uses Apache Maven (http://maven.apache.org) to manage the build process
 and the entire software life cycle.
@@ -57,10 +58,8 @@ and the entire software life cycle.
 * To build the source and Javadoc archives, do:
   `mvn source:jar javadoc:jar`
 
-==============================================================================
 
-
-## 5.0 License
+## License
 
 Jill Cognitive Agents Project
 Copyright (C) 2014 - 2016 by its authors. See AUTHORS file.
