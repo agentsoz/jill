@@ -3,7 +3,7 @@
 
 ## About
 
-Jill <http://url> is an open source initiate to deliver a fast and lightweight
+Jill is an open source initiate to deliver a fast and lightweight
 java-based BDI-like (Beliefs, Desires, Intentions) execution engine for 
 developing large-scale multi-agent systems. Jill is:
 
