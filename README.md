@@ -1,28 +1,6 @@
-==============================================================================
-Jill Cognitive Agents Project
-Copyright (C) 2014 - 2015 by its authors. See AUTHORS file.
+# Jill
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Lesser Public
-License along with this program.  If not, see
-<http://www.gnu.org/licenses/lgpl-3.0.html>.
-
-Contact: Dhirendra Singh <dhi.singh@gmail.com>
-==============================================================================
-
-
-
-==============================================================================
-1.0 INTRODUCTION
+## 1.0 About
 
 Jill <http://url> is an open source initiate to deliver a fast and lightweight
 java-based BDI-like (Beliefs, Desires, Intentions) execution engine for 
@@ -50,27 +28,19 @@ developing large-scale multi-agent systems. Jill is:
   GNU General Lesser Public License <http://www.gnu.org/licenses/lgpl-3.0.html>.
   
 
-
-==============================================================================
-2.0 RELEASES
+## 2.0 Releases
 
 The latest stable release as well as all previous releases are available at:
 https://github.com/agentsoz/jill/releases
 
-<release-history>
+
+## 3.0 Benchmarks
 
 
-==============================================================================
-3.0 BENCHMARKS
-
-...
-
-
-==============================================================================
-4.0 DEVELOPERS
+## 4.0 Developers
 
 Jill uses Apache Maven (http://maven.apache.org) to manage the build process
-and the entire software life cycle. 
+and the entire software life cycle.
 
 * To get started with Maven see:
   http://maven.apache.org/guides/getting-started/.
@@ -78,19 +48,36 @@ and the entire software life cycle.
 * For an introduction to the Maven build lifecycle see:
   https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
 
-* To checkout the latest sources:
-  git clone https://github.com/agentsoz/jill.git
+* To checkout the latest sources, do:
+  `git clone https://github.com/agentsoz/jill.git`
 
-* To build, test (unit tests), and install (locally):
-  mvn clean install
+* To build, test (unit tests), and install (locally), do:
+  `mvn clean install`
 
-* To build the source and Javadoc archives:
-  mvn source:jar javadoc:jar 
-
-* To contribute a patch, see the contribution HOWTO:
-  <contrib-url>
-
-
+* To build the source and Javadoc archives, do:
+  `mvn source:jar javadoc:jar`
 
 ==============================================================================
+
+
+## 5.0 License
+
+Jill Cognitive Agents Project
+Copyright (C) 2014 - 2016 by its authors. See AUTHORS file.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Lesser Public
+License along with this program.  If not, see
+<http://www.gnu.org/licenses/lgpl-3.0.html>.
+
+Contact: Dhirendra Singh <dhi.singh@gmail.com>
 
