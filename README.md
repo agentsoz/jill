@@ -105,11 +105,9 @@ Finished running 1 agents in 1267 ms
 This test executes one million relatively complex BDI agents (see [TestAgent.java](https://github.com/agentsoz/jill/blob/master/jill/src/test/java/io/github/agentsoz/jill/testprogram/TestAgent.java)). Each agent has a goal-plan hierarchy as follows:
 ```
             GoalA
-              |
-      PlanA-------PlanD
-        |
-    .-------.
-    |       |
+        .-----^-----.
+      PlanA       PlanD
+    .---^---.
   GoalB   GoalC
     |       |
   PlanB   PlanC
