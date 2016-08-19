@@ -91,6 +91,52 @@ Finished running 1 agents in 1267 ms
 32767
 ```
 
+### One million BDI agents
+
+This test executes one million relatively complex BDI agents (see [TestAgent.java](https://github.com/agentsoz/jill/blob/master/jill/src/test/java/io/github/agentsoz/jill/testprogram/TestAgent.java)). Each agent has a goal-plan hierarchy as follows:
+```
+            GoalA
+              |
+      PlanA-------PlanD
+        |
+    .-------.
+    |       |
+  GoalB   GoalC
+    |       |
+  PlanB   PlanC
+```
+Each agent starts by posting a high level goal [GoalA] which has two *relevant* plans [PlanA] and [PlanD]. In this example the context condition of all plans is `true` so that all relevant plans are also *applicable* at the same time. So given that [PlanA] and [PlanD] are both applicable, which should get selected? That depends on the global plan selection policy configured for Jill. By default it selects a plan instance at RANDOM, but this can be changed to always pick the first defined plan (command line option `--plan-selection-policy FIRST`) or last (option `--plan-selection-policy LAST`).
+
+If [PlanD] were selected, it executes (always successfully), after which [GoalA] is satisfied, and the agent becomes idle. On the other hand, if [PlanB] was selected, it then first posts [GoalB]--and waits for it to complete--followed by [GoalC]. This results in [PlanB] executing and completing first, followed by [PlanC]. At that point all steps (i.e., subgoals [GoalB] and [GoalC]) of [PlanA] have completed, which in turn results in its completion and the success of the top level goal [GoalA].
+
+Note that the execution of the agents is interleaved such that Jill cycles through all agents in each execution cycle, and progresses any active intentions (plans) by one plan step. When all agents eventually accomplish their [GoalA] and become idle, the program terminates (this behaviour can be disabled by passing the Jill option `--exit-on-idle FALSE` at runtime).
+
+[GoalA]:https://github.com/agentsoz/jill/blob/master/jill/src/test/java/io/github/agentsoz/jill/testprogram/GoalA.java
+[GoalB]:https://github.com/agentsoz/jill/blob/master/jill/src/test/java/io/github/agentsoz/jill/testprogram/GoalB.java
+[GoalC]:https://github.com/agentsoz/jill/blob/master/jill/src/test/java/io/github/agentsoz/jill/testprogram/GoalC.java
+[PlanA]:https://github.com/agentsoz/jill/blob/master/jill/src/test/java/io/github/agentsoz/jill/testprogram/PlanA.java
+[PlanB]:https://github.com/agentsoz/jill/blob/master/jill/src/test/java/io/github/agentsoz/jill/testprogram/PlanB.java
+[PlanC]:https://github.com/agentsoz/jill/blob/master/jill/src/test/java/io/github/agentsoz/jill/testprogram/PlanC.java
+[PlanD]:https://github.com/agentsoz/jill/blob/master/jill/src/test/java/io/github/agentsoz/jill/testprogram/PlanD.java
+
+To execute the test with one million BDI agents, use the convinience script [test/testagent.sh](https://github.com/agentsoz/jill/blob/master/test/testagent.sh)  as follows:
+```
+> ./test/testagent.sh
+...
+Started at  Fri Aug 19 11:20:24 AEST 2016
+java -Xmx2g -Xms2g -cp ./../jill/target/jill-0.3.1-SNAPSHOT-jar-with-dependencies.jar:./../examples/target/jill-examples-0.3.1-SNAPSHOT.jar:./../jill/target/test-classes io.github.agentsoz.jill.Main --config "{ programOutputFile : \"./testagent-1000000.out\", logFile : \"./testagent-1000000.log\", logLevel : \"INFO\", agents: [ { classname : io.github.agentsoz.jill.testprogram.TestAgent, args : [\"\"], count: 1000000 } ] }"
+Finished at Fri Aug 19 11:20:34 AEST 2016
+```
+That took only 10 seconds, nice! To get a better idea of the performance, you can query the log file `./test/testagent-1000000.log`:
+```
+> grep 1000000 ./test/testagent-1000000.log 
+Created 1000000 agents in 724 ms
+Started 1000000 agents in 800 ms
+Finished running 1000000 agents in 8041 ms
+Terminated 1000000 agents in 24 ms
+```
+
+
 
 ## Developers
 
