@@ -20,7 +20,7 @@ agents:
  [
   {
    classname : io.github.agentsoz.jill.example.hanoi.Player, 
-   args : [-discs, 9], 
+   args : [-discs, '${DISCS}'], 
    count: 1
   }
  ]
