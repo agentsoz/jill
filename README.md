@@ -16,7 +16,7 @@ developing large-scale multi-agent systems. Jill is:
   fit for inclusion in web-based and embedded-Java applications.
 
 * Fast: The Jill BDI execution engine is very fast, and was designed from 
-  ground-up to handle millions of BDI agents (see [Benchmarks](#benchmarks)). 
+  ground-up to handle millions of BDI agents (see [Benchmarks and Examples](#benchmarks-and-examples)). 
 
 * Java-based: The programming of BDI agents in Jill is done in 
   pure Java, so users benefit from the various support tools that are available
@@ -35,7 +35,61 @@ The latest stable release as well as all previous releases are available at:
 https://github.com/agentsoz/jill/releases
 
 
-## Benchmarks
+## Benchmarks and Examples
+
+### The Towers of Hanoi
+
+A solution for the classic [towers of hanoi puzzle](https://en.wikipedia.org/wiki/Tower_of_Hanoi) is available in the examples directory (see [hanoi player](https://github.com/agentsoz/jill/blob/master/examples/src/main/java/io/github/agentsoz/jill/example/hanoi/Player.java)). The goal is to move a stack of discs from the Pin0 (the first pin) to Pin3 (the third pin).
+
+The hanoi player can be run using the convinience script [test/hanoi.sh](https://github.com/agentsoz/jill/blob/master/test/hanoi.sh) which solves the problem for 15 discs by default:
+```
+> ./test/hanoi.sh
+...
+Solving Towers of Hanoi with 15 discs (see ./test/hanoi.out)
+Started at  Fri Aug 19 09:46:58 AEST 2016
+java -cp ./test/../jill/target/jill-0.3.1-SNAPSHOT-jar-with-dependencies.jar:./test/../examples/target/jill-examples-0.3.1-SNAPSHOT.jar io.github.agentsoz.jill.Main --config "{ programOutputFile : \"./test/hanoi.out\", logFile : \"./test/hanoi.log\", logLevel : \"INFO\", agents: [ { classname : io.github.agentsoz.jill.example.hanoi.Player, args : [-discs, 15], count: 1 } ] }"
+Finished at Fri Aug 19 09:46:59 AEST 2016
+```
+
+*Note: The script assumes that the JARs have been built from sources, so if you have instead downloaded the release JARs, then the paths in the command above will need to be adjusted.*
+
+The output of the run, i.e., the solution, is written to `./test/hanoi.out`:
+```
+> head -4 ./test/hanoi.out 
+Initialised hanoi board with 15 discs:
+|15|14|13|12|11|10|9|8|7|6|5|4|3|2|1
+|
+|
+> tail -10 test/hanoi.out
+Moving disc 1 from pin 2 to 1
+|3
+|2|1
+|15|14|13|12|11|10|9|8|7|6|5|4
+Moving disc 3 from pin 0 to 2
+|
+|2|1
+|15|14|13|12|11|10|9|8|7|6|5|4|3
+Moving disc 1 from pin 1 to 0
+|1
+|2
+|15|14|13|12|11|10|9|8|7|6|5|4|3
+Moving disc 2 from pin 1 to 2
+|1
+|
+|15|14|13|12|11|10|9|8|7|6|5|4|3|2
+Moving disc 1 from pin 0 to 2
+|
+|
+|15|14|13|12|11|10|9|8|7|6|5|4|3|2|1
+```
+
+To get an idea about performance, such as how long it took to solve the puzzle and in how many moves, we can look at the generated log file in `./test/hanoi.log`:
+```
+> grep -i finished test/hanoi.log 
+Finished running 1 agents in 1267 ms
+> grep Moving test/hanoi.out | wc -l
+32767
+```
 
 
 ## Developers
