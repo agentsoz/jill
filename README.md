@@ -1,5 +1,14 @@
 # Jill
 
+* [About](#about)
+* [Releases](#releases)
+* [Benchmarks and Examples](#benchmarks-and-examples)
+  * [The Towers of Hanoi](#1-the-towers-of-hanoi)
+  * [One Million BDI Agents](#2-one-million-bdi-agents)
+  * [Hello Neighbour](#3-hello-neighbour)
+  * [Token Passing](#4-token-passing)
+* [License](#license)
+
 
 ## About
 
@@ -91,7 +100,7 @@ Finished running 1 agents in 1267 ms
 32767
 ```
 
-### 2. One million BDI agents
+### 2. One Million BDI Agents
 
 This test executes one million relatively complex BDI agents (see [TestAgent.java](https://github.com/agentsoz/jill/blob/master/jill/src/test/java/io/github/agentsoz/jill/testprogram/TestAgent.java)). Each agent has a goal-plan hierarchy as follows:
 ```
@@ -138,7 +147,7 @@ Terminated 1000000 agents in 24 ms
 
 ### 3. Hello Neighbour
 
-This example case is that of an agent, who has several neighbours and--feeling rather jovial this bright day--wishes to greet one of them. No one in particular mind you, just someone who is a male. Indeed, there must have been something in the air, because all agents in the example feel exactly the same way.
+This example case is that of an agent ([Greeter.java] (https://github.com/agentsoz/jill/blob/master/examples/src/main/java/io/github/agentsoz/jill/example/greeter/Greeter.java)), who has several neighbours and--feeling rather jovial this bright day--wishes to greet one of them. No one in particular mind you, just someone who is a male. Indeed, there must have been something in the air, because all agents in the example feel exactly the same way.
 
 This crafted scenario is perfect for highlight the use of binding variables in context conditions of plans. Basically what we want is to be able to specify the condition (select a male neighbour) in the context condition, and let Jill give us a binding (such as "Oscar N. Morton") who we can say hello to. (In fact Jill will create one plan instance for each match and which one of those will actually be selected for execution will depend on the `--plan-selection-policy` setting). The function [GreetNeighbour::context()](https://github.com/agentsoz/jill/blob/master/examples/src/main/java/io/github/agentsoz/jill/example/greeter/GreetNeighbour.java#L45) shows how to specify such a context condition. Internally, this executes as a query on the [belief database of the agent] (https://github.com/agentsoz/jill/blob/master/examples/src/main/java/io/github/agentsoz/jill/example/greeter/Greeter.java#L51) and returns one plan instance for each match (in this case one plan instance per male neighbour). Inside the plan, the match must then be bound to a plan variable so that it can be used inside the plan body. This is done in [GreetNeighbour::setPlanVariables(HashMap<String, Object> vars)] (https://github.com/agentsoz/jill/blob/master/examples/src/main/java/io/github/agentsoz/jill/example/greeter/GreetNeighbour.java#L55) where the matched neighbours name is saved in a plan variable. (Here `vars` is a list of key-value pairs--the belief database table column names being the keys, and the matched record being the values.) The saved name is then used inside the plan body to [say hello to that neighbour] (https://github.com/agentsoz/jill/blob/master/examples/src/main/java/io/github/agentsoz/jill/example/greeter/GreetNeighbour.java#L70).
 
@@ -160,7 +169,34 @@ Started at  Fri Aug 19 12:26:20 AEST 2016
 java -cp ./test/../jill/target/jill-0.3.1-SNAPSHOT-jar-with-dependencies.jar:./test/../examples/target/jill-examples-0.3.1-SNAPSHOT.jar io.github.agentsoz.jill.Main --plan-selection-policy FIRST --config "{ programOutputFile : \"./test/greeter-10000a-500b.out\", logFile : \"./test/greeter-10000a-500b.log\", logLevel : \"INFO\", agents: [ { classname : io.github.agentsoz.jill.example.greeter.Greeter, args : [-neighbourhoodSize, 500], count: 10000 } ] }"
 Finished at Fri Aug 19 12:26:23 AEST 2016
 ```
+To see how long the test with 10,000 agents, each with 5 neighbours, took:
+```
+> grep 10000 test/greeter-10000a-5b.log
+Created 10000 agents in 62 ms
+Started 10000 agents in 237 ms
+Finished running 10000 agents in 394 ms
+Terminated 10000 agents in 5 ms
+```
 
+### 4. Token Passing
+
+In this setup a group of agents are connected together in a ring configuration such that each agent can talk to two others, one on either side. The benchmark simply passes a token around in the ring, varying the number of agents and rounds for which the token is passed. Below we explore the result for 10,000 agents passing the token for 100 rounds: 
+
+```
+> ./test/tokenpassing.sh 
+...
+Running token passing version 1 between 10000 agents for 100 rounds (see tokenpassing1-10000a-100r.*)
+Started at  Fri Aug 19 13:00:54 AEST 2016
+java -cp ./test/../jill/target/jill-0.3.1-SNAPSHOT-jar-with-dependencies.jar:./test/../examples/target/jill-examples-0.3.1-SNAPSHOT.jar io.github.agentsoz.jill.Main --config "{ programOutputFile : \"./test/tokenpassing-results/tokenpassing1-10000a-100r.out\", logFile : \"./test/tokenpassing-results/tokenpassing1-10000a-100r.log\", logLevel : \"INFO\", agents: [ { classname : io.github.agentsoz.jill.example.tokenpassing.TokenAgent1, args : [-rounds, 100], count: 10000 } ] }"
+Finished at Fri Aug 19 13:01:01 AEST 2016
+...
+> grep 10000 test/tokenpassing-results/tokenpassing1-10000a-100r.log
+Created 10000 agents in 72 ms
+Started 10000 agents in 11 ms
+Finished running 10000 agents in 6446 ms
+Terminated 10000 agents in 4 ms
+
+```
 
 ## Developers
 
