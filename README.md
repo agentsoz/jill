@@ -37,7 +37,7 @@ https://github.com/agentsoz/jill/releases
 
 ## Benchmarks and Examples
 
-### The Towers of Hanoi
+### 1. The Towers of Hanoi
 
 A solution for the classic [towers of hanoi puzzle](https://en.wikipedia.org/wiki/Tower_of_Hanoi) is available in the examples directory (see [hanoi player](https://github.com/agentsoz/jill/blob/master/examples/src/main/java/io/github/agentsoz/jill/example/hanoi/Player.java)). The goal is to move a stack of discs from the Pin0 (the first pin) to Pin3 (the third pin).
 
@@ -91,7 +91,7 @@ Finished running 1 agents in 1267 ms
 32767
 ```
 
-### One million BDI agents
+### 2. One million BDI agents
 
 This test executes one million relatively complex BDI agents (see [TestAgent.java](https://github.com/agentsoz/jill/blob/master/jill/src/test/java/io/github/agentsoz/jill/testprogram/TestAgent.java)). Each agent has a goal-plan hierarchy as follows:
 ```
@@ -136,6 +136,30 @@ Finished running 1000000 agents in 8041 ms
 Terminated 1000000 agents in 24 ms
 ```
 
+### 3. Hello Neighbour
+
+This example case is that of an agent, who has several neighbours and--feeling rather jovial this bright day--wishes to greet one of them. No one in particular mind you, just someone who is a male. Indeed, there must have been something in the air, because all agents in the example feel exactly the same way.
+
+This crafted scenario is perfect for highlight the use of binding variables in context conditions of plans. Basically what we want is to be able to specify the condition (select a male neighbour) in the context condition, and let Jill give us a binding (such as "Oscar N. Morton") who we can say hello to. (In fact Jill will create one plan instance for each match and which one of those will actually be selected for execution will depend on the `--plan-selection-policy` setting). The function [GreetNeighbour::context()](https://github.com/agentsoz/jill/blob/master/examples/src/main/java/io/github/agentsoz/jill/example/greeter/GreetNeighbour.java#L45) shows how to specify such a context condition. Internally, this executes as a query on the [belief database of the agent] (https://github.com/agentsoz/jill/blob/master/examples/src/main/java/io/github/agentsoz/jill/example/greeter/Greeter.java#L51) and returns one plan instance for each match (in this case one plan instance per male neighbour). Inside the plan, the match must then be bound to a plan variable so that it can be used inside the plan body. This is done in [GreetNeighbour::setPlanVariables(HashMap<String, Object> vars)] (https://github.com/agentsoz/jill/blob/master/examples/src/main/java/io/github/agentsoz/jill/example/greeter/GreetNeighbour.java#L55) where the matched neighbours name is saved in a plan variable. (Here `vars` is a list of key-value pairs--the belief database table column names being the keys, and the matched record being the values.) The saved name is then used inside the plan body to [say hello to that neighbour] (https://github.com/agentsoz/jill/blob/master/examples/src/main/java/io/github/agentsoz/jill/example/greeter/GreetNeighbour.java#L70).
+
+The script `./test/greeter.sh` runs this example in various configurations changing the number of agents and the number of neighbours per agent:
+```
+> ./test/greeter.sh 
+Running 10000 agents with 5 neighbours each (see greeter-10000a-5b.*)
+Started at  Fri Aug 19 12:26:14 AEST 2016
+java -cp ./test/../jill/target/jill-0.3.1-SNAPSHOT-jar-with-dependencies.jar:./test/../examples/target/jill-examples-0.3.1-SNAPSHOT.jar io.github.agentsoz.jill.Main --plan-selection-policy FIRST --config "{ programOutputFile : \"./test/greeter-10000a-5b.out\", logFile : \"./test/greeter-10000a-5b.log\", logLevel : \"INFO\", agents: [ { classname : io.github.agentsoz.jill.example.greeter.Greeter, args : [-neighbourhoodSize, 5], count: 10000 } ] }"
+Finished at Fri Aug 19 12:26:15 AEST 2016
+
+Running 50000 agents with 100 neighbours each (see greeter-50000a-100b.*)
+Started at  Fri Aug 19 12:26:15 AEST 2016
+java -cp ./test/../jill/target/jill-0.3.1-SNAPSHOT-jar-with-dependencies.jar:./test/../examples/target/jill-examples-0.3.1-SNAPSHOT.jar io.github.agentsoz.jill.Main --plan-selection-policy FIRST --config "{ programOutputFile : \"./test/greeter-50000a-100b.out\", logFile : \"./test/greeter-50000a-100b.log\", logLevel : \"INFO\", agents: [ { classname : io.github.agentsoz.jill.example.greeter.Greeter, args : [-neighbourhoodSize, 100], count: 50000 } ] }"
+Finished at Fri Aug 19 12:26:20 AEST 2016
+
+Running 10000 agents with 500 neighbours each (see greeter-10000a-500b.*)
+Started at  Fri Aug 19 12:26:20 AEST 2016
+java -cp ./test/../jill/target/jill-0.3.1-SNAPSHOT-jar-with-dependencies.jar:./test/../examples/target/jill-examples-0.3.1-SNAPSHOT.jar io.github.agentsoz.jill.Main --plan-selection-policy FIRST --config "{ programOutputFile : \"./test/greeter-10000a-500b.out\", logFile : \"./test/greeter-10000a-500b.log\", logLevel : \"INFO\", agents: [ { classname : io.github.agentsoz.jill.example.greeter.Greeter, args : [-neighbourhoodSize, 500], count: 10000 } ] }"
+Finished at Fri Aug 19 12:26:23 AEST 2016
+```
 
 
 ## Developers
