@@ -217,5 +217,16 @@ public class Agent extends AObject {
 		}
 		lastresult = null;
 	}
+	
+	/** 
+	 * Forces this agent to enter an idle state irrespective of whether
+	 * it has any active intentions or not. The agent will continue to 
+	 * remain in the suspected state until some event forces it to become
+	 * active again, at which point it will resume operation.
+	 */
+	public void suspend(boolean val) {
+		Main.setAgentIdle(getId(), val);
+		Main.flagMessageTo(Main.poolid(getId()));
+	}
 
 }
