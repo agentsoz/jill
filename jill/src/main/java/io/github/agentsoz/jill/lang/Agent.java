@@ -42,6 +42,8 @@ import java.util.HashSet;
  *
  */
 public class Agent extends AObject {
+	
+	// FIXME: some Agent method are just by Jill only and should be final
 
 	/**
 	 * References to this agent's top level goals. 
@@ -78,6 +80,10 @@ public class Agent extends AObject {
 	 */
 	private Stack255 executionStack; 
 
+	/**
+	 * A handle to any registered meta-planning function
+	 */
+	private MetaPlan metaplan;
 	
 	private static BeliefBase beliefbase;
 	private static AObjectCatalog agents;
@@ -94,6 +100,7 @@ public class Agent extends AObject {
 		beliefbase = GlobalState.beliefbase;
 		agents = GlobalState.agents;
 		lastresult = null;
+		metaplan = null;
 	}
 
 	/**
@@ -227,6 +234,26 @@ public class Agent extends AObject {
 	public void suspend(boolean val) {
 		Main.setAgentIdle(getId(), val);
 		Main.flagMessageTo(Main.poolid(getId()));
+	}
+	
+	/**
+	 * Registers a meta-planning function for this agent.
+	 * The registered function will be called by the Jill engine
+	 * with the available plan bindings, prior to any plan selection,
+	 * giving the agent the opportunity to do meta-level reasoning.
+	 */
+	public void registerMetaPlan(MetaPlan metaplan) {
+		this.metaplan = metaplan;
+	}
+	
+	/**
+	 * Called by the Jill engine with available plan bindings, 
+	 * to Allow this agent to perform meta-level reasoning.
+	 * @param bindings
+	 */
+	public final void notifyAgentPrePlanSelection(PlanBindings bindings) {
+		if (metaplan == null) return;
+		metaplan.consider(bindings);
 	}
 
 }
