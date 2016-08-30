@@ -118,4 +118,54 @@ public class MainTest {
 		assertTrue(out.toString().equals(output));
 	}
 
+	@Test
+	public void testBeliefBindingsInMetaPlan() {
+		final String output = 
+				"PlanGreetNeighbour"+
+				",0:Lionel U. Smith:male"+
+				",0:Daniel I. Smith:male"+
+				",0:Alex K. Jones:male"+
+				",0:John P. Wilson:male\n"+
+				"PlanGreetNeighbour"+
+				",0:Lionel U. Smith:male"+
+				",0:Daniel I. Smith:male"+
+				",0:Alex K. Jones:male"+
+				",0:John P. Wilson:male\n"+
+				"PlanGreetNeighbour"+
+				",0:Lionel U. Smith:male"+
+				",0:Daniel I. Smith:male"+
+				",0:Alex K. Jones:male"+
+				",0:John P. Wilson:male\n";
+		String[] args = {
+				"--config",
+				"{" + "\n" +
+				"\"randomSeed\":\"12345\"," + "\n" +
+				"\"agents\":[" +
+				"{\"classname\":\"io.github.agentsoz.jill.testgreeter.TestGreeterAgent\", \"args\":[\"-seed\",\"12345\",\"-neighbourhoodSize\",\"5\", \"-verboseMetaPlan\"], \"count\":\"3\"}" +		
+				"]}"
+			};
+		try {
+			Main.main(args);
+		} catch (Exception e) {}
+		assertTrue(out.toString().equals(output));
+	}
+
+	@Test
+	public void testContextVariablesBindingsInPlan() {
+		final String output = "Hello Lionel U. Smith\n" +
+				"Hello Lionel U. Smith\n" +
+				"Hello Lionel U. Smith\n";
+		String[] args = {
+				"--config",
+				"{" + "\n" +
+				"\"randomSeed\":\"12345\"," + "\n" +
+				"\"agents\":[" +
+				"{\"classname\":\"io.github.agentsoz.jill.testgreeter.TestGreeterAgent\", \"args\":[\"-seed\",\"12345\",\"-neighbourhoodSize\",\"5\", \"-verbosePlans\"], \"count\":\"3\"}" +		
+				"]}"
+			};
+		try {
+			Main.main(args);
+		} catch (Exception e) {}
+		assertTrue(out.toString().equals(output));
+	}
 }
