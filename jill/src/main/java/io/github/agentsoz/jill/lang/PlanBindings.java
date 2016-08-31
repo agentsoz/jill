@@ -26,6 +26,7 @@ import java.util.HashMap;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Random;
 import java.util.Set;
 
@@ -44,14 +45,14 @@ import io.github.agentsoz.jill.util.Log;
  */
 public class PlanBindings {
 
-	private LinkedHashMap<Plan, HashSet<Belief>> bindings;
+	private LinkedHashMap<Plan, LinkedHashSet<Belief>> bindings;
 	int cachedsize;
 	private Random rand;
 	
 
 	public PlanBindings(Random rand) {
 		this.rand = rand;
-		bindings = new LinkedHashMap<Plan, HashSet<Belief>>();
+		bindings = new LinkedHashMap<Plan, LinkedHashSet<Belief>>();
 		cachedsize = 0;
 	}
 	
@@ -60,7 +61,7 @@ public class PlanBindings {
 	 * @param plan
 	 * @param planBindings
 	 */
-	public void add(Plan plan, HashSet<Belief> planBindings) {
+	public void add(Plan plan, LinkedHashSet<Belief> planBindings) {
 		this.bindings.put(plan, planBindings);
 		if (planBindings == null || planBindings.isEmpty()) {
 			cachedsize++;

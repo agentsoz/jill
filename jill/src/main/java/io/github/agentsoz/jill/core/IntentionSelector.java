@@ -35,6 +35,7 @@ import io.github.agentsoz.jill.util.Log;
 import io.github.agentsoz.jill.util.Stack255;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Random;
 
 public class IntentionSelector implements Runnable {
@@ -155,7 +156,7 @@ public class IntentionSelector implements Runnable {
 								// Get the results of context query just performed
 								HashSet<Belief> results = agent.getLastResults();
 								// Add the results to the bindings
-								bindings.add(planInstance, (results == null) ? null : new HashSet<Belief>(results));
+								bindings.add(planInstance, (results == null) ? null : new LinkedHashSet<Belief>(results));
 							}
 						} catch (Exception e) {
 							e.printStackTrace();
