@@ -34,7 +34,11 @@ import io.github.agentsoz.jill.lang.PlanBindings;
 import io.github.agentsoz.jill.util.Log;
 
 import java.io.PrintStream;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedHashSet;
 import java.util.Random;
+import java.util.TreeSet;
 
 @AgentInfo(hasGoals={"io.github.agentsoz.jill.testgreeter.GoalBeFriendly"})
 public class TestGreeterAgent extends Agent {
@@ -166,9 +170,31 @@ public class TestGreeterAgent extends Agent {
 
 		@Override
 		public void consider(PlanBindings bindings) {
+			
 			if (bindings != null && bindings.size() > 0) {
+				Comparator<Belief> comparator = new Comparator<Belief>() {
+			        @Override
+					public int compare(Belief b1, Belief b2) {
+						String s1 = String.valueOf(b1.getBeliefset());
+						for (Object field : b1.getTuple()) {
+							s1 += ":" + field;
+						}
+						String s2 = String.valueOf(b2.getBeliefset());
+						for (Object field : b2.getTuple()) {
+							s2 += ":" + field;
+						}
+			        	return s1.compareTo(s2);
+			        }
+				};
+			
 				String s = "";
 				for(Plan plan : bindings.getPlans()) {
+					// Sort the bindings
+					TreeSet<Belief> beliefs = new TreeSet<Belief>(comparator);
+					beliefs.addAll(bindings.getBindings(plan));
+					// Save back the bindings in sorted order
+					bindings.add(plan, new LinkedHashSet<Belief>(beliefs));
+					s += plan.getAgent().getName() + ":";
 					s += plan.getClass().getSimpleName();
 					for (Belief belief : bindings.getBindings(plan)) {
 						s += "," + belief.getBeliefset();
