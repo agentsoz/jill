@@ -12,6 +12,7 @@ CFG='"{
 programOutputFile : \"'${DIR}'/testagent-'$a'.out\",
 logFile : \"'${DIR}'/testagent-'$a'.log\",
 logLevel : \"INFO\",
+randomSeed : \"123456\",
 agents:
  [
   {
