@@ -7,7 +7,7 @@ CP=${DIR}/../jill/target/jill-0.3.2-SNAPSHOT-jar-with-dependencies.jar:${DIR}/..
 CMD="java -cp ${CP} io.github.agentsoz.jill.Main --help"
 echo $CMD; eval $CMD
 
-DISCS=15
+DISCS=20
 OUTFILE=${DIR}/hanoi.out
 echo ""
 echo "Solving Towers of Hanoi with ${DISCS} discs (see ${OUTFILE})"
