@@ -1305,17 +1305,17 @@ public class SparseBitSet implements Cloneable, Serializable
      *  <pre>
      *      SparseBitSet drPepper = new SparseBitSet();</pre>
      *  Now <code>drPepper.toString()</code> returns "<code>{}</code>".
-     *  <br/>
+     *  <br>
      *  <pre>
      *      drPepper.set(2);</pre>
      *  Now <code>drPepper.toString()</code> returns "<code>{2}</code>".
-     *  <br/>
+     *  <br>
      *  <pre>
      *      drPepper.set(3, 4);
      *      drPepper.set(10);</pre>
      *  Now <code>drPepper.toString()</code> returns
      *  "<code>{2..4, 10}</code>".
-     *  <br/>
+     *  <br>
      *  This method is intended for diagnostic use (as it is relatively expensive
      *  in time), but can be useful in interpreting problems in an application's use
      *  of a <code>SparseBitSet</code>.
