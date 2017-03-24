@@ -191,7 +191,7 @@ public class Agent extends AObject {
 	 * createBeliefSet("neighbour", fields);
 	 * </pre>
 	 * @param name a name for this new belief set 
-	 * @param fields an array of belief set fields (see {@link BeliefSetField)} 
+	 * @param fields an array of belief set fields (see {@link BeliefSetField}) 
 	 * @throws BeliefBaseException see {@link BeliefSetField}
 	 */
 	public void createBeliefSet(String name, BeliefSetField[] fields) throws BeliefBaseException {
@@ -202,7 +202,7 @@ public class Agent extends AObject {
 	 * Adds a new belief to the specified belief set
 	 * @param beliefsetName the belief set to add the belief to; must have been created previously using {@link #createBeliefSet(String, BeliefSetField[])}
 	 * @param tuple parameter list of field values; types must match the specification in {@link #createBeliefSet(String, BeliefSetField[])}
-	 * @throws BeliefBaseException
+	 * @throws BeliefBaseException exception (see {@link BeliefBaseException})
 	 */
 	public void addBelief(String beliefsetName, Object... tuple) throws BeliefBaseException {
 		beliefbase.addBelief(getId(), beliefsetName, tuple);

@@ -112,7 +112,7 @@ public class PlanBindings {
 	}
 
 	/**
-	 * Gets the plan binding at the given index, where 0 <= index < size 
+	 * Gets the plan binding at the given index, where 0 &lt;= index &lt; size 
 	 * returned by {@link #size()}. The returned plan contains the variable 
 	 * bindings.
 	 * @param index the index of the bound plan instance to retrieve
