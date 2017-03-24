@@ -1305,20 +1305,20 @@ public class SparseBitSet implements Cloneable, Serializable
      *  <pre>
      *      SparseBitSet drPepper = new SparseBitSet();</pre>
      *  Now <code>drPepper.toString()</code> returns "<code>{}</code>".
-     *  </p><p>
+     *  <br/>
      *  <pre>
      *      drPepper.set(2);</pre>
      *  Now <code>drPepper.toString()</code> returns "<code>{2}</code>".
-     *  </p><p>
+     *  <br/>
      *  <pre>
      *      drPepper.set(3, 4);
      *      drPepper.set(10);</pre>
      *  Now <code>drPepper.toString()</code> returns
      *  "<code>{2..4, 10}</code>".
-     *  </p><p>
+     *  <br/>
      *  This method is intended for diagnostic use (as it is relatively expensive
      *  in time), but can be useful in interpreting problems in an application's use
-     *  of a <code>SparseBitSet</code>.</p>
+     *  of a <code>SparseBitSet</code>.
      *
      * @return      a String representation of this SparseBitSet
      * @see         #toStringCompaction(int length)
@@ -2512,7 +2512,7 @@ public class SparseBitSet implements Cloneable, Serializable
      * <pre>
      * flip| 0 1
      *    0| 1 1
-     *    1| 0 0 /<pre>
+     *    1| 0 0 </pre>
      */
     protected class FlipStrategy extends AbstractStrategy
     {
