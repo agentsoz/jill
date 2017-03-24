@@ -26,7 +26,7 @@ public interface MetaPlan {
 	
 	/**
 	 * Allows the agent to reason over all plan options
-	 * @param bindings
+	 * @param bindings the available plan bindings 
 	 */
 	public void consider(PlanBindings bindings);
 

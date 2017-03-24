@@ -49,8 +49,8 @@ public class Main {
 	private static PrintStream writer;
 	
 	/**
-	 * @param args
-	 * @throws Exception 
+	 * Program entry
+	 * @param args command line arguments
 	 */
 	public static void main(String[] args) {
 		try {
@@ -208,7 +208,7 @@ public class Main {
 
 	/**
 	 * Checks if the system is idle, i.e., all the agents pools are idle
-	 * @return
+	 * @return true if idle, false otherwise
 	 */
 	public static boolean arePoolsIdle() {
 		boolean idle = true;
@@ -240,7 +240,7 @@ public class Main {
 
 	/**
 	 * Starts the intention selection threads that each handle a pool of agents
-	 * @return the number of threads started
+	 * @param config the global configuration object
 	 */
 	public static void initIntentionSelectionThreads(Config config) {
 		int ncores = config.getNumThreads();
@@ -266,8 +266,8 @@ public class Main {
 
 	/**
 	 * Sets a bit in the agentsIdle cache, to mark if this agent is idle (or not).
-	 * @param agentId
-	 * @param isIdle
+	 * @param agentId the agent is question
+	 * @param isIdle the new idle status of this agent
 	 */
 	public static void setAgentIdle(int agentId, boolean isIdle) {
 		int poolid = poolid(agentId);

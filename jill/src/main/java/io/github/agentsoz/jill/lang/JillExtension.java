@@ -26,7 +26,7 @@ public interface JillExtension {
 
 	/** 
 	 * Initialises this extension. Called immediately after the Jill system has
-	 * finished initialising ({@link io.github.agentsoz.jill.Main#init(String[])}).
+	 * finished initialising ({@link io.github.agentsoz.jill.Main#init(Config)}).
 	 * @param args command line arguments pertaining to this extension
 	 */
 	public void init(String[] args);

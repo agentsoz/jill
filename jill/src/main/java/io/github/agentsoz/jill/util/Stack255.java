@@ -59,7 +59,7 @@ public class Stack255{
 	 * 
 	 * @param initialCapacity the initial capacity of the stack
 	 * @param incrementSize capacity is increased by this amount when the 
-	 * stack becomes full; if incrementSize <= 0, then the default value of 1 
+	 * stack becomes full; if incrementSize &lt;= 0, then the default value of 1 
 	 * is used 
 	 */
 	public Stack255(byte initialCapacity, byte incrementSize) {
@@ -70,7 +70,7 @@ public class Stack255{
 	
 	/**
 	 * Gets the object at the given index in the catalog
-	 * @param index the position of the Object
+	 * @param idx the position of the Object
 	 * @return the Object, or null if the index is invalid
 	 */
 	public Object get(int idx) {

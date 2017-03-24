@@ -58,8 +58,8 @@ public class PlanBindings {
 	
 	/** 
 	 * Add the set of bindings for a given plan to this store.
-	 * @param plan
-	 * @param planBindings
+	 * @param plan the plan type
+	 * @param planBindings the available bindings
 	 */
 	public void add(Plan plan, LinkedHashSet<Belief> planBindings) {
 		this.bindings.put(plan, planBindings);
@@ -74,7 +74,7 @@ public class PlanBindings {
 	 * Returns a set of plan types that have bindings.
 	 * For each plan type there may be various bindings which can be retrieved
 	 * using {@link #getBindings(Plan)}
-	 * @return
+	 * @return set of plan types
 	 */
 	public Set<Plan> getPlans() {
 		return bindings.keySet();
@@ -86,8 +86,8 @@ public class PlanBindings {
 	 * do not bind any variables. A {@code null} set indicates that no 
 	 * variable bindings exist for the given plan, as is the case when
 	 * the context condition of the plan simply returns true.
-	 * @param plan
-	 * @return
+	 * @param plan the plan type
+	 * @return set of available bindings for this plan type
 	 */
 	public Set<Belief> getBindings(Plan plan) {
 		return bindings.get(plan);
@@ -105,7 +105,7 @@ public class PlanBindings {
 	 * Returns the total number of bindings in this store. 
 	 * This is the sum of all plan bindings. Note that plans with no bindings
 	 * are counted as 1.
-	 * @return
+	 * @return the number of bindings in this store
 	 */
 	public int size() {
 		return cachedsize;
@@ -115,8 +115,8 @@ public class PlanBindings {
 	 * Gets the plan binding at the given index, where 0 <= index < size 
 	 * returned by {@link #size()}. The returned plan contains the variable 
 	 * bindings.
-	 * @param index
-	 * @return
+	 * @param index the index of the bound plan instance to retrieve
+	 * @return the plan instance at this index
 	 */
 	public Plan get(int index) {
 		int i = 0;

@@ -36,7 +36,7 @@ public class BeliefSetField {
 	 * Creates a new belief set field with the given properties
 	 * @param name the name of this field; this is used in queries 
 	 * on the belief set that will contain beliefs with this field
-	 * @param type specifies the {@link #Class} of this field.
+	 * @param type specifies the {@link Class} of this field.
 	 * For beliefs that are eventually added to the belief set that contains
 	 * this field, the corresponding field value must be of this type.
 	 * @param isPrimary specifies whether this field is part of the 
@@ -45,7 +45,7 @@ public class BeliefSetField {
 	 * A primary key (simple or composite) uniquely identifies a belief.
 	 * It is used also in queries across belief sets, to select a 
 	 * belief in the first belief set and then find matches for its primary
-	 * key in the second (see {@link #Query}).
+	 * key in the second (see {@link Query}).
 	 *  
 	 */
 	public BeliefSetField(String name, Class<?> type, boolean isPrimary) {
@@ -57,7 +57,7 @@ public class BeliefSetField {
 
 	/** 
 	 * Gets the name of this belief set field
-	 * @return
+	 * @return the name
 	 */
 	public String getName() {
 		return name;
@@ -65,24 +65,24 @@ public class BeliefSetField {
 
 	/**
 	 * Sets the name of this belief set field
-	 * @param name
+	 * @param name the name
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	/**
-	 * Gets the {@link #Class} type of this belief set field
+	 * Gets the {@link Class} type of this belief set field
 	 * Beliefs 
-	 * @return
+	 * @return the class
 	 */
 	public Class<?> getType() {
 		return type;
 	}
 
 	/**
-	 * Sets the {@link #Class} type of this belief set field
-	 * @param type
+	 * Sets the {@link Class} type of this belief set field
+	 * @param type the type
 	 */
 	public void setType(Class<?> type) {
 		this.type = type;
@@ -91,7 +91,7 @@ public class BeliefSetField {
 	/**
 	 * Checks if this field is part of the primary key for the 
 	 * enclosing belief set
-	 * @return
+	 * @return {@code true} if key is primary, {@code false} otherwise
 	 */
 	public boolean isPrimary() {
 		return isPrimary;
@@ -100,7 +100,7 @@ public class BeliefSetField {
 	/**
 	 * Marks this field as part of the primary key for the enclosing
 	 * belief set.
-	 * @param isPrimary
+	 * @param isPrimary whether to include this field in primary key or not
 	 */
 	public void setPrimary(boolean isPrimary) {
 		this.isPrimary = isPrimary;

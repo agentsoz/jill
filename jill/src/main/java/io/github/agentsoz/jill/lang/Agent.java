@@ -191,8 +191,8 @@ public class Agent extends AObject {
 	 * createBeliefSet("neighbour", fields);
 	 * </pre>
 	 * @param name a name for this new belief set 
-	 * @param fields an array of belief set fields (see {@link #BeliefSetField}) 
-	 * @throws BeliefBaseException
+	 * @param fields an array of belief set fields (see {@link BeliefSetField)} 
+	 * @throws BeliefBaseException see {@link BeliefSetField}
 	 */
 	public void createBeliefSet(String name, BeliefSetField[] fields) throws BeliefBaseException {
 		beliefbase.createBeliefSet(getId(), name, fields);
@@ -200,8 +200,8 @@ public class Agent extends AObject {
 	
 	/** 
 	 * Adds a new belief to the specified belief set
-	 * @param beliefsetName the belief set to add the belief to; must have been created previously using {@link #createBeliefSet(String, BeliefSetField[])
-	 * @param tuple parameter list of field values; types must match the specification in {@link #createBeliefSet(String, BeliefSetField[])
+	 * @param beliefsetName the belief set to add the belief to; must have been created previously using {@link #createBeliefSet(String, BeliefSetField[])}
+	 * @param tuple parameter list of field values; types must match the specification in {@link #createBeliefSet(String, BeliefSetField[])}
 	 * @throws BeliefBaseException
 	 */
 	public void addBelief(String beliefsetName, Object... tuple) throws BeliefBaseException {
@@ -230,6 +230,7 @@ public class Agent extends AObject {
 	 * it has any active intentions or not. The agent will continue to 
 	 * remain in the suspected state until some event forces it to become
 	 * active again, at which point it will resume operation.
+	 * @param val the new idle state of this agent
 	 */
 	public void suspend(boolean val) {
 		Main.setAgentIdle(getId(), val);
@@ -241,6 +242,7 @@ public class Agent extends AObject {
 	 * The registered function will be called by the Jill engine
 	 * with the available plan bindings, prior to any plan selection,
 	 * giving the agent the opportunity to do meta-level reasoning.
+	 * @param metaplan the metaplan instance to register
 	 */
 	public void registerMetaPlan(MetaPlan metaplan) {
 		this.metaplan = metaplan;
@@ -249,7 +251,7 @@ public class Agent extends AObject {
 	/**
 	 * Called by the Jill engine with available plan bindings, 
 	 * to Allow this agent to perform meta-level reasoning.
-	 * @param bindings
+	 * @param bindings the available plan bindings
 	 */
 	public final void notifyAgentPrePlanSelection(PlanBindings bindings) {
 		if (metaplan == null) return;
