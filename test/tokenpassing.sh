@@ -5,7 +5,7 @@ DIR=`dirname "$0"`
 OUTDIR=${DIR}/tokenpassing-results
 mkdir -p ${OUTDIR}
 
-CP=${DIR}/../jill/target/jill-0.3.2-jar-with-dependencies.jar:${DIR}/../examples/target/jill-examples-0.3.2.jar
+CP=${DIR}/../jill/target/jill-0.3.3-SNAPSHOT-jar-with-dependencies.jar:${DIR}/../examples/target/jill-examples-0.3.3-SNAPSHOT.jar
 
 CMD="java -cp ${CP} io.github.agentsoz.jill.Main --help"
 echo $CMD; $CMD

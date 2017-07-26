@@ -29,9 +29,14 @@ public class GPType extends AObject{
 	
 	public GPType(String str) {
 		super(str);
+		parents = null;
+		children = null;
 	}
 
 	public byte[] getParents() {
+		if (parents == null) {
+			return null;
+		}
 		byte[] arr = new byte[parents.length];
 		for (int i = 0; i < arr.length; i++) {
 			arr[i] = parents[i];
@@ -46,6 +51,9 @@ public class GPType extends AObject{
 
 	
 	public byte[] getChildren() {
+		if (children == null) {
+			return null;
+		}
 		byte[] arr = new byte[children.length];
 		for (int i = 0; i < arr.length; i++) {
 			arr[i] = children[i];
