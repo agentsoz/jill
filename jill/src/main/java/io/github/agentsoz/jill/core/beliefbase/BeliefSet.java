@@ -55,7 +55,9 @@ public class BeliefSet extends AObject {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + Arrays.hashCode(fields);
-		result = prime * result + getName().hashCode();
+		String name = getName();
+		result = prime * result + ((name==null) ? 1 : name.hashCode());
+		result = prime * result + Integer.hashCode(getId());
 		return result;
 	}
 
@@ -77,9 +79,15 @@ public class BeliefSet extends AObject {
 		if (!Arrays.equals(fields, other.fields)) {
 			return false;
 		}
-		if (!getName().equals(other.getName())) {
+		String name = getName();
+		String oname = other.getName();
+		if (name == null) {
+			return  (oname == null) ? true : false;
+		}
+		if (!name.equals(oname)) {
 			return false;
 		}
+		// No check for IDs, therefore if only IDs are different then objects are equal
 		return true;
 	}
 

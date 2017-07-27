@@ -38,8 +38,10 @@ public class AObjectCatalog extends AObject{
 	}
 	
 	public AObject get(int index) {
-		assert(index >= 0 && index < objects.length);
-		return objects[index];
+		if(index >= 0 && index < objects.length) {
+			return objects[index];
+		}
+		return null;
 	}
 	
 	/**
@@ -60,7 +62,9 @@ public class AObjectCatalog extends AObject{
 	}
 		
 	public void push(AObject obj) {
-		assert(obj != null && obj.getId() == GlobalConstant.NULLID);
+		if(obj == null || obj.getId() != GlobalConstant.NULLID) {
+			return;
+		}
 		// Grow if we are at capacity
 		if (nextid == objects.length) {
 			grow();

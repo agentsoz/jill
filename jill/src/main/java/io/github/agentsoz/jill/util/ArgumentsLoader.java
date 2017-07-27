@@ -75,7 +75,7 @@ public class ArgumentsLoader {
 						abort("Option value '"+args[i]+"' is not a boolean");
 					}
 				}
-				
+				break;
 			case "--help":
 				abort(null);
 				break;
@@ -110,11 +110,13 @@ public class ArgumentsLoader {
 	}
 
 	private static void abort(String err) {
+		int withCode = 0;
 		if (err != null) {
+			withCode = 1;
 			System.err.println("\nERROR: " + err + "\n");
 		}
 		System.out.println(usage());
-		System.exit(0);
+		System.exit(withCode);
 	}
 
 	public static String[] getExtensions() {

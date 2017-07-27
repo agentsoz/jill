@@ -46,22 +46,36 @@ import io.github.agentsoz.jill.util.Log;
 public class PlanBindings {
 
 	private LinkedHashMap<Plan, LinkedHashSet<Belief>> bindings;
-	int cachedsize;
+	private int cachedsize;
 	private Random rand;
 	
 
 	public PlanBindings(Random rand) {
-		this.rand = rand;
+		this.rand = (rand == null) ? new Random() : rand;
 		bindings = new LinkedHashMap<Plan, LinkedHashSet<Belief>>();
 		cachedsize = 0;
 	}
 	
 	/** 
-	 * Add the set of bindings for a given plan to this store.
+	 * Add the set of bindings for a given plan to this store. Any previously 
+	 * stored bindings for this plan will be replaced.
 	 * @param plan the plan type
 	 * @param planBindings the available bindings
 	 */
 	public void add(Plan plan, LinkedHashSet<Belief> planBindings) {
+		if (plan == null) {
+			return;
+		}
+		// remove any old bindings, making sure to decrement the cached size
+		if (this.bindings.containsKey(plan)) {
+			LinkedHashSet<Belief> oldBindings = this.bindings.remove(plan);
+			if (oldBindings == null || oldBindings.isEmpty()) {
+				cachedsize--;
+			} else {
+				cachedsize -= oldBindings.size();
+			}
+		}
+		// add this binding and update the cached size
 		this.bindings.put(plan, planBindings);
 		if (planBindings == null || planBindings.isEmpty()) {
 			cachedsize++;
@@ -111,13 +125,14 @@ public class PlanBindings {
 		return cachedsize;
 	}
 
-	/**
+	/*
 	 * Gets the plan binding at the given index, where 0 &lt;= index &lt; size 
 	 * returned by {@link #size()}. The returned plan contains the variable 
 	 * bindings.
 	 * @param index the index of the bound plan instance to retrieve
 	 * @return the plan instance at this index
 	 */
+	/*
 	public Plan get(int index) {
 		int i = 0;
 		for (Plan plan : bindings.keySet()) {
@@ -134,6 +149,7 @@ public class PlanBindings {
 		}
 		return null;
 	}
+	*/
 	
 	public Plan get(PlanSelectionPolicy policy) {
 		Plan plan = null;
@@ -150,7 +166,7 @@ public class PlanBindings {
 			
 			break;
 		case RANDOM:
-			index = selectIndex(size(), GlobalConstant.PLAN_SELECTION_POLICY);
+			index = rand.nextInt(size());
 			int i = 0;
 			for (Plan p : bindings.keySet()) {
 				vars = bindings.get(p);
@@ -175,35 +191,10 @@ public class PlanBindings {
 	}
 	
 	
-	/**
-	 * Selects an index in the range 0 .. size-1, based on the plan selection 
-	 * policy {@link GlobalConstant#PLAN_SELECTION_POLICY}
-	 * 
-	 * @param size
-	 * @param policy
-	 * @return
-	 */
-	private final int selectIndex(int size, PlanSelectionPolicy policy) {
-		assert(size>=0);
-		int choice = 0;
-		switch (policy) {
-		case FIRST:
-			choice = 0;
-			break;
-		case RANDOM:
-			choice = rand.nextInt(size);
-			break;
-		case LAST:
-			choice = (size>0) ? size-1 : 0;
-			break;
-		};
-		return choice;
-	}
-
-	
 	private final void setPlanVariables(Agent agent, Plan planInstance, HashSet<Belief> results, int choice ) {
-		assert(agent != null && planInstance != null & results != null);
-		assert (choice >= 0 && choice < results.size());
+		if (agent==null || planInstance == null || results == null || choice < 0 || choice >= results.size()) {
+			return;
+		}
 		HashMap<String, Object> vars= new HashMap<String, Object>();
 		Belief belief = null;
 		int index = 0;
@@ -215,7 +206,9 @@ public class PlanBindings {
 			index++;
 		}
 		Object[] tuple = belief.getTuple();
-		assert(tuple != null);
+		if(tuple == null) {
+			return;
+		}
 		index = 0;
 		for (Object o : belief.getTuple()) {
 			try {
