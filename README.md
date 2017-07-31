@@ -216,6 +216,15 @@ and the entire software life cycle.
 * To build the source and Javadoc archives, do:
   `mvn source:jar javadoc:jar`
 
+* For quality assurance, we use the PMD static code checker with copy
+  paste duplication checking enabled <https://pmd.github.io/>,  the Checkstyle 
+  java code style checker for compliance with Google code style 
+  <http://checkstyle.sourceforge.net/>, and the JaCoCo java code coverage 
+  checker with minimum coverage targets <http://www.jacoco.org>. 
+  The Maven build will fail if the code is non-compliant with the above. 
+  To temporarily disable the checks, use the following build command:
+  `mvn clean install -Dpmd.skip=true -Dcpd.skip=true -Dcheckstyle.skip=true -Djacoco.skip=true`
+  
 
 ## License
 
