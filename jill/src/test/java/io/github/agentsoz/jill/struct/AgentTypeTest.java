@@ -23,7 +23,6 @@ package io.github.agentsoz.jill.struct;
  */
 
 import static org.junit.Assert.*;
-import io.github.agentsoz.jill.config.GlobalConstant;
 import io.github.agentsoz.jill.struct.AObject;
 
 import org.junit.After;

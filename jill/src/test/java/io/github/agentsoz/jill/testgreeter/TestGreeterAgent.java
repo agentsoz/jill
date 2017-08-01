@@ -34,7 +34,6 @@ import io.github.agentsoz.jill.lang.PlanBindings;
 import io.github.agentsoz.jill.util.Log;
 
 import java.io.PrintStream;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.Random;

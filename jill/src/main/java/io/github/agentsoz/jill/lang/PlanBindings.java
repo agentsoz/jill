@@ -30,7 +30,6 @@ import java.util.LinkedHashSet;
 import java.util.Random;
 import java.util.Set;
 
-import io.github.agentsoz.jill.config.GlobalConstant;
 import io.github.agentsoz.jill.config.GlobalConstant.PlanSelectionPolicy;
 import io.github.agentsoz.jill.core.beliefbase.Belief;
 import io.github.agentsoz.jill.core.beliefbase.BeliefBaseException;

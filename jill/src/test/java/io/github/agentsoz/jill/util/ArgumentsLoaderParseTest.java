@@ -1,14 +1,8 @@
 package io.github.agentsoz.jill.util;
 
-import static org.junit.Assert.*;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.security.Permission;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 import junit.framework.TestCase;
 
@@ -19,7 +13,9 @@ public class ArgumentsLoaderParseTest extends TestCase {
 
 	    protected static class ExitException extends SecurityException 
 	    {
-	        public final int status;
+			private static final long serialVersionUID = 6476530573058049502L;
+
+			public final int status;
 	        public ExitException(int status) 
 	        {
 	            super("There is no escape!");

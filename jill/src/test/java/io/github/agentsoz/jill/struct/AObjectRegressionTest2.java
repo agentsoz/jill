@@ -26,6 +26,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+@SuppressWarnings("unused")
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AObjectRegressionTest2 {
 
