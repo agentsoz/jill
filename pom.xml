@@ -195,7 +195,7 @@
           </executions>
         </plugin>
 
-        <!-- Checkstyle code stlye checker  --> 
+        <!-- Checkstyle code style checker  --> 
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-checkstyle-plugin</artifactId>
@@ -235,6 +235,7 @@
           <configuration>
             <excludes>
               <exclude>io/github/agentsoz/jill/util/SparseBitSet*</exclude>
+              <exclude>**/playground/**</exclude>
             </excludes>
           </configuration>
           <executions>
@@ -293,6 +294,7 @@
             <minimumTokens>50</minimumTokens>
             <excludes>
               <exclude>**/SparseBitSet.java</exclude>
+              <exclude>**/playground/**</exclude>
             </excludes>
             <excludeRoots>
               <excludeRoot>target/</excludeRoot>
@@ -311,6 +313,9 @@
           <configuration>
             <configLocation>${rootdir}/qa/checkstyle.xml</configLocation>
             <violationSeverity>warning</violationSeverity>
+            <excludes>**/SparseBitSet.java</excludes>
+            <excludes>**/*RegressionTest*.java</excludes>
+            <excludes>**/playground/**</excludes>
           </configuration>
         </plugin>
 

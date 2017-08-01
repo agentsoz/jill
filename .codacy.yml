@@ -1,0 +1,7 @@
+---
+engines:
+exclude_paths:
+  - .**/SparseBitSet.java
+  - .**/*RegressionTest*.java
+  - playground/**
+
