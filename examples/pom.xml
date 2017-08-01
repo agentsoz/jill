@@ -14,6 +14,10 @@
   <artifactId>jill-examples</artifactId>
   <version>0.3.3-SNAPSHOT</version>
 
+  <properties>
+    <rootdir>${basedir}/..</rootdir>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>io.github.agentsoz</groupId>
