@@ -15,7 +15,7 @@ package io.github.agentsoz.jill.core.beliefbase;
  */
 
 /**
- * Specifies a belief set field (akin to a column in a belief set)
+ * Specifies a belief set field (akin to a column in a belief set).
  * 
  * @author dsingh
  *
@@ -26,7 +26,7 @@ public class BeliefSetField {
   private boolean isPrimary;
 
   /**
-   * Creates a new belief set field with the given properties
+   * Creates a new belief set field with the given properties.
    * 
    * @param name the name of this field; this is used in queries on the belief set that will contain
    *        beliefs with this field
@@ -48,7 +48,7 @@ public class BeliefSetField {
   }
 
   /**
-   * Gets the name of this belief set field
+   * Gets the name of this belief set field.
    * 
    * @return the name
    */
@@ -57,7 +57,7 @@ public class BeliefSetField {
   }
 
   /**
-   * Sets the name of this belief set field
+   * Sets the name of this belief set field.
    * 
    * @param name the name
    */
@@ -66,7 +66,7 @@ public class BeliefSetField {
   }
 
   /**
-   * Gets the {@link Class} type of this belief set field Beliefs
+   * Gets the {@link Class} type of this belief set field.
    * 
    * @return the class
    */
@@ -75,7 +75,7 @@ public class BeliefSetField {
   }
 
   /**
-   * Sets the {@link Class} type of this belief set field
+   * Sets the {@link Class} type of this belief set field.
    * 
    * @param type the type
    */
@@ -84,7 +84,7 @@ public class BeliefSetField {
   }
 
   /**
-   * Checks if this field is part of the primary key for the enclosing belief set
+   * Checks if this field is part of the primary key for the enclosing belief set.
    * 
    * @return {@code true} if key is primary, {@code false} otherwise
    */

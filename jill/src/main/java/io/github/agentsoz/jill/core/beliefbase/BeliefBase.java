@@ -14,12 +14,13 @@ package io.github.agentsoz.jill.core.beliefbase;
  * If not, see <http://www.gnu.org/licenses/lgpl-3.0.html>. #L%
  */
 
+import ch.qos.logback.classic.Level;
+
 import io.github.agentsoz.jill.core.beliefbase.abs.ABeliefStore;
 import io.github.agentsoz.jill.util.Log;
 
 import java.util.HashSet;
 
-import ch.qos.logback.classic.Level;
 
 public abstract class BeliefBase {
 
@@ -33,6 +34,12 @@ public abstract class BeliefBase {
 
   public abstract HashSet<Belief> query(int agentid, String key) throws BeliefBaseException;
 
+  /**
+   * Sample program to test belief base evaluation speeds.
+   * 
+   * @param args command line arguments
+   * @throws BeliefBaseException thrown on belief base update or evalaution errors
+   */
   public static void main(String[] args) throws BeliefBaseException {
     // Configure logging
     Log.createLogger("", Level.INFO, "BeliefBase.log");
@@ -41,110 +48,93 @@ public abstract class BeliefBase {
     String bs1 = "neighbour";
     String bs2 = "hascar";
 
-    long t0, t1, t2, t3;
+    long t0;
+    long t1;
 
-    int nAGENTS = 10000;
-    int nNEIGHBOURS = 1000;
-    BeliefBase bb = new ABeliefStore(nAGENTS, 4);
-    Log.info("Initialising " + nAGENTS + " agents with " + nNEIGHBOURS + " beliefs each");
+    int numAgents = 10000;
+    int numNeighbours = 1000;
+    BeliefBase bb = new ABeliefStore(numAgents, 4);
+    Log.info("Initialising " + numAgents + " agents with " + numNeighbours + " beliefs each");
     BeliefSetField[] fields1 = {new BeliefSetField("name", String.class, true),
         new BeliefSetField("gender", String.class, false),};
     BeliefSetField[] fields2 = {new BeliefSetField("name", String.class, true),
         new BeliefSetField("car", Boolean.class, false),};
 
-    t2 = System.currentTimeMillis();
-    for (int i = 0; i < nAGENTS; i++) {
+    long t2 = System.currentTimeMillis();
+    for (int i = 0; i < numAgents; i++) {
       t0 = System.currentTimeMillis();
       bb.createBeliefSet(i, bs1, fields1);
       t1 = System.currentTimeMillis();
       Log.debug("Created belief set '" + bs1 + "' (" + (t1 - t0) + " ms)");
       t0 = System.currentTimeMillis();
-      for (int j = 0; j < nNEIGHBOURS; j++) {
+      for (int j = 0; j < numNeighbours; j++) {
         bb.addBelief(i, bs1, "agent" + j, ((j % 2) == 0) ? "male" : "female");
       }
       t1 = System.currentTimeMillis();
-      Log.debug("Agent " + i + " added " + nNEIGHBOURS + " beliefs to belief set '" + bs1 + "' ("
+      Log.debug("Agent " + i + " added " + numNeighbours + " beliefs to belief set '" + bs1 + "' ("
           + (t1 - t0) + " ms)");
     }
-    t3 = System.currentTimeMillis();
-    Log.info("Finished initialising " + nAGENTS + " agents with " + nNEIGHBOURS
+    long t3 = System.currentTimeMillis();
+    Log.info("Finished initialising " + numAgents + " agents with " + numNeighbours
         + " beliefs each for belief set '" + bs1 + "' (" + (t3 - t2) + " ms)");
 
     t2 = System.currentTimeMillis();
-    for (int i = 0; i < nAGENTS; i++) {
+    for (int i = 0; i < numAgents; i++) {
       t0 = System.currentTimeMillis();
       bb.createBeliefSet(i, bs2, fields2);
       t1 = System.currentTimeMillis();
       Log.debug("Created belief set '" + bs2 + "' (" + (t1 - t0) + " ms)");
       t0 = System.currentTimeMillis();
-      for (int j = 0; j < nNEIGHBOURS; j++) {
+      for (int j = 0; j < numNeighbours; j++) {
         bb.addBelief(i, bs2, "agent" + j, ((j % 2) == 0) ? new Boolean(true) : new Boolean(false));
       }
       t1 = System.currentTimeMillis();
-      Log.debug("Agent " + i + " added " + nNEIGHBOURS + " beliefs to belief set '" + bs2 + "' ("
+      Log.debug("Agent " + i + " added " + numNeighbours + " beliefs to belief set '" + bs2 + "' ("
           + (t1 - t0) + " ms)");
     }
     t3 = System.currentTimeMillis();
-    Log.info("Finished initialising " + nAGENTS + " agents with " + nNEIGHBOURS
+    Log.info("Finished initialising " + numAgents + " agents with " + numNeighbours
         + " beliefs each for belief set '" + bs2 + "' (" + (t3 - t2) + " ms)");
 
 
-    int a;
-    int n;
-    String ns;
+    int agentId = 0;
+    int neighbourId = 0;
+    doEval(bb, agentId, bs1 + ".name=agent" + neighbourId);
 
-    a = 0;
-    n = 0;
-    ns = "agent" + n;
-    t0 = System.currentTimeMillis();
-    // bb.eval(a, "eq", bs1, "name", ns);
-    bb.eval(a, bs1 + ".name=" + ns);
-    t1 = System.currentTimeMillis();
-    Log.info("Agent " + a + " searched for " + bs1 + ".name=" + ns + " (" + (t1 - t0) + " ms)");
+    agentId = 0;
+    neighbourId = numNeighbours - 1;
+    doEval(bb, agentId, bs1 + ".name=agent" + neighbourId);
 
-    a = 0;
-    n = nNEIGHBOURS - 1;
-    ns = "agent" + n;
-    t0 = System.currentTimeMillis();
-    // bb.eval(a, "eq", bs1, "name", ns);
-    bb.eval(a, bs1 + ".name=" + ns);
-    t1 = System.currentTimeMillis();
-    Log.info("Agent " + a + " searched for " + bs1 + ".name=" + ns + " (" + (t1 - t0) + " ms)");
+    agentId = numAgents - 1;
+    neighbourId = numNeighbours - 1;
+    doEval(bb, agentId, bs1 + ".name=agent" + neighbourId);
 
-    a = nAGENTS - 1;
-    n = nNEIGHBOURS - 1;
-    ns = "agent" + n;
-    t0 = System.currentTimeMillis();
-    // bb.eval(a, "eq", bs1, "name", ns);
-    bb.eval(a, bs1 + ".name=" + ns);
-    t1 = System.currentTimeMillis();
-    Log.info("Agent " + a + " searched for " + bs1 + ".name=" + ns + " (" + (t1 - t0) + " ms)");
+    agentId = 0;
+    neighbourId = 0;
+    doEval(bb, agentId, bs1 + ".name=agent" + neighbourId);
 
-    a = 0;
-    n = 0;
-    ns = "agent" + n;
-    t0 = System.currentTimeMillis();
-    // bb.eval(a, "eq", bs1, "name", ns);
-    bb.eval(a, bs1 + ".name=" + ns);
-    t1 = System.currentTimeMillis();
-    Log.info("Agent " + a + " searched for " + bs1 + ".name=" + ns + " (" + (t1 - t0) + " ms)");
+    agentId = 0;
+    neighbourId = numNeighbours - 1;
+    doEval(bb, agentId, bs1 + ".name=agent" + neighbourId);
 
-    a = 0;
-    n = nNEIGHBOURS - 1;
-    ns = "agent" + n;
-    t0 = System.currentTimeMillis();
-    // bb.eval(a, "eq", bs1, "name", ns);
-    bb.eval(a, bs1 + ".name=" + ns);
-    t1 = System.currentTimeMillis();
-    Log.info("Agent " + a + " searched for " + bs1 + ".name=" + ns + " (" + (t1 - t0) + " ms)");
-
-    a = nAGENTS - 1;
-    n = nNEIGHBOURS - 1;
-    ns = "agent" + n;
-    t0 = System.currentTimeMillis();
-    // bb.eval(a, "eq", bs1, "name", ns);
-    bb.eval(a, bs1 + ".name=" + ns);
-    t1 = System.currentTimeMillis();
-    Log.info("Agent " + a + " searched for " + bs1 + ".name=" + ns + " (" + (t1 - t0) + " ms)");
+    agentId = numAgents - 1;
+    neighbourId = numNeighbours - 1;
+    doEval(bb, agentId, bs1 + ".name=agent" + neighbourId);
   }
+
+  /**
+   * Evaluates the given query on the given belief base for the agent.
+   * 
+   * @param bb the belief base to query
+   * @param agentId the agent for which the query applies
+   * @param query the belief query
+   * @throws BeliefBaseException thorwn if there is a query evaluation error
+   */
+  public static void doEval(BeliefBase bb, int agentId, String query) throws BeliefBaseException {
+    final long t0 = System.currentTimeMillis();
+    bb.eval(agentId, query);
+    final long t1 = System.currentTimeMillis();
+    Log.info("Agent " + agentId + " searched for '" + query + "' (" + (t1 - t0) + " ms)");
+  }
+
 }
