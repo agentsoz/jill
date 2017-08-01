@@ -313,9 +313,7 @@
           <configuration>
             <configLocation>${rootdir}/qa/checkstyle.xml</configLocation>
             <violationSeverity>warning</violationSeverity>
-            <excludes>**/SparseBitSet.java</excludes>
-            <excludes>**/*RegressionTest*.java</excludes>
-            <excludes>**/playground/**</excludes>
+            <excludes>**/SparseBitSet.java,**/*RegressionTest*.java,**/playground/**</excludes>
           </configuration>
         </plugin>
 
