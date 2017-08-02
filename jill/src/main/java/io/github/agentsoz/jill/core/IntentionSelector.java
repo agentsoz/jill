@@ -44,8 +44,16 @@ public class IntentionSelector implements Runnable {
   private boolean shutdown;
   private PlanBindings bindings; // plan bindings
 
-  public IntentionSelector(int poolid, long l, int start, int size) {
-    this.rand = new Random(l);
+  /**
+   * Constructs a new intention selector to manage a set of agents.
+   * 
+   * @param poolid ID of this pool (must follow the sequence 0,1,2,3,...).
+   * @param seed to initialise the random number generator with
+   * @param start not used
+   * @param size not used
+   */
+  public IntentionSelector(int poolid, long seed, int start, int size) {
+    this.rand = new Random(seed);
     this.poolid = poolid;
     this.lock = new Object();
     this.hasMessage = false;
@@ -57,6 +65,9 @@ public class IntentionSelector implements Runnable {
     bindings = new PlanBindings(rand);
   }
 
+  /**
+   * Runs this intentions selction thread.
+   */
   public void run() {
     HashSet<Integer> toRemove = new HashSet<Integer>();
     do {
@@ -160,8 +171,8 @@ public class IntentionSelector implements Runnable {
               e.printStackTrace();
             }
           }
-          int nBindings = bindings.size();
-          if (nBindings == 0) {
+          int numBindings = bindings.size();
+          if (numBindings == 0) {
             // No plan options for this goal at this point in time, so move to the next agent
             Log.debug("Agent " + agent.getId() + " has no applicable plans for goal " + gtype
                 + " and will continue to wait indefinitely");
@@ -215,6 +226,10 @@ public class IntentionSelector implements Runnable {
     Log.debug("Intention selector " + poolid + " is exiting");
   }
 
+  /**
+   * Flags to this intention selection thread that an external message, to an agent managed by this
+   * thread, is waiting to be processed.
+   */
   public void flagMessage() {
     synchronized (lock) {
       Log.debug("Intention selector " + poolid + " received a new message");
@@ -223,10 +238,18 @@ public class IntentionSelector implements Runnable {
     }
   }
 
+  /**
+   * Checks if this intention selector is idle.
+   * 
+   * @return true if idle, false otherwise
+   */
   public boolean isIdle() {
     return isIdle && !hasMessage;
   }
 
+  /**
+   * Terminates this intention selector thread.
+   */
   public void shutdown() {
     synchronized (lock) {
       Log.debug("Intention selector " + poolid + " received shutdown message");
@@ -236,6 +259,13 @@ public class IntentionSelector implements Runnable {
     }
   }
 
+  /**
+   * Sets the idle status of the given agent managed by this intention selector.
+   * 
+   * 
+   * @param agentId ID of the agent whose idle status is being set
+   * @param idle the new idle status of this agent
+   */
   // FIXME: Threading issue when external threads changes activeagents
   // and this thread is still iterating over activeagents
   public void setAgentIdle(int agentId, boolean idle) {
