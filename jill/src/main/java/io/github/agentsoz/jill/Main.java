@@ -32,7 +32,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Main {
 
   /**
-   * Used to mark if all the pools of agents are idle or not
+   * Used to mark if all the pools of agents are idle or not.
    */
   private static int npools;
   private static int poolsize;
@@ -43,7 +43,7 @@ public class Main {
   /**
    * Program entry
    * 
-   * @param args command line arguments
+   * @param args command line arguments.
    */
   public static void main(String[] args) {
     try {
@@ -68,9 +68,17 @@ public class Main {
       // finish up
       finish();
     } catch (Exception e) {
+      System.err.println("ERROR during Jill execution: " + e.getMessage());
+      e.printStackTrace();
     }
   }
 
+  /**
+   * Initialises the Jill engine.
+   * 
+   * @param config a valid loaded configuration
+   * @throws Exception thrown if something went wrong
+   */
   public static void init(Config config) throws Exception {
 
     // Pause for key press from user if requested
@@ -81,19 +89,20 @@ public class Main {
     // Configure logging
     Log.createLogger("", config.getLogLevel(), config.getLogFile());
 
-    int NUMAGENTS = 0;
+    int numAgents = 0;
     for (Config.AgentTypeData agentType : config.getAgents()) {
-      NUMAGENTS += agentType.getCount();
+      numAgents += agentType.getCount();
     }
-    int INCREMENT = 10000;
+    final int increment = 10000;
 
     GlobalState.reset();
-    GlobalState.agents = new AObjectCatalog("agents", NUMAGENTS, INCREMENT);
+    GlobalState.agents = new AObjectCatalog("agents", numAgents, increment);
 
 
     // Create the central belief base
-    GlobalState.beliefbase = new ABeliefStore(NUMAGENTS, config.getNumThreads());
-    long t0, t1;
+    GlobalState.beliefbase = new ABeliefStore(numAgents, config.getNumThreads());
+    long t0;
+    long t1;
 
     // Create the agents
     t0 = System.currentTimeMillis();
@@ -104,7 +113,7 @@ public class Main {
     Log.info("Created " + GlobalState.agents.size() + " agents in " + (t1 - t0) + " ms");
 
     // Initialise the thread pools
-    initIntentionSelectionPools(NUMAGENTS, config.getNumThreads());
+    initIntentionSelectionPools(numAgents, config.getNumThreads());
 
 
     // Redirect the agent program output if specified
@@ -123,15 +132,20 @@ public class Main {
 
   }
 
+  /**
+   * Starts the Jill engine. Must have previously been initialised (see {@link #init(Config)}).
+   * 
+   * @param config a valid config
+   */
   public static void start(Config config) {
     // Start the agents
     long t0 = System.currentTimeMillis();
-    int i = -1;
+    int index = -1;
     for (Config.AgentTypeData agentType : config.getAgents()) {
-      i++;
+      index++;
       String[] args = (agentType.getArgs() == null || agentType.getArgs().isEmpty()) ? new String[0]
           : agentType.getArgs().toArray(new String[agentType.getArgs().size()]);
-      for (int j = i; j < i + agentType.getCount(); j++) {
+      for (int j = index; j < index + agentType.getCount(); j++) {
         // Get the agent
         Agent agent = (Agent) GlobalState.agents.get(j);
         // Start the agent
@@ -146,6 +160,9 @@ public class Main {
 
   }
 
+  /**
+   * Blocks until all agents have finished executing plans and have gone idle.
+   */
   public static void waitUntilIdle() {
     // Wait till we are all done
     long t0 = System.currentTimeMillis();
@@ -164,6 +181,9 @@ public class Main {
     Log.info("Finished running " + GlobalState.agents.size() + " agents in " + (t1 - t0) + " ms");
   }
 
+  /**
+   * Termiantes the Jill engine.
+   */
   public static void finish() {
     // Terminate the extensions first
     for (JillExtension extension : GlobalState.eventHandlers) {
@@ -189,6 +209,12 @@ public class Main {
     Log.info("Terminated " + GlobalState.agents.size() + " agents in " + (t1 - t0) + " ms");
   }
 
+  /**
+   * Loads any configured extensions (see {@link JillExtension}).
+   * 
+   * @param config a valid configuration
+   * @throws Exception thrown if something went wrong
+   */
   private static void loadExtensions(Config config) throws Exception {
     if (config.getExtensions() == null) {
       return;
@@ -215,6 +241,12 @@ public class Main {
     return idle;
   }
 
+  /**
+   * Checks if the {@link IntentionSelector} pools have finished, i.e., all agents in the pools are
+   * idle.
+   * 
+   * @return true if pools have finished, false otherwise
+   */
   public static boolean arePoolsFinished() {
     boolean finished = true;
     for (int i = 0; i < intentionSelectors.length; i++) {
@@ -223,12 +255,21 @@ public class Main {
     return finished;
   }
 
+  /**
+   * Notifies all threads waiting on {@link #poolsIdle}.
+   */
   public static void flagPoolIdle() {
     synchronized (poolsIdle) {
       poolsIdle.notifyAll();
     }
   }
 
+  /**
+   * Initialises the intention selection pools.
+   * 
+   * @param nagents total number of agents to distribution between the intention selection pools
+   * @param ncores total number of cores
+   */
   public static void initIntentionSelectionPools(int nagents, int ncores) {
     poolsize = (nagents > ncores) ? (nagents / ncores) : 1;
     npools = (nagents > ncores) ? ncores : nagents;
@@ -236,11 +277,11 @@ public class Main {
 
 
   /**
-   * Starts the intention selection threads that each handle a pool of agents
+   * Starts the intention selection threads that each handle a pool of agents.
    * 
    * @param config the global configuration object
    */
-  public static void initIntentionSelectionThreads(Config config) {
+  private static void initIntentionSelectionThreads(Config config) {
     int ncores = config.getNumThreads();
     intentionSelectors = new IntentionSelector[ncores];
     for (int i = 0; i < npools; i++) {
@@ -250,13 +291,19 @@ public class Main {
     }
   }
 
-  public static void startIntentionSelectionThreads() {
+  /**
+   * Starts the intention selection threads.
+   */
+  private static void startIntentionSelectionThreads() {
     for (int i = 0; i < npools; i++) {
       new Thread(intentionSelectors[i]).start(); // start and wait at the entry barrier
     }
   }
 
-  public static void shutdownIntentionSelectionThreads() {
+  /**
+   * Stops the intention selection threads.
+   */
+  private static void shutdownIntentionSelectionThreads() {
     for (int i = 0; i < npools; i++) {
       intentionSelectors[i].shutdown();
     }
@@ -273,6 +320,12 @@ public class Main {
     intentionSelectors[poolid].setAgentIdle(agentId, isIdle);
   }
 
+  /**
+   * Gets the ID of the intension selection pool to which the given agent belongs.
+   * 
+   * @param agentid ID of the agent for which the pool ID is being requested
+   * @return ID of the pool to which this agent belongs
+   */
   public static int poolid(int agentid) {
     int poolid = agentid / poolsize;
     if (poolid + 1 > npools) {
@@ -291,10 +344,21 @@ public class Main {
     in.close();
   }
 
+  /**
+   * Flags to the given intentions selection pool that an external message is waiting to be
+   * processed.
+   * 
+   * @param toPool ID of the intention selection pool
+   */
   public static void flagMessageTo(int toPool) {
     intentionSelectors[toPool].flagMessage();
   }
 
+  /**
+   * Registers a new Jill extension.
+   * 
+   * @param extension the extension to register
+   */
   public static void registerExtension(JillExtension extension) {
     if (extension != null) {
       GlobalState.eventHandlers.add(extension);
