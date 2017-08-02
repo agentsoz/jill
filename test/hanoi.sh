@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DIR=`dirname "$0"`
+DIR=$(dirname "$0")
 
 CP=${DIR}/../jill/target/jill-0.3.3-SNAPSHOT-jar-with-dependencies.jar:${DIR}/../examples/target/jill-examples-0.3.3-SNAPSHOT.jar
 
@@ -27,7 +27,7 @@ agents:
 }"'
 
 CMD="java -cp ${CP} io.github.agentsoz.jill.Main --config $CFG" 
-echo "Started at " `date`
+echo "Started at " $(date)
 echo $CMD; eval $CMD > /dev/null
-echo "Finished at" `date`
+echo "Finished at" $(date)
 

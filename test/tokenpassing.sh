@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DIR=`dirname "$0"`
+DIR=$(dirname "$0")
 
 OUTDIR=${DIR}/tokenpassing-results
 mkdir -p ${OUTDIR}
@@ -30,9 +30,9 @@ agents:
  ]
 }"'
 CMD="java -cp ${CP} io.github.agentsoz.jill.Main --config $CFG" 
-echo "Started at " `date`
+echo "Started at " $(date)
 echo $CMD; eval $CMD > /dev/null
-echo "Finished at" `date`
+echo "Finished at" $(date)
 
 v=2
 ID=tokenpassing${v}-${a}a-${r}r
@@ -52,9 +52,9 @@ agents:
  ]
 }"'
 CMD="java -cp ${CP} io.github.agentsoz.jill.Main --config $CFG" 
-echo "Started at " `date`
+echo "Started at " $(date)
 echo $CMD; eval $CMD > /dev/null
-echo "Finished at" `date`
+echo "Finished at" $(date)
 
 
 a=100
@@ -77,9 +77,9 @@ agents:
  ]
 }"'
 CMD="java -cp ${CP} io.github.agentsoz.jill.Main --config $CFG" 
-echo "Started at " `date`
+echo "Started at " $(date)
 echo $CMD; eval $CMD > /dev/null
-echo "Finished at" `date`
+echo "Finished at" $(date)
 
 v=2
 ID=tokenpassing${v}-${a}a-${r}r
@@ -99,7 +99,7 @@ agents:
  ]
 }"'
 CMD="java -cp ${CP} io.github.agentsoz.jill.Main --config $CFG" 
-echo "Started at " `date`
+echo "Started at " $(date)
 echo $CMD; eval $CMD > /dev/null
-echo "Finished at" `date`
+echo "Finished at" $(date)
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DIR=`dirname "$0"`
+DIR=$(dirname "$0")
 
 CP=${DIR}/../jill/target/jill-0.3.3-SNAPSHOT-jar-with-dependencies.jar:${DIR}/../examples/target/jill-examples-0.3.3-SNAPSHOT.jar
 
@@ -27,9 +27,9 @@ agents:
  ]
 }"'
 CMD="java -cp ${CP} io.github.agentsoz.jill.Main --plan-selection-policy FIRST --config $CFG" 
-echo "Started at " `date`
+echo "Started at " $(date)
 echo $CMD; eval $CMD > ${DIR}/${ID}.out
-echo "Finished at" `date`
+echo "Finished at" $(date)
 
 a=50000
 b=100
@@ -50,9 +50,9 @@ agents:
  ]
 }"'
 CMD="java -cp ${CP} io.github.agentsoz.jill.Main --plan-selection-policy FIRST --config $CFG" 
-echo "Started at " `date`
+echo "Started at " $(date)
 echo $CMD; eval $CMD > ${DIR}/${ID}.out
-echo "Finished at" `date`
+echo "Finished at" $(date)
 
 a=10000
 b=500
@@ -73,7 +73,7 @@ agents:
  ]
 }"'
 CMD="java -cp ${CP} io.github.agentsoz.jill.Main --plan-selection-policy FIRST --config $CFG" 
-echo "Started at " `date`
+echo "Started at " $(date)
 echo $CMD; eval $CMD > ${DIR}/${ID}.out
-echo "Finished at" `date`
+echo "Finished at" $(date)
 
