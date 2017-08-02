@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DIR=`dirname "$0"`
+DIR=$(dirname "$0")
 
 RANDOOPJAR=randoop-all-3.1.5.jar
 if [ ! -f $DIR/$RANDOOPJAR ] ; then

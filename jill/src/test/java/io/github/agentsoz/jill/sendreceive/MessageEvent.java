@@ -1,60 +1,52 @@
 package io.github.agentsoz.jill.sendreceive;
 
 /*
- * #%L
- * Jill Cognitive Agents Platform
- * %%
- * Copyright (C) 2014 - 2017 by its authors. See AUTHORS file.
- * %%
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * #%L Jill Cognitive Agents Platform %% Copyright (C) 2014 - 2017 by its authors. See AUTHORS file.
+ * %% This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation, either version 3
+ * of the License, or (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Lesser Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Lesser Public License for more details.
  * 
- * You should have received a copy of the GNU General Lesser Public
- * License along with this program.  If not, see
- * <http://www.gnu.org/licenses/lgpl-3.0.html>.
- * #L%
+ * You should have received a copy of the GNU General Lesser Public License along with this program.
+ * If not, see <http://www.gnu.org/licenses/lgpl-3.0.html>. #L%
  */
 
 import io.github.agentsoz.jill.lang.Goal;
 import io.github.agentsoz.jill.lang.GoalInfo;
 
-@GoalInfo(hasPlans={"io.github.agentsoz.jill.sendreceive.HandleMessage"})
+@GoalInfo(hasPlans = {"io.github.agentsoz.jill.sendreceive.HandleMessage"})
 public class MessageEvent extends Goal {
-	
-	private int senderID;
-	private Object content;
 
-	public MessageEvent(String str) {
-		super(str);
-	}
+  private int senderID;
+  private Object content;
 
-	public MessageEvent(int senderID, Object content) {
-		this(null);
-		this.senderID = senderID;
-		this.content = content;
-	}
+  public MessageEvent(String str) {
+    super(str);
+  }
 
-	public int getSenderID() {
-		return senderID;
-	}
+  public MessageEvent(int senderID, Object content) {
+    this(null);
+    this.senderID = senderID;
+    this.content = content;
+  }
 
-	public void setSenderID(int senderID) {
-		this.senderID = senderID;
-	}
+  public int getSenderID() {
+    return senderID;
+  }
 
-	public Object getContent() {
-		return content;
-	}
+  public void setSenderID(int senderID) {
+    this.senderID = senderID;
+  }
 
-	public void setContent(Object content) {
-		this.content = content;
-	}
-	
+  public Object getContent() {
+    return content;
+  }
+
+  public void setContent(Object content) {
+    this.content = content;
+  }
+
 }
