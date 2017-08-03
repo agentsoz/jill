@@ -14,8 +14,6 @@ package io.github.agentsoz.jill.util;
  * If not, see <http://www.gnu.org/licenses/lgpl-3.0.html>. #L%
  */
 
-import org.slf4j.LoggerFactory;
-
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.LoggerContext;
@@ -23,32 +21,43 @@ import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.FileAppender;
 
+import org.slf4j.LoggerFactory;
+
+
 public class Log {
 
   private static Logger logger;
 
 
-  public static void info(String s) {
-    logger.info(s);
+  public static void info(String msg) {
+    logger.info(msg);
   }
 
-  public static void trace(String s) {
-    logger.trace(s);
+  public static void trace(String msg) {
+    logger.trace(msg);
   }
 
-  public static void warn(String s) {
-    logger.warn(s);
+  public static void warn(String msg) {
+    logger.warn(msg);
   }
 
-  public static void debug(String s) {
-    logger.debug(s);
+  public static void debug(String msg) {
+    logger.debug(msg);
   }
 
-  public static void error(String s) {
-    logger.error(s);
+  public static void error(String msg) {
+    logger.error(msg);
   }
 
 
+  /**
+   * Creates a new logger.
+   * 
+   * @param name a name for the logger
+   * @param level the logging level for the logger
+   * @param file the file to output all logging to
+   * @return the created logger
+   */
   public static Logger createLogger(String name, Level level, String file) {
     LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
     PatternLayoutEncoder ple = new PatternLayoutEncoder();

@@ -22,20 +22,20 @@ package io.github.agentsoz.jill.util;
  */
 public class Stack255 {
 
-  /** Maximum capacity of the stack (byte size) */
+  /** Maximum capacity of the stack (byte size). */
   private static final int MAXIMUM_CAPACITY = 255;
 
-  /** Current size of the stack */
+  /** Current size of the stack. */
   private int size;
 
   /**
    * Specifies the increment by which the capacity should be extended, once the stack reaches full
-   * capacity
+   * capacity.
    */
   private int increment;
 
   /**
-   * Objects in this stack
+   * Objects in this stack.
    */
   private Object[] objects;
 
@@ -46,7 +46,7 @@ public class Stack255 {
    * (it requires an array copy using {@link System#arraycopy(Object,int,Object,int,int)
    * System.arraycopy(...)}).
    * 
-   * The maximum capacity of the stack is 255 (the size of one byte). There is no provision to
+   * <p>The maximum capacity of the stack is 255 (the size of one byte). There is no provision to
    * shrink the stack at the moment.
    * 
    * @param initialCapacity the initial capacity of the stack
@@ -60,7 +60,7 @@ public class Stack255 {
   }
 
   /**
-   * Gets the object at the given index in the catalog
+   * Gets the object at the given index in the catalog.
    * 
    * @param idx the position of the Object
    * @return the Object, or null if the index is invalid
@@ -78,7 +78,7 @@ public class Stack255 {
   }
 
   /**
-   * Pushes an object on to the top of the stack
+   * Pushes an object on to the top of the stack.
    * 
    * @param obj the Object to place on the stack
    * @return true if successfully added, false if the stack was full
@@ -97,7 +97,7 @@ public class Stack255 {
   }
 
   /**
-   * Pops the Object at the top of the stack
+   * Pops the Object at the top of the stack.
    * 
    * @return the Object, or null if the stack is empty
    */
@@ -112,7 +112,7 @@ public class Stack255 {
   }
 
   /**
-   * Gets the current size of the stack
+   * Gets the current size of the stack.
    * 
    * @return the size of the stack
    */
@@ -121,7 +121,7 @@ public class Stack255 {
   }
 
   /**
-   * Checks if the stack is empty
+   * Checks if the stack is empty.
    * 
    * @return true if the stack is empty, false otherwise
    */
@@ -130,7 +130,7 @@ public class Stack255 {
   }
 
   /**
-   * Checks if the stack is full
+   * Checks if the stack is full.
    * 
    * @return true if the stack is full, false otherwise
    */
@@ -139,7 +139,7 @@ public class Stack255 {
   }
 
   /**
-   * Gets the current capacity of the stack
+   * Gets the current capacity of the stack.
    * 
    * @return the capacity of the stack
    */

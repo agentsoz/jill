@@ -17,35 +17,35 @@ package io.github.agentsoz.jill.struct;
 import java.lang.reflect.Method;
 
 public class PlanType extends GPType {
-  private Class<?> cPlan;
-  private Method mContext;
-  private Method mBody;
+  private Class<?> planClass;
+  private Method context;
+  private Method body;
 
   public PlanType(String name) {
     super(name);
   }
 
   public Method getContext() {
-    return mContext;
+    return context;
   }
 
-  public void setContext(Method mContext) {
-    this.mContext = mContext;
+  public void setContext(Method context) {
+    this.context = context;
   }
 
   public Method getBody() {
-    return mBody;
+    return body;
   }
 
-  public void setBody(Method mBody) {
-    this.mBody = mBody;
+  public void setBody(Method body) {
+    this.body = body;
   }
 
   public Class<?> getPlanClass() {
-    return cPlan;
+    return planClass;
   }
 
-  public void setPlanClass(Class<?> cPlan) {
-    this.cPlan = cPlan;
+  public void setPlanClass(Class<?> planClass) {
+    this.planClass = planClass;
   }
 }

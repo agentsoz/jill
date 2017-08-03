@@ -15,17 +15,17 @@ package io.github.agentsoz.jill.struct;
  */
 
 public class GoalType extends GPType {
-  private Class<?> cGoal;
+  private Class<?> goalClass;
 
   public GoalType(String name) {
     super(name);
   }
 
   public Class<?> getGoalClass() {
-    return cGoal;
+    return goalClass;
   }
 
-  public void setGoalClass(Class<?> cGoal) {
-    this.cGoal = cGoal;
+  public void setGoalClass(Class<?> goalClass) {
+    this.goalClass = goalClass;
   }
 }

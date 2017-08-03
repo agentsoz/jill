@@ -23,12 +23,25 @@ public class AObjectCatalog extends AObject {
   private int increment;
   private AObject[] objects;
 
+  /**
+   * Constructs a object catalog.
+   * 
+   * @param name s nsme for the catalog
+   * @param size the initial size of the catalog
+   * @param inc the size by which the catalog should grow when it reaches capacity
+   */
   public AObjectCatalog(String name, int size, int inc) {
     super(name);
     increment = inc;
     objects = new AObject[size];
   }
 
+  /**
+   * Gets the object at the given index of the catalog.
+   * 
+   * @param index the index of the object
+   * @return the object at that index
+   */
   public AObject get(int index) {
     if (index >= 0 && index < objects.length) {
       return objects[index];
@@ -53,6 +66,11 @@ public class AObjectCatalog extends AObject {
     return null;
   }
 
+  /**
+   * Pushes a new object to the top of the catalog.
+   * 
+   * @param obj the object to add
+   */
   public void push(AObject obj) {
     if (obj == null || obj.getId() != GlobalConstant.NULLID) {
       return;
@@ -65,6 +83,11 @@ public class AObjectCatalog extends AObject {
     objects[nextid++] = obj;
   }
 
+  /**
+   * Pops (removes) the object at the top of the catalog. 
+   * 
+   * @return the object at the top, or null if the catalog is empty
+   */
   public AObject pop() {
     if (nextid > GlobalConstant.NULLID) {
       nextid--;

@@ -14,10 +14,6 @@ package io.github.agentsoz.jill.util;
  * If not, see <http://www.gnu.org/licenses/lgpl-3.0.html>. #L%
  */
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
@@ -26,24 +22,38 @@ import io.github.agentsoz.jill.Main;
 import io.github.agentsoz.jill.config.Config;
 import io.github.agentsoz.jill.config.GlobalConstant;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+
 public class ArgumentsLoader {
 
   private static Config config = null;
 
+  /**
+   * Returns a usage string for the Jill command line arguments.
+   * 
+   * @return the usage string
+   */
   public static String usage() {
     return GlobalConstant.APP_HEADER + "\n\n" + "usage: " + Main.class.getName()
         + "  [options] --agent-class <agentclass> --num-agents <numagents>" + "\n"
         + "   --config <string>                 load configuration from string" + "\n"
         + "   --configfile <file>               load configuration from file" + "\n"
-        + "   --exit-on-idle <boolean>          forces system exit when all agents are idle (default is '"
-        + GlobalConstant.EXIT_ON_IDLE + "')\n"
+        + "   --exit-on-idle <boolean>          forces system exit when all agents are "
+        + "idle (default is '" + GlobalConstant.EXIT_ON_IDLE + "')\n"
         + "   --help                            print this usage message and exit \n"
-        + "   --plan-selection-policy <policy>  policy for selecting from plan instances (FIRST, RANDOM, or LAST (default is '"
-        + GlobalConstant.PLAN_SELECTION_POLICY + "')\n"
-        + "   --plan-instances-limit <number>   maximum number of applicable plan instances to consider (default is '"
-        + GlobalConstant.PLAN_INSTANCES_LIMIT + "')\n";
+        + "   --plan-selection-policy <policy>  policy for selecting from plan instances "
+        + "(FIRST, RANDOM, or LAST (default is '" + GlobalConstant.PLAN_SELECTION_POLICY + "')\n"
+        + "   --plan-instances-limit <number>   maximum number of applicable plan instances "
+        + "to consider (default is '" + GlobalConstant.PLAN_INSTANCES_LIMIT + "')\n";
   }
 
+  /**
+   * Parses the given command line arguments.
+   * 
+   * @param args the command line arguments
+   */
   public static void parse(String[] args) {
     for (int i = 0; i < args.length; i++) {
       switch (args[i]) {
@@ -93,6 +103,9 @@ public class ArgumentsLoader {
             }
           }
           break;
+        default:
+          // Ignore any other arguments (which may be used by components external to Jill)
+          break;
       }
     }
     // Abort if required args were not given
@@ -122,25 +135,19 @@ public class ArgumentsLoader {
   }
 
   /**
-   * Loads the Jill startup configuration object.
-   * <p>
-   * Configuration is specified at run time via one of the following two options:
-   * <ul>
-   * <li>{@code --config <string>}</li>
-   * <li>{@code --configfile <file>}</li>
-   * </ul>
-   * The contents of {@code <string>} or {@code <file>} are parsed in exactly the same way. The
-   * expected syntax is JSON format. If both options are specified, then last specified option will
-   * overrule.
-   * </p>
+   * Loads the Jill startup configuration object. <p> Configuration is specified at run time via one
+   * of the following two options: <ul> <li>{@code --config <string>}</li> <li>
+   * {@code --configfile <file>}</li> </ul> The contents of {@code <string>} or {@code <file>} are
+   * parsed in exactly the same way. The expected syntax is JSON format. If both options are
+   * specified, then last specified option will overrule. </p>
    * 
    * @return the Jill startup configuration object
    */
   static Config loadConfigFromString(String str) {
-    Gson g = new Gson();
-    Config c = null;
+    Gson gson = new Gson();
+    Config config = null;
     try {
-      c = g.fromJson(str, Config.class);
+      config = gson.fromJson(str, Config.class);
     } catch (JsonSyntaxException e) {
       abort("Invalid JSON syntax in " + str + ": " + e.getMessage());
     } catch (JsonIOException e) {
@@ -148,14 +155,14 @@ public class ArgumentsLoader {
     } catch (Exception e) {
       abort("Could not load config file " + str + ": " + e.getMessage());
     }
-    return c;
+    return config;
   }
 
   static Config loadConfigFromFile(String str) {
-    Gson g = new Gson();
-    Config c = null;
+    Gson gson = new Gson();
+    Config config = null;
     try {
-      c = g.fromJson(new BufferedReader(new FileReader(str)), Config.class);
+      config = gson.fromJson(new BufferedReader(new FileReader(str)), Config.class);
     } catch (JsonSyntaxException e) {
       abort("Invalid JSON syntax in " + str + ": " + e.getMessage());
     } catch (JsonIOException e) {
@@ -165,7 +172,7 @@ public class ArgumentsLoader {
     } catch (Exception e) {
       abort("Could not load config file " + str + ": " + e.getMessage());
     }
-    return c;
+    return config;
   }
 
   public static void reset() {

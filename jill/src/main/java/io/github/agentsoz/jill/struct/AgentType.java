@@ -16,7 +16,7 @@ package io.github.agentsoz.jill.struct;
 
 public class AgentType extends AObject {
 
-  private Class<?> cAgent;
+  private Class<?> agentClass;
 
   private byte[] goals; // This agent's goal-plan tree
 
@@ -26,13 +26,18 @@ public class AgentType extends AObject {
   }
 
   public Class<?> getAgentClass() {
-    return cAgent;
+    return agentClass;
   }
 
-  public void setAgentClass(Class<?> cAgent) {
-    this.cAgent = cAgent;
+  public void setAgentClass(Class<?> agentClass) {
+    this.agentClass = agentClass;
   }
 
+  /**
+   * Gets the list of goals for this agent.
+   * 
+   * @return array of goal IDs
+   */
   public byte[] getGoals() {
     if (goals == null) {
       return null;
@@ -44,6 +49,11 @@ public class AgentType extends AObject {
     return arr;
   }
 
+  /**
+   * Sets the list of goals for this agent.
+   * 
+   * @param arr array of goal IDs
+   */
   public void setGoals(byte[] arr) {
     if (arr == null) {
       goals = null;

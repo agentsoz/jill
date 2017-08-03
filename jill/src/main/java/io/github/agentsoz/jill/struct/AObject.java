@@ -30,7 +30,7 @@ public class AObject {
    */
   private int id = GlobalConstant.NULLID;
 
-  /** The String name of this object, stored as a compacted byte array */
+  /** The String name of this object, stored as a compacted byte array. */
   private byte[] name;
 
   /**
@@ -44,7 +44,7 @@ public class AObject {
   }
 
   /**
-   * Gets the id of this object
+   * Gets the id of this object.
    * 
    * @return the object id
    */
@@ -53,7 +53,7 @@ public class AObject {
   }
 
   /**
-   * Sets the id of this object
+   * Sets the id of this object.
    * 
    * @param id the new id
    */
@@ -62,7 +62,7 @@ public class AObject {
   }
 
   /**
-   * Gets the name of this object
+   * Gets the name of this object.
    * 
    * @return the object name
    */
@@ -71,7 +71,7 @@ public class AObject {
   }
 
   /**
-   * Sets the name of this object
+   * Sets the name of this object.
    * 
    * @param str the new name
    */
@@ -80,7 +80,7 @@ public class AObject {
   }
 
   /**
-   * Returns a String representation of this object
+   * Returns a String representation of this object.
    */
   public String toString() {
     return AString.toString(name) + ":" + id;
