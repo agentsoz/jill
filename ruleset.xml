@@ -9,7 +9,24 @@
 
   <rule ref="rulesets/java/basic.xml" />
   <rule ref="rulesets/java/braces.xml" />
+
   <rule ref="rulesets/java/codesize.xml" />
+  <rule ref="rulesets/java/codesize.xml/CyclomaticComplexity">
+    <priority>5</priority>
+  </rule>
+  <rule ref="rulesets/java/codesize.xml/StdCyclomaticComplexity">
+    <priority>5</priority>
+  </rule>
+  <rule ref="rulesets/java/codesize.xml/ModifiedCyclomaticComplexity">
+    <priority>5</priority>
+  </rule>
+  <rule ref="rulesets/java/codesize.xml/NPathComplexity">
+    <priority>5</priority>
+  </rule>
+  <rule ref="rulesets/java/codesize.xml/TooManyMethods">
+    <priority>5</priority>
+  </rule>
+
   <rule ref="rulesets/java/design.xml" >
     <exclude name="ConfusingTernary"/>
   </rule>

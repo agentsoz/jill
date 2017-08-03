@@ -214,7 +214,9 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-pmd-plugin</artifactId>
           <configuration>
+            <failurePriority>4</failurePriority>
             <printFailingErrors>true</printFailingErrors>
+            <verbose>true</verbose>
           </configuration>
           <executions>
             <execution>
