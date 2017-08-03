@@ -22,6 +22,13 @@ public abstract class Plan {
   private final Goal goal;
   private byte index = 0;
 
+  /**
+   * Creates a new plan for the gven goal for the given agent.
+   * 
+   * @param agent the agent to which this plan applies
+   * @param goal the goal that this plan handles
+   * @param name a name for this plan
+   */
   public Plan(Agent agent, Goal goal, String name) {
     this.agent = agent;
     this.goal = goal;
@@ -45,6 +52,9 @@ public abstract class Plan {
     getAgent().post(goal);
   }
 
+  /**
+   * Performs a single step of this plan, i.e., progresses this intention.
+   */
   public void step() {
     if (body == null || body.length == 0 || index < 0 || index >= body.length) {
       return;
@@ -52,6 +62,11 @@ public abstract class Plan {
     body[index++].step();
   }
 
+  /**
+   * Checks if this plan has finished executing.
+   * 
+   * @return true if this plan has finished executing, false otherwise
+   */
   public boolean hasfinished() {
     if (body == null || body.length == 0 || index < 0 || index >= body.length) {
       return true;

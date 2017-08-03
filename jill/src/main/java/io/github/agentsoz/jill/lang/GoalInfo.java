@@ -20,5 +20,11 @@ import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
 public @interface GoalInfo {
+  
+  /**
+   * The list of plans that handle this goal.
+   * 
+   * @return list of plans that handle this goal
+   */
   String[] hasPlans();
 }

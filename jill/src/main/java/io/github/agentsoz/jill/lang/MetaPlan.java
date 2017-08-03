@@ -17,7 +17,7 @@ package io.github.agentsoz.jill.lang;
 public interface MetaPlan {
 
   /**
-   * Allows the agent to reason over all plan options
+   * Allows the agent to reason over all plan options.
    * 
    * @param bindings the available plan bindings
    */

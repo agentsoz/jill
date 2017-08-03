@@ -19,5 +19,11 @@ import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PlanInfo {
+  
+  /**
+   * The list of goals that this agent posts.
+   * 
+   * @return list of goals that this agent posts
+   */
   String[] postsGoals();
 }

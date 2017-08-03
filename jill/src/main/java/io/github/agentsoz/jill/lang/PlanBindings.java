@@ -1,6 +1,5 @@
 package io.github.agentsoz.jill.lang;
 
-import java.util.HashMap;
 
 /*
  * #%L Jill Cognitive Agents Platform %% Copyright (C) 2014 - 2017 by its authors. See AUTHORS file.
@@ -16,17 +15,19 @@ import java.util.HashMap;
  * If not, see <http://www.gnu.org/licenses/lgpl-3.0.html>. #L%
  */
 
+import io.github.agentsoz.jill.config.GlobalConstant.PlanSelectionPolicy;
+import io.github.agentsoz.jill.core.beliefbase.Belief;
+import io.github.agentsoz.jill.core.beliefbase.BeliefBaseException;
+import io.github.agentsoz.jill.core.beliefbase.abs.ABeliefStore;
+import io.github.agentsoz.jill.util.Log;
+
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Random;
 import java.util.Set;
 
-import io.github.agentsoz.jill.config.GlobalConstant.PlanSelectionPolicy;
-import io.github.agentsoz.jill.core.beliefbase.Belief;
-import io.github.agentsoz.jill.core.beliefbase.BeliefBaseException;
-import io.github.agentsoz.jill.core.beliefbase.abs.ABeliefStore;
-import io.github.agentsoz.jill.util.Log;
 
 /**
  * Stores the set of bindings for a given plan type, and used for meta level reasoning.
@@ -41,6 +42,12 @@ public class PlanBindings {
   private Random rand;
 
 
+  /**
+   * Creates a new plan binding.
+   * 
+   * @param rand the random number generator to use for when selecting plan instances with
+   *        {@link PlanSelectionPolicy#RANDOM} policy
+   */
   public PlanBindings(Random rand) {
     this.rand = (rand == null) ? new Random() : rand;
     bindings = new LinkedHashMap<Plan, LinkedHashSet<Belief>>();
@@ -133,6 +140,12 @@ public class PlanBindings {
    * null; }
    */
 
+  /**
+   * Selects a plan instance from the set of plan bindings, using the given policy.
+   * 
+   * @param policy the policy to use for plan selection
+   * @return the selected plan, or {@code null} if something went wrong
+   */
   public Plan get(PlanSelectionPolicy policy) {
     Plan plan = null;
     HashSet<Belief> vars = null;
@@ -150,20 +163,23 @@ public class PlanBindings {
         break;
       case RANDOM:
         index = rand.nextInt(size());
-        int i = 0;
+        int idx = 0;
         for (Plan p : bindings.keySet()) {
           vars = bindings.get(p);
           bindingsExist = (vars != null && !vars.isEmpty());
-          i += bindingsExist ? vars.size() : 1;
-          if (i <= index) {
+          idx += bindingsExist ? vars.size() : 1;
+          if (idx <= index) {
             continue;
           }
           plan = p;
           if (bindingsExist) {
-            index = index - (i - vars.size());
+            index = index - (idx - vars.size());
           }
           break;
         }
+        break;
+      default:
+        //  TODO: ignore remaining polic
         break;
     }
     if (bindingsExist) {
@@ -174,6 +190,14 @@ public class PlanBindings {
   }
 
 
+  /**
+   * Sets the plan instance variables using the given results set.
+   * 
+   * @param agent the agent for which this operation applies
+   * @param planInstance the plan instance that is to be populated
+   * @param results the beliefs set representing all plan bindings
+   * @param choice index of the belief that is to be used to populate the plan instance variables
+   */
   private final void setPlanVariables(Agent agent, Plan planInstance, HashSet<Belief> results,
       int choice) {
     if (agent == null || planInstance == null || results == null || choice < 0

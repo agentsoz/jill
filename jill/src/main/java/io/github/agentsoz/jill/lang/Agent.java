@@ -40,14 +40,14 @@ public class Agent extends AObject {
 
   /**
    * References to this agent's top level goals.
-   * <p>
-   * For space efficiency, instead of storing references to {@link Goal} objects, we store catalog
-   * IDs for goals in the {@link io.github.agentsoz.jill.core.GlobalState#goalTypes} catalog. Since
-   * these references are of size byte, a maximum of 255 goal types are supported in the system
-   * (globally, not per agent type). These 1-byte references give very significant savings in space
-   * over Java object references, which on a 64-bit machine take 8-bytes each.
-   * <p>
-   * NOTE: If a limit of 255 goal types in the system turns out to be insufficient, then an agent
+   * 
+   * <p>For space efficiency, instead of storing references to {@link Goal} objects, we store
+   * catalog IDs for goals in the {@link io.github.agentsoz.jill.core.GlobalState#goalTypes}
+   * catalog. Since these references are of size byte, a maximum of 255 goal types are supported in
+   * the system (globally, not per agent type). These 1-byte references give very significant
+   * savings in space over Java object references, which on a 64-bit machine take 8-bytes each.
+   * 
+   * <p>NOTE: If a limit of 255 goal types in the system turns out to be insufficient, then an agent
    * type reference could be added here (at the cost of another byte) and that would then allow 255
    * goal types per agent type.
    * 
@@ -56,12 +56,12 @@ public class Agent extends AObject {
 
   /**
    * This agent's intention stack.
-   * <p>
-   * TODO: Currently, only a single intention stack is supported, which means that an agent can only
-   * really have one top level goal instance. This is to be extended to allow one stack per top
+   * 
+   * <p>TODO: Currently, only a single intention stack is supported, which means that an agent can
+   * only really have one top level goal instance. This is to be extended to allow one stack per top
    * level goal instance.
-   * <p>
-   * NOTE: This stack is of type {@link io.github.agentsoz.jill.util.Stack255} which supports a
+   * 
+   * <p>NOTE: This stack is of type {@link io.github.agentsoz.jill.util.Stack255} which supports a
    * maximum of 255 objects. This means that the active goal-plan execution trace cannot be longer
    * that 255. This should be more than enough for even the most complex goal-plan trees, but can be
    * an issue for recursive behaviours where a plan posts an instance of the same goal type that it
@@ -70,7 +70,7 @@ public class Agent extends AObject {
   private Stack255 executionStack;
 
   /**
-   * A handle to any registered meta-planning function
+   * A handle to any registered meta-planning function.
    */
   private MetaPlan metaplan;
 
@@ -118,6 +118,13 @@ public class Agent extends AObject {
     Main.flagMessageTo(Main.poolid(getId()));
   }
 
+  /**
+   * Send a message to an agent.
+   * 
+   * @param id the agent to send the message to
+   * @param msg the message to send
+   * @return true if the message was sent successfully, false otherwise
+   */
   public boolean send(int id, Goal msg) {
     AObject obj = agents.get(id);
     if (obj == null) {
@@ -131,6 +138,13 @@ public class Agent extends AObject {
     return true;
   }
 
+  /**
+   * Send a message to this agent.
+   * 
+   * @param name the agent to send the message to
+   * @param msg the message to send
+   * @return true if the message was sent successfully, false otherwise
+   */
   public boolean send(String name, Goal msg) {
     AObject obj = agents.find(name);
     if (obj == null) {
@@ -177,8 +191,8 @@ public class Agent extends AObject {
 
   /**
    * Creates a new belief set with the given fields.
-   * <p>
-   * Example usage:
+   * 
+   * <p>Example usage:
    * 
    * <pre>
    * BeliefSetField[] fields = {new BeliefSetField("name", String.class, true),
@@ -195,7 +209,7 @@ public class Agent extends AObject {
   }
 
   /**
-   * Adds a new belief to the specified belief set
+   * Adds a new belief to the specified belief set.
    * 
    * @param beliefsetName the belief set to add the belief to; must have been created previously
    *        using {@link #createBeliefSet(String, BeliefSetField[])}
@@ -207,16 +221,32 @@ public class Agent extends AObject {
     beliefbase.addBelief(getId(), beliefsetName, tuple);
   }
 
+  /**
+   * Evaluates the given query against this agent's belief base.
+   * 
+   * @param query the query to evaluate
+   * @return true if the query returned results, false otherwise
+   * @throws BeliefBaseException thrown if something went wrong
+   */
   public boolean eval(String query) throws BeliefBaseException {
     boolean result = beliefbase.eval(getId(), query);
     lastresult = (result) ? beliefbase.query(getId(), query) : new HashSet<Belief>();
     return result;
   }
 
+  /**
+   * Gets the results of the last query run (see {@link #eval(String)}).
+   * 
+   * @return the set of beliefs that matches the last query
+   */
   public HashSet<Belief> getLastResults() {
     return lastresult;
   }
 
+  /**
+   * Clears the results of the last query run (see {@link #eval(String)}).
+   * 
+   */
   public void clearLastResults() {
     if (lastresult != null) {
       lastresult.clear();
@@ -254,8 +284,9 @@ public class Agent extends AObject {
    * @param bindings the available plan bindings
    */
   public final void notifyAgentPrePlanSelection(PlanBindings bindings) {
-    if (metaplan == null)
+    if (metaplan == null) {
       return;
+    }
     metaplan.consider(bindings);
   }
 
