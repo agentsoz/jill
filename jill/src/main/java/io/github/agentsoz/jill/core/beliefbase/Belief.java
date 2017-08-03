@@ -23,6 +23,13 @@ public class Belief extends AObject {
   private int beliefset;
   private Object[] tuple;
 
+  /**
+   * Constructs a new belief.
+   * 
+   * @param id unique ID of this belief (must folllow sequence 0,1,2,3...)
+   * @param beliefset the beliefset to which this belief belongs
+   * @param tuple the belief values
+   */
   public Belief(int id, int beliefset, Object[] tuple) {
     super(null);
     setId(id);
@@ -31,6 +38,8 @@ public class Belief extends AObject {
   }
 
   /**
+   * Gets the beliefset to which this belief belongs.
+   * 
    * @return the beliefset
    */
   public int getBeliefset() {
@@ -38,6 +47,8 @@ public class Belief extends AObject {
   }
 
   /**
+   * Sets the beliefset to which this belief belongs.
+   * 
    * @param beliefset the beliefset to set
    */
   public void setBeliefset(int beliefset) {
@@ -45,6 +56,8 @@ public class Belief extends AObject {
   }
 
   /**
+   * Gets the values of this belief.
+   * 
    * @return the tuple
    */
   public Object[] getTuple() {
@@ -52,6 +65,8 @@ public class Belief extends AObject {
   }
 
   /**
+   * Sets the values of this belief.
+   * 
    * @param tuple the tuple to set
    */
   public void setTuple(Object[] tuple) {

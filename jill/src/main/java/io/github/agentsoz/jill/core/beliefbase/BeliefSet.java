@@ -14,24 +14,32 @@ package io.github.agentsoz.jill.core.beliefbase;
  * If not, see <http://www.gnu.org/licenses/lgpl-3.0.html>. #L%
  */
 
+import com.google.gson.Gson;
+
 import io.github.agentsoz.jill.struct.AObject;
 
 import java.util.Arrays;
-
-import com.google.gson.Gson;
 
 public class BeliefSet extends AObject {
 
   private BeliefSetField[] fields;
 
+  /**
+   * Constructs a new belief set.
+   * 
+   * @param id the unique ID of this belief set (must follow sequence 0,1,2,3,...)
+   * @param name a name for this belief set
+   * @param fields the fields (columns) of this belief set
+   */
   public BeliefSet(int id, String name, BeliefSetField[] fields) {
     super(name);
     setId(id);
     this.fields = fields;
   }
 
-
   /**
+   * Gets the fields of this belief set.
+   * 
    * @return the fields
    */
   public BeliefSetField[] getFields() {
@@ -87,6 +95,7 @@ public class BeliefSet extends AObject {
     return true;
   }
 
+ 
   public String toString() {
     return new Gson().toJson(this);
   }

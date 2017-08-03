@@ -46,6 +46,12 @@ public class ABeliefStore extends BeliefBase {
   private static ConcurrentHashMap<String, Set<Belief>> cachedresults;
   private static SparseBitSet[] agents2beliefs;
 
+  /**
+   * Constructs a new belief store.
+   * 
+   * @param nagents the store will manage beliefs for thsi number of agents
+   * @param nthreads the number of threads that may concurrently query/update this belief set
+   */
   public ABeliefStore(int nagents, int nthreads) {
     beliefsets = new ConcurrentHashMap<String, BeliefSet>(1, loadfactor, nthreads);
     beliefsetsByID =
@@ -131,12 +137,12 @@ public class ABeliefStore extends BeliefBase {
         throw new BeliefBaseException(logsuffix(agentid) + "invalid query '" + key
             + "' : syntax not of the form beliefset.field <op> value");
       }
-      String sBeliefset = matcher.group(1);
-      String sField = matcher.group(2);
-      String sOp = matcher.group(3);
-      String sVal = matcher.group(4);
+      String strBeliefset = matcher.group(1);
+      String strField = matcher.group(2);
+      String strOp = matcher.group(3);
+      String strVal = matcher.group(4);
       try {
-        query = parseQuery(agentid, sBeliefset, sField, sOp, sVal);
+        query = parseQuery(agentid, strBeliefset, strField, strOp, strVal);
         queries.put(key, query);
       } catch (Exception e) {
         throw new BeliefBaseException(
@@ -160,34 +166,34 @@ public class ABeliefStore extends BeliefBase {
     return matches;
   }
 
-  private AQuery parseQuery(int agentid, String sBeliefset, String sField, String sOp, String sVal)
-      throws BeliefBaseException {
-    if (!beliefsets.containsKey(sBeliefset)) {
-      throw new BeliefBaseException("belief set '" + sBeliefset + "' does not exist");
+  private AQuery parseQuery(int agentid, String strBeliefset, String strField, String strOp,
+      String strVal) throws BeliefBaseException {
+    if (!beliefsets.containsKey(strBeliefset)) {
+      throw new BeliefBaseException("belief set '" + strBeliefset + "' does not exist");
     }
-    BeliefSet beliefset = beliefsets.get(sBeliefset);
-    int id = beliefset.getId();
-    Operator op = (sOp.equals("=")) ? Operator.EQ
-        : (sOp.equals("<")) ? Operator.LT : (sOp.equals(">")) ? Operator.GT : Operator.NE;
+    BeliefSet beliefset = beliefsets.get(strBeliefset);
     int field = -1;
     Class<?> type = null;
     BeliefSetField[] fields = beliefset.getFields();
     for (int i = 0; i < fields.length; i++) {
-      if (sField.equals(fields[i].getName())) {
+      if (strField.equals(fields[i].getName())) {
         field = i;
         type = fields[i].getType();
         break;
       }
     }
     if (field == -1) {
-      throw new BeliefBaseException("belief set field '" + sField + "' does not exist");
+      throw new BeliefBaseException("belief set field '" + strField + "' does not exist");
     }
     Object val = null;
     try {
-      val = string2type(type, sVal);
+      val = string2type(type, strVal);
     } catch (BeliefBaseException e) {
       throw new BeliefBaseException(logsuffix(agentid) + e.getMessage());
     }
+    int id = beliefset.getId();
+    Operator op = (strOp.equals("=")) ? Operator.EQ
+        : (strOp.equals("<")) ? Operator.LT : (strOp.equals(">")) ? Operator.GT : Operator.NE;
     return new AQuery(id, field, op, val);
   }
 
@@ -241,6 +247,9 @@ public class ABeliefStore extends BeliefBase {
         case "java.lang.Boolean":
           val = Boolean.valueOf(str);
           break;
+        default:
+          // FIXME: Ignoring other types for now (while we are still developing new types)
+          break;
       }
     } catch (Exception e) {
       throw new BeliefBaseException("value '" + str + "' is not of type " + stype);
@@ -248,20 +257,31 @@ public class ABeliefStore extends BeliefBase {
     return val;
   }
 
-  public static String getType(Object o) {
-    if (o == null) {
+  /**
+   * Gets the type of the given object.
+   * 
+   * @param obj the object whose type is being queried
+   * @return the type of the object, or null if unknown
+   */
+  public static String getType(Object obj) {
+    if (obj == null) {
       return null;
     }
     String type = null;
-    if (o instanceof String || o instanceof Integer || o instanceof Double
-        || o instanceof Boolean) {
-      type = o.getClass().getName();
+    if (obj instanceof String || obj instanceof Integer || obj instanceof Double
+        || obj instanceof Boolean) {
+      type = obj.getClass().getName();
     }
     return type;
   }
 
-
-
+  /**
+   * Checks if the given query run on the given belief returns a match.
+   * 
+   * @param belief the belief being queried
+   * @param query the query being performed on the belief
+   * @return true if there is a match, false otherwise
+   */
   private static boolean match(Belief belief, AQuery query) {
     assert (belief != null);
     assert (query != null);
@@ -280,11 +300,22 @@ public class ABeliefStore extends BeliefBase {
     return false;
   }
 
+  /**
+   * Convinience function to return a logging prefix for this agent.
+   * 
+   * @param agentid the ID of this agnet
+   * @return the prefix to use for loggin purposes
+   */
   private String logsuffix(int agentid) {
     return getClass().getSimpleName() + ": agent " + agentid + ": ";
   }
 
-
+  /**
+   * Sample program to test pattern matching.
+   * 
+   * @param args command line arguments
+   * @throws BeliefBaseException thrown if something went wrong
+   */
   public static void main(String[] args) throws BeliefBaseException {
     BeliefBase bb = new ABeliefStore(100, 4);
     bb.eval(0, "neighbour.age < 31");
@@ -313,6 +344,16 @@ public class ABeliefStore extends BeliefBase {
     }
   }
 
+  /**
+   * Gets the belief set field name (see {@link BeliefSetField}) for the given belief set for the
+   * given agent.
+   * 
+   * @param agentid the agent in question
+   * @param beliefset the beliefset of that agent
+   * @param index the index of the belief set field in that belief set
+   * @return the name of the belief set field
+   * @throws BeliefBaseException thrown if something went wrong
+   */
   public static String getFieldName(int agentid, int beliefset, int index)
       throws BeliefBaseException {
     if (beliefset < 0 || beliefset > beliefsets.size()) {

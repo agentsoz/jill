@@ -33,10 +33,10 @@ public class GlobalConstant {
    */
   public enum PlanSelectionPolicy {
     FIRST, RANDOM, LAST
-  };
+  }
 
   /**
-   * The default plan selection policy
+   * The default plan selection policy.
    */
   public static PlanSelectionPolicy PLAN_SELECTION_POLICY = PlanSelectionPolicy.RANDOM;
 
@@ -47,8 +47,9 @@ public class GlobalConstant {
    * selection will draw an index between 0-9 only, i.e., a random instance will be drawn from the
    * first 10 instances, and never from the remaining 90 instances.
    * 
-   * This limit can be changed at runtime using the --plan-instances-limit option. Increasing this
-   * limit, however, may have a significant performance hit, so should be done only if necessary.
+   * <p>This limit can be changed at runtime using the --plan-instances-limit option. Increasing
+   * this limit, however, may have a significant performance hit, so should be done only if
+   * necessary.
    */
   public static int PLAN_INSTANCES_LIMIT = 10;
 
@@ -60,7 +61,7 @@ public class GlobalConstant {
   public static boolean EXIT_ON_IDLE = true;
 
   /**
-   * Agents beliefset (H2 database) connection string
+   * NOT USED: Agents beliefset (H2 database) connection string.
    */
   public static final String H2_CONNECT = "jdbc:h2:mem:agents;CACHE_SIZE=1048576";
 }

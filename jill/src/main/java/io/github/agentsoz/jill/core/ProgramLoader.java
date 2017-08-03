@@ -34,6 +34,16 @@ import java.lang.annotation.Annotation;
 
 public class ProgramLoader {
 
+  /**
+   * Creates a given number of agents of a given Class, and adds the newly created agents to the
+   * given store.
+   * 
+   * @param className the fully qualified Java classname for the agents begin created
+   * @param num the number of agents (class instances) to create
+   * @param agents the store to which these agents should be added
+   * @return true if agents were successfully created and added, false otherwise
+   * @throws Exception if something went wrong (usually fatal)
+   */
   public static boolean loadAgent(String className, int num, AObjectCatalog agents)
       throws Exception {
     Class<?> aclass;
@@ -53,15 +63,20 @@ public class ProgramLoader {
       // Find the goals that this agent has
       Annotation annotation = aclass.getAnnotation(AgentInfo.class);
       if (annotation == null) {
-        error("Agent " + className
-            + " is missing the @AgentInfo(hasGoals={\"package.GoalClass1, package.GoalClass2, ...\"}) annotation. Without it, the BDI execution engine does not know anything about this agent's goals and plans.");
+        error("Agent " + className + " is missing the "
+            + "@AgentInfo(hasGoals={\"package.GoalClass1, package.GoalClass2, ...\"}) "
+            + "annotation. Without it, the BDI execution engine does not know anything "
+            + "about this agent's goals and plans.");
         return false;
       }
       AgentInfo ainfo = (AgentInfo) annotation;
       String[] goals = ainfo.hasGoals();
       if (goals.length == 0) {
         error("Agent " + className
-            + " does not have any goals defined. Was expecting something like @AgentInfo(hasGoals={\"package.GoalClass1, package.GoalClass2, ...\"}) annotation. Without it, the BDI execution engine does not know anything about this agent's goals and plans.");
+            + " does not have any goals defined. Was expecting something like "
+            + "@AgentInfo(hasGoals={\"package.GoalClass1, package.GoalClass2, ...\"}) "
+            + "annotation. Without it, the BDI execution engine does not know anything "
+            + "about this agent's goals and plans.");
         return false;
       }
 
@@ -83,15 +98,21 @@ public class ProgramLoader {
         // Find the plans that this goal has
         annotation = gclass.getAnnotation(GoalInfo.class);
         if (annotation == null) {
-          error("Goal " + gclass.getName()
-              + " is missing the @GoalInfo(hasPlans={\"package.PlanClass1, package.PlanClass2, ...\"}) annotation. Without it, the BDI execution engine does not know anything about which plans can handle this goal.");
+          error("Goal " + gclass.getName() + " is missing the "
+              + "@GoalInfo(hasPlans={\"package.PlanClass1, package.PlanClass2, ...\"}) "
+              + "annotation. Without it, the BDI execution engine does not know anything "
+              + "about which plans can handle this goal.");
           return false;
         }
         GoalInfo ginfo = (GoalInfo) annotation;
         String[] plans = ginfo.hasPlans();
         if (plans.length == 0) {
           error("Goal " + gclass.getName()
-              + " does not have any plans defined. Was expecting something like @GoalInfo(hasPlans={\"package.PlanClass1, package.PlanClass2, ...\"}) annotation. Without it, the BDI execution engine does not know anything about which plans can handle this goal.");
+              + " does not have any plans defined. Was expecting something like "
+              + "@GoalInfo(hasPlans={\"package.PlanClass1, package.PlanClass2, ...\"}) "
+              + "annotation. Without it, the BDI execution engine does not know anything "
+              + "about which plans can handle this goal.");
+
           return false;
         }
 
@@ -124,8 +145,9 @@ public class ProgramLoader {
         // A @PlanInfo is optional, and only present if this plan posts goals
         if (pinfo != null) {
           if (pinfo.postsGoals().length == 0) {
-            error("Plan " + ptype.getName()
-                + " has incomplete @PlanInfo(postsGoals={\"package.GoalClass1\", \"package.GoalClass2\", ...})) annotation");
+            error("Plan " + ptype.getName() + " has incomplete "
+                + "@PlanInfo(postsGoals={\"package.GoalClass1\", \"package.GoalClass2\", ...})) "
+                + "annotation");
             return false;
           }
 
@@ -167,6 +189,13 @@ public class ProgramLoader {
     return true;
   }
 
+  /**
+   * Loads a Jill extension.
+   * 
+   * @param className the fully qalified Java classname of the extension
+   * @return an instance of the Jill extension class
+   * @throws Exception if something went wrong (usually fatal)
+   */
   public static JillExtension loadExtension(String className) throws Exception {
     JillExtension extension = null;
     Class<?> eclass;

@@ -14,14 +14,15 @@ package io.github.agentsoz.jill.core;
  * If not, see <http://www.gnu.org/licenses/lgpl-3.0.html>. #L%
  */
 
-import java.util.HashSet;
-
 import io.github.agentsoz.jill.core.beliefbase.abs.ABeliefStore;
 import io.github.agentsoz.jill.lang.JillExtension;
 import io.github.agentsoz.jill.util.AObjectCatalog;
 
+import java.util.HashSet;
+
+
 /**
- * A catalog of all known agent, goal and plan types
+ * A catalog of all known agent, goal and plan types.
  * 
  * @author dsingh
  *
@@ -53,17 +54,17 @@ public class GlobalState {
   public static AObjectCatalog agents;
 
   /**
-   * The central belief base to store all beliefs of all agents
+   * The central belief base to store all beliefs of all agents.
    */
   public static ABeliefStore beliefbase;
 
   /**
-   * The list of registered external event handlers (jill extensions)
+   * The list of registered external event handlers (jill extensions).
    */
   public static HashSet<JillExtension> eventHandlers = new HashSet<JillExtension>();
 
   /**
-   * Resets the global state
+   * Resets the global state.
    */
   public static void reset() {
     agentTypes = new AObjectCatalog("agentTypes", 5, 5);

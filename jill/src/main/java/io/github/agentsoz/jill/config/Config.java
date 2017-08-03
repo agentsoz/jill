@@ -14,12 +14,12 @@ package io.github.agentsoz.jill.config;
  * If not, see <http://www.gnu.org/licenses/lgpl-3.0.html>. #L%
  */
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.gson.Gson;
 
 import ch.qos.logback.classic.Level;
 
-import com.google.gson.Gson;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Config {
 
