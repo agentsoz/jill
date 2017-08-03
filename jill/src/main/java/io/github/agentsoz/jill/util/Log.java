@@ -92,8 +92,8 @@ public class Log {
   /**
    * Returns a formatted string for logging the duration between two timestamps.
    * 
-   * @param t0 start time in ms
-   * @param t1 end time in ms
+   * @param start start time in ms
+   * @param end end time in ms
    * @return formatted duration string 
    */
   public static String formattedDuration(long start, long end) {
