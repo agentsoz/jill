@@ -708,8 +708,8 @@ public class PlanTypeRegressionTest4 {
         planType1.setBody(method14);
         byte[] byte_array16 = planType1.getChildren();
         byte[] byte_array17 = planType1.getParents();
-        byte[] byte_array19 = io.github.agentsoz.jill.struct.GPType.grow(byte_array17, (int) (short) 10);
-        byte[] byte_array21 = io.github.agentsoz.jill.struct.GPType.grow(byte_array17, 10);
+        byte[] byte_array19 = io.github.agentsoz.jill.struct.GoalPlanType.grow(byte_array17, (int) (short) 10);
+        byte[] byte_array21 = io.github.agentsoz.jill.struct.GoalPlanType.grow(byte_array17, 10);
         org.junit.Assert.assertTrue("'" + str12 + "' != '" + "hi!:1" + "'", str12.equals("hi!:1"));
         org.junit.Assert.assertTrue("'" + str13 + "' != '" + "hi!" + "'", str13.equals("hi!"));
         org.junit.Assert.assertNotNull(byte_array16);
@@ -1496,9 +1496,9 @@ public class PlanTypeRegressionTest4 {
         java.lang.String str6 = planType1.toString();
         planType1.setName("");
         byte[] byte_array9 = planType1.getChildren();
-        byte[] byte_array11 = io.github.agentsoz.jill.struct.GPType.grow(byte_array9, 10);
-        byte[] byte_array13 = io.github.agentsoz.jill.struct.GPType.grow(byte_array9, (int) (short) 1);
-        byte[] byte_array15 = io.github.agentsoz.jill.struct.GPType.grow(byte_array13, (int) '#');
+        byte[] byte_array11 = io.github.agentsoz.jill.struct.GoalPlanType.grow(byte_array9, 10);
+        byte[] byte_array13 = io.github.agentsoz.jill.struct.GoalPlanType.grow(byte_array9, (int) (short) 1);
+        byte[] byte_array15 = io.github.agentsoz.jill.struct.GoalPlanType.grow(byte_array13, (int) '#');
         org.junit.Assert.assertTrue("'" + str6 + "' != '" + "hi!:-1" + "'", str6.equals("hi!:-1"));
         org.junit.Assert.assertNotNull(byte_array9);
         org.junit.Assert.assertNotNull(byte_array11);
@@ -2286,9 +2286,9 @@ public class PlanTypeRegressionTest4 {
         boolean b16 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) planType1, (io.github.agentsoz.jill.struct.AObject) planType9);
         java.lang.reflect.Method method17 = planType1.getContext();
         byte[] byte_array18 = planType1.getParents();
-        byte[] byte_array20 = io.github.agentsoz.jill.struct.GPType.grow(byte_array18, (int) (short) 100);
+        byte[] byte_array20 = io.github.agentsoz.jill.struct.GoalPlanType.grow(byte_array18, (int) (short) 100);
         try {
-            byte[] byte_array22 = io.github.agentsoz.jill.struct.GPType.grow(byte_array20, (int) (short) -1);
+            byte[] byte_array22 = io.github.agentsoz.jill.struct.GoalPlanType.grow(byte_array20, (int) (short) -1);
             org.junit.Assert.fail("Expected exception of type java.lang.ArrayIndexOutOfBoundsException");
         } catch (java.lang.ArrayIndexOutOfBoundsException e) {
         }
@@ -2418,8 +2418,8 @@ public class PlanTypeRegressionTest4 {
         planType9.setContext(method16);
         boolean b18 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) planType1, (io.github.agentsoz.jill.struct.AObject) planType9);
         byte[] byte_array19 = planType9.getChildren();
-        byte[] byte_array21 = io.github.agentsoz.jill.struct.GPType.grow(byte_array19, 1);
-        byte[] byte_array23 = io.github.agentsoz.jill.struct.GPType.grow(byte_array21, 0);
+        byte[] byte_array21 = io.github.agentsoz.jill.struct.GoalPlanType.grow(byte_array19, 1);
+        byte[] byte_array23 = io.github.agentsoz.jill.struct.GoalPlanType.grow(byte_array21, 0);
         org.junit.Assert.assertTrue(b18 == true);
         org.junit.Assert.assertNotNull(byte_array19);
         org.junit.Assert.assertNotNull(byte_array21);

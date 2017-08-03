@@ -14,18 +14,18 @@ public class GPTypeRegressionTest4 {
     public void test01() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test01");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array2 = gPType1.getChildren();
-        io.github.agentsoz.jill.struct.GPType gPType4 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType4 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array5 = gPType4.getChildren();
         gPType4.addChild((byte) 1);
         java.lang.String str8 = gPType4.getName();
         boolean b9 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType1, (io.github.agentsoz.jill.struct.AObject) gPType4);
         byte[] byte_array10 = gPType4.getChildren();
-        byte[] byte_array12 = io.github.agentsoz.jill.struct.GPType.grow(byte_array10, (int) (byte) 0);
-        byte[] byte_array14 = io.github.agentsoz.jill.struct.GPType.grow(byte_array10, (int) (short) 10);
-        byte[] byte_array16 = io.github.agentsoz.jill.struct.GPType.grow(byte_array10, (int) (short) 1);
-        byte[] byte_array18 = io.github.agentsoz.jill.struct.GPType.grow(byte_array10, 52);
+        byte[] byte_array12 = io.github.agentsoz.jill.struct.GoalPlanType.grow(byte_array10, (int) (byte) 0);
+        byte[] byte_array14 = io.github.agentsoz.jill.struct.GoalPlanType.grow(byte_array10, (int) (short) 10);
+        byte[] byte_array16 = io.github.agentsoz.jill.struct.GoalPlanType.grow(byte_array10, (int) (short) 1);
+        byte[] byte_array18 = io.github.agentsoz.jill.struct.GoalPlanType.grow(byte_array10, 52);
         org.junit.Assert.assertNull(byte_array2);
         org.junit.Assert.assertNull(byte_array5);
         org.junit.Assert.assertTrue("'" + str8 + "' != '" + "" + "'", str8.equals(""));
@@ -41,7 +41,7 @@ public class GPTypeRegressionTest4 {
     public void test02() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test02");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array2 = gPType1.getChildren();
         gPType1.addChild((byte) 1);
         java.lang.String str5 = gPType1.getName();
@@ -51,7 +51,7 @@ public class GPTypeRegressionTest4 {
         gPType1.addChild((byte) 0);
         gPType1.addChild((byte) 1);
         gPType1.setName(":-1:-1");
-        io.github.agentsoz.jill.struct.GPType gPType16 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType16 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array17 = gPType16.getChildren();
         gPType16.addChild((byte) 1);
         java.lang.String str20 = gPType16.getName();
@@ -86,7 +86,7 @@ public class GPTypeRegressionTest4 {
     public void test03() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test03");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array2 = gPType1.getChildren();
         gPType1.addChild((byte) 1);
         int i5 = gPType1.getId();
@@ -108,8 +108,8 @@ public class GPTypeRegressionTest4 {
     public void test04() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test04");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("hi!:1");
-        io.github.agentsoz.jill.struct.GPType gPType3 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!:1");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType3 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         boolean b4 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType1, (io.github.agentsoz.jill.struct.AObject) gPType3);
         byte[] byte_array5 = gPType1.getChildren();
         int i6 = gPType1.getId();
@@ -123,14 +123,14 @@ public class GPTypeRegressionTest4 {
     public void test05() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test05");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("hi!:1");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!:1");
         gPType1.addChild((byte) 100);
-        io.github.agentsoz.jill.struct.GPType gPType5 = new io.github.agentsoz.jill.struct.GPType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType5 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
         byte[] byte_array6 = gPType5.getParents();
         java.lang.String str7 = gPType5.getName();
-        io.github.agentsoz.jill.struct.GPType gPType9 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType9 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array10 = gPType9.getChildren();
-        io.github.agentsoz.jill.struct.GPType gPType12 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType12 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array13 = gPType12.getChildren();
         gPType12.addChild((byte) 1);
         java.lang.String str16 = gPType12.getName();
@@ -158,7 +158,7 @@ public class GPTypeRegressionTest4 {
     public void test06() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test06");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
         byte[] byte_array2 = gPType1.getParents();
         gPType1.setName("hi!");
         gPType1.setId((int) (byte) 1);
@@ -177,7 +177,7 @@ public class GPTypeRegressionTest4 {
     public void test07() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test07");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array2 = gPType1.getChildren();
         byte[] byte_array3 = gPType1.getParents();
         java.lang.String str4 = gPType1.getName();
@@ -192,10 +192,10 @@ public class GPTypeRegressionTest4 {
     public void test08() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test08");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         gPType1.addParent((byte) 1);
         byte[] byte_array4 = gPType1.getChildren();
-        io.github.agentsoz.jill.struct.GPType gPType6 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType6 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array7 = gPType6.getChildren();
         gPType6.addChild((byte) 1);
         int i10 = gPType6.getId();
@@ -225,14 +225,14 @@ public class GPTypeRegressionTest4 {
     public void test09() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test09");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("hi!");
-        io.github.agentsoz.jill.struct.GPType gPType3 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType3 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         boolean b4 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType1, (io.github.agentsoz.jill.struct.AObject) gPType3);
         byte[] byte_array5 = gPType3.getParents();
         gPType3.setName("hi!:-1");
         byte[] byte_array8 = gPType3.getChildren();
-        io.github.agentsoz.jill.struct.GPType gPType10 = new io.github.agentsoz.jill.struct.GPType("hi!");
-        io.github.agentsoz.jill.struct.GPType gPType12 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType10 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType12 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         boolean b13 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType10, (io.github.agentsoz.jill.struct.AObject) gPType12);
         java.lang.String str14 = gPType12.getName();
         gPType12.addParent((byte) 1);
@@ -254,11 +254,11 @@ public class GPTypeRegressionTest4 {
     public void test10() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test10");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
         byte[] byte_array2 = gPType1.getParents();
         gPType1.setName("hi!");
         gPType1.addParent((byte) 100);
-        io.github.agentsoz.jill.struct.GPType gPType8 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType8 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array9 = gPType8.getParents();
         int i10 = gPType8.getId();
         byte[] byte_array11 = gPType8.getChildren();
@@ -279,11 +279,11 @@ public class GPTypeRegressionTest4 {
     public void test11() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test11");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
         int i2 = gPType1.getId();
         int i3 = gPType1.getId();
-        io.github.agentsoz.jill.struct.GPType gPType5 = new io.github.agentsoz.jill.struct.GPType("hi!");
-        io.github.agentsoz.jill.struct.GPType gPType7 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType5 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType7 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         boolean b8 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType5, (io.github.agentsoz.jill.struct.AObject) gPType7);
         java.lang.String str9 = gPType7.getName();
         byte[] byte_array10 = gPType7.getParents();
@@ -293,26 +293,26 @@ public class GPTypeRegressionTest4 {
         java.lang.String str14 = gPType1.toString();
         byte[] byte_array15 = gPType1.getChildren();
         byte[] byte_array16 = gPType1.getChildren();
-        io.github.agentsoz.jill.struct.GPType gPType18 = new io.github.agentsoz.jill.struct.GPType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType18 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
         byte[] byte_array19 = gPType18.getParents();
         gPType18.setName("hi!");
         gPType18.addParent((byte) 100);
-        io.github.agentsoz.jill.struct.GPType gPType25 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType25 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array26 = gPType25.getParents();
         int i27 = gPType25.getId();
         byte[] byte_array28 = gPType25.getChildren();
         boolean b29 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType18, (io.github.agentsoz.jill.struct.AObject) gPType25);
         gPType25.setName("hi!");
-        io.github.agentsoz.jill.struct.GPType gPType33 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType33 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array34 = gPType33.getChildren();
         gPType33.addChild((byte) 1);
         int i37 = gPType33.getId();
         java.lang.String str38 = gPType33.toString();
         boolean b39 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType25, (io.github.agentsoz.jill.struct.AObject) gPType33);
-        io.github.agentsoz.jill.struct.GPType gPType41 = new io.github.agentsoz.jill.struct.GPType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType41 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
         int i42 = gPType41.getId();
         boolean b43 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType33, (io.github.agentsoz.jill.struct.AObject) gPType41);
-        io.github.agentsoz.jill.struct.GPType gPType45 = new io.github.agentsoz.jill.struct.GPType(":-1:-1");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType45 = new io.github.agentsoz.jill.struct.GoalPlanType(":-1:-1");
         gPType45.addParent((byte) 1);
         boolean b48 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType33, (io.github.agentsoz.jill.struct.AObject) gPType45);
         gPType33.setName("hi!:100");
@@ -349,15 +349,15 @@ public class GPTypeRegressionTest4 {
     public void test12() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test12");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("hi!:-1");
-        io.github.agentsoz.jill.struct.GPType gPType3 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!:-1");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType3 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array4 = gPType3.getChildren();
-        io.github.agentsoz.jill.struct.GPType gPType6 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType6 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array7 = gPType6.getChildren();
         gPType6.addChild((byte) 1);
         java.lang.String str10 = gPType6.getName();
         boolean b11 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType3, (io.github.agentsoz.jill.struct.AObject) gPType6);
-        io.github.agentsoz.jill.struct.GPType gPType13 = new io.github.agentsoz.jill.struct.GPType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType13 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
         byte[] byte_array14 = gPType13.getParents();
         gPType13.setId((int) (short) 10);
         boolean b17 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType3, (io.github.agentsoz.jill.struct.AObject) gPType13);
@@ -376,7 +376,7 @@ public class GPTypeRegressionTest4 {
     public void test13() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test13");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array2 = gPType1.getParents();
         int i3 = gPType1.getId();
         gPType1.setName("");
@@ -392,8 +392,8 @@ public class GPTypeRegressionTest4 {
     public void test14() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test14");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType(":-1");
-        io.github.agentsoz.jill.struct.GPType gPType3 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType(":-1");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType3 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array4 = gPType3.getChildren();
         gPType3.addChild((byte) 1);
         int i7 = gPType3.getId();
@@ -402,11 +402,11 @@ public class GPTypeRegressionTest4 {
         boolean b12 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType1, (io.github.agentsoz.jill.struct.AObject) gPType3);
         java.lang.String str13 = gPType1.toString();
         byte[] byte_array14 = gPType1.getParents();
-        io.github.agentsoz.jill.struct.GPType gPType16 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType16 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array17 = gPType16.getChildren();
         java.lang.String str18 = gPType16.toString();
-        io.github.agentsoz.jill.struct.GPType gPType20 = new io.github.agentsoz.jill.struct.GPType("hi!");
-        io.github.agentsoz.jill.struct.GPType gPType22 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType20 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType22 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         boolean b23 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType20, (io.github.agentsoz.jill.struct.AObject) gPType22);
         boolean b24 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType16, (io.github.agentsoz.jill.struct.AObject) gPType22);
         boolean b25 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType1, (io.github.agentsoz.jill.struct.AObject) gPType22);
@@ -429,21 +429,21 @@ public class GPTypeRegressionTest4 {
     public void test15() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test15");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array2 = gPType1.getChildren();
         gPType1.addChild((byte) 1);
         java.lang.String str5 = gPType1.getName();
         java.lang.String str6 = gPType1.getName();
         int i7 = gPType1.getId();
         gPType1.addParent((byte) 100);
-        io.github.agentsoz.jill.struct.GPType gPType11 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType11 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array12 = gPType11.getParents();
         int i13 = gPType11.getId();
         gPType11.setName("");
         gPType11.addChild((byte) 10);
         java.lang.String str18 = gPType11.getName();
-        io.github.agentsoz.jill.struct.GPType gPType20 = new io.github.agentsoz.jill.struct.GPType("hi!");
-        io.github.agentsoz.jill.struct.GPType gPType22 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType20 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType22 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         boolean b23 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType20, (io.github.agentsoz.jill.struct.AObject) gPType22);
         java.lang.String str24 = gPType22.getName();
         byte[] byte_array25 = gPType22.getParents();
@@ -471,7 +471,7 @@ public class GPTypeRegressionTest4 {
     public void test16() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test16");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array2 = gPType1.getChildren();
         gPType1.addChild((byte) 1);
         int i5 = gPType1.getId();
@@ -479,17 +479,17 @@ public class GPTypeRegressionTest4 {
         java.lang.String str7 = gPType1.getName();
         java.lang.String str8 = gPType1.getName();
         gPType1.setName(":-1:10");
-        io.github.agentsoz.jill.struct.GPType gPType12 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType12 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array13 = gPType12.getChildren();
         gPType12.addChild((byte) 1);
         java.lang.String str16 = gPType12.getName();
         java.lang.String str17 = gPType12.getName();
         int i18 = gPType12.getId();
         gPType12.setName(":-1:-1");
-        io.github.agentsoz.jill.struct.GPType gPType22 = new io.github.agentsoz.jill.struct.GPType("");
-        io.github.agentsoz.jill.struct.GPType gPType24 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType22 = new io.github.agentsoz.jill.struct.GoalPlanType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType24 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array25 = gPType24.getChildren();
-        io.github.agentsoz.jill.struct.GPType gPType27 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType27 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array28 = gPType27.getChildren();
         gPType27.addChild((byte) 1);
         java.lang.String str31 = gPType27.getName();
@@ -504,7 +504,7 @@ public class GPTypeRegressionTest4 {
         gPType12.addChild((byte) -1);
         java.lang.String str43 = gPType12.getName();
         gPType12.addParent((byte) -1);
-        io.github.agentsoz.jill.struct.GPType gPType47 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType47 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array48 = gPType47.getParents();
         byte[] byte_array49 = gPType47.getParents();
         gPType47.setId((int) (short) 100);
@@ -547,10 +547,10 @@ public class GPTypeRegressionTest4 {
     public void test17() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test17");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("");
-        io.github.agentsoz.jill.struct.GPType gPType3 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType3 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array4 = gPType3.getChildren();
-        io.github.agentsoz.jill.struct.GPType gPType6 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType6 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array7 = gPType6.getChildren();
         gPType6.addChild((byte) 1);
         java.lang.String str10 = gPType6.getName();
@@ -575,10 +575,10 @@ public class GPTypeRegressionTest4 {
     public void test18() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test18");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("");
-        io.github.agentsoz.jill.struct.GPType gPType3 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType3 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array4 = gPType3.getChildren();
-        io.github.agentsoz.jill.struct.GPType gPType6 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType6 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array7 = gPType6.getChildren();
         gPType6.addChild((byte) 1);
         java.lang.String str10 = gPType6.getName();
@@ -590,7 +590,7 @@ public class GPTypeRegressionTest4 {
         java.lang.String str17 = gPType1.toString();
         byte[] byte_array18 = gPType1.getChildren();
         gPType1.setName(":-1:-1:-1:-1");
-        io.github.agentsoz.jill.struct.GPType gPType22 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType22 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array23 = gPType22.getChildren();
         byte[] byte_array24 = gPType22.getParents();
         int i25 = gPType22.getId();
@@ -617,7 +617,7 @@ public class GPTypeRegressionTest4 {
     public void test19() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test19");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
         byte[] byte_array2 = gPType1.getParents();
         gPType1.setName("hi!");
         gPType1.setName(":-1:-1");
@@ -635,7 +635,7 @@ public class GPTypeRegressionTest4 {
     public void test20() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test20");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
         int i2 = gPType1.getId();
         java.lang.String str3 = gPType1.getName();
         java.lang.String str4 = gPType1.toString();
@@ -653,21 +653,21 @@ public class GPTypeRegressionTest4 {
     public void test21() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test21");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array2 = gPType1.getChildren();
         gPType1.addChild((byte) 1);
         int i5 = gPType1.getId();
         gPType1.addChild((byte) 0);
         gPType1.addParent((byte) 100);
         int i10 = gPType1.getId();
-        io.github.agentsoz.jill.struct.GPType gPType12 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType12 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array13 = gPType12.getChildren();
-        io.github.agentsoz.jill.struct.GPType gPType15 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType15 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array16 = gPType15.getChildren();
         gPType15.addChild((byte) 1);
         java.lang.String str19 = gPType15.getName();
         boolean b20 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType12, (io.github.agentsoz.jill.struct.AObject) gPType15);
-        io.github.agentsoz.jill.struct.GPType gPType22 = new io.github.agentsoz.jill.struct.GPType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType22 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
         byte[] byte_array23 = gPType22.getParents();
         gPType22.setId((int) (short) 10);
         boolean b26 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType12, (io.github.agentsoz.jill.struct.AObject) gPType22);
@@ -703,13 +703,13 @@ public class GPTypeRegressionTest4 {
     public void test22() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test22");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
         gPType1.setId((int) (byte) 100);
-        io.github.agentsoz.jill.struct.GPType gPType5 = new io.github.agentsoz.jill.struct.GPType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType5 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
         byte[] byte_array6 = gPType5.getParents();
         gPType5.setName("hi!");
         gPType5.addParent((byte) 100);
-        io.github.agentsoz.jill.struct.GPType gPType12 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType12 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array13 = gPType12.getParents();
         int i14 = gPType12.getId();
         byte[] byte_array15 = gPType12.getChildren();
@@ -717,18 +717,18 @@ public class GPTypeRegressionTest4 {
         gPType5.addParent((byte) 100);
         gPType5.addChild((byte) 10);
         byte[] byte_array21 = gPType5.getChildren();
-        io.github.agentsoz.jill.struct.GPType gPType23 = new io.github.agentsoz.jill.struct.GPType("");
-        io.github.agentsoz.jill.struct.GPType gPType25 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType23 = new io.github.agentsoz.jill.struct.GoalPlanType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType25 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array26 = gPType25.getChildren();
-        io.github.agentsoz.jill.struct.GPType gPType28 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType28 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array29 = gPType28.getChildren();
         gPType28.addChild((byte) 1);
         java.lang.String str32 = gPType28.getName();
         boolean b33 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType25, (io.github.agentsoz.jill.struct.AObject) gPType28);
         int i34 = gPType28.getId();
         boolean b35 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType23, (io.github.agentsoz.jill.struct.AObject) gPType28);
-        io.github.agentsoz.jill.struct.GPType gPType37 = new io.github.agentsoz.jill.struct.GPType("hi!");
-        io.github.agentsoz.jill.struct.GPType gPType39 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType37 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType39 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         boolean b40 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType37, (io.github.agentsoz.jill.struct.AObject) gPType39);
         java.lang.String str41 = gPType39.getName();
         gPType39.addParent((byte) 1);
@@ -761,18 +761,18 @@ public class GPTypeRegressionTest4 {
     public void test23() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test23");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("");
-        io.github.agentsoz.jill.struct.GPType gPType3 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType3 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array4 = gPType3.getChildren();
-        io.github.agentsoz.jill.struct.GPType gPType6 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType6 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array7 = gPType6.getChildren();
         gPType6.addChild((byte) 1);
         java.lang.String str10 = gPType6.getName();
         boolean b11 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType3, (io.github.agentsoz.jill.struct.AObject) gPType6);
         int i12 = gPType6.getId();
         boolean b13 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType1, (io.github.agentsoz.jill.struct.AObject) gPType6);
-        io.github.agentsoz.jill.struct.GPType gPType15 = new io.github.agentsoz.jill.struct.GPType("hi!");
-        io.github.agentsoz.jill.struct.GPType gPType17 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType15 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType17 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         boolean b18 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType15, (io.github.agentsoz.jill.struct.AObject) gPType17);
         java.lang.String str19 = gPType17.getName();
         gPType17.addParent((byte) 1);
@@ -796,15 +796,15 @@ public class GPTypeRegressionTest4 {
     public void test24() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test24");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array2 = gPType1.getChildren();
-        io.github.agentsoz.jill.struct.GPType gPType4 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType4 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array5 = gPType4.getChildren();
         gPType4.addChild((byte) 1);
         java.lang.String str8 = gPType4.getName();
         boolean b9 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType1, (io.github.agentsoz.jill.struct.AObject) gPType4);
         gPType1.setId((int) (byte) 0);
-        io.github.agentsoz.jill.struct.GPType gPType13 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType13 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array14 = gPType13.getChildren();
         gPType13.addChild((byte) 1);
         int i17 = gPType13.getId();
@@ -831,7 +831,7 @@ public class GPTypeRegressionTest4 {
     public void test25() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test25");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array2 = gPType1.getChildren();
         gPType1.addChild((byte) 1);
         java.lang.String str5 = gPType1.getName();
@@ -846,7 +846,7 @@ public class GPTypeRegressionTest4 {
     public void test26() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test26");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array2 = gPType1.getChildren();
         gPType1.addChild((byte) 1);
         int i5 = gPType1.getId();
@@ -866,7 +866,7 @@ public class GPTypeRegressionTest4 {
     public void test27() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test27");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
         byte[] byte_array2 = gPType1.getParents();
         gPType1.setName("hi!");
         gPType1.setName(":-1:-1");
@@ -884,8 +884,8 @@ public class GPTypeRegressionTest4 {
     public void test28() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test28");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("hi!");
-        io.github.agentsoz.jill.struct.GPType gPType3 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType3 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         boolean b4 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType1, (io.github.agentsoz.jill.struct.AObject) gPType3);
         byte[] byte_array5 = gPType3.getParents();
         gPType3.setName("hi!:-1");
@@ -903,7 +903,7 @@ public class GPTypeRegressionTest4 {
     public void test29() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test29");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         gPType1.setId((int) (byte) -1);
         java.lang.String str4 = gPType1.toString();
         gPType1.setName(":-1:-1");
@@ -917,7 +917,7 @@ public class GPTypeRegressionTest4 {
     public void test30() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test30");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array2 = gPType1.getChildren();
         gPType1.addChild((byte) 1);
         int i5 = gPType1.getId();
@@ -939,8 +939,8 @@ public class GPTypeRegressionTest4 {
     public void test31() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test31");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("hi!");
-        io.github.agentsoz.jill.struct.GPType gPType3 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType3 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         boolean b4 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType1, (io.github.agentsoz.jill.struct.AObject) gPType3);
         byte[] byte_array5 = gPType3.getParents();
         gPType3.setName("hi!:-1");
@@ -961,7 +961,7 @@ public class GPTypeRegressionTest4 {
     public void test32() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test32");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array2 = gPType1.getChildren();
         gPType1.addChild((byte) 1);
         gPType1.addChild((byte) 100);
@@ -975,7 +975,7 @@ public class GPTypeRegressionTest4 {
     public void test33() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test33");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array2 = gPType1.getChildren();
         gPType1.addChild((byte) 1);
         int i5 = gPType1.getId();
@@ -993,13 +993,13 @@ public class GPTypeRegressionTest4 {
     public void test34() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test34");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array2 = gPType1.getParents();
         int i3 = gPType1.getId();
         gPType1.setName("");
         gPType1.addChild((byte) 10);
         gPType1.addChild((byte) 0);
-        io.github.agentsoz.jill.struct.GPType gPType11 = new io.github.agentsoz.jill.struct.GPType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType11 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
         byte[] byte_array12 = gPType11.getParents();
         gPType11.setName("hi!");
         gPType11.setId((int) (byte) 1);
@@ -1023,24 +1023,24 @@ public class GPTypeRegressionTest4 {
     public void test35() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test35");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
         byte[] byte_array2 = gPType1.getParents();
         gPType1.setName("hi!");
         gPType1.addParent((byte) 100);
-        io.github.agentsoz.jill.struct.GPType gPType8 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType8 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array9 = gPType8.getParents();
         int i10 = gPType8.getId();
         byte[] byte_array11 = gPType8.getChildren();
         boolean b12 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType1, (io.github.agentsoz.jill.struct.AObject) gPType8);
         gPType8.setName("hi!");
-        io.github.agentsoz.jill.struct.GPType gPType16 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType16 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array17 = gPType16.getChildren();
         gPType16.addChild((byte) 1);
         int i20 = gPType16.getId();
         java.lang.String str21 = gPType16.toString();
         boolean b22 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType8, (io.github.agentsoz.jill.struct.AObject) gPType16);
         gPType16.addChild((byte) 10);
-        io.github.agentsoz.jill.struct.GPType gPType26 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType26 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         gPType26.setId((int) (byte) -1);
         java.lang.String str29 = gPType26.getName();
         boolean b30 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType16, (io.github.agentsoz.jill.struct.AObject) gPType26);
@@ -1068,7 +1068,7 @@ public class GPTypeRegressionTest4 {
     public void test36() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test36");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array2 = gPType1.getParents();
         int i3 = gPType1.getId();
         gPType1.setName("");
@@ -1087,15 +1087,15 @@ public class GPTypeRegressionTest4 {
     public void test37() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test37");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType(":-1");
-        io.github.agentsoz.jill.struct.GPType gPType3 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType(":-1");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType3 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array4 = gPType3.getChildren();
         gPType3.addChild((byte) 1);
         int i7 = gPType3.getId();
         gPType3.addChild((byte) 0);
         gPType3.addParent((byte) 1);
         boolean b12 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType1, (io.github.agentsoz.jill.struct.AObject) gPType3);
-        io.github.agentsoz.jill.struct.GPType gPType14 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType14 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array15 = gPType14.getChildren();
         gPType14.addChild((byte) 1);
         java.lang.String str18 = gPType14.toString();
@@ -1118,7 +1118,7 @@ public class GPTypeRegressionTest4 {
     public void test38() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test38");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array2 = gPType1.getChildren();
         gPType1.addChild((byte) 1);
         java.lang.String str5 = gPType1.getName();
@@ -1140,9 +1140,9 @@ public class GPTypeRegressionTest4 {
     public void test39() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test39");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array2 = gPType1.getChildren();
-        io.github.agentsoz.jill.struct.GPType gPType4 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType4 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array5 = gPType4.getChildren();
         gPType4.addChild((byte) 1);
         java.lang.String str8 = gPType4.getName();
@@ -1151,10 +1151,10 @@ public class GPTypeRegressionTest4 {
         byte[] byte_array11 = gPType4.getParents();
         gPType4.addParent((byte) 0);
         gPType4.addParent((byte) 100);
-        io.github.agentsoz.jill.struct.GPType gPType17 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType17 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         gPType17.addParent((byte) 1);
         byte[] byte_array20 = gPType17.getChildren();
-        io.github.agentsoz.jill.struct.GPType gPType22 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType22 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array23 = gPType22.getChildren();
         gPType22.addChild((byte) 1);
         int i26 = gPType22.getId();
@@ -1192,8 +1192,8 @@ public class GPTypeRegressionTest4 {
     public void test40() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test40");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("hi!");
-        io.github.agentsoz.jill.struct.GPType gPType3 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType3 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         boolean b4 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType1, (io.github.agentsoz.jill.struct.AObject) gPType3);
         byte[] byte_array5 = gPType3.getParents();
         gPType3.setName("hi!:-1");
@@ -1201,9 +1201,9 @@ public class GPTypeRegressionTest4 {
         byte[] byte_array9 = gPType3.getChildren();
         int i10 = gPType3.getId();
         gPType3.setName(":-1:-1:-1:-1");
-        io.github.agentsoz.jill.struct.GPType gPType14 = new io.github.agentsoz.jill.struct.GPType(":-1");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType14 = new io.github.agentsoz.jill.struct.GoalPlanType(":-1");
         java.lang.String str15 = gPType14.toString();
-        io.github.agentsoz.jill.struct.GPType gPType17 = new io.github.agentsoz.jill.struct.GPType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType17 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
         byte[] byte_array18 = gPType17.getParents();
         gPType17.setName("hi!");
         gPType17.setName(":-1:-1");
@@ -1229,10 +1229,10 @@ public class GPTypeRegressionTest4 {
     public void test41() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test41");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("");
-        io.github.agentsoz.jill.struct.GPType gPType3 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType3 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array4 = gPType3.getChildren();
-        io.github.agentsoz.jill.struct.GPType gPType6 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType6 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array7 = gPType6.getChildren();
         gPType6.addChild((byte) 1);
         java.lang.String str10 = gPType6.getName();
@@ -1267,7 +1267,7 @@ public class GPTypeRegressionTest4 {
     public void test42() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test42");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array2 = gPType1.getChildren();
         gPType1.addChild((byte) 1);
         int i5 = gPType1.getId();
@@ -1295,16 +1295,16 @@ public class GPTypeRegressionTest4 {
     public void test43() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test43");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array2 = gPType1.getChildren();
-        io.github.agentsoz.jill.struct.GPType gPType4 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType4 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array5 = gPType4.getChildren();
         gPType4.addChild((byte) 1);
         java.lang.String str8 = gPType4.getName();
         boolean b9 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType1, (io.github.agentsoz.jill.struct.AObject) gPType4);
         int i10 = gPType4.getId();
         gPType4.setId((-1));
-        io.github.agentsoz.jill.struct.GPType gPType14 = new io.github.agentsoz.jill.struct.GPType(":-1");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType14 = new io.github.agentsoz.jill.struct.GoalPlanType(":-1");
         boolean b15 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType4, (io.github.agentsoz.jill.struct.AObject) gPType14);
         gPType14.addChild((byte) 0);
         byte[] byte_array18 = gPType14.getChildren();
@@ -1326,28 +1326,28 @@ public class GPTypeRegressionTest4 {
     public void test44() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test44");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array2 = gPType1.getChildren();
         gPType1.addChild((byte) 1);
         int i5 = gPType1.getId();
         gPType1.addChild((byte) 0);
         gPType1.addParent((byte) 100);
-        io.github.agentsoz.jill.struct.GPType gPType11 = new io.github.agentsoz.jill.struct.GPType(":-1");
-        io.github.agentsoz.jill.struct.GPType gPType13 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType11 = new io.github.agentsoz.jill.struct.GoalPlanType(":-1");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType13 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array14 = gPType13.getChildren();
         gPType13.addChild((byte) 1);
         int i17 = gPType13.getId();
         gPType13.addChild((byte) 0);
         gPType13.addParent((byte) 1);
         boolean b22 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType11, (io.github.agentsoz.jill.struct.AObject) gPType13);
-        io.github.agentsoz.jill.struct.GPType gPType24 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType24 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array25 = gPType24.getChildren();
         gPType24.addChild((byte) 1);
         java.lang.String str28 = gPType24.toString();
         boolean b29 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType11, (io.github.agentsoz.jill.struct.AObject) gPType24);
         boolean b30 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType1, (io.github.agentsoz.jill.struct.AObject) gPType24);
         byte[] byte_array31 = gPType1.getParents();
-        io.github.agentsoz.jill.struct.GPType gPType33 = new io.github.agentsoz.jill.struct.GPType("hi!:-1");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType33 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!:-1");
         gPType33.addParent((byte) -1);
         byte[] byte_array36 = gPType33.getParents();
         byte[] byte_array37 = gPType33.getParents();
@@ -1375,7 +1375,7 @@ public class GPTypeRegressionTest4 {
     public void test45() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test45");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
         byte[] byte_array2 = gPType1.getParents();
         gPType1.setName("hi!");
         gPType1.setId((int) (byte) 100);
@@ -1384,21 +1384,21 @@ public class GPTypeRegressionTest4 {
         int i10 = gPType1.getId();
         byte[] byte_array11 = gPType1.getChildren();
         byte[] byte_array12 = gPType1.getParents();
-        io.github.agentsoz.jill.struct.GPType gPType14 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType14 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array15 = gPType14.getChildren();
         gPType14.addChild((byte) 1);
         int i18 = gPType14.getId();
         gPType14.addChild((byte) 0);
         gPType14.addParent((byte) 100);
         int i23 = gPType14.getId();
-        io.github.agentsoz.jill.struct.GPType gPType25 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType25 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array26 = gPType25.getChildren();
-        io.github.agentsoz.jill.struct.GPType gPType28 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType28 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array29 = gPType28.getChildren();
         gPType28.addChild((byte) 1);
         java.lang.String str32 = gPType28.getName();
         boolean b33 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType25, (io.github.agentsoz.jill.struct.AObject) gPType28);
-        io.github.agentsoz.jill.struct.GPType gPType35 = new io.github.agentsoz.jill.struct.GPType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType35 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
         byte[] byte_array36 = gPType35.getParents();
         gPType35.setId((int) (short) 10);
         boolean b39 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType25, (io.github.agentsoz.jill.struct.AObject) gPType35);
@@ -1438,12 +1438,12 @@ public class GPTypeRegressionTest4 {
     public void test46() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test46");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
         byte[] byte_array2 = gPType1.getParents();
         java.lang.String str3 = gPType1.getName();
-        io.github.agentsoz.jill.struct.GPType gPType5 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType5 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array6 = gPType5.getChildren();
-        io.github.agentsoz.jill.struct.GPType gPType8 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType8 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array9 = gPType8.getChildren();
         gPType8.addChild((byte) 1);
         java.lang.String str12 = gPType8.getName();
@@ -1451,10 +1451,10 @@ public class GPTypeRegressionTest4 {
         int i14 = gPType8.getId();
         boolean b15 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType1, (io.github.agentsoz.jill.struct.AObject) gPType8);
         byte[] byte_array16 = gPType8.getChildren();
-        byte[] byte_array18 = io.github.agentsoz.jill.struct.GPType.grow(byte_array16, (int) (short) 10);
-        byte[] byte_array20 = io.github.agentsoz.jill.struct.GPType.grow(byte_array16, (int) (short) 10);
-        byte[] byte_array22 = io.github.agentsoz.jill.struct.GPType.grow(byte_array20, 35);
-        byte[] byte_array24 = io.github.agentsoz.jill.struct.GPType.grow(byte_array22, (int) (short) 100);
+        byte[] byte_array18 = io.github.agentsoz.jill.struct.GoalPlanType.grow(byte_array16, (int) (short) 10);
+        byte[] byte_array20 = io.github.agentsoz.jill.struct.GoalPlanType.grow(byte_array16, (int) (short) 10);
+        byte[] byte_array22 = io.github.agentsoz.jill.struct.GoalPlanType.grow(byte_array20, 35);
+        byte[] byte_array24 = io.github.agentsoz.jill.struct.GoalPlanType.grow(byte_array22, (int) (short) 100);
         org.junit.Assert.assertNull(byte_array2);
         org.junit.Assert.assertTrue("'" + str3 + "' != '" + "hi!" + "'", str3.equals("hi!"));
         org.junit.Assert.assertNull(byte_array6);
@@ -1474,14 +1474,14 @@ public class GPTypeRegressionTest4 {
     public void test47() throws Throwable {
         if (debug)
             System.out.format("%n%s%n", "GPTypeRegressionTest4.test47");
-        io.github.agentsoz.jill.struct.GPType gPType1 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType1 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         gPType1.setId((int) (byte) -1);
         java.lang.String str4 = gPType1.toString();
         gPType1.setName(":-1:-1");
-        io.github.agentsoz.jill.struct.GPType gPType8 = new io.github.agentsoz.jill.struct.GPType("");
-        io.github.agentsoz.jill.struct.GPType gPType10 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType8 = new io.github.agentsoz.jill.struct.GoalPlanType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType10 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array11 = gPType10.getChildren();
-        io.github.agentsoz.jill.struct.GPType gPType13 = new io.github.agentsoz.jill.struct.GPType("");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType13 = new io.github.agentsoz.jill.struct.GoalPlanType("");
         byte[] byte_array14 = gPType13.getChildren();
         gPType13.addChild((byte) 1);
         java.lang.String str17 = gPType13.getName();
@@ -1492,7 +1492,7 @@ public class GPTypeRegressionTest4 {
         byte[] byte_array23 = gPType8.getParents();
         gPType8.setId(10);
         boolean b26 = io.github.agentsoz.jill.struct.AObject.isNameEqual((io.github.agentsoz.jill.struct.AObject) gPType1, (io.github.agentsoz.jill.struct.AObject) gPType8);
-        io.github.agentsoz.jill.struct.GPType gPType28 = new io.github.agentsoz.jill.struct.GPType("hi!");
+        io.github.agentsoz.jill.struct.GoalPlanType gPType28 = new io.github.agentsoz.jill.struct.GoalPlanType("hi!");
         byte[] byte_array29 = gPType28.getParents();
         gPType28.setName("hi!");
         java.lang.String str32 = gPType28.toString();

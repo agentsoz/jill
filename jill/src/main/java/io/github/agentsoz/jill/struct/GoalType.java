@@ -14,7 +14,7 @@ package io.github.agentsoz.jill.struct;
  * If not, see <http://www.gnu.org/licenses/lgpl-3.0.html>. #L%
  */
 
-public class GoalType extends GPType {
+public class GoalType extends GoalPlanType {
   private Class<?> goalClass;
 
   public GoalType(String name) {

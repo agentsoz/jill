@@ -66,7 +66,7 @@ public class AgentType extends AObject {
   }
 
   public void addGoal(byte goal) {
-    goals = GPType.grow(goals, 1);
+    goals = GoalPlanType.grow(goals, 1);
     goals[goals.length - 1] = goal;
   }
 }

@@ -16,7 +16,7 @@ package io.github.agentsoz.jill.struct;
 
 import java.lang.reflect.Method;
 
-public class PlanType extends GPType {
+public class PlanType extends GoalPlanType {
   private Class<?> planClass;
   private Method context;
   private Method body;

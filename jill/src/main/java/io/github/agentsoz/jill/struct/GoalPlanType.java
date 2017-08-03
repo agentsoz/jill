@@ -14,7 +14,7 @@ package io.github.agentsoz.jill.struct;
  * If not, see <http://www.gnu.org/licenses/lgpl-3.0.html>. #L%
  */
 
-public class GPType extends AObject {
+public class GoalPlanType extends AObject {
 
   private byte[] parents;
   private byte[] children;
@@ -24,7 +24,7 @@ public class GPType extends AObject {
    *  
    * @param str a name for this object
    */
-  public GPType(String str) {
+  public GoalPlanType(String str) {
     super(str);
     parents = null;
     children = null;
