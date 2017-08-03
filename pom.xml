@@ -291,7 +291,7 @@
             <skipEmptyReport>false</skipEmptyReport>
             <linkXref>true</linkXref>
             <sourceEncoding>utf-8</sourceEncoding>
-            <minimumTokens>50</minimumTokens>
+            <minimumTokens>100</minimumTokens>
             <excludes>
               <exclude>**/SparseBitSet.java</exclude>
               <exclude>**/playground/**</exclude>
