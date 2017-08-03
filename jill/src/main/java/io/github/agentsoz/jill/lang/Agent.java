@@ -25,6 +25,9 @@ import io.github.agentsoz.jill.util.AObjectCatalog;
 import io.github.agentsoz.jill.util.Log;
 import io.github.agentsoz.jill.util.Stack255;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.PrintStream;
 import java.util.HashSet;
 
@@ -35,6 +38,8 @@ import java.util.HashSet;
  *
  */
 public class Agent extends AObject {
+
+  private final Logger logger = LoggerFactory.getLogger(Main.LOGGER_NAME);
 
   // FIXME: some Agent method are just by Jill only and should be final
 
@@ -111,7 +116,7 @@ public class Agent extends AObject {
    */
   public void post(Goal goal) {
     synchronized (executionStack) {
-      Log.debug("Agent " + getId() + " posting goal " + goal.getClass().getSimpleName());
+      logger.debug("{} posting goal {}", Log.logPrefix(getId()), goal.getClass().getSimpleName());
       executionStack.push(goal);
       Main.setAgentIdle(getId(), false);
     }
@@ -128,12 +133,12 @@ public class Agent extends AObject {
   public boolean send(int id, Goal msg) {
     AObject obj = agents.get(id);
     if (obj == null) {
-      Log.warn(
-          "Agent " + getId() + " attempted to send a message to unknown agent id '" + id + "'");
+      logger.warn("{} attempted to send a message to unknown agent id '{}'", Log.logPrefix(getId()),
+          id);
       return false;
     }
-    Log.debug("Agent " + getId() + " is sending message of type " + msg.getClass().getSimpleName()
-        + " to agent " + id);
+    logger.debug("{} is sending message of type {} to agent {}", Log.logPrefix(getId()),
+        msg.getClass().getSimpleName(), id);
     ((Agent) obj).post(msg);
     return true;
   }
@@ -148,7 +153,8 @@ public class Agent extends AObject {
   public boolean send(String name, Goal msg) {
     AObject obj = agents.find(name);
     if (obj == null) {
-      Log.warn("Agent " + getId() + " attempted to send a message to unknown agent '" + name + "'");
+      logger.warn("{} attempted to send a message to unknown agent '{}'", Log.logPrefix(getId()),
+          name);
       return false;
     }
     ((Agent) obj).post(msg);
@@ -156,11 +162,11 @@ public class Agent extends AObject {
   }
 
   public void start(PrintStream writer, String[] params) {
-    Log.debug("Agent " + getId() + " is starting");
+    logger.debug("{} is starting", Log.logPrefix(getId()));
   }
 
   public void finish() {
-    Log.debug("Agent " + getId() + " is finishing");
+    logger.debug("{} is finishing", Log.logPrefix(getId()));
   }
 
   /**

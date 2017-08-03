@@ -34,6 +34,9 @@ import java.lang.annotation.Annotation;
 
 public class ProgramLoader {
 
+  private static final String knowsNothing =
+      "annotation. Without it, the BDI execution engine does not know anything ";
+
   /**
    * Creates a given number of agents of a given Class, and adds the newly created agents to the
    * given store.
@@ -65,18 +68,18 @@ public class ProgramLoader {
       if (annotation == null) {
         error("Agent " + className + " is missing the "
             + "@AgentInfo(hasGoals={\"package.GoalClass1, package.GoalClass2, ...\"}) "
-            + "annotation. Without it, the BDI execution engine does not know anything "
+            + knowsNothing
             + "about this agent's goals and plans.");
         return false;
       }
       AgentInfo ainfo = (AgentInfo) annotation;
       String[] goals = ainfo.hasGoals();
       if (goals.length == 0) {
-        error("Agent " + className
-            + " does not have any goals defined. Was expecting something like "
-            + "@AgentInfo(hasGoals={\"package.GoalClass1, package.GoalClass2, ...\"}) "
-            + "annotation. Without it, the BDI execution engine does not know anything "
-            + "about this agent's goals and plans.");
+        error(
+            "Agent " + className + " does not have any goals defined. Was expecting something like "
+                + "@AgentInfo(hasGoals={\"package.GoalClass1, package.GoalClass2, ...\"}) "
+                + knowsNothing
+                + "about this agent's goals and plans.");
         return false;
       }
 
@@ -100,7 +103,7 @@ public class ProgramLoader {
         if (annotation == null) {
           error("Goal " + gclass.getName() + " is missing the "
               + "@GoalInfo(hasPlans={\"package.PlanClass1, package.PlanClass2, ...\"}) "
-              + "annotation. Without it, the BDI execution engine does not know anything "
+              + knowsNothing
               + "about which plans can handle this goal.");
           return false;
         }
@@ -110,7 +113,7 @@ public class ProgramLoader {
           error("Goal " + gclass.getName()
               + " does not have any plans defined. Was expecting something like "
               + "@GoalInfo(hasPlans={\"package.PlanClass1, package.PlanClass2, ...\"}) "
-              + "annotation. Without it, the BDI execution engine does not know anything "
+              + knowsNothing
               + "about which plans can handle this goal.");
 
           return false;

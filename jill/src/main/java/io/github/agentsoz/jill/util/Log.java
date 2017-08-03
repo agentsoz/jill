@@ -79,4 +79,27 @@ public class Log {
     return logger;
   }
 
+  /**
+   * Returns a agent name string to use for logging.
+   * 
+   * @param idx ID of the agent
+   * @return string to use for logging
+   */
+  public static String logPrefix(int idx) {
+    return "Agent " + idx + ":";
+  }
+  
+  /**
+   * Returns a formatted string for logging the duration between two timestamps.
+   * 
+   * @param t0 start time in ms
+   * @param t1 end time in ms
+   * @return formatted duration string 
+   */
+  public static String formattedDuration(long start, long end) {
+    return "(" + (end - start) + " ms)";
+  }
+
+
+
 }

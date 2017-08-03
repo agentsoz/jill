@@ -25,6 +25,9 @@ import io.github.agentsoz.jill.util.AObjectCatalog;
 import io.github.agentsoz.jill.util.ArgumentsLoader;
 import io.github.agentsoz.jill.util.Log;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.PrintStream;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -32,6 +35,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Main {
 
   public static final String LOGGER_NAME = "io.github.agentsoz.jill";
+  public static Logger logger;
+
   /**
    * Used to mark if all the pools of agents are idle or not.
    */
@@ -41,6 +46,8 @@ public class Main {
   public static AtomicInteger poolsIdle = new AtomicInteger();
   private static PrintStream writer;
 
+  private static final String agentsIn = " agents in ";
+  
   /**
    * Program entry
    * 
@@ -69,8 +76,8 @@ public class Main {
       // finish up
       finish();
     } catch (Exception e) {
-      System.err.println("ERROR during Jill execution: " + e.getMessage());
-      e.printStackTrace();
+      Logger logger = LoggerFactory.getLogger(Main.LOGGER_NAME);
+      logger.error("ERROR during Jill execution", e);
     }
   }
 
@@ -89,6 +96,7 @@ public class Main {
 
     // Configure logging
     Log.createLogger(Main.LOGGER_NAME, config.getLogLevel(), config.getLogFile());
+    logger = LoggerFactory.getLogger(Main.LOGGER_NAME);
 
     int numAgents = 0;
     for (Config.AgentTypeData agentType : config.getAgents()) {
@@ -111,7 +119,8 @@ public class Main {
       ProgramLoader.loadAgent(agentType.getClassname(), agentType.getCount(), GlobalState.agents);
     }
     t1 = System.currentTimeMillis();
-    Log.info("Created " + GlobalState.agents.size() + " agents in " + (t1 - t0) + " ms");
+    logger.info(
+        "Created " + GlobalState.agents.size() + agentsIn + Log.formattedDuration(t0, t1));
 
     // Initialise the thread pools
     initIntentionSelectionPools(numAgents, config.getNumThreads());
@@ -122,7 +131,8 @@ public class Main {
       try {
         writer = new PrintStream(config.getProgramOutputFile(), "UTF-8");
       } catch (Exception e) {
-        e.printStackTrace();
+        Logger logger = LoggerFactory.getLogger(Main.LOGGER_NAME);
+        logger.error("Could not open program outout file " + config.getProgramOutputFile(), e);
       }
     } else {
       writer = System.out;
@@ -154,7 +164,8 @@ public class Main {
       }
     }
     long t1 = System.currentTimeMillis();
-    Log.info("Started " + GlobalState.agents.size() + " agents in " + (t1 - t0) + " ms");
+    logger.info(
+        "Started " + GlobalState.agents.size() + agentsIn + Log.formattedDuration(t0, t1));
 
     // Start the intention selection threads
     startIntentionSelectionThreads();
@@ -173,13 +184,14 @@ public class Main {
         try {
           poolsIdle.wait();
         } catch (InterruptedException e) {
-          Log.error("Failed to wait on termination condition: " + e.getMessage());
+          logger.error("Failed to wait on termination condition: " + e.getMessage());
         }
       }
     }
 
     long t1 = System.currentTimeMillis();
-    Log.info("Finished running " + GlobalState.agents.size() + " agents in " + (t1 - t0) + " ms");
+    logger.info("Finished running " + GlobalState.agents.size() + agentsIn
+        + Log.formattedDuration(t0, t1));
   }
 
   /**
@@ -207,7 +219,8 @@ public class Main {
       writer.close();
     }
     long t1 = System.currentTimeMillis();
-    Log.info("Terminated " + GlobalState.agents.size() + " agents in " + (t1 - t0) + " ms");
+    logger.info(
+        "Terminated " + GlobalState.agents.size() + agentsIn + Log.formattedDuration(t0, t1));
   }
 
   /**
@@ -361,19 +374,9 @@ public class Main {
   public static void registerExtension(JillExtension extension) {
     if (extension != null) {
       GlobalState.eventHandlers.add(extension);
-      Log.info("Registered Jill extension: " + extension);
+      logger.info("Registered Jill extension: " + extension);
     } else {
-      Log.warn("Cannot register null extension; will ignore.");
+      logger.warn("Cannot register null extension; will ignore.");
     }
-  }
-
-  /**
-   * Returns a agent name string to use for logging.
-   * 
-   * @param idx ID of the agent
-   * @return string to use for logging
-   */
-  public static String logPrefix(int idx) {
-    return String.format("Agent %d:", idx);
   }
 }

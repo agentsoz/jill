@@ -26,6 +26,9 @@ import io.github.agentsoz.jill.struct.PlanType;
 import io.github.agentsoz.jill.util.Log;
 import io.github.agentsoz.jill.util.Stack255;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Random;
@@ -92,7 +95,8 @@ public class IntentionSelector implements Runnable {
         Agent agent = (Agent) GlobalState.agents.get(i);
         Stack255 agentExecutionStack = (Stack255) (agent).getExecutionStack();
         int esSize = agentExecutionStack.size();
-        Log.trace("Agent " + agent.getId() + "'s execution stack is " + esSize + "/255 full");
+        logger
+            .trace(Log.logPrefix(agent.getId()) + "'s execution stack is " + esSize + "/255 full");
         if (agentExecutionStack == null || esSize == 0) {
           // Mark this agent as idle
           // Main.setAgentIdle(i, true);
@@ -100,7 +104,7 @@ public class IntentionSelector implements Runnable {
           continue;
         }
         if (esSize >= 255) {
-          Log.error("Agent " + agent.getId()
+          logger.error(Log.logPrefix(agent.getId())
               + "'s execution stack has reached the maximum size of 255. Cannot continue.");
           continue;
         }
@@ -115,7 +119,7 @@ public class IntentionSelector implements Runnable {
         if (node instanceof Plan) {
           // If done then pop this plan/goal
           if (((Plan) node).hasfinished()) {
-            Log.debug("Agent " + agent.getId() + " finished executing plan "
+            logger.debug(Log.logPrefix(agent.getId()) + " finished executing plan "
                 + node.getClass().getSimpleName());
             synchronized (agentExecutionStack) {
               // Pop the plan off the stack
@@ -129,7 +133,7 @@ public class IntentionSelector implements Runnable {
               }
             }
           } else {
-            Log.debug("Agent " + agent.getId() + " is executing a step of plan "
+            logger.debug(Log.logPrefix(agent.getId()) + " is executing a step of plan "
                 + node.getClass().getSimpleName());
             ((Plan) node).step();
           }
@@ -165,14 +169,14 @@ public class IntentionSelector implements Runnable {
                     (results == null) ? null : new LinkedHashSet<Belief>(results));
               }
             } catch (Exception e) {
-              e.printStackTrace();
+              logger.error("Could not create plan object of type " + ptype.getClass().getName(), e);
             }
           }
           int numBindings = bindings.size();
           if (numBindings == 0) {
             // No plan options for this goal at this point in time, so move to the next agent
-            Log.debug("Agent " + agent.getId() + " has no applicable plans for goal " + gtype
-                + " and will continue to wait indefinitely");
+            logger.debug(Log.logPrefix(agent.getId()) + " has no applicable plans for goal "
+                + gtype + " and will continue to wait indefinitely");
             continue;
           }
           // Call the meta-level planning prior to plan selection
@@ -181,7 +185,7 @@ public class IntentionSelector implements Runnable {
           Plan planInstance = bindings.get(GlobalConstant.PLAN_SELECTION_POLICY);
           // Now push the plan on to the intention stack
           synchronized (agentExecutionStack) {
-            Log.debug("Agent " + agent.getId() + " choose an instance of plan "
+            logger.debug(Log.logPrefix(agent.getId()) + " choose an instance of plan "
                 + planInstance.getClass().getSimpleName() + " to handle goal "
                 + gtype.getClass().getSimpleName());
             agentExecutionStack.push(planInstance);
@@ -200,17 +204,16 @@ public class IntentionSelector implements Runnable {
         synchronized (lock) {
           while (idle && !hasMessage) {
             try {
-              Log.debug("Intention selector " + poolid + " is idle; will wait on external message");
+              logger.debug("Pool {} is idle; will wait on external message", poolid);
               // Main.incrementPoolsIdle();
               isIdle = true;
               Main.flagPoolIdle();
               lock.wait();
               isIdle = false;
               // Main.decrementPoolsIdle();
-              Log.debug("Intention selector " + poolid + " just woke up on external message");
+              logger.debug("Pool {} just woke up on external message", poolid);
             } catch (InterruptedException e) {
-              Log.error("Intention selector " + poolid + " failed to wait on external message: "
-                  + e.getMessage());
+              logger.error("Pool " + poolid + " failed to wait on external message: ", e);
             }
           }
           hasMessage = false;
@@ -220,7 +223,7 @@ public class IntentionSelector implements Runnable {
         }
       }
     } while (true);
-    Log.debug("Intention selector " + poolid + " is exiting");
+    logger.debug("Pool {} is exiting", poolid);
   }
 
   /**
@@ -229,7 +232,7 @@ public class IntentionSelector implements Runnable {
    */
   public void flagMessage() {
     synchronized (lock) {
-      Log.debug("Intention selector " + poolid + " received a new message");
+      logger.debug("Pool {} received a new message", poolid);
       hasMessage = true;
       lock.notify();
     }
@@ -249,7 +252,7 @@ public class IntentionSelector implements Runnable {
    */
   public void shutdown() {
     synchronized (lock) {
-      Log.debug("Intention selector " + poolid + " received shutdown message");
+      logger.debug("Pool {} received shutdown message", poolid);
       shutdown = true;
       hasMessage = true;
       lock.notify();

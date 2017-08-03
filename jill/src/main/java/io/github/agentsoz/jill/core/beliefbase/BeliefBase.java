@@ -65,7 +65,7 @@ public abstract class BeliefBase {
       t0 = System.currentTimeMillis();
       bb.createBeliefSet(i, bs1, fields1);
       t1 = System.currentTimeMillis();
-      Log.debug("Created belief set '" + bs1 + "' (" + (t1 - t0) + " ms)");
+      Log.debug("Created belief set '" + bs1 + "' " + Log.formattedDuration(t0, t1));
       t0 = System.currentTimeMillis();
       for (int j = 0; j < numNeighbours; j++) {
         bb.addBelief(i, bs1, "agent" + j, ((j % 2) == 0) ? "male" : "female");
@@ -76,14 +76,14 @@ public abstract class BeliefBase {
     }
     long t3 = System.currentTimeMillis();
     Log.info("Finished initialising " + numAgents + " agents with " + numNeighbours
-        + " beliefs each for belief set '" + bs1 + "' (" + (t3 - t2) + " ms)");
+        + " beliefs each for belief set '" + bs1 + "' " + Log.formattedDuration(t2, t3));
 
     t2 = System.currentTimeMillis();
     for (int i = 0; i < numAgents; i++) {
       t0 = System.currentTimeMillis();
       bb.createBeliefSet(i, bs2, fields2);
       t1 = System.currentTimeMillis();
-      Log.debug("Created belief set '" + bs2 + "' (" + (t1 - t0) + " ms)");
+      Log.debug("Created belief set '" + bs2 + "' " + Log.formattedDuration(t0, t1));
       t0 = System.currentTimeMillis();
       for (int j = 0; j < numNeighbours; j++) {
         bb.addBelief(i, bs2, "agent" + j, ((j % 2) == 0) ? new Boolean(true) : new Boolean(false));
@@ -94,32 +94,33 @@ public abstract class BeliefBase {
     }
     t3 = System.currentTimeMillis();
     Log.info("Finished initialising " + numAgents + " agents with " + numNeighbours
-        + " beliefs each for belief set '" + bs2 + "' (" + (t3 - t2) + " ms)");
+        + " beliefs each for belief set '" + bs2 + "' " + Log.formattedDuration(t2, t3));
 
 
+    final String opstr = ".name=agent";
     int agentId = 0;
     int neighbourId = 0;
-    doEval(bb, agentId, bs1 + ".name=agent" + neighbourId);
+    doEval(bb, agentId, bs1 + opstr + neighbourId);
 
     agentId = 0;
     neighbourId = numNeighbours - 1;
-    doEval(bb, agentId, bs1 + ".name=agent" + neighbourId);
+    doEval(bb, agentId, bs1 + opstr + neighbourId);
 
     agentId = numAgents - 1;
     neighbourId = numNeighbours - 1;
-    doEval(bb, agentId, bs1 + ".name=agent" + neighbourId);
+    doEval(bb, agentId, bs1 + opstr + neighbourId);
 
     agentId = 0;
     neighbourId = 0;
-    doEval(bb, agentId, bs1 + ".name=agent" + neighbourId);
+    doEval(bb, agentId, bs1 + opstr + neighbourId);
 
     agentId = 0;
     neighbourId = numNeighbours - 1;
-    doEval(bb, agentId, bs1 + ".name=agent" + neighbourId);
+    doEval(bb, agentId, bs1 + opstr + neighbourId);
 
     agentId = numAgents - 1;
     neighbourId = numNeighbours - 1;
-    doEval(bb, agentId, bs1 + ".name=agent" + neighbourId);
+    doEval(bb, agentId, bs1 + opstr + neighbourId);
   }
 
   /**
@@ -134,7 +135,7 @@ public abstract class BeliefBase {
     final long t0 = System.currentTimeMillis();
     bb.eval(agentId, query);
     final long t1 = System.currentTimeMillis();
-    Log.info("Agent " + agentId + " searched for '" + query + "' (" + (t1 - t0) + " ms)");
+    Log.info("Agent " + agentId + " searched for '" + query + "' " + Log.formattedDuration(t0, t1));
   }
 
 }
