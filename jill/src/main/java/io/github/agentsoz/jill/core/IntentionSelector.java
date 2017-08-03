@@ -32,28 +32,26 @@ import java.util.Random;
 
 public class IntentionSelector implements Runnable {
 
-  private int poolid;
-  private HashSet<Integer> activeAgents;
+  private final Logger logger = LoggerFactory.getLogger(Main.LOGGER_NAME);
+
+  private final int poolid;
+  private final HashSet<Integer> activeAgents;
   HashSet<Integer> extToRemove;
   HashSet<Integer> extToAdd;
-  private Random rand;
 
-  private Object lock;
+  private final Object lock;
   private boolean hasMessage;
   private boolean isIdle;
   private boolean shutdown;
-  private PlanBindings bindings; // plan bindings
+  private final PlanBindings bindings; // plan bindings
 
   /**
    * Constructs a new intention selector to manage a set of agents.
    * 
    * @param poolid ID of this pool (must follow the sequence 0,1,2,3,...).
-   * @param seed to initialise the random number generator with
-   * @param start not used
-   * @param size not used
+   * @param seed to initialise the random number generator
    */
-  public IntentionSelector(int poolid, long seed, int start, int size) {
-    this.rand = new Random(seed);
+  public IntentionSelector(int poolid, long seed) {
     this.poolid = poolid;
     this.lock = new Object();
     this.hasMessage = false;
@@ -62,7 +60,7 @@ public class IntentionSelector implements Runnable {
     activeAgents = new HashSet<Integer>();
     extToRemove = new HashSet<Integer>();
     extToAdd = new HashSet<Integer>();
-    bindings = new PlanBindings(rand);
+    bindings = new PlanBindings(new Random(seed));
   }
 
   /**
@@ -159,8 +157,7 @@ public class IntentionSelector implements Runnable {
               // Clear previously buffered context results if any
               agent.clearLastResults();
               // Evaluate the context condition
-              boolean context = planInstance.context();
-              if (context == true) {
+              if (planInstance.context() == true) {
                 // Get the results of context query just performed
                 HashSet<Belief> results = agent.getLastResults();
                 // Add the results to the bindings

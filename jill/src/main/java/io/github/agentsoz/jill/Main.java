@@ -31,6 +31,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main {
 
+  public static final String LOGGER_NAME = "io.github.agentsoz.jill";
   /**
    * Used to mark if all the pools of agents are idle or not.
    */
@@ -87,7 +88,7 @@ public class Main {
     }
 
     // Configure logging
-    Log.createLogger("", config.getLogLevel(), config.getLogFile());
+    Log.createLogger(Main.LOGGER_NAME, config.getLogLevel(), config.getLogFile());
 
     int numAgents = 0;
     for (Config.AgentTypeData agentType : config.getAgents()) {
@@ -285,9 +286,7 @@ public class Main {
     int ncores = config.getNumThreads();
     intentionSelectors = new IntentionSelector[ncores];
     for (int i = 0; i < npools; i++) {
-      int start = i * poolsize;
-      int size = (i + 1 < npools) ? poolsize : GlobalState.agents.size() - start;
-      intentionSelectors[i] = new IntentionSelector(i, config.getRandomSeed(), start, size);
+      intentionSelectors[i] = new IntentionSelector(i, config.getRandomSeed());
     }
   }
 
@@ -321,7 +320,7 @@ public class Main {
   }
 
   /**
-   * Gets the ID of the intension selection pool to which the given agent belongs.
+   * Gets the ID of the intention selection pool to which the given agent belongs.
    * 
    * @param agentid ID of the agent for which the pool ID is being requested
    * @return ID of the pool to which this agent belongs
@@ -366,5 +365,15 @@ public class Main {
     } else {
       Log.warn("Cannot register null extension; will ignore.");
     }
+  }
+
+  /**
+   * Returns a agent name string to use for logging.
+   * 
+   * @param idx ID of the agent
+   * @return string to use for logging
+   */
+  public static String logPrefix(int idx) {
+    return String.format("Agent %d:", idx);
   }
 }
