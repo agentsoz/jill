@@ -86,7 +86,7 @@ public abstract class BeliefBase {
       Log.debug("Created belief set '" + bs2 + "' " + Log.formattedDuration(t0, t1));
       t0 = System.currentTimeMillis();
       for (int j = 0; j < numNeighbours; j++) {
-        bb.addBelief(i, bs2, "agent" + j, ((j % 2) == 0) ? new Boolean(true) : new Boolean(false));
+        bb.addBelief(i, bs2, "agent" + j, ((j % 2) == 0) ? true : false);
       }
       t1 = System.currentTimeMillis();
       Log.debug("Agent " + i + " added " + numNeighbours + " beliefs to belief set '" + bs2 + "' ("

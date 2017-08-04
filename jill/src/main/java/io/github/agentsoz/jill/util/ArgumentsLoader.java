@@ -26,9 +26,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
-public class ArgumentsLoader {
+public final class ArgumentsLoader {
 
-  private static Config config = null;
+  private static Config config;
 
   /**
    * This class cannot be instantiated.

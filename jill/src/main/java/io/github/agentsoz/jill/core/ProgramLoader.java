@@ -32,7 +32,7 @@ import java.lang.annotation.Annotation;
 
 
 
-public class ProgramLoader {
+public final class ProgramLoader {
 
   private static final String knowsNothing =
       "annotation. Without it, the BDI execution engine does not know anything ";

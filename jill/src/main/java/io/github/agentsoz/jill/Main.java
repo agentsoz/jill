@@ -32,7 +32,7 @@ import java.io.PrintStream;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Main {
+public final class Main {
 
   public static final String LOGGER_NAME = "io.github.agentsoz.jill";
   public static Logger logger;
@@ -83,7 +83,6 @@ public class Main {
       // finish up
       finish();
     } catch (Exception e) {
-      Logger logger = LoggerFactory.getLogger(Main.LOGGER_NAME);
       logger.error("ERROR during Jill execution", e);
     }
   }
@@ -138,7 +137,6 @@ public class Main {
       try {
         writer = new PrintStream(config.getProgramOutputFile(), "UTF-8");
       } catch (Exception e) {
-        Logger logger = LoggerFactory.getLogger(Main.LOGGER_NAME);
         logger.error("Could not open program outout file " + config.getProgramOutputFile(), e);
       }
     } else {
@@ -244,7 +242,7 @@ public class Main {
       JillExtension extension = ProgramLoader.loadExtension(extensionData.getClassname());
       if (extension != null) {
         registerExtension(extension);
-        extension.init(extensionData.getArgs().toArray(new String[0]));;
+        extension.init(extensionData.getArgs().toArray(new String[0]));
       }
     }
   }

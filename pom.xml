@@ -215,7 +215,7 @@
           <artifactId>maven-pmd-plugin</artifactId>
           <configuration>
             <failurePriority>4</failurePriority>
-            <printFailingErrors>true</printFailingErrors>
+            <printFailingErrors>false</printFailingErrors>
             <verbose>true</verbose>
           </configuration>
           <executions>

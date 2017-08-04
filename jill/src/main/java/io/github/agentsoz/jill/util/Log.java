@@ -24,7 +24,7 @@ import ch.qos.logback.core.FileAppender;
 import org.slf4j.LoggerFactory;
 
 
-public class Log {
+public final class Log {
 
   private static Logger logger;
 

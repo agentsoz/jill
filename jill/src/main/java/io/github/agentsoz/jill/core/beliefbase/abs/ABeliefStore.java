@@ -146,7 +146,7 @@ public class ABeliefStore extends BeliefBase {
         queries.put(key, query);
       } catch (Exception e) {
         throw new BeliefBaseException(
-            logsuffix(agentid) + "invalid query '" + key + "' : " + e.getMessage());
+            logsuffix(agentid) + "invalid query '" + key + "' : " + e.getMessage(), e);
       }
     }
     // Get the cached results if they exist,
@@ -189,11 +189,11 @@ public class ABeliefStore extends BeliefBase {
     try {
       val = string2type(type, strVal);
     } catch (BeliefBaseException e) {
-      throw new BeliefBaseException(logsuffix(agentid) + e.getMessage());
+      throw new BeliefBaseException(logsuffix(agentid) + e.getMessage(), e);
     }
     int id = beliefset.getId();
-    Operator op = (strOp.equals("=")) ? Operator.EQ
-        : (strOp.equals("<")) ? Operator.LT : (strOp.equals(">")) ? Operator.GT : Operator.NE;
+    Operator op = "=".equals(strOp) ? Operator.EQ
+        : "<".equals(strOp) ? Operator.LT : ">".equals(strOp) ? Operator.GT : Operator.NE;
     return new AQuery(id, field, op, val);
   }
 
@@ -252,7 +252,7 @@ public class ABeliefStore extends BeliefBase {
           break;
       }
     } catch (Exception e) {
-      throw new BeliefBaseException("value '" + str + "' is not of type " + stype);
+      throw new BeliefBaseException("value '" + str + "' is not of type " + stype, e);
     }
     return val;
   }
@@ -293,7 +293,7 @@ public class ABeliefStore extends BeliefBase {
         Object lhs = belief.getTuple()[query.getField()];
         Object rhs = query.getValue();
         // Match wildcard or exact string
-        return rhs.equals("*") || lhs.equals(rhs);
+        return "*".equals(rhs) || lhs.equals(rhs);
       default:
         break;
     }

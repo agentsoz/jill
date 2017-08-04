@@ -26,6 +26,9 @@
   <rule ref="rulesets/java/codesize.xml/TooManyMethods">
     <priority>5</priority>
   </rule>
+  <rule ref="rulesets/java/codesize.xml/ExcessiveMethodLength">
+    <priority>5</priority>
+  </rule>
 
   <rule ref="rulesets/java/design.xml" >
     <exclude name="ConfusingTernary"/>
@@ -52,6 +55,7 @@
   <rule ref="rulesets/java/typeresolution.xml" />
   <rule ref="rulesets/java/unnecessary.xml" >
     <exclude name="UselessParentheses"/>
+    <exclude name="UnnecessaryModifier"/>
   </rule>
   <rule ref="rulesets/java/unusedcode.xml" />
 

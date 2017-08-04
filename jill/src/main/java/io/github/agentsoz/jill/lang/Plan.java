@@ -20,7 +20,9 @@ public abstract class Plan {
 
   private final Agent agent;
   private final Goal goal;
-  private byte index = 0;
+  private byte index;
+
+  public PlanStep[] body;
 
   /**
    * Creates a new plan for the gven goal for the given agent.
@@ -37,8 +39,6 @@ public abstract class Plan {
   public abstract boolean context();
 
   public abstract void setPlanVariables(HashMap<String, Object> vars);
-
-  public PlanStep[] body;
 
   public Agent getAgent() {
     return agent;

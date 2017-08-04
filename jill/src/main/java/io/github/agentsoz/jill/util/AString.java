@@ -14,7 +14,13 @@ package io.github.agentsoz.jill.util;
  * If not, see <http://www.gnu.org/licenses/lgpl-3.0.html>. #L%
  */
 
+import io.github.agentsoz.jill.Main;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.UnsupportedEncodingException;
+
 
 /**
  * AString provides utility functions to convert a String object to a byte array for compressed
@@ -26,7 +32,9 @@ import java.io.UnsupportedEncodingException;
  * @author dsingh
  *
  */
-public class AString {
+public final class AString {
+
+  private static final Logger logger = LoggerFactory.getLogger(Main.LOGGER_NAME);
 
   /** The java.nio.charset to use for converting to/from byte array */
   private static final String CHARSET = "UTF-8";
@@ -53,7 +61,7 @@ public class AString {
     try {
       return str.getBytes(CHARSET);
     } catch (UnsupportedEncodingException e) {
-      e.printStackTrace();
+      logger.error("Could not convert '" + str + "' to byte[]", e);
     }
     return null;
   }
@@ -72,7 +80,7 @@ public class AString {
     try {
       return new String(bytes, CHARSET);
     } catch (UnsupportedEncodingException e) {
-      e.printStackTrace();
+      logger.error("Could not convert '" + bytes + "' to string", e);
     }
     return null;
   }

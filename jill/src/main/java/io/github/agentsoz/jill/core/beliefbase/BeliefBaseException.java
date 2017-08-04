@@ -20,4 +20,9 @@ public class BeliefBaseException extends Exception {
   public BeliefBaseException(String msg) {
     super(msg);
   }
+  
+  public BeliefBaseException(String msg, Exception exception) {
+    super(msg,exception);
+  }
+
 }

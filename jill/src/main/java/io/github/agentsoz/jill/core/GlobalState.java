@@ -27,14 +27,7 @@ import java.util.HashSet;
  * @author dsingh
  *
  */
-public class GlobalState {
-
-  /**
-   * This class cannot be instantiated.
-   */
-  private GlobalState() {
-
-  }
+public final class GlobalState {
 
   /**
    * Catalog of all agent types in the system, loaded at runtime. Each entry in the catalog is
@@ -69,6 +62,13 @@ public class GlobalState {
    * The list of registered external event handlers (jill extensions).
    */
   public static HashSet<JillExtension> eventHandlers = new HashSet<JillExtension>();
+
+  /**
+   * This class cannot be instantiated.
+   */
+  private GlobalState() {
+
+  }
 
   /**
    * Resets the global state.
