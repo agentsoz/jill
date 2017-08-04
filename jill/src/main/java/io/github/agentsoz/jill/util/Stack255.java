@@ -32,7 +32,7 @@ public class Stack255 {
    * Specifies the increment by which the capacity should be extended, once the stack reaches full
    * capacity.
    */
-  private int increment;
+  private final int increment;
 
   /**
    * Objects in this stack.

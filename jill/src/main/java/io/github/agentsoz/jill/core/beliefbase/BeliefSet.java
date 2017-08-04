@@ -22,7 +22,7 @@ import java.util.Arrays;
 
 public class BeliefSet extends AObject {
 
-  private BeliefSetField[] fields;
+  private final BeliefSetField[] fields;
 
   /**
    * Constructs a new belief set.

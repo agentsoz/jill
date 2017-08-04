@@ -20,7 +20,7 @@ import io.github.agentsoz.jill.struct.AObject;
 public class AObjectCatalog extends AObject {
 
   private int nextid = GlobalConstant.NULLID + 1;
-  private int increment;
+  private final int increment;
   private AObject[] objects;
 
   /**

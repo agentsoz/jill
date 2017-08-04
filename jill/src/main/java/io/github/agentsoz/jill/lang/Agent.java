@@ -72,7 +72,7 @@ public class Agent extends AObject {
    * an issue for recursive behaviours where a plan posts an instance of the same goal type that it
    * handles.
    */
-  private Stack255 executionStack;
+  private final Stack255 executionStack;
 
   /**
    * A handle to any registered meta-planning function.

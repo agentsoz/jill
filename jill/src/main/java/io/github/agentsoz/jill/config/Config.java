@@ -23,12 +23,12 @@ import java.util.List;
 
 public class Config {
 
-  private String logFile = "Run.log";
-  private String logLevel = "WARN";
-  private String programOutputFile = null;
-  private Integer numThreads = Runtime.getRuntime().availableProcessors();
-  private Integer randomSeed = -1;
-  private Boolean doPauseForUserInput = false;
+  private final String logFile = "Run.log";
+  private final String logLevel = "WARN";
+  private final String programOutputFile = null;
+  private final Integer numThreads = Runtime.getRuntime().availableProcessors();
+  private final Integer randomSeed = -1;
+  private final Boolean doPauseForUserInput = false;
 
   private List<AgentTypeData> agents;
   private List<ExtensionData> extensions;

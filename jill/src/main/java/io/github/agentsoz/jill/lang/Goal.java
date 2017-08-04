@@ -18,7 +18,7 @@ import io.github.agentsoz.jill.util.AString;
 
 public class Goal {
 
-  private byte[] name;
+  private final byte[] name;
 
   public Goal(String str) {
     name = AString.toBytes(str);

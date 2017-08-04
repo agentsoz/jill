@@ -37,9 +37,9 @@ import java.util.Set;
  */
 public class PlanBindings {
 
-  private LinkedHashMap<Plan, LinkedHashSet<Belief>> bindings;
+  private final LinkedHashMap<Plan, LinkedHashSet<Belief>> bindings;
   private int cachedsize;
-  private Random rand;
+  private final Random rand;
 
 
   /**
