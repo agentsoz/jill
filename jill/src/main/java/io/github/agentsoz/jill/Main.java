@@ -49,6 +49,13 @@ public class Main {
   private static final String agentsIn = " agents in ";
   
   /**
+   * This class cannot be instantiated.
+   */
+  private Main() {
+    
+  }
+  
+  /**
    * Program entry
    * 
    * @param args command line arguments.

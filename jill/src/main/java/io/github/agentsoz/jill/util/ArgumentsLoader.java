@@ -31,6 +31,13 @@ public class ArgumentsLoader {
   private static Config config = null;
 
   /**
+   * This class cannot be instantiated.
+   */
+  private ArgumentsLoader() {
+    
+  }
+  
+  /**
    * Returns a usage string for the Jill command line arguments.
    * 
    * @return the usage string

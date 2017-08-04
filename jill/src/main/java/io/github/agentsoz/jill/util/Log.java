@@ -28,6 +28,12 @@ public class Log {
 
   private static Logger logger;
 
+  /**
+   * This class cannot be instantiated.
+   */
+  private Log() {
+    
+  }
 
   public static void info(String msg) {
     logger.info(msg);

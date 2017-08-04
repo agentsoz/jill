@@ -37,6 +37,14 @@ public class ProgramLoader {
   private static final String knowsNothing =
       "annotation. Without it, the BDI execution engine does not know anything ";
 
+  
+  /**
+   * This class cannot be instantiated.
+   */
+  private ProgramLoader() {
+    
+  }
+  
   /**
    * Creates a given number of agents of a given Class, and adds the newly created agents to the
    * given store.

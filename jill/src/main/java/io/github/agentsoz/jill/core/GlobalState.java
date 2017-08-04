@@ -30,6 +30,13 @@ import java.util.HashSet;
 public class GlobalState {
 
   /**
+   * This class cannot be instantiated.
+   */
+  private GlobalState() {
+
+  }
+
+  /**
    * Catalog of all agent types in the system, loaded at runtime. Each entry in the catalog is
    * assigned an automatically created ID.
    */

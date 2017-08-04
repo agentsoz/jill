@@ -32,6 +32,13 @@ public class AString {
   private static final String CHARSET = "UTF-8";
 
   /**
+   * This class cannot be instantiated.
+   */
+  private AString() {
+    
+  }
+  
+  /**
    * Encodes the String str into a sequence of bytes using the character set specified in CHARSET,
    * storing the result into a new byte array.
    * 
