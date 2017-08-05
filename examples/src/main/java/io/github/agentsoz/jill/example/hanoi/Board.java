@@ -17,20 +17,19 @@ package io.github.agentsoz.jill.example.hanoi;
 import io.github.agentsoz.jill.util.Log;
 
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.List;
 
 public class Board {
 
   @SuppressWarnings("unchecked")
-  ArrayList<Integer>[] pins = (ArrayList<Integer>[]) (new ArrayList[3]);
+  List<Integer>[] pins = (ArrayList<Integer>[]) (new ArrayList[3]);
 
   /**
    * Creates a new game board.
    * 
-   * @param rand the random number generator to use
    * @param ndiscs number of discs in the game
    */
-  public Board(Random rand, int ndiscs) {
+  public Board(int ndiscs) {
     for (int i = 0; i < pins.length; i++) {
       pins[i] = new ArrayList<Integer>();
     }
@@ -74,18 +73,19 @@ public class Board {
 
   @Override
   public String toString() {
-    String str = "";
+    StringBuilder str = new StringBuilder();
     if (pins.length == 0) {
-      return str;
+      return str.toString();
     }
     for (int i = 0; i < pins.length; i++) {
       if (pins[i].isEmpty()) {
-        str += "|";
+        str.append('|');
       }
       for (Integer j : pins[i]) {
-        str += "|" + j;
+        str.append('|');
+        str.append(j);
       }
-      str += "\n";
+      str.append('\n');
     }
     return str.substring(0, str.length() - 1);
   }

@@ -19,7 +19,6 @@ import io.github.agentsoz.jill.lang.AgentInfo;
 import io.github.agentsoz.jill.util.Log;
 
 import java.io.PrintStream;
-import java.util.Random;
 
 @AgentInfo(hasGoals = {"io.github.agentsoz.jill.example.hanoi.Solve"})
 public class Player extends Agent {
@@ -27,7 +26,6 @@ public class Player extends Agent {
   public static PrintStream out;
 
   // Defaults
-  private static Random rand = new Random();
   private static int ndiscs = 5;
   private Board board;
 
@@ -47,7 +45,7 @@ public class Player extends Agent {
     parse(params);
 
     // Create the board
-    board = new Board(rand, ndiscs);
+    board = new Board(ndiscs);
     out.println("Initialised hanoi board with " + ndiscs + " discs:");
     out.println(board.toString());
 
@@ -62,32 +60,13 @@ public class Player extends Agent {
    */
   public static void parse(String[] args) {
     for (int i = 0; i < args.length; i++) {
-      switch (args[i]) {
-        case "-seed":
-          if (i + 1 < args.length) {
-            i++;
-            int seed = 0;
-            try {
-              seed = Integer.parseInt(args[i]);
-              rand = new Random(seed);
-            } catch (Exception e) {
-              Log.warn("Seed value '" + args[i] + "' is not a number");
-            }
-          }
-          break;
-        case "-discs":
-          if (i + 1 < args.length) {
-            i++;
-            try {
-              ndiscs = Integer.parseInt(args[i]);
-            } catch (Exception e) {
-              Log.warn("Number od discs value '" + args[i] + "' is not a number");
-            }
-          }
-          break;
-        default:
-          // Ignore all other arguments
-          break;
+      if ("-discs".equals(args[i]) && (i + 1 < args.length)) {
+        i++;
+        try {
+          ndiscs = Integer.parseInt(args[i]);
+        } catch (NumberFormatException e) {
+          Log.warn("Number od discs value '" + args[i] + "' is not a number");
+        }
       }
     }
   }
