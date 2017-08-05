@@ -34,14 +34,14 @@ import java.util.TreeSet;
 @AgentInfo(hasGoals = {"io.github.agentsoz.jill.testgreeter.GoalBeFriendly"})
 public class TestGreeterAgent extends Agent {
 
-  protected PrintStream writer = null;
+  protected PrintStream writer;
 
   // Defaults
   private static Random rand = new Random();
   private static int numNeighbours = 1;
 
-  protected boolean verbosePlans = false;
-  private boolean verboseMetaPlan = false;
+  protected boolean verbosePlans;
+  private boolean verboseMetaPlan;
 
   private static final String beliefset = "neighbour";
 
@@ -86,21 +86,21 @@ public class TestGreeterAgent extends Agent {
    * @throws BeliefBaseException
    */
   private void registerNeighbours(Random rand, int count) throws BeliefBaseException {
-    final String[] MALES =
+    final String[] males =
         {"Alex", "Daniel", "John", "Lionel", "Nick", "Oscar", "Paul", "Rod", "Sam", "Tom"};
-    final String[] FEMALES = {"Alice", "Elisa", "Fiona", "Julia", "Kate", "Laura", "Margaret",
+    final String[] females = {"Alice", "Elisa", "Fiona", "Julia", "Kate", "Laura", "Margaret",
         "Nancy", "Pam", "Rachael"};
-    final String[] MIDDLE = {"A.", "B.", "C.", "D.", "E.", "F.", "G.", "H.", "I.", "J.", "K.", "L.",
+    final String[] middle = {"A.", "B.", "C.", "D.", "E.", "F.", "G.", "H.", "I.", "J.", "K.", "L.",
         "M.", "N.", "O.", "P.", "Q.", "R.", "S.", "T.", "U.", "V.", "W.", "X.", "Y.", "Z."};
-    final String[] SURNAMES = {"Anderson", "Brown", "Jones", "Martin", "Morton", "Smith", "Taylor",
+    final String[] surnames = {"Anderson", "Brown", "Jones", "Martin", "Morton", "Smith", "Taylor",
         "White", "Williams", "Wilson",};
     int size = (count < 0) ? 0 : count;
     for (int i = 0; i < size; i++) {
       boolean male = (rand.nextDouble() < 0.5) ? true : false;
       String name =
-          male ? MALES[rand.nextInt(MALES.length)] : FEMALES[rand.nextInt(FEMALES.length)];
-      name += " " + MIDDLE[rand.nextInt(MIDDLE.length)] + " ";
-      name += SURNAMES[rand.nextInt(SURNAMES.length)];
+          male ? males[rand.nextInt(males.length)] : females[rand.nextInt(females.length)];
+      name += " " + middle[rand.nextInt(middle.length)] + " ";
+      name += surnames[rand.nextInt(surnames.length)];
       String gender = male ? "male" : "female";
       this.addBelief(beliefset, name, gender);
     }
@@ -126,7 +126,7 @@ public class TestGreeterAgent extends Agent {
             i++;
             try {
               numNeighbours = Integer.parseInt(args[i]);
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
               Log.warn("Neighbourhood size value '" + args[i] + "' is not a number");
             }
           }
@@ -137,13 +137,15 @@ public class TestGreeterAgent extends Agent {
         case "-verboseMetaPlan":
           agent.verboseMetaPlan = true;
           break;
+        default:
+          break;
       }
     }
   }
 
   private class TestMetaPlan implements MetaPlan {
 
-    private PrintStream writer = null;
+    private final PrintStream writer;
 
     private TestMetaPlan(PrintStream writer) {
       this.writer = writer;
@@ -168,24 +170,24 @@ public class TestGreeterAgent extends Agent {
           }
         };
 
-        String s = "";
+        String str = "";
         for (Plan plan : bindings.getPlans()) {
           // Sort the bindings
           TreeSet<Belief> beliefs = new TreeSet<Belief>(comparator);
           beliefs.addAll(bindings.getBindings(plan));
           // Save back the bindings in sorted order
           bindings.add(plan, new LinkedHashSet<Belief>(beliefs));
-          s += plan.getAgent().getName() + ":";
-          s += plan.getClass().getSimpleName();
+          str += plan.getAgent().getName() + ":";
+          str += plan.getClass().getSimpleName();
           for (Belief belief : bindings.getBindings(plan)) {
-            s += "," + belief.getBeliefset();
+            str += "," + belief.getBeliefset();
             for (Object field : belief.getTuple()) {
-              s += ":" + field;
+              str += ":" + field;
             }
           }
         }
         if (writer != null) {
-          writer.println(s);
+          writer.println(str);
         }
       }
     }

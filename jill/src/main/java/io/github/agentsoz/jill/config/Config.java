@@ -21,14 +21,15 @@ import ch.qos.logback.classic.Level;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings({"PMD.ImmutableField","PMD.RedundantFieldInitializer"})
 public class Config {
 
-  private static final String logFile = "Run.log";
-  private static final String logLevel = "WARN";
-  private static final String programOutputFile = null;
-  private final Integer numThreads = Runtime.getRuntime().availableProcessors();
-  private final Integer randomSeed = -1;
-  private static final Boolean doPauseForUserInput = false;
+  private String logFile = "Run.log";
+  private String logLevel = "WARN";
+  private String programOutputFile = null;
+  private Integer numThreads = Runtime.getRuntime().availableProcessors();
+  private Integer randomSeed = -1;
+  private Boolean doPauseForUserInput = false;
 
   private List<AgentTypeData> agents;
   private List<ExtensionData> extensions;
