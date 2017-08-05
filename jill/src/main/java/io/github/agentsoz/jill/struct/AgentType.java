@@ -43,9 +43,7 @@ public class AgentType extends AObject {
       return null;
     }
     byte[] arr = new byte[goals.length];
-    for (int i = 0; i < arr.length; i++) {
-      arr[i] = (byte) (goals[i]);
-    }
+    System.arraycopy(goals, 0, arr, 0, arr.length);
     return arr;
   }
 
@@ -60,9 +58,7 @@ public class AgentType extends AObject {
       return;
     }
     goals = new byte[arr.length];
-    for (int i = 0; i < arr.length; i++) {
-      goals[i] = arr[i];
-    }
+    System.arraycopy(arr, 0, goals, 0, goals.length);
   }
 
   public void addGoal(byte goal) {

@@ -24,6 +24,12 @@ public class Board {
   @SuppressWarnings("unchecked")
   ArrayList<Integer>[] pins = (ArrayList<Integer>[]) (new ArrayList[3]);
 
+  /**
+   * Creates a new game board.
+   * 
+   * @param rand the random number generator to use
+   * @param ndiscs number of discs in the game
+   */
   public Board(Random rand, int ndiscs) {
     for (int i = 0; i < pins.length; i++) {
       pins[i] = new ArrayList<Integer>();
@@ -35,49 +41,53 @@ public class Board {
   }
 
   /**
-   * Move a disc from pin a to pin b
+   * Move a disc from pin A to pin B.
    * 
+   * @param pinA the ID of the source pin
+   * @param pinB the ID of the destination pin
    * @return true if the move was made, false otherwise
    */
-  public boolean move(int a, int b) {
+  public boolean move(int pinA, int pinB) {
     // Nothing to do if the pin number is invalid
-    if (a < 0 || a >= pins.length || b < 0 || b >= pins.length) {
-      Log.warn("Invalid board pin specified " + a + ". Should be between 0.." + (pins.length - 1)
+    if (pinA < 0 || pinA >= pins.length || pinB < 0 || pinB >= pins.length) {
+      Log.warn("Invalid board pin specified " + pinA + ". Should be between 0.." + (pins.length - 1)
           + " (inclusive).");
       return false;
-    } else if (pins[a].isEmpty()) {
-      Log.warn("No disc on pin" + a);
+    } else if (pins[pinA].isEmpty()) {
+      Log.warn("No disc on pin" + pinA);
       return false;
-    } else if (a == b) {
-      Log.info("Moving disc from pin" + a + " on to itself (means the board will not change)");
+    } else if (pinA == pinB) {
+      Log.info("Moving disc from pin" + pinA + " on to itself (means the board will not change)");
       return true;
     }
-    int discOnA = pins[a].get(pins[a].size() - 1);
-    int discOnB = (pins[b].isEmpty()) ? Integer.MAX_VALUE : pins[b].get(pins[b].size() - 1);
+    int discOnA = pins[pinA].get(pins[pinA].size() - 1);
+    int discOnB =
+        (pins[pinB].isEmpty()) ? Integer.MAX_VALUE : pins[pinB].get(pins[pinB].size() - 1);
     if (discOnB < discOnA) {
-      Log.warn("Cannot move disc" + discOnA + " (pin" + a + ") on to smaller disc" + discOnB
-          + " (pin" + b + ")");
+      Log.warn("Cannot move disc" + discOnA + " (pin" + pinA + ") on to smaller disc" + discOnB
+          + " (pin" + pinB + ")");
       return false;
     }
-    pins[b].add(pins[a].remove(pins[a].size() - 1));
+    pins[pinB].add(pins[pinA].remove(pins[pinA].size() - 1));
     return true;
   }
 
+  @Override
   public String toString() {
-    String s = "";
+    String str = "";
     if (pins.length == 0) {
-      return s;
+      return str;
     }
     for (int i = 0; i < pins.length; i++) {
       if (pins[i].isEmpty()) {
-        s += "|";
+        str += "|";
       }
       for (Integer j : pins[i]) {
-        s += "|" + j;
+        str += "|" + j;
       }
-      s += "\n";
+      str += "\n";
     }
-    return s.substring(0, s.length() - 1);
+    return str.substring(0, str.length() - 1);
   }
 
 }

@@ -78,6 +78,11 @@ public class TokenAgent3 extends Agent {
     }
   }
 
+  /**
+   * Parses the command line arguments.
+   * 
+   * @param args the command line arguments
+   */
   public static void parse(String[] args) {
     for (int i = 0; i < args.length; i++) {
       switch (args[i]) {
@@ -100,6 +105,9 @@ public class TokenAgent3 extends Agent {
               Log.warn("Value '" + args[i] + "' is not a number");
             }
           }
+          break;
+        default:
+          // Ignore all other arguments
           break;
       }
     }

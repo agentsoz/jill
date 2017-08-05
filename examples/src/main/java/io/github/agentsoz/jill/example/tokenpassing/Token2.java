@@ -27,6 +27,13 @@ public class Token2 extends Goal {
     super(str);
   }
 
+  
+  /**
+   * Creates a new Token2 goal.
+   * 
+   * @param round the current token passing round
+   * @param agent the recipient agent
+   */
   public Token2(int round, int agent) {
     this(null);
     this.agent = agent;

@@ -297,6 +297,7 @@
             <excludes>
               <exclude>**/SparseBitSet.java</exclude>
               <exclude>**/playground/**</exclude>
+              <exclude>**/jill/example/tokenpassing/TokenAgent*.java</exclude>
             </excludes>
             <excludeRoots>
               <excludeRoot>target/</excludeRoot>

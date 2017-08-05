@@ -55,6 +55,11 @@ public class Player extends Agent {
     post(new Solve("s", ndiscs, 0, 2, 1));
   }
 
+  /**
+   * Parses the command line arguments.
+   * 
+   * @param args the command line arguments
+   */
   public static void parse(String[] args) {
     for (int i = 0; i < args.length; i++) {
       switch (args[i]) {
@@ -79,6 +84,9 @@ public class Player extends Agent {
               Log.warn("Number od discs value '" + args[i] + "' is not a number");
             }
           }
+          break;
+        default:
+          // Ignore all other arguments
           break;
       }
     }

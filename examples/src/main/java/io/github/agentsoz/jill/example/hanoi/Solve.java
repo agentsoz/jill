@@ -29,8 +29,17 @@ public class Solve extends Goal {
     super(str);
   }
 
-  public Solve(String str, int disc, int src, int dest, int spare) {
-    this(str);
+  /**
+   * Creates a Solve goal.
+   * 
+   * @param name a name for this goal
+   * @param disc the the disc that is to be moved
+   * @param src the source pin ID, on which this disc currently sits
+   * @param dest the destination pin ID, to which this disc is to be moved
+   * @param spare the spare disc ID
+   */
+  public Solve(String name, int disc, int src, int dest, int spare) {
+    this(name);
     this.disc = disc;
     this.src = src;
     this.dest = dest;

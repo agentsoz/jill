@@ -25,6 +25,13 @@ public class MoveTower extends Plan {
 
   Solve solve;
 
+  /**
+   * Creates a MoveTower plan.
+   * 
+   * @param agent the agent that has this plan
+   * @param goal the goal that this plan handles
+   * @param name a name for this plan
+   */
   public MoveTower(Agent agent, Goal goal, String name) {
     super(agent, goal, name);
     solve = (Solve) goal;
@@ -41,14 +48,18 @@ public class MoveTower extends Plan {
     // TODO Auto-generated method stub
   }
 
+  private void log() {
+    Board board = ((Player) getAgent()).getBoard();
+    Player.out
+        .println("Moving disc " + solve.disc + " from pin " + solve.src + " to " + solve.dest);
+    board.move(solve.src, solve.dest);
+    Player.out.println(board.toString());
+  }
+  
   PlanStep[] steps = {new PlanStep() {
     public void step() {
       if (solve.disc == 1) {
-        Board board = ((Player) getAgent()).getBoard();
-        Player.out
-            .println("Moving disc " + solve.disc + " from pin " + solve.src + " to " + solve.dest);
-        board.move(solve.src, solve.dest);
-        Player.out.println(board.toString());
+        log();
       }
     }
   }, new PlanStep() {
@@ -60,11 +71,7 @@ public class MoveTower extends Plan {
   }, new PlanStep() {
     public void step() {
       if (solve.disc != 1) {
-        Board board = ((Player) getAgent()).getBoard();
-        Player.out
-            .println("Moving disc " + solve.disc + " from pin " + solve.src + " to " + solve.dest);
-        board.move(solve.src, solve.dest);
-        Player.out.println(board.toString());
+        log();
       }
     }
   }, new PlanStep() {
