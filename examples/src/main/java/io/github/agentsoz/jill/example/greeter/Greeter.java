@@ -76,14 +76,16 @@ public class Greeter extends Agent {
     final String[] surnames = {"Anderson", "Brown", "Jones", "Martin", "Morton", "Smith", "Taylor",
         "White", "Williams", "Wilson",};
     int size = (count < 0) ? 0 : count;
+    StringBuilder name = new StringBuilder();
     for (int i = 0; i < size; i++) {
       boolean male = (rand.nextDouble() < 0.5) ? true : false;
-      String name =
-          male ? males[rand.nextInt(males.length)] : females[rand.nextInt(females.length)];
-      name += " " + middle[rand.nextInt(middle.length)] + " ";
-      name += surnames[rand.nextInt(surnames.length)];
-      String gender = male ? "male" : "female";
-      this.addBelief(beliefset, name, gender);
+      name.setLength(0);
+      name.append(male ? males[rand.nextInt(males.length)] : females[rand.nextInt(females.length)]);
+      name.append(' ');
+      name.append(middle[rand.nextInt(middle.length)]);
+      name.append(' ');
+      name.append(surnames[rand.nextInt(surnames.length)]);
+      this.addBelief(beliefset, name, male ? "male" : "female");
     }
   }
 
@@ -102,7 +104,7 @@ public class Greeter extends Agent {
             try {
               seed = Integer.parseInt(args[i]);
               rand = new Random(seed);
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
               Log.warn("Seed value '" + args[i] + "' is not a number");
             }
           }
@@ -112,7 +114,7 @@ public class Greeter extends Agent {
             i++;
             try {
               numNeighbours = Integer.parseInt(args[i]);
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
               Log.warn("Neighbourhood size value '" + args[i] + "' is not a number");
             }
           }

@@ -36,7 +36,9 @@ public class ReceiveToken1 extends Plan {
   }
 
   @Override
-  public void setPlanVariables(HashMap<String, Object> vars) {}
+  public void setPlanVariables(HashMap<String, Object> vars) {
+    // No plan bindings to worry about
+  }
 
   PlanStep[] steps = {new PlanStep() {
     public void step() {

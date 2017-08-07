@@ -38,7 +38,7 @@ public class Token3 extends Goal {
     this(null);
     this.agent = agent;
     this.round = round;
-    setHops(0);
+    this.hops = 0;
   }
 
   public int getAgent() {

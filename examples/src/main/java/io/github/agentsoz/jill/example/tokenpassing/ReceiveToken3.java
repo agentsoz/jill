@@ -26,7 +26,7 @@ import java.util.HashMap;
 
 public class ReceiveToken3 extends Plan {
 
-  private String neighbour;
+  /*package*/ String neighbour;
 
   public ReceiveToken3(Agent agent, Goal goal, String name) {
     super(agent, goal, name);
@@ -49,12 +49,8 @@ public class ReceiveToken3 extends Plan {
   @Override
   public void setPlanVariables(HashMap<String, Object> vars) {
     for (String attribute : vars.keySet()) {
-      switch (attribute) {
-        case "name":
-          neighbour = (String) (vars.get(attribute));
-          break;
-        default:
-          break;
+      if ("name".equals(attribute)) {
+        neighbour = (String) (vars.get(attribute));
       }
     }
   }

@@ -48,7 +48,7 @@ public class MoveTower extends Plan {
     // TODO Auto-generated method stub
   }
 
-  private void log() {
+  /*package*/ void log() {
     Board board = ((Player) getAgent()).getBoard();
     Player.out
         .println("Moving disc " + solve.disc + " from pin " + solve.src + " to " + solve.dest);
