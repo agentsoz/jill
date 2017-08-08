@@ -1,6 +1,7 @@
 package io.github.agentsoz.jill.core.beliefbase;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.After;
 import org.junit.Before;
@@ -28,17 +29,17 @@ public class BeliefTest {
     Belief b7 = new Belief(1, 1, a2);
     Belief b8 = new Belief(1, 0, a2);
 
-    assertFalse(b1.equals(null));
-    assertFalse(b1.equals(new Object()));
-    assertFalse(b1.equals(b2));
-    assertTrue(b1.equals(b1));
-    assertTrue(b5.equals(b6));
-    assertFalse(b4.equals(b8));
-    assertFalse(b7.equals(b6));
+    assertNotEquals(null, b1);
+    assertNotEquals(new Object(), b1);
+    assertNotEquals(b1, b2);
+    assertEquals(b1, b1);
+    assertEquals(b5, b6);
+    assertNotEquals(b4, b8);
+    assertNotEquals(b7, b6);
 
     b7.setBeliefset(b8.getBeliefset());
     b7.setTuple(b8.getTuple());
-    assertTrue(b7.equals(b8));
+    assertEquals(b7, b8);
 
 
 

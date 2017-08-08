@@ -163,7 +163,7 @@ public class IntentionSelector implements Runnable {
               // Clear previously buffered context results if any
               agent.clearLastResults();
               // Evaluate the context condition
-              if (planInstance.context() == true) {
+              if (planInstance.context()) {
                 // Get the results of context query just performed
                 Set<Belief> results = agent.getLastResults();
                 // Add the results to the bindings
