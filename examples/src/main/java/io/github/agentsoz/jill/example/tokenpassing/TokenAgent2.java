@@ -48,20 +48,13 @@ public class TokenAgent2 extends Agent {
    */
   public static void parse(String[] args) {
     for (int i = 0; i < args.length; i++) {
-      switch (args[i]) {
-        case "-rounds":
-          if (i + 1 < args.length) {
-            i++;
-            try {
-              rounds = Integer.parseInt(args[i]);
-            } catch (NumberFormatException e) {
-              Log.warn("Value '" + args[i] + "' is not a number");
-            }
-          }
-          break;
-        default:
-          // Ignore all other arguments
-          break;
+      if ("-rounds".equals(args[i]) && i + 1 < args.length) {
+        i++;
+        try {
+          rounds = Integer.parseInt(args[i]);
+        } catch (NumberFormatException e) {
+          Log.warn("Value '" + args[i] + "' is not a number");
+        }
       }
     }
   }

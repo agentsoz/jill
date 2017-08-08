@@ -46,12 +46,8 @@ public class PlanGreetNeighbour extends Plan {
   @Override
   public void setPlanVariables(Map<String, Object> vars) {
     for (String attribute : vars.keySet()) {
-      switch (attribute) {
-        case "name":
-          neighbour = (String) (vars.get(attribute));
-          break;
-        default:
-          break;
+      if ("name".equals(attribute)) {
+        neighbour = (String) (vars.get(attribute));
       }
     }
   }

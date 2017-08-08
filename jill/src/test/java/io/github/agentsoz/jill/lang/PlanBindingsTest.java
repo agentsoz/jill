@@ -21,11 +21,11 @@ public class PlanBindingsTest {
 
     PlanBindings pb = new PlanBindings(null);
 
-    assertTrue(pb.size() == 0);
+    assertSame(0, pb.size());
     pb.clear();
-    assertTrue(pb.size() == 0);
+    assertSame(0, pb.size());
     pb.add(null, null);
-    assertTrue(pb.size() == 0);
+    assertSame(0, pb.size());
 
     Plan p1 = new Plan(null, null, null) {
       @Override
@@ -39,14 +39,14 @@ public class PlanBindingsTest {
     LinkedHashSet<Belief> lhs1 = new LinkedHashSet<Belief>();
 
     pb.add(null, lhs1);
-    assertSame(pb.size(),0);
+    assertSame(0, pb.size());
     pb.add(p1, null);
-    assertSame(pb.size(),1);
-    pb.add(p1, null);
-    pb.add(p1, null);
+    assertSame(1, pb.size());
     pb.add(p1, null);
     pb.add(p1, null);
-    assertSame(pb.size(),1);
+    pb.add(p1, null);
+    pb.add(p1, null);
+    assertSame(1, pb.size());
 
     Plan p2 = new Plan(null, null, null) {
       @Override
@@ -59,25 +59,25 @@ public class PlanBindingsTest {
     };
 
     pb.add(p2, null);
-    assertSame(pb.size(), 2);
+    assertSame(2, pb.size());
     pb.add(p2, lhs1);
-    assertSame(pb.size(), 2);
+    assertSame(2, pb.size());
 
     LinkedHashSet<Belief> lhs2 = new LinkedHashSet<Belief>();
     pb.add(p2, lhs2);
-    assertSame(pb.size(), 2);
+    assertSame(2, pb.size());
 
     LinkedHashSet<Belief> lhs3 = new LinkedHashSet<Belief>();
     lhs3.add(new Belief(0, 0, null));
     pb.add(p2, lhs3);
-    assertSame(pb.size(), 2);
+    assertSame(2, pb.size());
 
     LinkedHashSet<Belief> lhs4 = new LinkedHashSet<Belief>();
     lhs4.add(new Belief(1, 1, null));
     lhs4.add(new Belief(2, 2, null));
     lhs4.add(new Belief(3, 3, null));
     pb.add(p2, lhs4);
-    assertSame(pb.size(), 4);
+    assertSame(4, pb.size());
 
     pb.add(p2, lhs2);
     assertSame(pb.size(), 2);
@@ -93,7 +93,7 @@ public class PlanBindingsTest {
     };
 
     pb.add(p3, lhs4);
-    assertSame(pb.size(), 5);
+    assertSame(5, pb.size());
 
     Plan p4 = new Plan(null, null, null) {
       @Override
@@ -106,7 +106,7 @@ public class PlanBindingsTest {
     };
 
     pb.add(p4, lhs4);
-    assertSame(pb.size(), 8);
+    assertSame(8, pb.size());
 
   }
 
@@ -114,7 +114,7 @@ public class PlanBindingsTest {
   public void testGetPlans0() {
 
     PlanBindings pb = new PlanBindings(null);
-    assertNotSame(pb.getPlans(), null);
+    assertNotSame(null, pb.getPlans());
     assertTrue(pb.getPlans().isEmpty());
 
     Plan p1 = new Plan(null, null, null) {
@@ -131,7 +131,7 @@ public class PlanBindingsTest {
 
     pb.add(p1, null);
     pb.add(p1, lhs1);
-    assertSame(pb.getPlans().size(), 1);
+    assertSame(1, pb.getPlans().size());
     assertTrue(pb.getPlans().contains(p1));
 
     Plan p2 = new Plan(null, null, null) {
@@ -145,7 +145,7 @@ public class PlanBindingsTest {
     };
 
     pb.add(p2, null);
-    assertSame(pb.getPlans().size(), 2);
+    assertSame(2, pb.getPlans().size());
     assertTrue(pb.getPlans().contains(p1));
     assertTrue(pb.getPlans().contains(p2));
 
@@ -160,14 +160,14 @@ public class PlanBindingsTest {
     };
 
     pb.add(p3, null);
-    assertSame(pb.getPlans().size(), 3);
+    assertSame(3, pb.getPlans().size());
     assertTrue(pb.getPlans().contains(p1));
     assertTrue(pb.getPlans().contains(p2));
     assertTrue(pb.getPlans().contains(p3));
 
     pb.clear();
     pb.add(p3, null);
-    assertSame(pb.getPlans().size(), 1);
+    assertSame(1, pb.getPlans().size());
     assertTrue(!pb.getPlans().contains(p1));
     assertTrue(!pb.getPlans().contains(p2));
     assertTrue(pb.getPlans().contains(p3));
@@ -190,7 +190,7 @@ public class PlanBindingsTest {
     LinkedHashSet<Belief> lhs1 = new LinkedHashSet<Belief>();
 
     pb.add(p1, null);
-    assertSame(pb.getBindings(p1), null);
+    assertSame(null, pb.getBindings(p1));
 
     pb.add(p1, lhs1);
     assertSame(pb.getBindings(p1), lhs1);
@@ -206,7 +206,7 @@ public class PlanBindingsTest {
     };
 
     pb.add(p2, null);
-    assertNotSame(pb.getBindings(p1), null);
+    assertNotSame(null, pb.getBindings(p1));
     assertSame(pb.getBindings(p2), null);
 
     Plan p3 = new Plan(null, null, null) {
@@ -219,14 +219,14 @@ public class PlanBindingsTest {
       }
     };
 
-    assertSame(pb.getBindings(p3), null);
+    assertSame(null, pb.getBindings(p3));
     pb.add(p3, lhs1);
     assertSame(pb.getBindings(p3), lhs1);
 
     pb.clear();
-    assertSame(pb.getBindings(p1), null);
-    assertSame(pb.getBindings(p2), null);
-    assertSame(pb.getBindings(p3), null);
+    assertSame(null, pb.getBindings(p1));
+    assertSame(null, pb.getBindings(p2));
+    assertSame(null, pb.getBindings(p3));
   }
 
   @Test
@@ -320,11 +320,11 @@ public class PlanBindingsTest {
     o3 = pb.get(PlanSelectionPolicy.RANDOM);
     o4 = pb.get(PlanSelectionPolicy.RANDOM);
     o5 = pb.get(PlanSelectionPolicy.RANDOM);
-    assertFalse(o1 == o2 && o1 == o3 && o1 == o4 && o1 == o5);
-    assertFalse(o2 == o1 && o2 == o3 && o2 == o4 && o2 == o5);
-    assertFalse(o3 == o1 && o3 == o2 && o3 == o4 && o3 == o5);
-    assertFalse(o4 == o1 && o4 == o2 && o4 == o3 && o4 == o5);
-    assertFalse(o5 == o1 && o5 == o2 && o5 == o3 && o5 == o4);
+    assertFalse(o1.equals(o2) && o1.equals(o3) && o1.equals(o4) && o1.equals(o5));
+    assertFalse(o2.equals(o1) && o2.equals(o3) && o2.equals(o4) && o2.equals(o5));
+    assertFalse(o3.equals(o1) && o3.equals(o2) && o3.equals(o4) && o3.equals(o5));
+    assertFalse(o4.equals(o1) && o4.equals(o2) && o4.equals(o3) && o4.equals(o5));
+    assertFalse(o5.equals(o1) && o5.equals(o2) && o5.equals(o3) && o5.equals(o4));
 
   }
 

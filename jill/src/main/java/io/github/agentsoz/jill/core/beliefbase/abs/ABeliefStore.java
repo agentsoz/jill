@@ -292,6 +292,10 @@ public class ABeliefStore extends BeliefBase {
         Object rhs = query.getValue();
         // Match wildcard or exact string
         return "*".equals(rhs) || lhs.equals(rhs);
+      case GT:
+        // TODO: Handle Operator.GT
+      case LT:
+        // TODO: Handle Operator.LT
       default:
         break;
     }
