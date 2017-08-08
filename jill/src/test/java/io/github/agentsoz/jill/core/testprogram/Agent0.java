@@ -16,6 +16,6 @@ package io.github.agentsoz.jill.core.testprogram;
 
 public class Agent0 {
 
-  public Agent0(String name) {}
+  public Agent0(String name) {} // NOPMD - ignore unused param 'name'
 
 }

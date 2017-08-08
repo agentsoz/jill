@@ -31,7 +31,7 @@ public abstract class Plan {
    * @param goal the goal that this plan handles
    * @param name a name for this plan
    */
-  public Plan(Agent agent, Goal goal, String name) {
+  public Plan(Agent agent, Goal goal, String name) { // NOPMD - ignore unused param 'name'
     this.agent = agent;
     this.goal = goal;
   }

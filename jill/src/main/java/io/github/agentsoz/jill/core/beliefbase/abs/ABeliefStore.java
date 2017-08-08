@@ -159,7 +159,7 @@ public class ABeliefStore extends BeliefBase {
     }
 
     // Finally, filter the results for this agent
-    HashSet<Belief> matches = filterResultsForAgent(agentid, beliefs, results);
+    HashSet<Belief> matches = filterResultsForAgent(agentid, results);
     Log.debug("Agent " + agentid + " found " + matches.size() + " matches for the query");
 
     return matches;
@@ -209,8 +209,7 @@ public class ABeliefStore extends BeliefBase {
     return results;
   }
 
-  private static HashSet<Belief> filterResultsForAgent(int agentid,
-      ConcurrentHashMap<Belief, Integer> beliefs2, Set<Belief> results) {
+  private static HashSet<Belief> filterResultsForAgent(int agentid, Set<Belief> results) {
     assert (results != null);
     // Finally, check if this result holds true for this agent
     SparseBitSet agentbeliefs = agents2beliefs[agentid];
