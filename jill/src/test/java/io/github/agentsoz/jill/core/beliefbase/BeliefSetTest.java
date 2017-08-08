@@ -20,30 +20,30 @@ public class BeliefSetTest {
     BeliefSet bs7 = new BeliefSet(2, "", bsfa);
     BeliefSet bs8 = new BeliefSet(2, "bs8", bsfa);
 
-    assertFalse(bs1.equals(null));
-    assertFalse(bs1.equals(new Object()));
-    assertTrue(bs1.equals(bs1));
-    assertTrue(bs1.equals(bs2));
-    assertTrue(bs2.equals(bs3));
-    assertTrue(bs3.equals(bs4));
-    assertFalse(bs4.equals(bs5));
-    assertTrue(bs5.equals(bs6));
-    assertTrue(bs6.equals(bs7));
-    assertFalse(bs7.equals(bs8));
+    assertNotEquals(bs1, null);
+    assertNotEquals(bs1, new Object());
+    assertEquals(bs1, bs1);
+    assertEquals(bs1, bs2);
+    assertEquals(bs2, bs3);
+    assertEquals(bs3, bs4);
+    assertNotEquals(bs4, bs5);
+    assertEquals(bs5, bs6);
+    assertEquals(bs6, bs7);
+    assertNotEquals(bs7, bs8);
 
     HashSet<BeliefSet> hs = new HashSet<BeliefSet>();
     hs.add(bs1);
-    assertTrue(hs.size() == 1);
+    assertEquals(hs.size(), 1);
     hs.add(bs2);
-    assertTrue(hs.size() == 1);
+    assertEquals(hs.size(), 1);
     hs.add(bs3);
-    assertTrue(hs.size() == 2);
+    assertEquals(hs.size(), 2);
     hs.add(bs3);
-    assertTrue(hs.size() == 2);
+    assertEquals(hs.size(), 2);
     hs.add(bs5);
-    assertTrue(hs.size() == 3);
+    assertEquals(hs.size(), 3);
     hs.add(bs7);
-    assertTrue(hs.size() == 4);
+    assertEquals(hs.size(), 4);
   }
 
 }
