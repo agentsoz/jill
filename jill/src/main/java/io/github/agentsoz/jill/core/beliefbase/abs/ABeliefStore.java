@@ -30,6 +30,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@SuppressWarnings("PMD.GodClass")
 public class ABeliefStore extends BeliefBase {
 
   private static final float loadfactor = 0.9f;
@@ -119,7 +120,7 @@ public class ABeliefStore extends BeliefBase {
   }
 
   @Override
-  public HashSet<Belief> query(int agentid, String key) throws BeliefBaseException {
+  public Set<Belief> query(int agentid, String key) throws BeliefBaseException {
     // Get the cached query if we have seen it before, else parse it
     AQuery query = null;
     if (queries.containsKey(key)) {
@@ -159,7 +160,7 @@ public class ABeliefStore extends BeliefBase {
     }
 
     // Finally, filter the results for this agent
-    HashSet<Belief> matches = filterResultsForAgent(agentid, results);
+    Set<Belief> matches = filterResultsForAgent(agentid, results);
     Log.debug("Agent " + agentid + " found " + matches.size() + " matches for the query");
 
     return matches;
@@ -209,7 +210,7 @@ public class ABeliefStore extends BeliefBase {
     return results;
   }
 
-  private static HashSet<Belief> filterResultsForAgent(int agentid, Set<Belief> results) {
+  private static Set<Belief> filterResultsForAgent(int agentid, Set<Belief> results) {
     assert (results != null);
     // Finally, check if this result holds true for this agent
     SparseBitSet agentbeliefs = agents2beliefs[agentid];

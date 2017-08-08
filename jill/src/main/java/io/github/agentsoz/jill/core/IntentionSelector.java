@@ -40,9 +40,9 @@ public class IntentionSelector implements Runnable {
   private final Logger logger = LoggerFactory.getLogger(Main.LOGGER_NAME);
 
   private final int poolid;
-  private final HashSet<Integer> activeAgents;
-  HashSet<Integer> extToRemove;
-  HashSet<Integer> extToAdd;
+  private final Set<Integer> activeAgents;
+  Set<Integer> extToRemove;
+  Set<Integer> extToAdd;
 
   private final Object lock;
   private boolean hasMessage;
@@ -237,7 +237,7 @@ public class IntentionSelector implements Runnable {
     synchronized (lock) {
       logger.debug("Pool {} received a new message", poolid);
       hasMessage = true;
-      lock.notify();
+      lock.notify(); // NOPMD - ignore notifyall() warning
     }
   }
 
@@ -258,7 +258,7 @@ public class IntentionSelector implements Runnable {
       logger.debug("Pool {} received shutdown message", poolid);
       shutdown = true;
       hasMessage = true;
-      lock.notify();
+      lock.notify(); // NOPMD - ignore notifyall() warning
     }
   }
 

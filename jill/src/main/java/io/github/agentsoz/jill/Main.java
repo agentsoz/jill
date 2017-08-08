@@ -34,6 +34,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@SuppressWarnings("PMD.GodClass")
 public final class Main {
 
   public static final String LOGGER_NAME = "io.github.agentsoz.jill";

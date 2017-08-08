@@ -19,7 +19,7 @@ import ch.qos.logback.classic.Level;
 import io.github.agentsoz.jill.core.beliefbase.abs.ABeliefStore;
 import io.github.agentsoz.jill.util.Log;
 
-import java.util.HashSet;
+import java.util.Set;
 
 
 public abstract class BeliefBase {
@@ -32,7 +32,7 @@ public abstract class BeliefBase {
 
   public abstract boolean eval(int agentid, String query) throws BeliefBaseException;
 
-  public abstract HashSet<Belief> query(int agentid, String key) throws BeliefBaseException;
+  public abstract Set<Belief> query(int agentid, String key) throws BeliefBaseException;
 
   /**
    * Sample program to test belief base evaluation speeds.

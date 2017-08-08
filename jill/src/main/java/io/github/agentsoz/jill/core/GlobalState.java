@@ -19,6 +19,7 @@ import io.github.agentsoz.jill.lang.JillExtension;
 import io.github.agentsoz.jill.util.AObjectCatalog;
 
 import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -61,7 +62,7 @@ public final class GlobalState {
   /**
    * The list of registered external event handlers (jill extensions).
    */
-  public static HashSet<JillExtension> eventHandlers = new HashSet<JillExtension>();
+  public static Set<JillExtension> eventHandlers = new HashSet<JillExtension>();
 
   /**
    * This class cannot be instantiated.
