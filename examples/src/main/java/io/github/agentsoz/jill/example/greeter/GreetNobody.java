@@ -19,7 +19,7 @@ import io.github.agentsoz.jill.lang.Goal;
 import io.github.agentsoz.jill.lang.Plan;
 import io.github.agentsoz.jill.lang.PlanStep;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public class GreetNobody extends Plan {
 
@@ -44,7 +44,7 @@ public class GreetNobody extends Plan {
   }
 
   @Override
-  public void setPlanVariables(HashMap<String, Object> vars) {
+  public void setPlanVariables(Map<String, Object> vars) {
     // TODO Auto-generated method stub
   }
 

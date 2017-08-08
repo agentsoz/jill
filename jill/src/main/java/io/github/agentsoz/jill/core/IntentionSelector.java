@@ -33,6 +33,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Random;
+import java.util.Set;
 
 public class IntentionSelector implements Runnable {
 
@@ -164,7 +165,7 @@ public class IntentionSelector implements Runnable {
               // Evaluate the context condition
               if (planInstance.context() == true) {
                 // Get the results of context query just performed
-                HashSet<Belief> results = agent.getLastResults();
+                Set<Belief> results = agent.getLastResults();
                 // Add the results to the bindings
                 bindings.add(planInstance,
                     (results == null) ? null : new LinkedHashSet<Belief>(results));

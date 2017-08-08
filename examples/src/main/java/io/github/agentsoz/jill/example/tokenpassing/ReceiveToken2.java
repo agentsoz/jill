@@ -21,7 +21,7 @@ import io.github.agentsoz.jill.lang.Plan;
 import io.github.agentsoz.jill.lang.PlanStep;
 import io.github.agentsoz.jill.util.Log;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public class ReceiveToken2 extends Plan {
 
@@ -38,7 +38,7 @@ public class ReceiveToken2 extends Plan {
   }
 
   @Override
-  public void setPlanVariables(HashMap<String, Object> vars) {
+  public void setPlanVariables(Map<String, Object> vars) {
     // No plan bindings to worry about
   }
 

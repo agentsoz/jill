@@ -23,6 +23,7 @@ import io.github.agentsoz.jill.util.Log;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
@@ -35,7 +36,7 @@ import java.util.Set;
  */
 public class PlanBindings {
 
-  private final LinkedHashMap<Plan, Set<Belief>> bindings;
+  private final Map<Plan, Set<Belief>> bindings;
   private int cachedsize;
   private final Random rand;
 

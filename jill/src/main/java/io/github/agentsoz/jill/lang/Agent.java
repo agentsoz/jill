@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.PrintStream;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Base class for all BDI-like agents in the system.
@@ -81,7 +82,7 @@ public class Agent extends AObject {
 
   private static BeliefBase beliefbase;
   private static AObjectCatalog agents;
-  private HashSet<Belief> lastresult;
+  private Set<Belief> lastresult;
 
   /**
    * Creates a new agent with the given name.
@@ -241,7 +242,7 @@ public class Agent extends AObject {
    * 
    * @return the set of beliefs that matches the last query
    */
-  public HashSet<Belief> getLastResults() {
+  public Set<Belief> getLastResults() {
     return lastresult;
   }
 

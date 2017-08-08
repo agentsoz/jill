@@ -19,7 +19,7 @@ import io.github.agentsoz.jill.lang.Goal;
 import io.github.agentsoz.jill.lang.Plan;
 import io.github.agentsoz.jill.lang.PlanStep;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public class MoveTower extends Plan {
 
@@ -44,7 +44,7 @@ public class MoveTower extends Plan {
   }
 
   @Override
-  public void setPlanVariables(HashMap<String, Object> var) {
+  public void setPlanVariables(Map<String, Object> var) {
     // TODO Auto-generated method stub
   }
 

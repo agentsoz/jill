@@ -1,6 +1,6 @@
 package io.github.agentsoz.jill.lang;
 
-import java.util.HashMap;
+import java.util.Map;
 
 /*
  * #%L Jill Cognitive Agents Platform %% Copyright (C) 2014 - 2017 by its authors. See AUTHORS file.
@@ -38,7 +38,7 @@ public abstract class Plan {
 
   public abstract boolean context();
 
-  public abstract void setPlanVariables(HashMap<String, Object> vars);
+  public abstract void setPlanVariables(Map<String, Object> vars);
 
   public Agent getAgent() {
     return agent;

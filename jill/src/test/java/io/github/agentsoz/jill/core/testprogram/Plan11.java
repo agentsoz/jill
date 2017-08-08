@@ -5,7 +5,7 @@ import io.github.agentsoz.jill.lang.Goal;
 import io.github.agentsoz.jill.lang.Plan;
 import io.github.agentsoz.jill.lang.PlanInfo;
 
-import java.util.HashMap;
+import java.util.Map;
 
 /*
  * #%L Jill Cognitive Agents Platform %% Copyright (C) 2014 - 2017 by its authors. See AUTHORS file.
@@ -37,7 +37,7 @@ public class Plan11 extends Plan {
   }
 
   @Override
-  public void setPlanVariables(HashMap<String, Object> vars) {
+  public void setPlanVariables(Map<String, Object> vars) {
     // TODO Auto-generated method stub
 
   }

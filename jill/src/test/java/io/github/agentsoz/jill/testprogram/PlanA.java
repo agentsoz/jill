@@ -20,7 +20,7 @@ import io.github.agentsoz.jill.lang.Plan;
 import io.github.agentsoz.jill.lang.PlanInfo;
 import io.github.agentsoz.jill.lang.PlanStep;
 
-import java.util.HashMap;
+import java.util.Map;
 
 @PlanInfo(postsGoals = {"io.github.agentsoz.jill.testprogram.GoalB",
     "io.github.agentsoz.jill.testprogram.GoalC"})
@@ -50,7 +50,7 @@ public class PlanA extends Plan {
   },};
 
   @Override
-  public void setPlanVariables(HashMap<String, Object> vars) {
+  public void setPlanVariables(Map<String, Object> vars) {
     // TODO Auto-generated method stub
 
   }

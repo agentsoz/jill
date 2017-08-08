@@ -22,7 +22,7 @@ import io.github.agentsoz.jill.lang.Plan;
 import io.github.agentsoz.jill.lang.PlanStep;
 import io.github.agentsoz.jill.util.Log;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public class ReceiveToken3 extends Plan {
 
@@ -47,7 +47,7 @@ public class ReceiveToken3 extends Plan {
   }
 
   @Override
-  public void setPlanVariables(HashMap<String, Object> vars) {
+  public void setPlanVariables(Map<String, Object> vars) {
     for (String attribute : vars.keySet()) {
       if ("name".equals(attribute)) {
         neighbour = (String) (vars.get(attribute));
