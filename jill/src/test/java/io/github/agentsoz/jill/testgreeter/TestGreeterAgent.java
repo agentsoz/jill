@@ -95,14 +95,16 @@ public class TestGreeterAgent extends Agent {
     final String[] surnames = {"Anderson", "Brown", "Jones", "Martin", "Morton", "Smith", "Taylor",
         "White", "Williams", "Wilson",};
     int size = (count < 0) ? 0 : count;
+    StringBuilder name = new StringBuilder();
     for (int i = 0; i < size; i++) {
       boolean male = (rand.nextDouble() < 0.5) ? true : false;
-      String name =
-          male ? males[rand.nextInt(males.length)] : females[rand.nextInt(females.length)];
-      name += " " + middle[rand.nextInt(middle.length)] + " ";
-      name += surnames[rand.nextInt(surnames.length)];
-      String gender = male ? "male" : "female";
-      this.addBelief(beliefset, name, gender);
+      name.setLength(0);
+      name.append(male ? males[rand.nextInt(males.length)] : females[rand.nextInt(females.length)]);
+      name.append(' ');
+      name.append(middle[rand.nextInt(middle.length)]);
+      name.append(' ');
+      name.append(surnames[rand.nextInt(surnames.length)]);
+      this.addBelief(beliefset, name.toString(), male ? "male" : "female");
     }
   }
 
@@ -158,36 +160,41 @@ public class TestGreeterAgent extends Agent {
         Comparator<Belief> comparator = new Comparator<Belief>() {
           @Override
           public int compare(Belief b1, Belief b2) {
-            String s1 = String.valueOf(b1.getBeliefset());
+            StringBuilder s1 = new StringBuilder(String.valueOf(b1.getBeliefset()));
             for (Object field : b1.getTuple()) {
-              s1 += ":" + field;
+              s1.append(':');
+              s1.append(field);
             }
-            String s2 = String.valueOf(b2.getBeliefset());
+            StringBuilder s2 = new StringBuilder(String.valueOf(b2.getBeliefset()));
             for (Object field : b2.getTuple()) {
-              s2 += ":" + field;
+              s1.append(':');
+              s1.append(field);
             }
-            return s1.compareTo(s2);
+            return s1.toString().compareTo(s2.toString());
           }
         };
 
-        String str = "";
+        StringBuilder str = new StringBuilder();
         for (Plan plan : bindings.getPlans()) {
           // Sort the bindings
           TreeSet<Belief> beliefs = new TreeSet<Belief>(comparator);
           beliefs.addAll(bindings.getBindings(plan));
           // Save back the bindings in sorted order
           bindings.add(plan, new LinkedHashSet<Belief>(beliefs));
-          str += plan.getAgent().getName() + ":";
-          str += plan.getClass().getSimpleName();
+          str.append(plan.getAgent().getName());
+          str.append(':');
+          str.append(plan.getClass().getSimpleName());
           for (Belief belief : bindings.getBindings(plan)) {
-            str += "," + belief.getBeliefset();
+            str.append(',');
+            str.append(belief.getBeliefset());
             for (Object field : belief.getTuple()) {
-              str += ":" + field;
+              str.append(':');
+              str.append(field);
             }
           }
         }
         if (writer != null) {
-          writer.println(str);
+          writer.println(str.toString());
         }
       }
     }
