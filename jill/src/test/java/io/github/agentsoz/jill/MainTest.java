@@ -63,10 +63,7 @@ public class MainTest {
         "{" + "\n" + "\"randomSeed\":\"12345\"," + "\n" + "\"agents\":["
             + "{\"classname\":\"io.github.agentsoz.jill.testprogram.TestAgent\", \"args\":[\"-d\"], \"count\":\"1000\"}"
             + "]" + "}"};
-    try {
-      Main.main(args);
-    } catch (Exception e) {
-    }
+    Main.main(args);
     assertTrue(out.toString().equals(output));
   }
 
@@ -78,10 +75,7 @@ public class MainTest {
         "{" + "\n" + "\"randomSeed\":\"12345\"," + "\n" + "\"agents\":["
             + "{\"classname\":\"io.github.agentsoz.jill.testprogram.TestAgent\", \"args\":[\"-d\"], \"count\":\"1000\"}"
             + "]" + "}"};
-    try {
-      Main.main(args);
-    } catch (Exception e) {
-    }
+    Main.main(args);
     assertTrue(out.toString().equals(output));
   }
 
@@ -92,10 +86,7 @@ public class MainTest {
         "{\"agents\":["
             + "{\"classname\":\"io.github.agentsoz.jill.sendreceive.Talker\", \"args\":[], \"count\":\"2\"}"
             + "]}"};
-    try {
-      Main.main(args);
-    } catch (Exception e) {
-    }
+    Main.main(args);
     assertTrue(out.toString().equals(output));
   }
 
@@ -110,10 +101,7 @@ public class MainTest {
         "{" + "\n" + "\"randomSeed\":\"12345\"," + "\n" + "\"agents\":["
             + "{\"classname\":\"io.github.agentsoz.jill.testgreeter.TestGreeterAgent\", \"args\":[\"-seed\",\"12345\",\"-neighbourhoodSize\",\"5\", \"-verboseMetaPlan\"], \"count\":\"3\"}"
             + "]}"};
-    try {
-      Main.main(args);
-    } catch (Exception e) {
-    }
+    Main.main(args);
     assertEquals(output, out.toString());
   }
 
@@ -125,10 +113,7 @@ public class MainTest {
         "{" + "\n" + "\"randomSeed\":\"12345\"," + "\n" + "\"agents\":["
             + "{\"classname\":\"io.github.agentsoz.jill.testgreeter.TestGreeterAgent\", \"args\":[\"-seed\",\"12345\",\"-neighbourhoodSize\",\"5\", \"-verbosePlans\"], \"count\":\"3\"}"
             + "]}"};
-    try {
-      Main.main(args);
-    } catch (Exception e) {
-    }
+    Main.main(args);
     assertEquals(output, out.toString());
   }
 }

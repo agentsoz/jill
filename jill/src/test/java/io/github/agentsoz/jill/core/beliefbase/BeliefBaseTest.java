@@ -11,7 +11,7 @@ public class BeliefBaseTest {
     String[] args = {};
     try {
       BeliefBase.main(args);
-    } catch (Exception e) {
+    } catch (BeliefBaseException e) {
       fail("Exception was: " + e.getMessage());
     }
   }

@@ -91,14 +91,14 @@ public class ArgumentsLoaderParseTest extends TestCase {
               + "agents:[{classname:io.github.agentsoz.jill.example.hanoi.Player, "
               + "args:[-discs, 9], " + "count: 1}]" + "}"};
       ArgumentsLoader.parse(args);
-    } catch (Exception e) {
+    } catch (ExitException e) {
       fail("Command line args could not be parsed: " + e.getMessage());
     }
     try {
       String configFile = getClass().getResource("config-example.txt").getFile();
       String[] args = {"--configfile", configFile};
       ArgumentsLoader.parse(args);
-    } catch (Exception e) {
+    } catch (ExitException e) {
       fail("Command line args could not be parsed: " + e.getMessage());
     }
     try {
@@ -107,7 +107,7 @@ public class ArgumentsLoaderParseTest extends TestCase {
           "false", "--plan-selection-policy", "FIRST", "--plan-selection-policy", "RANDOM",
           "--plan-selection-policy", "LAST", "--plan-instances-limit", "10"};
       ArgumentsLoader.parse(args);
-    } catch (Exception e) {
+    } catch (ExitException e) {
       fail("Command line args could not be parsed: " + e.getMessage());
     }
   }
