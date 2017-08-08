@@ -4,8 +4,6 @@ import static org.junit.Assert.*;
 
 import java.util.HashSet;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 public class BeliefSetTest {

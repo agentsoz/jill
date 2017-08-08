@@ -22,9 +22,7 @@ import io.github.agentsoz.jill.core.beliefbase.abs.ABeliefStore;
 import io.github.agentsoz.jill.util.Log;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.Random;
 import java.util.Set;
 
@@ -37,7 +35,7 @@ import java.util.Set;
  */
 public class PlanBindings {
 
-  private final LinkedHashMap<Plan, LinkedHashSet<Belief>> bindings;
+  private final LinkedHashMap<Plan, Set<Belief>> bindings;
   private int cachedsize;
   private final Random rand;
 
@@ -50,7 +48,7 @@ public class PlanBindings {
    */
   public PlanBindings(Random rand) {
     this.rand = (rand == null) ? new Random() : rand;
-    bindings = new LinkedHashMap<Plan, LinkedHashSet<Belief>>();
+    bindings = new LinkedHashMap<Plan, Set<Belief>>();
     cachedsize = 0;
   }
 
@@ -61,13 +59,13 @@ public class PlanBindings {
    * @param plan the plan type
    * @param planBindings the available bindings
    */
-  public void add(Plan plan, LinkedHashSet<Belief> planBindings) {
+  public void add(Plan plan, Set<Belief> planBindings) {
     if (plan == null) {
       return;
     }
     // remove any old bindings, making sure to decrement the cached size
     if (this.bindings.containsKey(plan)) {
-      LinkedHashSet<Belief> oldBindings = this.bindings.remove(plan);
+      Set<Belief> oldBindings = this.bindings.remove(plan);
       if (oldBindings == null || oldBindings.isEmpty()) {
         cachedsize--;
       } else {
@@ -148,7 +146,7 @@ public class PlanBindings {
    */
   public Plan get(PlanSelectionPolicy policy) {
     Plan plan = null;
-    HashSet<Belief> vars = null;
+    Set<Belief> vars = null;
     boolean bindingsExist = false;
     int index = 0;
     switch (policy) {
@@ -168,14 +166,13 @@ public class PlanBindings {
           vars = bindings.get(p);
           bindingsExist = (vars != null && !vars.isEmpty());
           idx += bindingsExist ? vars.size() : 1;
-          if (idx <= index) {
-            continue;
+          if (idx > index) {
+            plan = p;
+            if (bindingsExist) {
+              index = index - (idx - vars.size());
+            }
+            break;
           }
-          plan = p;
-          if (bindingsExist) {
-            index = index - (idx - vars.size());
-          }
-          break;
         }
         break;
       default:
@@ -198,13 +195,12 @@ public class PlanBindings {
    * @param results the beliefs set representing all plan bindings
    * @param choice index of the belief that is to be used to populate the plan instance variables
    */
-  private final void setPlanVariables(Agent agent, Plan planInstance, HashSet<Belief> results,
+  private final void setPlanVariables(Agent agent, Plan planInstance, Set<Belief> results,
       int choice) {
     if (agent == null || planInstance == null || results == null || choice < 0
         || choice >= results.size()) {
       return;
     }
-    HashMap<String, Object> vars = new HashMap<String, Object>();
     Belief belief = null;
     int index = 0;
     for (Belief b : results) {
@@ -219,6 +215,7 @@ public class PlanBindings {
       return;
     }
     index = 0;
+    HashMap<String, Object> vars = new HashMap<String, Object>();
     for (Object o : belief.getTuple()) {
       try {
         String fieldname = ABeliefStore.getFieldName(agent.getId(), belief.getBeliefset(), index);

@@ -68,10 +68,7 @@ public abstract class Plan {
    * @return true if this plan has finished executing, false otherwise
    */
   public boolean hasfinished() {
-    if (body == null || body.length == 0 || index < 0 || index >= body.length) {
-      return true;
-    }
-    return false;
+    return (body == null || body.length == 0 || index < 0 || index >= body.length);
   }
 
 }

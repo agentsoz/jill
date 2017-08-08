@@ -88,11 +88,8 @@ public class BeliefSet extends AObject {
     if (name == null) {
       return (oname == null) ? true : false;
     }
-    if (!name.equals(oname)) {
-      return false;
-    }
     // No check for IDs, therefore if only IDs are different then objects are equal
-    return true;
+    return name.equals(oname);
   }
 
  

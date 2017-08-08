@@ -107,10 +107,7 @@ public class Belief extends AObject {
     if (beliefset != other.beliefset) {
       return false;
     }
-    if (!Arrays.equals(tuple, other.tuple)) {
-      return false;
-    }
-    return true;
+    return Arrays.equals(tuple, other.tuple);
   }
 
 

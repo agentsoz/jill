@@ -85,7 +85,7 @@ public class Greeter extends Agent {
       name.append(middle[rand.nextInt(middle.length)]);
       name.append(' ');
       name.append(surnames[rand.nextInt(surnames.length)]);
-      this.addBelief(beliefset, name, male ? "male" : "female");
+      this.addBelief(beliefset, name.toString(), male ? "male" : "female");
     }
   }
 

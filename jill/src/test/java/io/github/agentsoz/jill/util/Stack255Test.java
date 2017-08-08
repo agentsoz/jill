@@ -17,8 +17,6 @@ package io.github.agentsoz.jill.util;
 import static org.junit.Assert.*;
 import io.github.agentsoz.jill.util.Stack255;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 public class Stack255Test {

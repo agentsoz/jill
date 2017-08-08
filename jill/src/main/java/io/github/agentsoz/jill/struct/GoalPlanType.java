@@ -40,9 +40,7 @@ public class GoalPlanType extends AObject {
       return null;
     }
     byte[] arr = new byte[parents.length];
-    for (int i = 0; i < arr.length; i++) {
-      arr[i] = parents[i];
-    }
+    System.arraycopy(parents, 0, arr, 0, arr.length);
     return arr;
   }
 
@@ -67,9 +65,7 @@ public class GoalPlanType extends AObject {
       return null;
     }
     byte[] arr = new byte[children.length];
-    for (int i = 0; i < arr.length; i++) {
-      arr[i] = children[i];
-    }
+    System.arraycopy(children, 0, arr, 0, arr.length);
     return arr;
   }
 

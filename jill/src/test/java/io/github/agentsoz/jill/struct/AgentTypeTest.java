@@ -17,8 +17,6 @@ package io.github.agentsoz.jill.struct;
 import static org.junit.Assert.*;
 import io.github.agentsoz.jill.struct.AObject;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 public class AgentTypeTest {

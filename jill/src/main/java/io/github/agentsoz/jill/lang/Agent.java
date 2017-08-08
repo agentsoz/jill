@@ -176,9 +176,7 @@ public class Agent extends AObject {
    */
   public byte[] getGoals() {
     byte[] arr = new byte[goals.length];
-    for (int i = 0; i < arr.length; i++) {
-      arr[i] = goals[i];
-    }
+    System.arraycopy(goals, 0, arr, 0, arr.length);
     return arr;
   }
 
@@ -190,9 +188,7 @@ public class Agent extends AObject {
    */
   public void setGoals(byte[] bs) {
     goals = new byte[bs.length];
-    for (int i = 0; i < bs.length; i++) {
-      goals[i] = (byte) (bs[i] & 0x000f);
-    }
+    System.arraycopy(bs, 0, goals, 0, goals.length);
   }
 
   /**
