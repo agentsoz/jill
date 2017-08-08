@@ -149,7 +149,7 @@ public class TestGreeterAgent extends Agent {
 
     private final PrintStream writer;
 
-    private TestMetaPlan(PrintStream writer) {
+    /*package*/ TestMetaPlan(PrintStream writer) {
       this.writer = writer;
     }
 

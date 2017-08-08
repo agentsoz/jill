@@ -29,7 +29,9 @@ public class PlanBindingsTest {
 
     Plan p1 = new Plan(null, null, null) {
       @Override
-      public void setPlanVariables(Map<String, Object> vars) {}
+      public void setPlanVariables(Map<String, Object> vars) {
+        // Nothing to do here
+      }
 
       @Override
       public boolean context() {
@@ -50,7 +52,9 @@ public class PlanBindingsTest {
 
     Plan p2 = new Plan(null, null, null) {
       @Override
-      public void setPlanVariables(Map<String, Object> vars) {}
+      public void setPlanVariables(Map<String, Object> vars) {
+        // Nothing to do here
+      }
 
       @Override
       public boolean context() {
@@ -84,7 +88,9 @@ public class PlanBindingsTest {
 
     Plan p3 = new Plan(null, null, null) {
       @Override
-      public void setPlanVariables(Map<String, Object> vars) {}
+      public void setPlanVariables(Map<String, Object> vars) {
+        // Nothing to do here
+      }
 
       @Override
       public boolean context() {
@@ -97,7 +103,9 @@ public class PlanBindingsTest {
 
     Plan p4 = new Plan(null, null, null) {
       @Override
-      public void setPlanVariables(Map<String, Object> vars) {}
+      public void setPlanVariables(Map<String, Object> vars) {
+        // Nothing to do here
+      }
 
       @Override
       public boolean context() {
@@ -119,7 +127,9 @@ public class PlanBindingsTest {
 
     Plan p1 = new Plan(null, null, null) {
       @Override
-      public void setPlanVariables(Map<String, Object> vars) {}
+      public void setPlanVariables(Map<String, Object> vars) {
+        // Nothing to do here
+      }
 
       @Override
       public boolean context() {
@@ -136,7 +146,9 @@ public class PlanBindingsTest {
 
     Plan p2 = new Plan(null, null, null) {
       @Override
-      public void setPlanVariables(Map<String, Object> vars) {}
+      public void setPlanVariables(Map<String, Object> vars) {
+        // Nothing to do here
+      }
 
       @Override
       public boolean context() {
@@ -151,7 +163,9 @@ public class PlanBindingsTest {
 
     Plan p3 = new Plan(null, null, null) {
       @Override
-      public void setPlanVariables(Map<String, Object> vars) {}
+      public void setPlanVariables(Map<String, Object> vars) {
+        // Nothing to do here
+      }
 
       @Override
       public boolean context() {
@@ -180,7 +194,9 @@ public class PlanBindingsTest {
     PlanBindings pb = new PlanBindings(null);
     Plan p1 = new Plan(null, null, null) {
       @Override
-      public void setPlanVariables(Map<String, Object> vars) {}
+      public void setPlanVariables(Map<String, Object> vars) {
+        // Nothing to do here
+      }
 
       @Override
       public boolean context() {
@@ -197,7 +213,9 @@ public class PlanBindingsTest {
 
     Plan p2 = new Plan(null, null, null) {
       @Override
-      public void setPlanVariables(Map<String, Object> vars) {}
+      public void setPlanVariables(Map<String, Object> vars) {
+        // Nothing to do here
+      }
 
       @Override
       public boolean context() {
@@ -211,7 +229,9 @@ public class PlanBindingsTest {
 
     Plan p3 = new Plan(null, null, null) {
       @Override
-      public void setPlanVariables(Map<String, Object> vars) {}
+      public void setPlanVariables(Map<String, Object> vars) {
+        // Nothing to do here
+      }
 
       @Override
       public boolean context() {
@@ -236,7 +256,9 @@ public class PlanBindingsTest {
     Agent a2 = new Agent("a2");
     Plan p1 = new Plan(a1, null, null) {
       @Override
-      public void setPlanVariables(Map<String, Object> vars) {}
+      public void setPlanVariables(Map<String, Object> vars) {
+        // Nothing to do here
+      }
 
       @Override
       public boolean context() {
@@ -245,7 +267,9 @@ public class PlanBindingsTest {
     };
     Plan p2 = new Plan(null, null, null) {
       @Override
-      public void setPlanVariables(Map<String, Object> vars) {}
+      public void setPlanVariables(Map<String, Object> vars) {
+        // Nothing to do here
+      }
 
       @Override
       public boolean context() {
@@ -254,7 +278,9 @@ public class PlanBindingsTest {
     };
     Plan p3 = new Plan(a1, null, null) {
       @Override
-      public void setPlanVariables(Map<String, Object> vars) {}
+      public void setPlanVariables(Map<String, Object> vars) {
+        // Nothing to do here
+      }
 
       @Override
       public boolean context() {
@@ -263,7 +289,9 @@ public class PlanBindingsTest {
     };
     Plan p4 = new Plan(a2, null, null) {
       @Override
-      public void setPlanVariables(Map<String, Object> vars) {}
+      public void setPlanVariables(Map<String, Object> vars) {
+        // Nothing to do here
+      }
 
       @Override
       public boolean context() {
@@ -272,7 +300,9 @@ public class PlanBindingsTest {
     };
     Plan p5 = new Plan(a1, null, null) {
       @Override
-      public void setPlanVariables(Map<String, Object> vars) {}
+      public void setPlanVariables(Map<String, Object> vars) {
+        // Nothing to do here
+      }
 
       @Override
       public boolean context() {
