@@ -14,7 +14,7 @@ package io.github.agentsoz.jill.core;
  * If not, see <http://www.gnu.org/licenses/lgpl-3.0.html>. #L%
  */
 
-import static org.junit.Assert.*;
+import ch.qos.logback.classic.Level;
 
 import io.github.agentsoz.jill.Main;
 import io.github.agentsoz.jill.core.GlobalState;
@@ -22,14 +22,16 @@ import io.github.agentsoz.jill.core.ProgramLoader;
 import io.github.agentsoz.jill.lang.JillExtension;
 import io.github.agentsoz.jill.util.Log;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import ch.qos.logback.classic.Level;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 
 public class ProgramLoaderTest {
 

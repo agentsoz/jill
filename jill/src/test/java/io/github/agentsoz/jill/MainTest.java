@@ -14,21 +14,23 @@ package io.github.agentsoz.jill;
  * If not, see <http://www.gnu.org/licenses/lgpl-3.0.html>. #L%
  */
 
-import static org.junit.Assert.*;
+import ch.qos.logback.classic.Level;
+
 import io.github.agentsoz.jill.Main;
 import io.github.agentsoz.jill.core.GlobalState;
 import io.github.agentsoz.jill.core.ProgramLoaderTest;
 import io.github.agentsoz.jill.util.ArgumentsLoader;
 import io.github.agentsoz.jill.util.Log;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
+import static org.junit.Assert.assertEquals;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import ch.qos.logback.classic.Level;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+
 
 public class MainTest {
 
@@ -64,7 +66,7 @@ public class MainTest {
             + "{\"classname\":\"io.github.agentsoz.jill.testprogram.TestAgent\", \"args\":[\"-d\"], \"count\":\"1000\"}"
             + "]" + "}"};
     Main.main(args);
-    assertTrue(out.toString().equals(output));
+    assertEquals(out.toString(),output);
   }
 
   @Test
@@ -76,7 +78,7 @@ public class MainTest {
             + "{\"classname\":\"io.github.agentsoz.jill.testprogram.TestAgent\", \"args\":[\"-d\"], \"count\":\"1000\"}"
             + "]" + "}"};
     Main.main(args);
-    assertTrue(out.toString().equals(output));
+    assertEquals(out.toString(), output);
   }
 
   @Test
@@ -87,7 +89,7 @@ public class MainTest {
             + "{\"classname\":\"io.github.agentsoz.jill.sendreceive.Talker\", \"args\":[], \"count\":\"2\"}"
             + "]}"};
     Main.main(args);
-    assertTrue(out.toString().equals(output));
+    assertEquals(out.toString(), output);
   }
 
 
