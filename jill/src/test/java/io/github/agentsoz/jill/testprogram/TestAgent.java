@@ -23,9 +23,9 @@ import java.io.PrintStream;
     "io.github.agentsoz.jill.testprogram.GoalB", "io.github.agentsoz.jill.testprogram.GoalC"})
 public class TestAgent extends Agent {
 
-  private int i = 0;
-  private PrintStream writer = null;
-  private boolean verbose = false;
+  private int i;
+  private PrintStream writer;
+  private boolean verbose;
 
   public TestAgent(String str) {
     super(str);
