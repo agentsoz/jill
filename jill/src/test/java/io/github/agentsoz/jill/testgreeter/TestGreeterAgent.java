@@ -116,7 +116,7 @@ public class TestGreeterAgent extends Agent {
             try {
               seed = Integer.parseInt(args[i]);
               rand = new Random(seed);
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
               Log.warn("Seed value '" + args[i] + "' is not a number");
             }
           }

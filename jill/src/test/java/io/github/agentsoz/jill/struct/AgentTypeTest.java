@@ -23,12 +23,6 @@ import org.junit.Test;
 
 public class AgentTypeTest {
 
-  @Before
-  public void setUp() throws Exception {}
-
-  @After
-  public void tearDown() throws Exception {}
-
   @Test
   public void testDefaultsGettersSetters() {
     AgentType o = new AgentType("o");

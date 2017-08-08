@@ -64,7 +64,8 @@ public class ArgumentsLoaderParseTest extends TestCase {
     try {
       String[] args = null;
       ArgumentsLoader.parse(args);
-    } catch (Exception e) {
+    } catch (ExitException e) {
+      assertEquals("Exit status", 1, e.status);
     }
     try {
       String[] args = {};

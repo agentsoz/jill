@@ -62,7 +62,7 @@ public final class ArgumentsLoader {
    * @param args the command line arguments
    */
   public static void parse(String[] args) {
-    for (int i = 0; i < args.length; i++) {
+    for (int i = 0; args != null && i < args.length; i++) {
       switch (args[i]) {
         case "--config":
           if (i + 1 < args.length) {
@@ -79,11 +79,7 @@ public final class ArgumentsLoader {
         case "--exit-on-idle":
           if (i + 1 < args.length) {
             i++;
-            try {
-              GlobalConstant.EXIT_ON_IDLE = Boolean.parseBoolean(args[i]);
-            } catch (Exception e) {
-              abort("Option value '" + args[i] + "' is not a boolean");
-            }
+            GlobalConstant.EXIT_ON_IDLE = Boolean.parseBoolean(args[i]);
           }
           break;
         case "--help":
@@ -95,7 +91,7 @@ public final class ArgumentsLoader {
             try {
               GlobalConstant.PLAN_SELECTION_POLICY =
                   GlobalConstant.PlanSelectionPolicy.valueOf(args[i]);
-            } catch (Exception e) {
+            } catch (IllegalArgumentException e) {
               abort("Unknown plan selection policy '" + args[i] + "'");
             }
           }
@@ -105,7 +101,7 @@ public final class ArgumentsLoader {
             i++;
             try {
               GlobalConstant.PLAN_INSTANCES_LIMIT = Integer.parseInt(args[i]);
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
               abort("Option value '" + args[i] + "' is not a number");
             }
           }

@@ -23,12 +23,6 @@ import org.junit.Test;
 
 public class AStringTest {
 
-  @Before
-  public void setUp() throws Exception {}
-
-  @After
-  public void tearDown() throws Exception {}
-
   @Test
   public void testToBytesNullString() {
     assertNull(AString.toBytes(null));

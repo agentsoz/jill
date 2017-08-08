@@ -10,12 +10,6 @@ import org.junit.Test;
 
 public class BeliefSetTest {
 
-  @Before
-  public void setUp() throws Exception {}
-
-  @After
-  public void tearDown() throws Exception {}
-
   @Test
   public void test() {
     BeliefSet bs1 = new BeliefSet(0, null, null);

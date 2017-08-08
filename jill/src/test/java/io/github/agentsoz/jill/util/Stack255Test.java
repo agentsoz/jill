@@ -23,12 +23,6 @@ import org.junit.Test;
 
 public class Stack255Test {
 
-  @Before
-  public void setUp() throws Exception {}
-
-  @After
-  public void tearDown() throws Exception {}
-
   @Test
   public void testStack() {
     Stack255 s = new Stack255((byte) 0, (byte) 0);

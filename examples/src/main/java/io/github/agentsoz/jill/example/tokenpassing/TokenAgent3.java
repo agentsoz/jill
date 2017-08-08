@@ -91,7 +91,7 @@ public class TokenAgent3 extends Agent {
             i++;
             try {
               neighbourhood = Integer.parseInt(args[i]);
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
               Log.warn("Value '" + args[i] + "' is not a number");
             }
           }
@@ -101,7 +101,7 @@ public class TokenAgent3 extends Agent {
             i++;
             try {
               rounds = Integer.parseInt(args[i]);
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
               Log.warn("Value '" + args[i] + "' is not a number");
             }
           }

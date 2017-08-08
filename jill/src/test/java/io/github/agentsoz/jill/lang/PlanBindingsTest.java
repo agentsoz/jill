@@ -20,12 +20,6 @@ import java.util.Random;
 
 public class PlanBindingsTest {
 
-  @Before
-  public void setUp() throws Exception {}
-
-  @After
-  public void tearDown() throws Exception {}
-
   @Test
   public void testAdd0() {
 

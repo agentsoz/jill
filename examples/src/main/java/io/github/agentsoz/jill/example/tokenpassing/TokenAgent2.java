@@ -54,7 +54,7 @@ public class TokenAgent2 extends Agent {
             i++;
             try {
               rounds = Integer.parseInt(args[i]);
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
               Log.warn("Value '" + args[i] + "' is not a number");
             }
           }
