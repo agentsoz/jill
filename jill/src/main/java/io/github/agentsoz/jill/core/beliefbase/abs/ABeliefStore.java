@@ -38,13 +38,13 @@ public class ABeliefStore extends BeliefBase {
     EQ, NE, LT, GT,
   }
 
-  private static ConcurrentHashMap<String, BeliefSet> beliefsets;
-  private static ConcurrentHashMap<Integer, BeliefSet> beliefsetsByID;
-  private static ConcurrentHashMap<Belief, Integer> beliefs;
-  private static ConcurrentHashMap<Integer, Belief> beliefsByID;
-  private static ConcurrentHashMap<String, AQuery> queries;
-  private static ConcurrentHashMap<String, Set<Belief>> cachedresults;
-  private static SparseBitSet[] agents2beliefs;
+  private static ConcurrentHashMap<String, BeliefSet> beliefsets; // NOPMD - canot be final
+  private static ConcurrentHashMap<Integer, BeliefSet> beliefsetsByID; // NOPMD - canot be final
+  private static ConcurrentHashMap<Belief, Integer> beliefs; // NOPMD - canot be final
+  private static ConcurrentHashMap<Integer, Belief> beliefsByID; // NOPMD - canot be final
+  private static ConcurrentHashMap<String, AQuery> queries; // NOPMD - canot be final
+  private static ConcurrentHashMap<String, Set<Belief>> cachedresults; // NOPMD - canot be final
+  private static SparseBitSet[] agents2beliefs; // NOPMD - canot be final
 
   /**
    * Constructs a new belief store.

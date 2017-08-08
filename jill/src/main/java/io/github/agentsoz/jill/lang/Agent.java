@@ -80,8 +80,8 @@ public class Agent extends AObject {
    */
   private MetaPlan metaplan;
 
-  private static BeliefBase beliefbase;
-  private static AObjectCatalog agents;
+  private static BeliefBase beliefbase; // NOPMD - must not make this final
+  private static AObjectCatalog agents; // NOPMD - must not make this final
   private Set<Belief> lastresult;
 
   /**
