@@ -25,7 +25,7 @@ public class AObjectTest {
   @Test
   public void testDefaultsGettersSetters() {
     AObject o = new AObject(null);
-    assertEquals(null, o.getName());
+    assertEquals("", o.getName());
     assertEquals(GlobalConstant.NULLID, o.getId());
     o.setId(54321);
     assertEquals(54321, o.getId());

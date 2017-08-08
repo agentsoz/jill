@@ -56,14 +56,14 @@ public final class AString {
    */
   public static byte[] toBytes(String str) {
     if (str == null) {
-      return null;
+      return new byte[0];
     }
     try {
       return str.getBytes(CHARSET);
     } catch (UnsupportedEncodingException e) {
       logger.error("Could not convert '" + str + "' to byte[]", e);
     }
-    return null;
+    return new byte[0];
   }
 
   /**

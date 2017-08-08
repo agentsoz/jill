@@ -23,7 +23,10 @@ public class AStringTest {
 
   @Test
   public void testToBytesNullString() {
-    assertNull(AString.toBytes(null));
+    byte[] result = AString.toBytes(null);
+    byte[] expected = {};
+    assertNotNull(result);
+    assertArrayEquals(expected, result);
   }
 
   @Test

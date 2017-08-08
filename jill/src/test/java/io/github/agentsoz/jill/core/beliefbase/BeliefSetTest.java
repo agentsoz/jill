@@ -25,9 +25,9 @@ public class BeliefSetTest {
     assertTrue(bs1.equals(bs1));
     assertTrue(bs1.equals(bs2));
     assertTrue(bs2.equals(bs3));
-    assertFalse(bs3.equals(bs4));
+    assertTrue(bs3.equals(bs4));
     assertFalse(bs4.equals(bs5));
-    assertFalse(bs5.equals(bs6));
+    assertTrue(bs5.equals(bs6));
     assertTrue(bs6.equals(bs7));
     assertFalse(bs7.equals(bs8));
 
@@ -40,9 +40,9 @@ public class BeliefSetTest {
     assertTrue(hs.size() == 2);
     hs.add(bs3);
     assertTrue(hs.size() == 2);
-    hs.add(bs4);
-    assertTrue(hs.size() == 3);
     hs.add(bs5);
+    assertTrue(hs.size() == 3);
+    hs.add(bs7);
     assertTrue(hs.size() == 4);
   }
 
