@@ -1,5 +1,7 @@
 package io.github.agentsoz.jill.core;
 
+import io.github.agentsoz.jill.Main;
+
 /*
  * #%L Jill Cognitive Agents Platform %% Copyright (C) 2014 - 2017 by its authors. See AUTHORS file.
  * %% This program is free software: you can redistribute it and/or modify it under the terms of the
@@ -26,25 +28,31 @@ import io.github.agentsoz.jill.struct.AgentType;
 import io.github.agentsoz.jill.struct.GoalType;
 import io.github.agentsoz.jill.struct.PlanType;
 import io.github.agentsoz.jill.util.AObjectCatalog;
-import io.github.agentsoz.jill.util.Log;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationTargetException;
+
 
 
 
 public final class ProgramLoader {
 
+  private static final Logger logger = LoggerFactory.getLogger(Main.LOGGER_NAME);
+
   private static final String knowsNothing =
       "annotation. Without it, the BDI execution engine does not know anything ";
 
-  
+
   /**
    * This class cannot be instantiated.
    */
   private ProgramLoader() {
-    
+
   }
-  
+
   /**
    * Creates a given number of agents of a given Class, and adds the newly created agents to the
    * given store.
@@ -53,19 +61,17 @@ public final class ProgramLoader {
    * @param num the number of agents (class instances) to create
    * @param agents the store to which these agents should be added
    * @return true if agents were successfully created and added, false otherwise
-   * @throws Exception if something went wrong (usually fatal)
    */
-  public static boolean loadAgent(String className, int num, AObjectCatalog agents)
-      throws Exception {
+  public static boolean loadAgent(String className, int num, AObjectCatalog agents) {
     Class<?> aclass;
     try {
       // Check that we have an Agent class, else abort
       aclass = Class.forName(className);
       if (!Agent.class.isAssignableFrom(aclass)) {
-        error("Class '" + className + "' does not extend " + Agent.class.getName());
+        logger.error("Class '" + className + "' does not extend " + Agent.class.getName());
         return false;
       }
-      Log.info("Found class " + className + " of type " + Agent.class.getName());
+      logger.info("Found class " + className + " of type " + Agent.class.getName());
       // Save this agent type to the catalog of known agent types
       AgentType atype = new AgentType(className);
       atype.setAgentClass(aclass);
@@ -74,20 +80,18 @@ public final class ProgramLoader {
       // Find the goals that this agent has
       Annotation annotation = aclass.getAnnotation(AgentInfo.class);
       if (annotation == null) {
-        error("Agent " + className + " is missing the "
+        logger.error("Agent " + className + " is missing the "
             + "@AgentInfo(hasGoals={\"package.GoalClass1, package.GoalClass2, ...\"}) "
-            + knowsNothing
-            + "about this agent's goals and plans.");
+            + knowsNothing + "about this agent's goals and plans.");
         return false;
       }
       AgentInfo ainfo = (AgentInfo) annotation;
       String[] goals = ainfo.hasGoals();
       if (goals.length == 0) {
-        error(
+        logger.error(
             "Agent " + className + " does not have any goals defined. Was expecting something like "
                 + "@AgentInfo(hasGoals={\"package.GoalClass1, package.GoalClass2, ...\"}) "
-                + knowsNothing
-                + "about this agent's goals and plans.");
+                + knowsNothing + "about this agent's goals and plans.");
         return false;
       }
 
@@ -96,11 +100,11 @@ public final class ProgramLoader {
         Class<?> gclass = Class.forName(goals[i]);
         // Abort if the specified goal is not of type Goal
         if (!Goal.class.isAssignableFrom(gclass)) {
-          error("Agent " + className + " uses " + goals[i] + " which is not of type Goal.");
+          logger.error("Agent " + className + " uses " + goals[i] + " which is not of type Goal.");
           return false;
         }
         // Found the goal class, so add this goal to the catalog of known goal types
-        Log.info("Found class '" + gclass.getName() + "' of type " + Goal.class.getName());
+        logger.info("Found class '" + gclass.getName() + "' of type " + Goal.class.getName());
         GoalType gtype = new GoalType(gclass.getName());
         gtype.setGoalClass(gclass);
         GlobalState.goalTypes.push(gtype);
@@ -109,20 +113,18 @@ public final class ProgramLoader {
         // Find the plans that this goal has
         annotation = gclass.getAnnotation(GoalInfo.class);
         if (annotation == null) {
-          error("Goal " + gclass.getName() + " is missing the "
+          logger.error("Goal " + gclass.getName() + " is missing the "
               + "@GoalInfo(hasPlans={\"package.PlanClass1, package.PlanClass2, ...\"}) "
-              + knowsNothing
-              + "about which plans can handle this goal.");
+              + knowsNothing + "about which plans can handle this goal.");
           return false;
         }
         GoalInfo ginfo = (GoalInfo) annotation;
         String[] plans = ginfo.hasPlans();
         if (plans.length == 0) {
-          error("Goal " + gclass.getName()
+          logger.error("Goal " + gclass.getName()
               + " does not have any plans defined. Was expecting something like "
               + "@GoalInfo(hasPlans={\"package.PlanClass1, package.PlanClass2, ...\"}) "
-              + knowsNothing
-              + "about which plans can handle this goal.");
+              + knowsNothing + "about which plans can handle this goal.");
 
           return false;
         }
@@ -132,13 +134,13 @@ public final class ProgramLoader {
           Class<?> pclass = Class.forName(plans[j]);
           // Abort if the specified plan is not of type Plan
           if (!Plan.class.isAssignableFrom(pclass)) {
-            error("Goal " + gclass.getName() + " has plan " + pclass.getName()
+            logger.error("Goal " + gclass.getName() + " has plan " + pclass.getName()
                 + " which is not of type Plan.");
             return false;
           }
 
           // Found the plan class, so add this plan to the catalog of known plan types
-          Log.info("Found Plan " + pclass.getName() + " that handles Goal " + gclass.getName());
+          logger.info("Found Plan " + pclass.getName() + " that handles Goal " + gclass.getName());
           PlanType ptype = new PlanType(pclass.getName());
           ptype.setPlanClass(pclass);
           GlobalState.planTypes.push(ptype);
@@ -156,18 +158,18 @@ public final class ProgramLoader {
         // A @PlanInfo is optional, and only present if this plan posts goals
         if (pinfo != null) {
           if (pinfo.postsGoals().length == 0) {
-            error("Plan " + ptype.getName() + " has incomplete "
+            logger.error("Plan " + ptype.getName() + " has incomplete "
                 + "@PlanInfo(postsGoals={\"package.GoalClass1\", \"package.GoalClass2\", ...})) "
                 + "annotation");
             return false;
           }
 
-          Log.info("Plan " + ptype.getName() + " posts " + pinfo.postsGoals().length + " goals");
+          logger.info("Plan " + ptype.getName() + " posts " + pinfo.postsGoals().length + " goals");
           // Find the goal
           for (String goalname : pinfo.postsGoals()) {
             GoalType gtype = (GoalType) GlobalState.goalTypes.find(goalname);
             if (gtype == null) {
-              error("Plan " + ptype.getName() + " posts goal " + goalname
+              logger.error("Plan " + ptype.getName() + " posts goal " + goalname
                   + "which is not a known goal type.");
               return false;
             }
@@ -179,6 +181,7 @@ public final class ProgramLoader {
       }
 
       // Now create the specified number of instances of this agent type
+      int added = 0;
       try {
         for (int i = 0; i < num; i++) {
           // Create a new instance (name prefix 'a' for agents)
@@ -188,15 +191,19 @@ public final class ProgramLoader {
           agent.setGoals(atype.getGoals());
           // Add this instance to the catalog of agent instances
           agents.push(agent);
+          added++;
         }
+        logger.info("Finished loading {} agents", added);
 
-      } catch (Exception e) {
-        error(e.getMessage());
+      } catch (NoSuchMethodException | SecurityException | InstantiationException
+          | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+        logger.error("Could not create instance of class " + aclass.getName());
       }
 
     } catch (ClassNotFoundException e) {
-      error("Class not found: " + e.getMessage());
+      logger.error("Class not found: " + className, e);
     }
+    
     return true;
   }
 
@@ -205,33 +212,24 @@ public final class ProgramLoader {
    * 
    * @param className the fully qalified Java classname of the extension
    * @return an instance of the Jill extension class
-   * @throws Exception if something went wrong (usually fatal)
    */
-  public static JillExtension loadExtension(String className) throws Exception {
+  public static JillExtension loadExtension(String className) {
     JillExtension extension = null;
     Class<?> eclass;
     try {
       // Check that we have the extension class, else abort
       eclass = Class.forName(className);
       if (!JillExtension.class.isAssignableFrom(eclass)) {
-        error("Class '" + className + "' does not implement " + JillExtension.class.getName());
+        logger
+            .error("Class '" + className + "' does not implement " + JillExtension.class.getName());
         return null;
       }
-      Log.info("Loading extension " + className);
+      logger.info("Loading extension " + className);
       extension = (JillExtension) (eclass.newInstance());
-    } catch (ClassNotFoundException e) {
-      System.err.println("Class not found: " + e.getMessage());
-    } catch (InstantiationException | IllegalAccessException e) {
-      System.err.println("Could not create new instance of " + className + ": " + e.getMessage());
+    } catch (ClassNotFoundException | SecurityException | InstantiationException
+        | IllegalAccessException | IllegalArgumentException e) {
+      logger.error("Could not load extension " + className, e);
     }
     return extension;
-  }
-
-
-
-  private static void error(String err) throws Exception {
-    System.err.println(err);
-    Log.error(err);
-    throw new Exception(err);
   }
 }

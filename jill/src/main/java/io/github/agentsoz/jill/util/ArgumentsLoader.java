@@ -153,10 +153,6 @@ public final class ArgumentsLoader {
       config = gson.fromJson(str, Config.class);
     } catch (JsonSyntaxException e) {
       abort("Invalid JSON syntax in " + str + ": " + e.getMessage());
-    } catch (JsonIOException e) {
-      abort("Could not read config from " + str + ": " + e.getMessage());
-    } catch (Exception e) {
-      abort("Could not load config file " + str + ": " + e.getMessage());
     }
     return config;
   }
@@ -172,8 +168,6 @@ public final class ArgumentsLoader {
       abort("Could not read config from " + str + ": " + e.getMessage());
     } catch (FileNotFoundException e) {
       abort("Config file " + str + " not found: " + e.getMessage());
-    } catch (Exception e) {
-      abort("Could not load config file " + str + ": " + e.getMessage());
     }
     return config;
   }

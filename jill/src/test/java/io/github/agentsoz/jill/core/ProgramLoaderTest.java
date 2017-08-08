@@ -15,6 +15,8 @@ package io.github.agentsoz.jill.core;
  */
 
 import static org.junit.Assert.*;
+
+import io.github.agentsoz.jill.Main;
 import io.github.agentsoz.jill.core.GlobalState;
 import io.github.agentsoz.jill.core.ProgramLoader;
 import io.github.agentsoz.jill.lang.JillExtension;
@@ -41,7 +43,8 @@ public class ProgramLoaderTest {
     System.setOut(new PrintStream(out));
     System.setErr(new PrintStream(err));
     // Configure logging
-    Log.createLogger("", Level.INFO, ProgramLoaderTest.class.getSimpleName() + ".log");
+    Log.createLogger(Main.LOGGER_NAME, Level.INFO,
+        ProgramLoaderTest.class.getSimpleName() + ".log");
     GlobalState.reset();
   }
 
@@ -55,144 +58,102 @@ public class ProgramLoaderTest {
 
   @Test
   public void testAgentClass() {
-    try {
-      ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent0", 0, null);
-    } catch (Exception e) {
-    }
-    assertTrue(err.toString().contains("does not extend io.github.agentsoz.jill.lang.Agent"));
+    ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent0", 0, null);
+    assertTrue(out.toString().contains("does not extend io.github.agentsoz.jill.lang.Agent"));
   }
 
   @Test
   public void testAgentInfo() {
-    try {
-      ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent1", 0, null);
-    } catch (Exception e) {
-    }
-    assertTrue(err.toString().contains(
+    ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent1", 0, null);
+    assertTrue(out.toString().contains(
         "is missing the @AgentInfo(hasGoals={\"package.GoalClass1, package.GoalClass2, ...\"}) annotation"));
   }
 
   @Test
   public void testHasGoals() {
-    try {
-      ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent2", 0, null);
-    } catch (Exception e) {
-    }
-    assertTrue(err.toString().contains("does not have any goals defined"));
+    ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent2", 0, null);
+    assertTrue(out.toString().contains("does not have any goals defined"));
   }
 
   @Test
   public void testGoalNotFound() {
-    try {
-      ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent3", 0, null);
-    } catch (Exception e) {
-    }
-    assertTrue(err.toString().contains("Class not found"));
+    ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent3", 0, null);
+    assertTrue(out.toString().contains("Class not found"));
   }
 
   @Test
   public void testGoalType() {
-    try {
-      ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent4", 0, null);
-    } catch (Exception e) {
-    }
-    assertTrue(err.toString().contains("is not of type Goal"));
+    ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent4", 0, null);
+    assertTrue(out.toString().contains("is not of type Goal"));
   }
 
   @Test
   public void testGoalInfo() {
-    try {
-      ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent5", 0, null);
-    } catch (Exception e) {
-    }
-    assertTrue(err.toString().contains(
+    ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent5", 0, null);
+    assertTrue(out.toString().contains(
         "is missing the @GoalInfo(hasPlans={\"package.PlanClass1, package.PlanClass2, ...\"}) annotation"));
   }
 
   @Test
   public void testHasPlans() {
-    try {
-      ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent6", 0, null);
-    } catch (Exception e) {
-    }
-    assertTrue(err.toString().contains("does not have any plans defined"));
+    ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent6", 0, null);
+    assertTrue(out.toString().contains("does not have any plans defined"));
   }
 
   @Test
   public void testPlanNotFound() {
-    try {
-      ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent7", 0, null);
-    } catch (Exception e) {
-    }
-    assertTrue(err.toString().contains("Class not found"));
+    ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent7", 0, null);
+    assertTrue(out.toString().contains("Class not found"));
   }
 
   @Test
   public void testPlanType() {
-    try {
-      ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent8", 0, null);
-    } catch (Exception e) {
-    }
-    assertTrue(err.toString().contains("is not of type Plan"));
+    ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent8", 0, null);
+    assertTrue(out.toString().contains("is not of type Plan"));
   }
 
   @Test
   public void testNoError() {
-    try {
-      ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent9", 0, null);
-    } catch (Exception e) {
-    }
-    assertTrue(err.toString().equals(""));
+    ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent9", 0, null);
+    assertTrue(out.toString().contains("Finished loading 0 agents"));
   }
 
   @Test
   public void testPostsGoalsEmpty() {
-    try {
-      ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent10", 0, null);
-    } catch (Exception e) {
-    }
-    assertTrue(err.toString().contains(
+    ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent10", 0, null);
+    assertTrue(out.toString().contains(
         "has incomplete @PlanInfo(postsGoals={\"package.GoalClass1\", \"package.GoalClass2\", ...})) annotation"));
   }
 
   @Test
   public void testPostsGoalsNotFound() {
-    try {
-      ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent11", 0, null);
-    } catch (Exception e) {
-    }
-    assertTrue(err.toString().contains("is not a known goal type"));
+    ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent11", 0, null);
+    assertTrue(out.toString().contains("is not a known goal type"));
   }
 
   @Test
   public void testPostsGoals() {
-    try {
-      ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent12", 0, null);
-    } catch (Exception e) {
-    }
-    assertTrue(err.toString().equals(""));
+    ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent12", 0, null);
+    assertTrue(out.toString()
+        .contains("Found class " + "'io.github.agentsoz.jill.core.testprogram.Goal12' "
+            + "of type io.github.agentsoz.jill.lang.Goal"));
   }
 
   @Test
   public void testLoadExtension() {
     // Load the test extension
     JillExtension extension;
-    try {
-      extension =
-          ProgramLoader.loadExtension("io.github.agentsoz.jill.core.extension.TestExtension");
-      assertTrue(err.toString().equals(""));
-      assertNotNull(extension);
+    extension = ProgramLoader.loadExtension("io.github.agentsoz.jill.core.extension.TestExtension");
+    assertTrue(out.toString().contains("Loading extension"));
+    assertNotNull(extension);
 
-      // Call the init() function
-      String[] args = {"Here", "are", "four", "args"};
-      extension.init(args);
-      assertTrue(out.toString().contains("TestExtension initialised with 4 args"));
+    // Call the init() function
+    String[] args = {"Here", "are", "four", "args"};
+    extension.init(args);
+    assertTrue(out.toString().contains("TestExtension initialised with 4 args"));
 
-      // Call the finish function
-      extension.finish();
-      assertTrue(out.toString().contains("TestExtension finished"));
-    } catch (Exception e) {
-      fail();
-    }
+    // Call the finish function
+    extension.finish();
+    assertTrue(out.toString().contains("TestExtension finished"));
   }
 }

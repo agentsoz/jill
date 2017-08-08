@@ -144,9 +144,8 @@ public class ABeliefStore extends BeliefBase {
       try {
         query = parseQuery(agentid, strBeliefset, strField, strOp, strVal);
         queries.put(key, query);
-      } catch (Exception e) {
-        throw new BeliefBaseException(
-            logsuffix(agentid) + "invalid query '" + key + "' : " + e.getMessage(), e);
+      } catch (BeliefBaseException e) {
+        throw new BeliefBaseException(logsuffix(agentid) + "could not parse query: " + key, e);
       }
     }
     // Get the cached results if they exist,
@@ -251,7 +250,7 @@ public class ABeliefStore extends BeliefBase {
           // FIXME: Ignoring other types for now (while we are still developing new types)
           break;
       }
-    } catch (Exception e) {
+    } catch (NumberFormatException e) {
       throw new BeliefBaseException("value '" + str + "' is not of type " + stype, e);
     }
     return val;

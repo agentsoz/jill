@@ -28,7 +28,9 @@ import io.github.agentsoz.jill.util.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -47,53 +49,53 @@ public final class Main {
   private static PrintStream writer;
 
   private static final String agentsIn = " agents in ";
-  
+
   /**
    * This class cannot be instantiated.
    */
   private Main() {
-    
+
   }
-  
+
   /**
    * Program entry
    * 
    * @param args command line arguments.
    */
   public static void main(String[] args) {
-    try {
-      // Parse the command line options
-      ArgumentsLoader.parse(args);
+    // Parse the command line options
+    ArgumentsLoader.parse(args);
 
-      // Load the configuration
-      Config config = ArgumentsLoader.getConfig();
+    // Load the configuration
+    Config config = ArgumentsLoader.getConfig();
 
-      // Initialise the system with the given arguments
-      init(config);
-
-      // load all extensions
-      loadExtensions(config);
-
-      // Start the engine
-      start(config);
-
-      // Wait until the agents become idle
-      waitUntilIdle();
-
-      // finish up
-      finish();
-    } catch (Exception e) {
-      logger.error("ERROR during Jill execution", e);
+    // Initialise the system with the given arguments
+    if (!init(config)) {
+      return;
     }
+
+    // load all extensions
+    if (!loadExtensions(config)) {
+      return;
+    }
+
+    // Start the engine
+    start(config);
+
+    // Wait until the agents become idle
+    waitUntilIdle();
+
+    // finish up
+    finish();
   }
 
   /**
    * Initialises the Jill engine.
    * 
    * @param config a valid loaded configuration
-   * @throws Exception thrown if something went wrong
+   * @p
    */
-  public static void init(Config config) throws Exception {
+  public static boolean init(Config config) {
 
     // Pause for key press from user if requested
     if (config.isDoPauseForUserInput()) {
@@ -117,16 +119,18 @@ public final class Main {
     // Create the central belief base
     GlobalState.beliefbase = new ABeliefStore(numAgents, config.getNumThreads());
     long t0;
-    long t1;
 
     // Create the agents
     t0 = System.currentTimeMillis();
     for (Config.AgentTypeData agentType : config.getAgents()) {
-      ProgramLoader.loadAgent(agentType.getClassname(), agentType.getCount(), GlobalState.agents);
+      if (!ProgramLoader.loadAgent(agentType.getClassname(), agentType.getCount(),
+          GlobalState.agents)) {
+        // return unsuccessful
+        return false;
+      }
     }
-    t1 = System.currentTimeMillis();
-    logger.info(
-        "Created " + GlobalState.agents.size() + agentsIn + Log.formattedDuration(t0, t1));
+    long t1 = System.currentTimeMillis();
+    logger.info("Created " + GlobalState.agents.size() + agentsIn + Log.formattedDuration(t0, t1));
 
     // Initialise the thread pools
     initIntentionSelectionPools(numAgents, config.getNumThreads());
@@ -136,7 +140,7 @@ public final class Main {
     if (config.getProgramOutputFile() != null) {
       try {
         writer = new PrintStream(config.getProgramOutputFile(), "UTF-8");
-      } catch (Exception e) {
+      } catch (FileNotFoundException | UnsupportedEncodingException e) {
         logger.error("Could not open program outout file " + config.getProgramOutputFile(), e);
       }
     } else {
@@ -146,6 +150,8 @@ public final class Main {
     // Initialise the intention selection threads
     initIntentionSelectionThreads(config);
 
+    // return success
+    return true;
   }
 
   /**
@@ -169,8 +175,7 @@ public final class Main {
       }
     }
     long t1 = System.currentTimeMillis();
-    logger.info(
-        "Started " + GlobalState.agents.size() + agentsIn + Log.formattedDuration(t0, t1));
+    logger.info("Started " + GlobalState.agents.size() + agentsIn + Log.formattedDuration(t0, t1));
 
     // Start the intention selection threads
     startIntentionSelectionThreads();
@@ -195,8 +200,8 @@ public final class Main {
     }
 
     long t1 = System.currentTimeMillis();
-    logger.info("Finished running " + GlobalState.agents.size() + agentsIn
-        + Log.formattedDuration(t0, t1));
+    logger.info(
+        "Finished running " + GlobalState.agents.size() + agentsIn + Log.formattedDuration(t0, t1));
   }
 
   /**
@@ -224,27 +229,30 @@ public final class Main {
       writer.close();
     }
     long t1 = System.currentTimeMillis();
-    logger.info(
-        "Terminated " + GlobalState.agents.size() + agentsIn + Log.formattedDuration(t0, t1));
+    logger
+        .info("Terminated " + GlobalState.agents.size() + agentsIn + Log.formattedDuration(t0, t1));
   }
 
   /**
    * Loads any configured extensions (see {@link JillExtension}).
    * 
    * @param config a valid configuration
-   * @throws Exception thrown if something went wrong
+   * @return true if successfully loaded, false otherwise
    */
-  private static void loadExtensions(Config config) throws Exception {
+  private static boolean loadExtensions(Config config) {
     if (config.getExtensions() == null) {
-      return;
+      return true;
     }
     for (Config.ExtensionData extensionData : config.getExtensions()) {
       JillExtension extension = ProgramLoader.loadExtension(extensionData.getClassname());
       if (extension != null) {
         registerExtension(extension);
         extension.init(extensionData.getArgs().toArray(new String[0]));
+      } else {
+        return false;
       }
     }
+    return true;
   }
 
   /**

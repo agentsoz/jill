@@ -29,6 +29,7 @@ import io.github.agentsoz.jill.util.Stack255;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Random;
@@ -168,7 +169,8 @@ public class IntentionSelector implements Runnable {
                 bindings.add(planInstance,
                     (results == null) ? null : new LinkedHashSet<Belief>(results));
               }
-            } catch (Exception e) {
+            } catch (NoSuchMethodException | SecurityException | InstantiationException
+                | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
               logger.error("Could not create plan object of type " + ptype.getClass().getName(), e);
             }
           }
