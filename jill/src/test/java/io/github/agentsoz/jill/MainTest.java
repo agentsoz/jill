@@ -32,7 +32,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 
-
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public class MainTest {
 
   private ByteArrayOutputStream out;
