@@ -35,11 +35,14 @@ public class AObjectTest {
 
   @Test
   public void testIsNameEqual() {
+    final String object = "object";
+    final String object1 = "object1";
+    final String object2 = "object2";
     assertFalse(AObject.isNameEqual(new AObject(null), new AObject(null)));
-    assertFalse(AObject.isNameEqual(new AObject("object1"), new AObject(null)));
-    assertFalse(AObject.isNameEqual(new AObject(null), new AObject("object2")));
-    assertFalse(AObject.isNameEqual(new AObject("object1"), new AObject("object2")));
-    assertFalse(AObject.isNameEqual(new AObject("object"), new AObject("object2")));
-    assertTrue(AObject.isNameEqual(new AObject("object"), new AObject("object")));
+    assertFalse(AObject.isNameEqual(new AObject(object1), new AObject(null)));
+    assertFalse(AObject.isNameEqual(new AObject(null), new AObject(object2)));
+    assertFalse(AObject.isNameEqual(new AObject(object1), new AObject(object2)));
+    assertFalse(AObject.isNameEqual(new AObject(object), new AObject(object2)));
+    assertTrue(AObject.isNameEqual(new AObject(object), new AObject(object)));
   }
 }

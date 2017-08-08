@@ -100,17 +100,19 @@ public class ArgumentsLoaderTest {
     assertNotNull(c);
 
     // Compare what was loaded to what was in the file
-    String configcontents = c.toString().replaceAll("\\s+", "");
     String filecontents = "";
+    String configcontents = c.toString().replaceAll("\\s+", "");
+    StringBuilder str = new StringBuilder();
     try {
       BufferedReader reader = new BufferedReader(new FileReader(configFile));
       String line = reader.readLine();
       while (line != null) {
         line = line.replaceAll("(?://.*)", "");
-        filecontents += line;
+        str.append(line);
         line = reader.readLine();
       }
       reader.close();
+      filecontents = str.toString();
       // remove spaces from the read file
       filecontents = filecontents.replaceAll("\\s+", "");
       // remove java commments from the read file

@@ -10,6 +10,8 @@ public class ArgumentsLoaderParseTest extends TestCase {
 
   private ByteArrayOutputStream out;
   private ByteArrayOutputStream err;
+  
+  private static final String exitStatus = "Exit status";
 
   protected static class ExitException extends SecurityException {
     private static final long serialVersionUID = 6476530573058049502L;
@@ -65,25 +67,25 @@ public class ArgumentsLoaderParseTest extends TestCase {
       String[] args = null;
       ArgumentsLoader.parse(args);
     } catch (ExitException e) {
-      assertEquals("Exit status", 1, e.status);
+      assertEquals(exitStatus, 1, e.status);
     }
     try {
       String[] args = {};
       ArgumentsLoader.parse(args);
     } catch (ExitException e) {
-      assertEquals("Exit status", 1, e.status);
+      assertEquals(exitStatus, 1, e.status);
     }
     try {
       String[] args = {""};
       ArgumentsLoader.parse(args);
     } catch (ExitException e) {
-      assertEquals("Exit status", 1, e.status);
+      assertEquals(exitStatus, 1, e.status);
     }
     try {
       String[] args = {"--help"};
       ArgumentsLoader.parse(args);
     } catch (ExitException e) {
-      assertEquals("Exit status", 0, e.status);
+      assertEquals(exitStatus, 0, e.status);
     }
     try {
       String[] args = {"--config",
