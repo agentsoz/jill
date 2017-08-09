@@ -80,11 +80,11 @@ public class TestGreeterAgent extends Agent {
   }
 
   /**
-   * Helper function to add beliefs about neighbours
+   * Helper function to add beliefs about neighbours.
    * 
    * @param rand random number generator to use
    * @param count number of beliefs to add
-   * @throws BeliefBaseException
+   * @throws BeliefBaseException thrown if something went wrong
    */
   private void registerNeighbours(Random rand, int count) throws BeliefBaseException {
     final String[] males =
@@ -109,6 +109,12 @@ public class TestGreeterAgent extends Agent {
     }
   }
 
+  /**
+   * Parses command line arguments. 
+   * 
+   * @param args the command line arguments
+   * @param agent the agent to which the arguments apply
+   */
   public static void parse(String[] args, TestGreeterAgent agent) {
     for (int i = 0; i < args.length; i++) {
       switch (args[i]) {
@@ -182,8 +188,8 @@ public class TestGreeterAgent extends Agent {
           beliefs.addAll(bindings.getBindings(plan));
           // Save back the bindings in sorted order
           bindings.add(plan, new LinkedHashSet<Belief>(beliefs));
-          str.append(plan.getAgent().getName());
-          str.append(':');
+          //str.append(plan.getAgent().getName());
+          //str.append(':');
           str.append(plan.getClass().getSimpleName());
           for (Belief belief : bindings.getBindings(plan)) {
             str.append(',');

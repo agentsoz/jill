@@ -25,6 +25,13 @@ public class HandleMessage extends Plan {
 
   MessageEvent msg;
 
+  /**
+   * Handles a message goal.
+   * 
+   * @param agent the agent to which this plan belongs
+   * @param goal the goal that this plan handles
+   * @param name a name for this plan
+   */
   public HandleMessage(Agent agent, Goal goal, String name) {
     super(agent, goal, name);
     msg = (MessageEvent) goal;
@@ -38,7 +45,7 @@ public class HandleMessage extends Plan {
 
   PlanStep[] steps = {new PlanStep() {
     public void step() {
-      int sender = msg.getSenderID();
+      int sender = msg.getSenderId();
       if (sender == 0) {
         // Received a message from agent 0
         System.out.print(msg.getContent());

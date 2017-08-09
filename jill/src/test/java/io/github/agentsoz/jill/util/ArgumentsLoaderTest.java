@@ -1,5 +1,7 @@
 package io.github.agentsoz.jill.util;
 
+import static org.junit.Assert.assertNotNull;
+
 /*
  * #%L Jill Cognitive Agents Platform %% Copyright (C) 2014 - 2017 by its authors. See AUTHORS file.
  * %% This program is free software: you can redistribute it and/or modify it under the terms of the
@@ -14,7 +16,18 @@ package io.github.agentsoz.jill.util;
  * If not, see <http://www.gnu.org/licenses/lgpl-3.0.html>. #L%
  */
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import ch.qos.logback.classic.Level;
+
+import io.github.agentsoz.jill.Main;
+import io.github.agentsoz.jill.config.Config;
+import io.github.agentsoz.jill.core.GlobalState;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -22,15 +35,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
 
-import io.github.agentsoz.jill.config.Config;
-import io.github.agentsoz.jill.core.GlobalState;
-import io.github.agentsoz.jill.core.ProgramLoaderTest;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import ch.qos.logback.classic.Level;
 
 public class ArgumentsLoaderTest {
 
@@ -44,6 +48,11 @@ public class ArgumentsLoaderTest {
   String configFile = getClass().getResource("config-example.txt").getFile();
 
 
+  /**
+   * Common setup for all tests. Saves stderr and stdout to an output stream.
+   * 
+   * @throws Exception if something went wrong
+   */
   @Before
   public void setUp() throws Exception {
     out = new ByteArrayOutputStream();
@@ -51,11 +60,16 @@ public class ArgumentsLoaderTest {
     System.setOut(new PrintStream(out));
     System.setErr(new PrintStream(err));
     // Configure logging
-    Log.createLogger("", Level.INFO, ProgramLoaderTest.class.getSimpleName() + ".log");
+    Log.createLogger(Main.LOGGER_NAME, Level.INFO, "test.log");
     GlobalState.reset();
     ArgumentsLoader.reset();
   }
 
+  /**
+   * Common setup for all tests. Closes stderr and stdout streams.
+   * 
+   * @throws Exception if something went wrong
+   */
   @After
   public void tearDown() throws Exception {
     System.setOut(null);
@@ -67,41 +81,41 @@ public class ArgumentsLoaderTest {
   @Test
   public void testLoadNullConfig() {
     // Config is null if no file has been specified
-    Config c = ArgumentsLoader.loadConfigFromString(null);
-    assertNull(c);
+    Config config = ArgumentsLoader.loadConfigFromString(null);
+    assertNull(config);
   }
 
   @Test
   public void testLoadEmptyConfig() {
-    Config c = ArgumentsLoader.loadConfigFromString("");
-    assertNull(c);
+    Config config = ArgumentsLoader.loadConfigFromString("");
+    assertNull(config);
   }
 
   @Test
   public void testLoadDefaultConfig() {
-    Config c = ArgumentsLoader.loadConfigFromString("{}");
-    assertNotNull(c);
+    Config config = ArgumentsLoader.loadConfigFromString("{}");
+    assertNotNull(config);
   }
 
   @Test
   public void testLoadConfigFromString() {
     // Load the config object from the specified string
-    Config c = ArgumentsLoader.loadConfigFromString(configString);
-    assertNotNull(c);
+    Config config = ArgumentsLoader.loadConfigFromString(configString);
+    assertNotNull(config);
     // Check that the config string (minus the enclosing brackets), exists in the returned config
-    assertTrue(c.toString().contains(configString.substring(1, configString.length() - 1)));
+    assertTrue(config.toString().contains(configString.substring(1, configString.length() - 1)));
   }
 
 
   @Test
   public void testLoadConfigFromFile() {
     // Load a sample config file
-    Config c = ArgumentsLoader.loadConfigFromFile(configFile);
-    assertNotNull(c);
+    Config config = ArgumentsLoader.loadConfigFromFile(configFile);
+    assertNotNull(config);
 
     // Compare what was loaded to what was in the file
     String filecontents = "";
-    String configcontents = c.toString().replaceAll("\\s+", "");
+    String configcontents = config.toString().replaceAll("\\s+", "");
     StringBuilder str = new StringBuilder();
     try {
       BufferedReader reader = new BufferedReader(new FileReader(configFile));

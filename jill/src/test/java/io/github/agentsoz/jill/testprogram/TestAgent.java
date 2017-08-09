@@ -23,7 +23,7 @@ import java.io.PrintStream;
     "io.github.agentsoz.jill.testprogram.GoalB", "io.github.agentsoz.jill.testprogram.GoalC"})
 public class TestAgent extends Agent {
 
-  private int i;
+  private int status;
   private PrintStream writer;
   private boolean verbose;
 
@@ -43,24 +43,24 @@ public class TestAgent extends Agent {
   @Override
   public void finish() {
     /*
-     * Check that some plan changed i. Should print: hex '8' if plan PlanD ran, hex '7' if plans
-     * PlanA then PlanB then PlanC ran.
+     * Check that some plan changed status. Should print: hex '8' if plan PlanD ran, hex '7' if
+     * plans PlanA then PlanB then PlanC ran.
      */
     if (verbose) {
       if (writer == null) {
-        System.out.printf("%h", i);
+        System.out.printf("%h", status);
       } else {
-        writer.printf("%h", i);
+        writer.printf("%h", status);
       }
     }
   }
 
-  public int getI() {
-    return i;
+  public int getStatus() {
+    return status;
   }
 
-  public void setI(int i) {
-    this.i = i;
+  public void setStatus(int status) {
+    this.status = status;
   }
 
 }

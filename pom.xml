@@ -248,7 +248,6 @@
                 <goal>prepare-agent</goal>
               </goals>
               <configuration>
-                <destFile>${rootdir}/target/coverage-reports/jacoco-unit.exec</destFile>
               </configuration>
             </execution>
             <execution>
@@ -258,8 +257,7 @@
                 <goal>report</goal>
               </goals>
               <configuration>
-                <dataFile>${rootdir}/target/coverage-reports/jacoco-unit.exec</dataFile>
-                <outputDirectory>${outputDirectory}/target/coverage-reports/jacoco</outputDirectory>
+                <outputDirectory>${rootdir}/target/coverage-reports/jacoco</outputDirectory>
               </configuration>
             </execution>
             <execution>
@@ -268,7 +266,6 @@
                 <goal>check</goal>
               </goals>
               <configuration>
-                <dataFile>${rootdir}/target/coverage-reports/jacoco-unit.exec</dataFile>
                 <rules>
                   <!--  implementation is needed only for Maven 2  -->
                   <rule implementation="org.jacoco.maven.RuleConfiguration">
@@ -324,6 +321,7 @@
           <configuration>
             <configLocation>${rootdir}/checkstyle.xml</configLocation>
             <violationSeverity>warning</violationSeverity>
+            <includeTestSourceDirectory>true</includeTestSourceDirectory>
             <excludes>**/SparseBitSet.java,**/*RegressionTest*.java,**/playground/**</excludes>
           </configuration>
         </plugin>

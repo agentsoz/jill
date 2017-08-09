@@ -37,7 +37,7 @@ public class PlanA extends Plan {
 
   PlanStep[] steps = {new PlanStep() {
     public void step() {
-      ((TestAgent) getAgent()).setI(((TestAgent) getAgent()).getI() | 0x0001);
+      ((TestAgent) getAgent()).setStatus(((TestAgent) getAgent()).getStatus() | 0x0001);
     }
   }, new PlanStep() {
     public void step() {

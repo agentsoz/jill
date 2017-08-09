@@ -14,7 +14,11 @@ package io.github.agentsoz.jill.util;
  * If not, see <http://www.gnu.org/licenses/lgpl-3.0.html>. #L%
  */
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import io.github.agentsoz.jill.util.AString;
 
 import org.junit.Test;
@@ -38,7 +42,7 @@ public class AStringTest {
   }
 
   @Test
-  public void testToBytesABC() {
+  public void testToBytesStrgin() {
     byte[] result = AString.toBytes("ABC");
     byte[] expected = {0x41, 0x42, 0x43};
     assertNotNull(result);
@@ -60,7 +64,7 @@ public class AStringTest {
   }
 
   @Test
-  public void testToStringByteArrayABC() {
+  public void testToStringByteArray() {
     byte[] bytes = {0x41, 0x42, 0x43};
     String result = AString.toString(bytes);
     String expected = "ABC";

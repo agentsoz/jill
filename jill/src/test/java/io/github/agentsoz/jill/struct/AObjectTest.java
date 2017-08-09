@@ -14,7 +14,10 @@ package io.github.agentsoz.jill.struct;
  * If not, see <http://www.gnu.org/licenses/lgpl-3.0.html>. #L%
  */
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import io.github.agentsoz.jill.config.GlobalConstant;
 import io.github.agentsoz.jill.struct.AObject;
 
@@ -24,13 +27,13 @@ public class AObjectTest {
 
   @Test
   public void testDefaultsGettersSetters() {
-    AObject o = new AObject(null);
-    assertEquals("", o.getName());
-    assertEquals(GlobalConstant.NULLID, o.getId());
-    o.setId(54321);
-    assertEquals(54321, o.getId());
-    o.setName("object1");
-    assertEquals("object1", o.getName());
+    AObject obj = new AObject(null);
+    assertEquals("", obj.getName());
+    assertEquals(GlobalConstant.NULLID, obj.getId());
+    obj.setId(54321);
+    assertEquals(54321, obj.getId());
+    obj.setName("object1");
+    assertEquals("object1", obj.getName());
   }
 
   @Test

@@ -27,6 +27,13 @@ public class PlanGreetNeighbour extends Plan {
 
   String neighbour;
 
+  /**
+   * Creates a plan to greet a neighbour.
+   * 
+   * @param agent the agent to whom this plan belongs
+   * @param goal the goal that this plan handles
+   * @param name a name for this plan
+   */
   public PlanGreetNeighbour(Agent agent, Goal goal, String name) {
     super(agent, goal, name);
     body = steps;

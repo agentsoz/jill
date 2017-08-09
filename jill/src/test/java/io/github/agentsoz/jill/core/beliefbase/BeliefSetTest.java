@@ -1,24 +1,27 @@
 package io.github.agentsoz.jill.core.beliefbase;
 
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+
+import org.junit.Test;
 
 import java.util.HashSet;
 
-import org.junit.Test;
 
 public class BeliefSetTest {
 
   @Test
   public void test() {
-    BeliefSet bs1 = new BeliefSet(0, null, null);
-    BeliefSet bs2 = new BeliefSet(0, null, null);
-    BeliefSet bs3 = new BeliefSet(1, null, null);
-    BeliefSet bs4 = new BeliefSet(1, "", null);
-    BeliefSetField[] bsfa = new BeliefSetField[0];
-    BeliefSet bs5 = new BeliefSet(1, null, bsfa);
-    BeliefSet bs6 = new BeliefSet(1, "", bsfa);
-    BeliefSet bs7 = new BeliefSet(2, "", bsfa);
-    BeliefSet bs8 = new BeliefSet(2, "bs8", bsfa);
+    final BeliefSet bs1 = new BeliefSet(0, null, null);
+    final BeliefSet bs2 = new BeliefSet(0, null, null);
+    final BeliefSet bs3 = new BeliefSet(1, null, null);
+    final BeliefSet bs4 = new BeliefSet(1, "", null);
+    final BeliefSetField[] bsfa = new BeliefSetField[0];
+    final BeliefSet bs5 = new BeliefSet(1, null, bsfa);
+    final BeliefSet bs6 = new BeliefSet(1, "", bsfa);
+    final BeliefSet bs7 = new BeliefSet(2, "", bsfa);
+    final BeliefSet bs8 = new BeliefSet(2, "bs8", bsfa);
 
     assertNotEquals(bs1, null);
     assertNotEquals(bs1, new Object());

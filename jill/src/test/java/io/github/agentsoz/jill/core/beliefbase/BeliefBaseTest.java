@@ -1,6 +1,6 @@
 package io.github.agentsoz.jill.core.beliefbase;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 

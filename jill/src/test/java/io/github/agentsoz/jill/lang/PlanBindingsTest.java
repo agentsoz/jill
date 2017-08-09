@@ -1,17 +1,17 @@
 package io.github.agentsoz.jill.lang;
 
-
-import io.github.agentsoz.jill.config.GlobalConstant.PlanSelectionPolicy;
-import io.github.agentsoz.jill.core.beliefbase.Belief;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
+
+import io.github.agentsoz.jill.config.GlobalConstant.PlanSelectionPolicy;
+import io.github.agentsoz.jill.core.beliefbase.Belief;
+
 import org.junit.Test;
 
-import java.util.Map;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Random;
 
 @SuppressWarnings("PMD")
@@ -20,7 +20,7 @@ public class PlanBindingsTest {
   @Test
   public void testAdd0() {
 
-    PlanBindings pb = new PlanBindings(null);
+    final PlanBindings pb = new PlanBindings(null);
 
     assertSame(0, pb.size());
     pb.clear();
@@ -28,7 +28,7 @@ public class PlanBindingsTest {
     pb.add(null, null);
     assertSame(0, pb.size());
 
-    Plan p1 = new Plan(null, null, null) {
+    final Plan p1 = new Plan(null, null, null) {
       @Override
       public void setPlanVariables(Map<String, Object> vars) {
         // Nothing to do here
@@ -51,7 +51,7 @@ public class PlanBindingsTest {
     pb.add(p1, null);
     assertSame(1, pb.size());
 
-    Plan p2 = new Plan(null, null, null) {
+    final Plan p2 = new Plan(null, null, null) {
       @Override
       public void setPlanVariables(Map<String, Object> vars) {
         // Nothing to do here
@@ -87,7 +87,7 @@ public class PlanBindingsTest {
     pb.add(p2, lhs2);
     assertSame(pb.size(), 2);
 
-    Plan p3 = new Plan(null, null, null) {
+    final Plan p3 = new Plan(null, null, null) {
       @Override
       public void setPlanVariables(Map<String, Object> vars) {
         // Nothing to do here
@@ -102,7 +102,7 @@ public class PlanBindingsTest {
     pb.add(p3, lhs4);
     assertSame(5, pb.size());
 
-    Plan p4 = new Plan(null, null, null) {
+    final Plan p4 = new Plan(null, null, null) {
       @Override
       public void setPlanVariables(Map<String, Object> vars) {
         // Nothing to do here
@@ -122,11 +122,11 @@ public class PlanBindingsTest {
   @Test
   public void testGetPlans0() {
 
-    PlanBindings pb = new PlanBindings(null);
+    final PlanBindings pb = new PlanBindings(null);
     assertNotSame(null, pb.getPlans());
     assertTrue(pb.getPlans().isEmpty());
 
-    Plan p1 = new Plan(null, null, null) {
+    final Plan p1 = new Plan(null, null, null) {
       @Override
       public void setPlanVariables(Map<String, Object> vars) {
         // Nothing to do here
@@ -145,7 +145,7 @@ public class PlanBindingsTest {
     assertSame(1, pb.getPlans().size());
     assertTrue(pb.getPlans().contains(p1));
 
-    Plan p2 = new Plan(null, null, null) {
+    final Plan p2 = new Plan(null, null, null) {
       @Override
       public void setPlanVariables(Map<String, Object> vars) {
         // Nothing to do here
@@ -162,7 +162,7 @@ public class PlanBindingsTest {
     assertTrue(pb.getPlans().contains(p1));
     assertTrue(pb.getPlans().contains(p2));
 
-    Plan p3 = new Plan(null, null, null) {
+    final Plan p3 = new Plan(null, null, null) {
       @Override
       public void setPlanVariables(Map<String, Object> vars) {
         // Nothing to do here
@@ -192,8 +192,8 @@ public class PlanBindingsTest {
   @Test
   public void testGetBindings0() {
 
-    PlanBindings pb = new PlanBindings(null);
-    Plan p1 = new Plan(null, null, null) {
+    final PlanBindings pb = new PlanBindings(null);
+    final Plan p1 = new Plan(null, null, null) {
       @Override
       public void setPlanVariables(Map<String, Object> vars) {
         // Nothing to do here
@@ -212,7 +212,7 @@ public class PlanBindingsTest {
     pb.add(p1, lhs1);
     assertSame(pb.getBindings(p1), lhs1);
 
-    Plan p2 = new Plan(null, null, null) {
+    final Plan p2 = new Plan(null, null, null) {
       @Override
       public void setPlanVariables(Map<String, Object> vars) {
         // Nothing to do here
@@ -228,7 +228,7 @@ public class PlanBindingsTest {
     assertNotSame(null, pb.getBindings(p1));
     assertSame(pb.getBindings(p2), null);
 
-    Plan p3 = new Plan(null, null, null) {
+    final Plan p3 = new Plan(null, null, null) {
       @Override
       public void setPlanVariables(Map<String, Object> vars) {
         // Nothing to do here
@@ -252,10 +252,10 @@ public class PlanBindingsTest {
 
   @Test
   public void testGet0() {
-    PlanBindings pb = new PlanBindings(new Random(1234));
-    Agent a1 = new Agent("a1");
-    Agent a2 = new Agent("a2");
-    Plan p1 = new Plan(a1, null, null) {
+    final PlanBindings pb = new PlanBindings(new Random(1234));
+    final Agent a1 = new Agent("a1");
+    final Agent a2 = new Agent("a2");
+    final Plan p1 = new Plan(a1, null, null) {
       @Override
       public void setPlanVariables(Map<String, Object> vars) {
         // Nothing to do here
@@ -266,7 +266,7 @@ public class PlanBindingsTest {
         return false;
       }
     };
-    Plan p2 = new Plan(null, null, null) {
+    final Plan p2 = new Plan(null, null, null) {
       @Override
       public void setPlanVariables(Map<String, Object> vars) {
         // Nothing to do here
@@ -277,7 +277,7 @@ public class PlanBindingsTest {
         return false;
       }
     };
-    Plan p3 = new Plan(a1, null, null) {
+    final Plan p3 = new Plan(a1, null, null) {
       @Override
       public void setPlanVariables(Map<String, Object> vars) {
         // Nothing to do here
@@ -288,7 +288,7 @@ public class PlanBindingsTest {
         return false;
       }
     };
-    Plan p4 = new Plan(a2, null, null) {
+    final Plan p4 = new Plan(a2, null, null) {
       @Override
       public void setPlanVariables(Map<String, Object> vars) {
         // Nothing to do here
@@ -299,7 +299,7 @@ public class PlanBindingsTest {
         return false;
       }
     };
-    Plan p5 = new Plan(a1, null, null) {
+    final Plan p5 = new Plan(a1, null, null) {
       @Override
       public void setPlanVariables(Map<String, Object> vars) {
         // Nothing to do here
@@ -311,8 +311,8 @@ public class PlanBindingsTest {
       }
     };
 
-    LinkedHashSet<Belief> lhs1 = new LinkedHashSet<Belief>();
-    LinkedHashSet<Belief> lhs4 = new LinkedHashSet<Belief>();
+    final LinkedHashSet<Belief> lhs1 = new LinkedHashSet<Belief>();
+    final LinkedHashSet<Belief> lhs4 = new LinkedHashSet<Belief>();
     lhs4.add(new Belief(1, 1, null));
     lhs4.add(new Belief(2, 2, null));
     lhs4.add(new Belief(3, 3, null));
@@ -327,10 +327,11 @@ public class PlanBindingsTest {
     Plan o1 = pb.selectPlan(PlanSelectionPolicy.FIRST);
     Plan o2 = pb.selectPlan(PlanSelectionPolicy.FIRST);
     Plan o3 = pb.selectPlan(PlanSelectionPolicy.FIRST);
-    Plan o4 = pb.selectPlan(PlanSelectionPolicy.FIRST);
-    Plan o5 = pb.selectPlan(PlanSelectionPolicy.FIRST);
     assertSame(o1, o2);
     assertSame(o1, o3);
+
+    Plan o4 = pb.selectPlan(PlanSelectionPolicy.FIRST);
+    Plan o5 = pb.selectPlan(PlanSelectionPolicy.FIRST);
     assertSame(o1, o4);
     assertSame(o1, o5);
     assertSame(o1, p1);

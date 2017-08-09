@@ -14,7 +14,10 @@ package io.github.agentsoz.jill.util;
  * If not, see <http://www.gnu.org/licenses/lgpl-3.0.html>. #L%
  */
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import io.github.agentsoz.jill.util.Stack255;
 
 import org.junit.Test;
@@ -23,112 +26,112 @@ public class Stack255Test {
 
   @Test
   public void testStack() {
-    Stack255 s = new Stack255((byte) 0, (byte) 0);
-    assertEquals(0, s.size());
-    assertEquals(0, s.capacity());
-    assertTrue(s.isEmpty());
-    assertFalse(s.isFull());
+    Stack255 stack = new Stack255((byte) 0, (byte) 0);
+    assertEquals(0, stack.size());
+    assertEquals(0, stack.capacity());
+    assertTrue(stack.isEmpty());
+    assertFalse(stack.isFull());
 
-    s = new Stack255((byte) 0, (byte) 255);
-    assertEquals(0, s.size());
-    assertEquals(0, s.capacity());
-    assertTrue(s.isEmpty());
-    assertFalse(s.isFull());
+    stack = new Stack255((byte) 0, (byte) 255);
+    assertEquals(0, stack.size());
+    assertEquals(0, stack.capacity());
+    assertTrue(stack.isEmpty());
+    assertFalse(stack.isFull());
 
-    s = new Stack255((byte) 255, (byte) 0);
-    assertEquals(0, s.size());
-    assertEquals(255, s.capacity());
-    assertTrue(s.isEmpty());
-    assertFalse(s.isFull());
+    stack = new Stack255((byte) 255, (byte) 0);
+    assertEquals(0, stack.size());
+    assertEquals(255, stack.capacity());
+    assertTrue(stack.isEmpty());
+    assertFalse(stack.isFull());
 
-    s = new Stack255((byte) 255, (byte) 255);
-    assertEquals(0, s.size());
-    assertEquals(255, s.capacity());
-    assertTrue(s.isEmpty());
-    assertFalse(s.isFull());
+    stack = new Stack255((byte) 255, (byte) 255);
+    assertEquals(0, stack.size());
+    assertEquals(255, stack.capacity());
+    assertTrue(stack.isEmpty());
+    assertFalse(stack.isFull());
   }
 
   @Test
   public void testIsEmpty() {
-    Stack255 s = new Stack255((byte) 255, (byte) 0);
-    assertTrue(s.isEmpty());
-    s.push(new Object());
-    assertEquals(1, s.size());
-    assertFalse(s.isEmpty());
-    s.push(new Object());
-    assertFalse(s.isEmpty());
-    s.pop();
-    assertFalse(s.isEmpty());
-    s.pop();
-    assertTrue(s.isEmpty());
-    s.pop();
-    assertTrue(s.isEmpty());
+    Stack255 stack = new Stack255((byte) 255, (byte) 0);
+    assertTrue(stack.isEmpty());
+    stack.push(new Object());
+    assertEquals(1, stack.size());
+    assertFalse(stack.isEmpty());
+    stack.push(new Object());
+    assertFalse(stack.isEmpty());
+    stack.pop();
+    assertFalse(stack.isEmpty());
+    stack.pop();
+    assertTrue(stack.isEmpty());
+    stack.pop();
+    assertTrue(stack.isEmpty());
   }
 
   @Test
   public void testIsFull() {
-    Stack255 s = new Stack255((byte) 255, (byte) 0);
+    Stack255 stack = new Stack255((byte) 255, (byte) 0);
     for (int i = 0; i < 254; i++) {
-      s.push(new Object());
-      assertFalse(s.isFull());
+      stack.push(new Object());
+      assertFalse(stack.isFull());
     }
-    s.push(new Object());
-    assertTrue(s.isFull());
+    stack.push(new Object());
+    assertTrue(stack.isFull());
   }
 
   @Test
   public void testSize() {
-    Stack255 s = new Stack255((byte) 255, (byte) 0);
-    s.pop();
-    assertEquals(0, s.size());
-    s.pop();
-    assertEquals(0, s.size());
+    Stack255 stack = new Stack255((byte) 255, (byte) 0);
+    stack.pop();
+    assertEquals(0, stack.size());
+    stack.pop();
+    assertEquals(0, stack.size());
     for (int i = 0; i < 255; i++) {
-      s.push(new Object());
-      assertEquals(i + 1, s.size());
+      stack.push(new Object());
+      assertEquals(i + 1, stack.size());
     }
-    s.push(new Object());
-    assertEquals(255, s.size());
-    s.push(new Object());
-    assertEquals(255, s.size());
+    stack.push(new Object());
+    assertEquals(255, stack.size());
+    stack.push(new Object());
+    assertEquals(255, stack.size());
   }
 
   @Test
   public void testPushPopGet() {
-    Stack255 s = new Stack255((byte) 255, (byte) 0);
+    Stack255 stack = new Stack255((byte) 255, (byte) 0);
     // popping an empty stack should return null
-    assertEquals(null, s.pop());
+    assertEquals(null, stack.pop());
 
     Object[] objects = new Object[255];
     // pushing up to the maximum capacity should succeed
     for (int i = 0; i < 255; i++) {
       objects[i] = new Object();
-      assertTrue(s.push(objects[i]));
+      assertTrue(stack.push(objects[i]));
     }
     // pushing past maximum capacity should fail
-    assertFalse(s.push(objects[0]));
-    assertFalse(s.push(objects[0]));
+    assertFalse(stack.push(objects[0]));
+    assertFalse(stack.push(objects[0]));
 
     // getting using an invalid index should result in a null object
-    assertEquals(null, s.get(-1));
-    assertEquals(null, s.get(255));
+    assertEquals(null, stack.get(-1));
+    assertEquals(null, stack.get(255));
 
     // popped objects should match the pushed ones
     for (int i = 254; i >= 0; i--) {
-      assertEquals(objects[i], s.get(i));
-      assertEquals(objects[i], s.pop());
+      assertEquals(objects[i], stack.get(i));
+      assertEquals(objects[i], stack.pop());
     }
 
     // getting from an empty stack should result in a null value
-    assertEquals(null, s.get(0));
+    assertEquals(null, stack.get(0));
   }
 
   @Test
   public void testGrow() {
-    Stack255 s = new Stack255((byte) 10, (byte) 10);
+    Stack255 stack = new Stack255((byte) 10, (byte) 10);
     for (int i = 0; i < 255; i++) {
-      assertTrue(s.push(new Object()));
+      assertTrue(stack.push(new Object()));
     }
-    assertFalse(s.push(new Object()));
+    assertFalse(stack.push(new Object()));
   }
 }

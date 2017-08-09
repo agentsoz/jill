@@ -20,25 +20,31 @@ import io.github.agentsoz.jill.lang.GoalInfo;
 @GoalInfo(hasPlans = {"io.github.agentsoz.jill.sendreceive.HandleMessage"})
 public class MessageEvent extends Goal {
 
-  private int senderID;
+  private int senderId;
   private Object content;
 
   public MessageEvent(String str) {
     super(str);
   }
 
-  public MessageEvent(int senderID, Object content) {
+  /**
+   * Creates a new message goal.
+   * 
+   * @param senderId the ID of the sender agent the message is from
+   * @param content the contents of the message
+   */
+  public MessageEvent(int senderId, Object content) {
     this(null);
-    this.senderID = senderID;
+    this.senderId = senderId;
     this.content = content;
   }
 
-  public int getSenderID() {
-    return senderID;
+  public int getSenderId() {
+    return senderId;
   }
 
-  public void setSenderID(int senderID) {
-    this.senderID = senderID;
+  public void setSenderId(int senderId) {
+    this.senderId = senderId;
   }
 
   public Object getContent() {

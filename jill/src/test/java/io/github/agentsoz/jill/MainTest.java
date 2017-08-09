@@ -14,18 +14,18 @@ package io.github.agentsoz.jill;
  * If not, see <http://www.gnu.org/licenses/lgpl-3.0.html>. #L%
  */
 
+import static org.junit.Assert.assertEquals;
+
 import ch.qos.logback.classic.Level;
 
 import io.github.agentsoz.jill.Main;
 import io.github.agentsoz.jill.core.GlobalState;
-import io.github.agentsoz.jill.core.ProgramLoaderTest;
 import io.github.agentsoz.jill.util.ArgumentsLoader;
 import io.github.agentsoz.jill.util.Log;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -38,6 +38,11 @@ public class MainTest {
   private ByteArrayOutputStream out;
   private ByteArrayOutputStream err;
 
+  /**
+   * Common setup for all tests. Saves stderr and stdout to an output stream.
+   * 
+   * @throws Exception if something went wrong
+   */
   @Before
   public void setUp() throws Exception {
     out = new ByteArrayOutputStream();
@@ -45,11 +50,16 @@ public class MainTest {
     System.setOut(new PrintStream(out));
     System.setErr(new PrintStream(err));
     // Configure logging
-    Log.createLogger("", Level.INFO, ProgramLoaderTest.class.getSimpleName() + ".log");
+    Log.createLogger(Main.LOGGER_NAME, Level.INFO, "test.log");
     GlobalState.reset();
     ArgumentsLoader.reset();
   }
 
+  /**
+   * Common setup for all tests. Closes stderr and stdout streams.
+   * 
+   * @throws Exception if something went wrong
+   */
   @After
   public void tearDown() throws Exception {
     System.setOut(null);
@@ -116,7 +126,8 @@ public class MainTest {
     assertEquals(out.toString(), output);
   }
 
-
+  @Ignore("FIXME: The ordering of output is failing for this test.")
+  @Test
   public void testBeliefBindingsInMetaPlan() {
     final String output = "PlanGreetNeighbour" + ",0:Alex K. Jones:male" + ",0:Daniel I. Smith:male"
         + ",0:John P. Wilson:male" + ",0:Lionel U. Smith:male\n" + "PlanGreetNeighbour"

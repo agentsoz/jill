@@ -14,7 +14,9 @@ package io.github.agentsoz.jill.struct;
  * If not, see <http://www.gnu.org/licenses/lgpl-3.0.html>. #L%
  */
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+
 import io.github.agentsoz.jill.struct.AObject;
 
 import org.junit.Test;
@@ -23,40 +25,40 @@ public class AgentTypeTest {
 
   @Test
   public void testDefaultsGettersSetters() {
-    AgentType o = new AgentType("o");
-    o.setAgentClass(String.class);
-    assertEquals(String.class, o.getAgentClass());
-    o.setAgentClass(AObject.class);
-    assertNotEquals(String.class, o.getAgentClass());
-    assertEquals(AObject.class, o.getAgentClass());
-    o.setAgentClass(null);
-    assertEquals(null, o.getAgentClass());
+    AgentType obj = new AgentType("o");
+    obj.setAgentClass(String.class);
+    assertEquals(String.class, obj.getAgentClass());
+    obj.setAgentClass(AObject.class);
+    assertNotEquals(String.class, obj.getAgentClass());
+    assertEquals(AObject.class, obj.getAgentClass());
+    obj.setAgentClass(null);
+    assertEquals(null, obj.getAgentClass());
   }
 
   @Test
   public void testGoals() {
-    AgentType o = new AgentType("o");
-    o.setGoals(null);
-    assertEquals(null, o.getGoals());
-    o.addGoal((byte) 23);
-    assertNotEquals(null, o.getGoals());
-    assertEquals(1, o.getGoals().length);
-    o.addGoal((byte) 22);
-    o.addGoal((byte) 21);
-    assertEquals(3, o.getGoals().length);
-    assertEquals((byte) 23, o.getGoals()[0]);
-    assertEquals((byte) 22, o.getGoals()[1]);
-    assertEquals((byte) 21, o.getGoals()[2]);
-    byte[] a = {(byte) 33, (byte) 255};
-    o.setGoals(a);
-    assertEquals(2, o.getGoals().length);
-    assertEquals((byte) 33, o.getGoals()[0]);
-    assertEquals((byte) 255, o.getGoals()[1]);
-    o.setGoals(null);
-    assertEquals(null, o.getGoals());
-    byte[] b = new byte[0];
-    o.setGoals(b);
-    assertNotEquals(null, o.getGoals());
-    assertEquals(0, o.getGoals().length);
+    AgentType obj = new AgentType("o");
+    obj.setGoals(null);
+    assertEquals(null, obj.getGoals());
+    obj.addGoal((byte) 23);
+    assertNotEquals(null, obj.getGoals());
+    assertEquals(1, obj.getGoals().length);
+    obj.addGoal((byte) 22);
+    obj.addGoal((byte) 21);
+    assertEquals(3, obj.getGoals().length);
+    assertEquals((byte) 23, obj.getGoals()[0]);
+    assertEquals((byte) 22, obj.getGoals()[1]);
+    assertEquals((byte) 21, obj.getGoals()[2]);
+    byte[] aobj = {(byte) 33, (byte) 255};
+    obj.setGoals(aobj);
+    assertEquals(2, obj.getGoals().length);
+    assertEquals((byte) 33, obj.getGoals()[0]);
+    assertEquals((byte) 255, obj.getGoals()[1]);
+    obj.setGoals(null);
+    assertEquals(null, obj.getGoals());
+    byte[] bobj = new byte[0];
+    obj.setGoals(bobj);
+    assertNotEquals(null, obj.getGoals());
+    assertEquals(0, obj.getGoals().length);
   }
 }

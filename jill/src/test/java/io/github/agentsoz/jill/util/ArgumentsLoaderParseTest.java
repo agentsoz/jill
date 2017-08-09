@@ -1,16 +1,22 @@
 package io.github.agentsoz.jill.util;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.security.Permission;
 
-import junit.framework.TestCase;
 
-public class ArgumentsLoaderParseTest extends TestCase {
+public class ArgumentsLoaderParseTest {
 
   private ByteArrayOutputStream out;
   private ByteArrayOutputStream err;
-  
+
   private static final String exitStatus = "Exit status";
 
   protected static class ExitException extends SecurityException {
@@ -42,9 +48,13 @@ public class ArgumentsLoaderParseTest extends TestCase {
     }
   }
 
-  @Override
-  protected void setUp() throws Exception {
-    super.setUp();
+  /**
+   * Common setup for all tests. Saves stderr and stdout to an output stream.
+   * 
+   * @throws Exception if something went wrong
+   */
+  @Before
+  public void setUp() throws Exception {
     System.setSecurityManager(new NoExitSecurityManager());
     out = new ByteArrayOutputStream();
     err = new ByteArrayOutputStream();
@@ -52,16 +62,21 @@ public class ArgumentsLoaderParseTest extends TestCase {
     System.setErr(new PrintStream(err));
   }
 
-  @Override
-  protected void tearDown() throws Exception {
+  /**
+   * Common setup for all tests. Closes stderr and stdout streams.
+   * 
+   * @throws Exception if something went wrong
+   */
+  @After
+  public void tearDown() throws Exception {
     System.setSecurityManager(null); // or save and restore original
-    super.tearDown();
     System.setOut(null);
     System.setErr(null);
     out.close();
     err.close();
   }
 
+  @Test
   public void testParse() throws Exception {
     try {
       String[] args = null;

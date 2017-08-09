@@ -14,6 +14,9 @@ package io.github.agentsoz.jill.core;
  * If not, see <http://www.gnu.org/licenses/lgpl-3.0.html>. #L%
  */
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import ch.qos.logback.classic.Level;
 
 import io.github.agentsoz.jill.Main;
@@ -21,9 +24,6 @@ import io.github.agentsoz.jill.core.GlobalState;
 import io.github.agentsoz.jill.core.ProgramLoader;
 import io.github.agentsoz.jill.lang.JillExtension;
 import io.github.agentsoz.jill.util.Log;
-
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
@@ -38,6 +38,11 @@ public class ProgramLoaderTest {
   private ByteArrayOutputStream out;
   private ByteArrayOutputStream err;
 
+  /**
+   * Common setup for all tests. Saves stderr and stdout to an output stream.
+   * 
+   * @throws Exception if something went wrong
+   */
   @Before
   public void setUp() throws Exception {
     out = new ByteArrayOutputStream();
@@ -45,11 +50,15 @@ public class ProgramLoaderTest {
     System.setOut(new PrintStream(out));
     System.setErr(new PrintStream(err));
     // Configure logging
-    Log.createLogger(Main.LOGGER_NAME, Level.INFO,
-        ProgramLoaderTest.class.getSimpleName() + ".log");
+    Log.createLogger(Main.LOGGER_NAME, Level.INFO, "test.log");
     GlobalState.reset();
   }
 
+  /**
+   * Common setup for all tests. Closes stderr and stdout streams.
+   * 
+   * @throws Exception if something went wrong
+   */
   @After
   public void tearDown() throws Exception {
     System.setOut(null);
@@ -67,8 +76,8 @@ public class ProgramLoaderTest {
   @Test
   public void testAgentInfo() {
     ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent1", 0, null);
-    assertTrue(out.toString().contains(
-        "is missing the @AgentInfo(hasGoals={\"package.GoalClass1, package.GoalClass2, ...\"}) annotation"));
+    assertTrue(out.toString().contains("is missing the "
+        + "@AgentInfo(hasGoals={\"package.GoalClass1, package.GoalClass2, ...\"}) annotation"));
   }
 
   @Test
@@ -92,8 +101,8 @@ public class ProgramLoaderTest {
   @Test
   public void testGoalInfo() {
     ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent5", 0, null);
-    assertTrue(out.toString().contains(
-        "is missing the @GoalInfo(hasPlans={\"package.PlanClass1, package.PlanClass2, ...\"}) annotation"));
+    assertTrue(out.toString().contains("is missing the "
+        + "@GoalInfo(hasPlans={\"package.PlanClass1, package.PlanClass2, ...\"}) annotation"));
   }
 
   @Test
@@ -123,8 +132,10 @@ public class ProgramLoaderTest {
   @Test
   public void testPostsGoalsEmpty() {
     ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent10", 0, null);
-    assertTrue(out.toString().contains(
-        "has incomplete @PlanInfo(postsGoals={\"package.GoalClass1\", \"package.GoalClass2\", ...})) annotation"));
+    assertTrue(out.toString()
+        .contains("has incomplete "
+            + "@PlanInfo(postsGoals={\"package.GoalClass1\", \"package.GoalClass2\", ...})) "
+            + "annotation"));
   }
 
   @Test
@@ -136,8 +147,8 @@ public class ProgramLoaderTest {
   @Test
   public void testPostsGoals() {
     ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent12", 0, null);
-    assertTrue(out.toString()
-        .contains("Found class " + "io.github.agentsoz.jill.core.testprogram.Goal12 "
+    assertTrue(
+        out.toString().contains("Found class " + "io.github.agentsoz.jill.core.testprogram.Goal12 "
             + "of type io.github.agentsoz.jill.lang.Goal"));
   }
 
