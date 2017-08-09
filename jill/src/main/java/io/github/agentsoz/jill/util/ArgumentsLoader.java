@@ -34,9 +34,9 @@ public final class ArgumentsLoader {
    * This class cannot be instantiated.
    */
   private ArgumentsLoader() {
-    
+
   }
-  
+
   /**
    * Returns a usage string for the Jill command line arguments.
    * 
@@ -63,52 +63,13 @@ public final class ArgumentsLoader {
    */
   public static void parse(String[] args) {
     for (int i = 0; args != null && i < args.length; i++) {
-      switch (args[i]) {
-        case "--config":
-          if (i + 1 < args.length) {
-            i++;
-            config = loadConfigFromString(args[i]);
-          }
-          break;
-        case "--configfile":
-          if (i + 1 < args.length) {
-            i++;
-            config = loadConfigFromFile(args[i]);
-          }
-          break;
-        case "--exit-on-idle":
-          if (i + 1 < args.length) {
-            i++;
-            GlobalConstant.EXIT_ON_IDLE = Boolean.parseBoolean(args[i]);
-          }
-          break;
-        case "--help":
-          abort(null);
-          break;
-        case "--plan-selection-policy":
-          if (i + 1 < args.length) {
-            i++;
-            try {
-              GlobalConstant.PLAN_SELECTION_POLICY =
-                  GlobalConstant.PlanSelectionPolicy.valueOf(args[i]);
-            } catch (IllegalArgumentException e) {
-              abort("Unknown plan selection policy '" + args[i] + "'");
-            }
-          }
-          break;
-        case "--plan-instances-limit":
-          if (i + 1 < args.length) {
-            i++;
-            try {
-              GlobalConstant.PLAN_INSTANCES_LIMIT = Integer.parseInt(args[i]);
-            } catch (NumberFormatException e) {
-              abort("Option value '" + args[i] + "' is not a number");
-            }
-          }
-          break;
-        default:
-          // Ignore any other arguments (which may be used by components external to Jill)
-          break;
+      // First parse args that don't require an option
+      if ("--help".equals(args[i])) {
+        abort(null);
+      }
+      // Now parse args that must be accompanied by an option
+      if (i + 1 < args.length) {
+        parseArgumentWithOption(args[i], args[++i]); // force increment the counter
       }
     }
     // Abort if required args were not given
@@ -116,6 +77,44 @@ public final class ArgumentsLoader {
       abort("Configuration file or string was not given");
     } else if (config.getAgents() == null || config.getAgents().isEmpty()) {
       abort("Configuration is missing agents specification");
+    }
+  }
+
+  /**
+   * Parses the given command line argument and associated option. Will abort if an unrecoverable
+   * error occurs.
+   * 
+   * @param arg the argument to parse
+   * @param opt the options to parse for that argument
+   */
+  private static void parseArgumentWithOption(String arg, String opt) {
+    switch (arg) {
+      case "--config":
+        config = loadConfigFromString(opt);
+        break;
+      case "--configfile":
+        config = loadConfigFromFile(opt);
+        break;
+      case "--exit-on-idle":
+        GlobalConstant.EXIT_ON_IDLE = Boolean.parseBoolean(opt);
+        break;
+      case "--plan-selection-policy":
+        try {
+          GlobalConstant.PLAN_SELECTION_POLICY = GlobalConstant.PlanSelectionPolicy.valueOf(opt);
+        } catch (IllegalArgumentException e) {
+          abort("Unknown plan selection policy '" + opt + "'");
+        }
+        break;
+      case "--plan-instances-limit":
+        try {
+          GlobalConstant.PLAN_INSTANCES_LIMIT = Integer.parseInt(opt);
+        } catch (NumberFormatException e) {
+          abort("Option value '" + opt + "' is not a number");
+        }
+        break;
+      default:
+        // Ignore any other arguments (which may be used by components external to Jill)
+        break;
     }
   }
 
