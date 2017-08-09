@@ -61,7 +61,7 @@ public class ProgramLoaderTest {
   @Test
   public void testAgentClass() {
     ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent0", 0, null);
-    assertTrue(out.toString().contains("does not extend io.github.agentsoz.jill.lang.Agent"));
+    assertTrue(out.toString().contains("is not of type io.github.agentsoz.jill.lang.Agent"));
   }
 
   @Test
@@ -86,7 +86,7 @@ public class ProgramLoaderTest {
   @Test
   public void testGoalType() {
     ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent4", 0, null);
-    assertTrue(out.toString().contains("is not of type Goal"));
+    assertTrue(out.toString().contains("is not of type io.github.agentsoz.jill.lang.Goal"));
   }
 
   @Test
@@ -111,7 +111,7 @@ public class ProgramLoaderTest {
   @Test
   public void testPlanType() {
     ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent8", 0, null);
-    assertTrue(out.toString().contains("is not of type Plan"));
+    assertTrue(out.toString().contains("is not of type io.github.agentsoz.jill.lang.Plan"));
   }
 
   @Test
@@ -137,7 +137,7 @@ public class ProgramLoaderTest {
   public void testPostsGoals() {
     ProgramLoader.loadAgent("io.github.agentsoz.jill.core.testprogram.Agent12", 0, null);
     assertTrue(out.toString()
-        .contains("Found class " + "'io.github.agentsoz.jill.core.testprogram.Goal12' "
+        .contains("Found class " + "io.github.agentsoz.jill.core.testprogram.Goal12 "
             + "of type io.github.agentsoz.jill.lang.Goal"));
   }
 
