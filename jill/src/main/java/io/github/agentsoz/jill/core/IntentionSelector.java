@@ -185,7 +185,7 @@ public class IntentionSelector implements Runnable {
           // Call the meta-level planning prior to plan selection
           agent.notifyAgentPrePlanSelection(bindings);
           // Pick a plan option using specified policy
-          Plan planInstance = bindings.get(GlobalConstant.PLAN_SELECTION_POLICY);
+          Plan planInstance = bindings.selectPlan(GlobalConstant.PLAN_SELECTION_POLICY);
           // Now push the plan on to the intention stack
           synchronized (agentExecutionStack) {
             logger.debug(Log.logPrefix(agent.getId()) + " choose an instance of plan "

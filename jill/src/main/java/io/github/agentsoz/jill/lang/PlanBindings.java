@@ -145,10 +145,8 @@ public class PlanBindings {
    * @param policy the policy to use for plan selection
    * @return the selected plan, or {@code null} if something went wrong
    */
-  public Plan get(PlanSelectionPolicy policy) {
+  public Plan selectPlan(PlanSelectionPolicy policy) {
     Plan plan = null;
-    Set<Belief> vars = null;
-    boolean bindingsExist = false;
     int index = 0;
     switch (policy) {
       case FIRST:
@@ -156,37 +154,44 @@ public class PlanBindings {
         Plan[] plans = bindings.keySet().toArray(new Plan[0]);
         plan = (policy == PlanSelectionPolicy.FIRST) ? plans[0] : plans[plans.length - 1];
         index = (policy == PlanSelectionPolicy.FIRST) ? 0 : plans.length - 1;
-        vars = bindings.get(plan);
-        bindingsExist = (vars != null && !vars.isEmpty());
-
+        setPlanVariables(plan.getAgent(), plan, bindings.get(plan), index);
         break;
       case RANDOM:
-        index = rand.nextInt(size());
-        int idx = 0;
-        for (Plan p : bindings.keySet()) {
-          vars = bindings.get(p);
-          bindingsExist = (vars != null && !vars.isEmpty());
-          idx += bindingsExist ? vars.size() : 1;
-          if (idx > index) {
-            plan = p;
-            if (bindingsExist) {
-              index = index - (idx - vars.size());
-            }
-            break;
-          }
-        }
+        plan = selectPlanAtRandom();
         break;
       default:
-        //  TODO: ignore remaining polic
+        // TODO: ignore remaining polic
         break;
     }
-    if (bindingsExist) {
-      setPlanVariables(plan.getAgent(), plan, vars, index);
-    }
-
     return plan;
   }
 
+  /**
+   * Selects a plan instance at random from the set of plan bindings.
+   * 
+   * @return a randomly selected plan instance, or null if ther are no bindings to choose from
+   */
+  private Plan selectPlanAtRandom() {
+    Plan plan = null;
+    Set<Belief> vars = null;
+    int index = rand.nextInt(size());
+    int idx = 0;
+    boolean bindingsExist = false;
+    for (Plan p : bindings.keySet()) {
+      vars = bindings.get(p);
+      bindingsExist = (vars != null && !vars.isEmpty());
+      idx += bindingsExist ? vars.size() : 1;
+      if (idx > index) {
+        plan = p;
+        if (bindingsExist) {
+          index = index - (idx - vars.size());
+          setPlanVariables(plan.getAgent(), plan, vars, index);
+        }
+        break;
+      }
+    }
+    return plan;
+  }
 
   /**
    * Sets the plan instance variables using the given results set.
@@ -198,24 +203,18 @@ public class PlanBindings {
    */
   private final void setPlanVariables(Agent agent, Plan planInstance, Set<Belief> results,
       int choice) {
-    if (agent == null || planInstance == null || results == null || choice < 0
-        || choice >= results.size()) {
+    if (agent == null || planInstance == null) {
       return;
     }
-    Belief belief = null;
-    int index = 0;
-    for (Belief b : results) {
-      if (index == choice) {
-        belief = b;
-        break;
-      }
-      index++;
+    Belief belief = getResultAtIndex(results, choice);
+    if (belief == null) {
+      return;
     }
     Object[] tuple = belief.getTuple();
     if (tuple == null) {
       return;
     }
-    index = 0;
+    int index = 0;
     HashMap<String, Object> vars = new HashMap<String, Object>();
     for (Object o : belief.getTuple()) {
       try {
@@ -230,5 +229,26 @@ public class PlanBindings {
     planInstance.setPlanVariables(vars);
   }
 
+  /**
+   * Gets the result at the given index from the results set.
+   * 
+   * @param results results set (implementation must support predictable iteration order)
+   * @param index the index within the set {@code (0 < index < results.size())} to retrieve
+   * @return the result at the given index, or null if there was an error
+   */
+  private Belief getResultAtIndex(Set<Belief> results, int index) {
+    Belief belief = null;
+    if (!(results == null || index < 0 || index >= results.size())) {
+      int idx = 0;
+      for (Belief b : results) {
+        if (idx == index) {
+          belief = b;
+          break;
+        }
+        idx++;
+      }
+    }
+    return belief;
+  }
 
 }

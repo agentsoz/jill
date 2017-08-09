@@ -323,33 +323,33 @@ public class PlanBindingsTest {
     pb.add(p4, null);
     pb.add(p5, lhs1);
 
-    Plan o1 = pb.get(PlanSelectionPolicy.FIRST);
-    Plan o2 = pb.get(PlanSelectionPolicy.FIRST);
-    Plan o3 = pb.get(PlanSelectionPolicy.FIRST);
-    Plan o4 = pb.get(PlanSelectionPolicy.FIRST);
-    Plan o5 = pb.get(PlanSelectionPolicy.FIRST);
+    Plan o1 = pb.selectPlan(PlanSelectionPolicy.FIRST);
+    Plan o2 = pb.selectPlan(PlanSelectionPolicy.FIRST);
+    Plan o3 = pb.selectPlan(PlanSelectionPolicy.FIRST);
+    Plan o4 = pb.selectPlan(PlanSelectionPolicy.FIRST);
+    Plan o5 = pb.selectPlan(PlanSelectionPolicy.FIRST);
     assertSame(o1, o2);
     assertSame(o1, o3);
     assertSame(o1, o4);
     assertSame(o1, o5);
     assertSame(o1, p1);
 
-    o1 = pb.get(PlanSelectionPolicy.LAST);
-    o2 = pb.get(PlanSelectionPolicy.LAST);
-    o3 = pb.get(PlanSelectionPolicy.LAST);
-    o4 = pb.get(PlanSelectionPolicy.LAST);
-    o5 = pb.get(PlanSelectionPolicy.LAST);
+    o1 = pb.selectPlan(PlanSelectionPolicy.LAST);
+    o2 = pb.selectPlan(PlanSelectionPolicy.LAST);
+    o3 = pb.selectPlan(PlanSelectionPolicy.LAST);
+    o4 = pb.selectPlan(PlanSelectionPolicy.LAST);
+    o5 = pb.selectPlan(PlanSelectionPolicy.LAST);
     assertSame(o1, o2);
     assertSame(o1, o3);
     assertSame(o1, o4);
     assertSame(o1, o5);
     assertSame(o1, p5);
 
-    o1 = pb.get(PlanSelectionPolicy.RANDOM);
-    o2 = pb.get(PlanSelectionPolicy.RANDOM);
-    o3 = pb.get(PlanSelectionPolicy.RANDOM);
-    o4 = pb.get(PlanSelectionPolicy.RANDOM);
-    o5 = pb.get(PlanSelectionPolicy.RANDOM);
+    o1 = pb.selectPlan(PlanSelectionPolicy.RANDOM);
+    o2 = pb.selectPlan(PlanSelectionPolicy.RANDOM);
+    o3 = pb.selectPlan(PlanSelectionPolicy.RANDOM);
+    o4 = pb.selectPlan(PlanSelectionPolicy.RANDOM);
+    o5 = pb.selectPlan(PlanSelectionPolicy.RANDOM);
     assertFalse(o1.equals(o2) && o1.equals(o3) && o1.equals(o4) && o1.equals(o5));
     assertFalse(o2.equals(o1) && o2.equals(o3) && o2.equals(o4) && o2.equals(o5));
     assertFalse(o3.equals(o1) && o3.equals(o2) && o3.equals(o4) && o3.equals(o5));
