@@ -31,6 +31,16 @@ public class Greeter extends Agent {
   private static int numNeighbours = 1;
   private static final String beliefset = "neighbour";
 
+  private static final String[] males =
+      {"Alex", "Daniel", "John", "Lionel", "Nick", "Oscar", "Paul", "Rod", "Sam", "Tom"};
+  private static final String[] females =
+      {"Alice", "Elisa", "Fiona", "Julia", "Kate", "Laura", "Margaret", "Nancy", "Pam", "Rachael"};
+  private static final String[] middle =
+      {"A.", "B.", "C.", "D.", "E.", "F.", "G.", "H.", "I.", "J.", "K.", "L.", "M.", "N.", "O.",
+          "P.", "Q.", "R.", "S.", "T.", "U.", "V.", "W.", "X.", "Y.", "Z."};
+  private static final String[] surnames = {"Anderson", "Brown", "Jones", "Martin", "Morton",
+      "Smith", "Taylor", "White", "Williams", "Wilson",};
+
   public Greeter(String name) {
     super(name);
   }
@@ -67,26 +77,25 @@ public class Greeter extends Agent {
    * @throws BeliefBaseException thrown if there is a belief base access error
    */
   private void registerNeighbours(Random rand, int count) throws BeliefBaseException {
-    final String[] males =
-        {"Alex", "Daniel", "John", "Lionel", "Nick", "Oscar", "Paul", "Rod", "Sam", "Tom"};
-    final String[] females = {"Alice", "Elisa", "Fiona", "Julia", "Kate", "Laura", "Margaret",
-        "Nancy", "Pam", "Rachael"};
-    final String[] middle = {"A.", "B.", "C.", "D.", "E.", "F.", "G.", "H.", "I.", "J.", "K.", "L.",
-        "M.", "N.", "O.", "P.", "Q.", "R.", "S.", "T.", "U.", "V.", "W.", "X.", "Y.", "Z."};
-    final String[] surnames = {"Anderson", "Brown", "Jones", "Martin", "Morton", "Smith", "Taylor",
-        "White", "Williams", "Wilson",};
     int size = (count < 0) ? 0 : count;
-    StringBuilder name = new StringBuilder();
     for (int i = 0; i < size; i++) {
       boolean male = (rand.nextDouble() < 0.5) ? true : false;
-      name.setLength(0);
-      name.append(male ? males[rand.nextInt(males.length)] : females[rand.nextInt(females.length)]);
-      name.append(' ');
-      name.append(middle[rand.nextInt(middle.length)]);
-      name.append(' ');
-      name.append(surnames[rand.nextInt(surnames.length)]);
-      this.addBelief(beliefset, name.toString(), male ? "male" : "female");
+      this.addBelief(beliefset, buildName(male), male ? "male" : "female");
     }
+  }
+
+  /**
+   * Builds a new name.
+   * 
+   * @param male specifies whether the name should be for a male or female
+   * @return the constructed name
+   */
+  private static String buildName(boolean male) {
+    StringBuilder name = new StringBuilder();
+    name.append(male ? males[rand.nextInt(males.length)] : females[rand.nextInt(females.length)])
+        .append(' ').append(middle[rand.nextInt(middle.length)]).append(' ')
+        .append(surnames[rand.nextInt(surnames.length)]);
+    return name.toString();
   }
 
   /**
