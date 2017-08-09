@@ -237,7 +237,8 @@
           <configuration>
             <excludes>
               <exclude>io/github/agentsoz/jill/util/SparseBitSet*</exclude>
-              <exclude>**/playground/**</exclude>
+              <exclude>io/github/agentsoz/jill/example/**</exclude>
+              <exclude>io/github/agentsoz/jill/extension/template/**</exclude>
             </excludes>
           </configuration>
           <executions>
@@ -246,13 +247,20 @@
               <goals>
                 <goal>prepare-agent</goal>
               </goals>
+              <configuration>
+                <destFile>${rootdir}/target/coverage-reports/jacoco-unit.exec</destFile>
+              </configuration>
             </execution>
             <execution>
               <id>default-report</id>
-              <phase>prepare-package</phase>
+              <phase>post-integration-test</phase>
               <goals>
                 <goal>report</goal>
               </goals>
+              <configuration>
+                <dataFile>${rootdir}/target/coverage-reports/jacoco-unit.exec</dataFile>
+                <outputDirectory>${outputDirectory}/target/coverage-reports/jacoco</outputDirectory>
+              </configuration>
             </execution>
             <execution>
               <id>default-check</id>
@@ -260,6 +268,7 @@
                 <goal>check</goal>
               </goals>
               <configuration>
+                <dataFile>${rootdir}/target/coverage-reports/jacoco-unit.exec</dataFile>
                 <rules>
                   <!--  implementation is needed only for Maven 2  -->
                   <rule implementation="org.jacoco.maven.RuleConfiguration">
@@ -296,8 +305,7 @@
             <minimumTokens>100</minimumTokens>
             <excludes>
               <exclude>**/SparseBitSet.java</exclude>
-              <exclude>**/playground/**</exclude>
-              <exclude>**/jill/example/tokenpassing/TokenAgent*.java</exclude>
+              <exclude>**/*RegressionTest*.java</exclude>
             </excludes>
             <excludeRoots>
               <excludeRoot>target/</excludeRoot>
