@@ -46,6 +46,38 @@ public class BeliefSet extends AObject {
     return fields;
   }
 
+  /**
+   * Gets the field of this belief set that has the given name.
+   * 
+   * @param name the name of the field to retrieve
+   * @return the belief set field matching that name, or null if not found
+   */
+  public BeliefSetField getFieldByName(String name) {
+    BeliefSetField field = null;
+    for (int i = 0; i < fields.length; i++) {
+      if (name.equals(fields[i].getName())) {
+        field = fields[i];
+        break;
+      }
+    }
+    return field;
+  }
+
+  /**
+   * Gets the index (column) of the given field in this belief set.
+   * 
+   * @param field the field for which the index is required
+   * @return the index of that field, or -1 if not found
+   */
+  public int getIndex(BeliefSetField field) {
+    int index = -1;
+    for (int i = 0; i < fields.length; i++) {
+      if (field.equals(fields[i])) {
+        index = i;
+      }
+    }
+    return index;
+  }
 
   /*
    * (non-Javadoc)
@@ -92,7 +124,7 @@ public class BeliefSet extends AObject {
     return name.equals(oname);
   }
 
- 
+
   public String toString() {
     return new Gson().toJson(this);
   }

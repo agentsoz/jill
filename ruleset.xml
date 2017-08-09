@@ -24,7 +24,9 @@
     <priority>5</priority>
   </rule>
   <rule ref="rulesets/java/codesize.xml/TooManyMethods">
-    <priority>5</priority>
+    <properties>
+      <property name="maxmethods" value="20"/>
+    </properties>
   </rule>
   <rule ref="rulesets/java/codesize.xml/ExcessiveMethodLength">
     <priority>5</priority>

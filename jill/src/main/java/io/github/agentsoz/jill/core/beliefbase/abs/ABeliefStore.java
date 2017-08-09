@@ -169,32 +169,26 @@ public class ABeliefStore extends BeliefBase {
   private AQuery parseQuery(int agentid, String strBeliefset, String strField, String strOp,
       String strVal) throws BeliefBaseException {
     if (!beliefsets.containsKey(strBeliefset)) {
-      throw new BeliefBaseException("belief set '" + strBeliefset + "' does not exist");
+      throw new BeliefBaseException(
+          logsuffix(agentid) + "belief set '" + strBeliefset + "' does not exist");
     }
     BeliefSet beliefset = beliefsets.get(strBeliefset);
-    int field = -1;
-    Class<?> type = null;
-    BeliefSetField[] fields = beliefset.getFields();
-    for (int i = 0; i < fields.length; i++) {
-      if (strField.equals(fields[i].getName())) {
-        field = i;
-        type = fields[i].getType();
-        break;
-      }
-    }
-    if (field == -1) {
-      throw new BeliefBaseException("belief set field '" + strField + "' does not exist");
+    BeliefSetField field = beliefset.getFieldByName(strField);
+    int fieldIndex = beliefset.getIndex(field);
+    if (field == null || fieldIndex == -1) {
+      throw new BeliefBaseException(logsuffix(agentid) + "could not retrieve belief set field '"
+          + strField + "' from belief set " + strBeliefset);
     }
     Object val = null;
     try {
-      val = string2type(type, strVal);
+      val = string2type(field.getType(), strVal);
     } catch (BeliefBaseException e) {
       throw new BeliefBaseException(logsuffix(agentid) + e.getMessage(), e);
     }
     int id = beliefset.getId();
     Operator op = "=".equals(strOp) ? Operator.EQ
         : "<".equals(strOp) ? Operator.LT : ">".equals(strOp) ? Operator.GT : Operator.NE;
-    return new AQuery(id, field, op, val);
+    return new AQuery(id, fieldIndex, op, val);
   }
 
   private static Set<Belief> performQuery(AQuery query,
