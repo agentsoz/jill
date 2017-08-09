@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.LinkedHashSet;
 import java.util.Random;
 
+@SuppressWarnings("PMD")
 public class PlanBindingsTest {
 
   @Test

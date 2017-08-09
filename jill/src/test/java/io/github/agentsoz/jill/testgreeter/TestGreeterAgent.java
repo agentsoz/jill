@@ -31,6 +31,7 @@ import java.util.LinkedHashSet;
 import java.util.Random;
 import java.util.TreeSet;
 
+@SuppressWarnings("PMD")
 @AgentInfo(hasGoals = {"io.github.agentsoz.jill.testgreeter.GoalBeFriendly"})
 public class TestGreeterAgent extends Agent {
 
