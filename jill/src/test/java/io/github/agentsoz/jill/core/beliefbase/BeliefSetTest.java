@@ -1,6 +1,5 @@
 package io.github.agentsoz.jill.core.beliefbase;
 
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 

@@ -108,7 +108,8 @@ public class IntentionSelector implements Runnable {
           break;
         }
       }
-    } while (true);
+    } 
+    while (true);
     logger.debug("Pool {} is exiting", poolid);
   }
 

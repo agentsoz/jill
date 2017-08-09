@@ -28,6 +28,7 @@ import io.github.agentsoz.jill.core.GlobalState;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -132,7 +133,8 @@ public class ArgumentsLoaderTest {
       // remove java commments from the read file
       filecontents = filecontents.replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)", "");
     } catch (IOException e) {
-      e.printStackTrace();
+      LoggerFactory.getLogger(Main.LOGGER_NAME).error("Error in reading config file " + configFile,
+          e);
     }
     // Check that the config string (minus the enclosing brackets), exists in the returned config
     assertTrue(configcontents.contains(filecontents.substring(1, filecontents.length() - 1)));
