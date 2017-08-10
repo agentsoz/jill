@@ -7,6 +7,7 @@
   * [One Million BDI Agents](#2-one-million-bdi-agents)
   * [Hello Neighbour](#3-hello-neighbour)
   * [Token Passing](#4-token-passing)
+* [Developers](#developers)
 * [License](#license)
 
 
