@@ -14,11 +14,6 @@ package io.github.agentsoz.jill.util;
  * If not, see <http://www.gnu.org/licenses/lgpl-3.0.html>. #L%
  */
 
-import io.github.agentsoz.jill.Main;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.UnsupportedEncodingException;
 
 
@@ -33,8 +28,6 @@ import java.io.UnsupportedEncodingException;
  *
  */
 public final class AString {
-
-  private static final Logger logger = LoggerFactory.getLogger(Main.LOGGER_NAME);
 
   /** The java.nio.charset to use for converting to/from byte array */
   private static final String CHARSET = "UTF-8";
@@ -58,12 +51,13 @@ public final class AString {
     if (str == null) {
       return new byte[0];
     }
+    byte[] val = null;
     try {
-      return str.getBytes(CHARSET);
-    } catch (UnsupportedEncodingException e) {
-      logger.error("Could not convert '" + str + "' to byte[]", e);
+      val = str.getBytes(CHARSET);
+    } catch (UnsupportedEncodingException e) { // NOPMD - ignore empty catch
+      // Can never occur since CHARSET is correct and final
     }
-    return new byte[0];
+    return val;
   }
 
   /**
@@ -77,12 +71,13 @@ public final class AString {
     if (bytes == null) {
       return null;
     }
+    String str = null;
     try {
-      return new String(bytes, CHARSET);
-    } catch (UnsupportedEncodingException e) {
-      logger.error("Could not convert '" + bytes + "' to string", e);
+      str = new String(bytes, CHARSET);
+    } catch (UnsupportedEncodingException e) { // NOPMD - ignore empty catch
+      // Can never occur since CHARSET is correct and final
     }
-    return null;
+    return str;
   }
 
 }
