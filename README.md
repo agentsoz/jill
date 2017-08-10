@@ -224,6 +224,12 @@ and the entire software life cycle.
   The Maven build will fail if the code is non-compliant with the above. 
   To temporarily disable the checks, use the following build command:
   `mvn clean install -Dpmd.skip=true -Dcpd.skip=true -Dcheckstyle.skip=true -Djacoco.skip=true`
+
+* All development is carried out on the `dev` branch. Code contributions should
+  be made on new branches off `dev` by submitting a pull request. For more
+  information on this Git workflow see 
+  <http://nvie.com/posts/a-successful-git-branching-model/>.
+
   
 
 ## License
