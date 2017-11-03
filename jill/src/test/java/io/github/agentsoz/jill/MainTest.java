@@ -126,7 +126,6 @@ public class MainTest {
     assertEquals(out.toString(), output);
   }
 
-  @Ignore("FIXME: The ordering of output is failing for this test.")
   @Test
   public void testBeliefBindingsInMetaPlan() {
     final String output = "PlanGreetNeighbour" + ",0:Alex K. Jones:male" + ",0:Daniel I. Smith:male"

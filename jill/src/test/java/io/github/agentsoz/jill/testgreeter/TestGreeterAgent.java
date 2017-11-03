@@ -174,8 +174,8 @@ public class TestGreeterAgent extends Agent {
             }
             StringBuilder s2 = new StringBuilder(String.valueOf(b2.getBeliefset()));
             for (Object field : b2.getTuple()) {
-              s1.append(':');
-              s1.append(field);
+              s2.append(':');
+              s2.append(field);
             }
             return s1.toString().compareTo(s2.toString());
           }
