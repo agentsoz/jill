@@ -22,20 +22,12 @@ import java.io.PrintStream;
 @AgentInfo(hasGoals = {"io.github.agentsoz.jill.testprogram.LogGoal"})
 public class LogAgent extends Agent {
 
-  private int status;
-  private PrintStream writer;
-  private boolean verbose;
-
   public LogAgent(String str) {
     super(str);
   }
 
   @Override
   public void start(PrintStream writer, String[] params) {
-    if (params != null && params[0].equals("-d")) {
-      verbose = true;
-      this.writer = writer;
-    }
     post(new LogGoal("g"));
   }
 
