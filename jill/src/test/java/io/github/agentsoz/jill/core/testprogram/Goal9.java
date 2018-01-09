@@ -4,8 +4,12 @@ import io.github.agentsoz.jill.lang.Goal;
 import io.github.agentsoz.jill.lang.GoalInfo;
 
 /*
- * #%L Jill Cognitive Agents Platform %% Copyright (C) 2014 - 2017 by its authors. See AUTHORS file.
- * %% This program is free software: you can redistribute it and/or modify it under the terms of the
+ * #%L
+ * Jill Cognitive Agents Platform
+ * %%
+ * Copyright (C) 2014 - 2018 by its authors. See AUTHORS file.
+ * %%
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU Lesser General Public License as published by the Free Software Foundation, either version 3
  * of the License, or (at your option) any later version.
  * 
@@ -14,7 +18,8 @@ import io.github.agentsoz.jill.lang.GoalInfo;
  * General Lesser Public License for more details.
  * 
  * You should have received a copy of the GNU General Lesser Public License along with this program.
- * If not, see <http://www.gnu.org/licenses/lgpl-3.0.html>. #L%
+ * If not, see <http://www.gnu.org/licenses/lgpl-3.0.html>.
+ * #L%
  */
 
 @GoalInfo(hasPlans = {"io.github.agentsoz.jill.core.testprogram.Plan9"})
