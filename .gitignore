@@ -6,3 +6,8 @@ bin/
 build/
 .settings/
 .gradle
+
+# IntelliJ ignores
+.idea/
+**/*.iml
+
