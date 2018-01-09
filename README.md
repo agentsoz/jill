@@ -1,6 +1,8 @@
 # Jill
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/bbaec92c934d409eaf90a465179a854f)](https://www.codacy.com/app/agentsoz/jill?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=agentsoz/jill&amp;utm_campaign=Badge_Grade) [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/bbaec92c934d409eaf90a465179a854f)](https://www.codacy.com/app/agentsoz/jill?utm_source=github.com&utm_medium=referral&utm_content=agentsoz/jill&utm_campaign=Badge_Coverage)
+```master```[![Build Status](https://travis-ci.org/agentsoz/jill.svg?branch=master)](https://travis-ci.org/agentsoz/jill)
+```dev```[![Build Status](https://travis-ci.org/agentsoz/jill.svg?branch=dev)](https://travis-ci.org/agentsoz/jill)
 
 * [About](#about)
 * [Releases](#releases)
@@ -16,30 +18,30 @@
 ## About
 
 Jill is an open source initiate to deliver a fast and lightweight
-java-based BDI-like (Beliefs, Desires, Intentions) execution engine for 
+java-based BDI-like (Beliefs, Desires, Intentions) execution engine for
 developing large-scale multi-agent systems. Jill is:
 
-* A BDI execution engine: that supports complex BDI goal-plan behaviour 
-  hierarchies in the PRS style (A Rao and M Georgeff. BDI Agents: from 
+* A BDI execution engine: that supports complex BDI goal-plan behaviour
+  hierarchies in the PRS style (A Rao and M Georgeff. BDI Agents: from
   theory to practice. In ICMAS, volume 95, pages 312–319, 1995).
 
-* Lightweight: the design and implementation is heavily optimised to 
+* Lightweight: the design and implementation is heavily optimised to
   deliver a very lightweight distribution (see [Releases](#releases) for details)
   fit for inclusion in web-based and embedded-Java applications.
 
-* Fast: The Jill BDI execution engine is very fast, and was designed from 
-  ground-up to handle millions of BDI agents (see [Benchmarks and Examples](#benchmarks-and-examples)). 
+* Fast: The Jill BDI execution engine is very fast, and was designed from
+  ground-up to handle millions of BDI agents (see [Benchmarks and Examples](#benchmarks-and-examples)).
 
-* Java-based: The programming of BDI agents in Jill is done in 
+* Java-based: The programming of BDI agents in Jill is done in
   pure Java, so users benefit from the various support tools that are available
   to Java developers, such as full integration with the Eclipse IDE.
   Jill itself is written in Java and is distributed as a JAR bundle which can
   be easily integrated into larger projects that require cognitive reasoning
   agents.
 
-* Open source: Jill is released under the terms of the 
+* Open source: Jill is released under the terms of the
   GNU General Lesser Public License <http://www.gnu.org/licenses/lgpl-3.0.html>.
-  
+
 
 ## Releases
 
@@ -67,7 +69,7 @@ Finished at Fri Aug 19 09:46:59 AEST 2016
 
 The output of the run, i.e., the solution, is written to `./test/hanoi.out`:
 ```
-> head -4 ./test/hanoi.out 
+> head -4 ./test/hanoi.out
 Initialised hanoi board with 15 discs:
 |15|14|13|12|11|10|9|8|7|6|5|4|3|2|1
 |
@@ -97,7 +99,7 @@ Moving disc 1 from pin 0 to 2
 
 To get an idea about performance, such as how long it took to solve the puzzle and in how many moves, we can look at the generated log file in `./test/hanoi.log`:
 ```
-> grep -i finished test/hanoi.log 
+> grep -i finished test/hanoi.log
 Finished running 1 agents in 1267 ms
 > grep Moving test/hanoi.out | wc -l
 32767
@@ -139,7 +141,7 @@ Finished at Fri Aug 19 11:20:34 AEST 2016
 ```
 That took only 10 seconds, nice! To get a better idea of the performance, you can query the log file `./test/testagent-1000000.log`:
 ```
-> grep 1000000 ./test/testagent-1000000.log 
+> grep 1000000 ./test/testagent-1000000.log
 Created 1000000 agents in 724 ms
 Started 1000000 agents in 800 ms
 Finished running 1000000 agents in 8041 ms
@@ -154,7 +156,7 @@ This crafted scenario is perfect for highlight the use of binding variables in c
 
 The script `./test/greeter.sh` runs this example in various configurations changing the number of agents and the number of neighbours per agent:
 ```
-> ./test/greeter.sh 
+> ./test/greeter.sh
 Running 10000 agents with 5 neighbours each (see greeter-10000a-5b.*)
 Started at  Fri Aug 19 12:26:14 AEST 2016
 java -cp ./test/../jill/target/jill-0.3.1-SNAPSHOT-jar-with-dependencies.jar:./test/../examples/target/jill-examples-0.3.1-SNAPSHOT.jar io.github.agentsoz.jill.Main --plan-selection-policy FIRST --config "{ programOutputFile : \"./test/greeter-10000a-5b.out\", logFile : \"./test/greeter-10000a-5b.log\", logLevel : \"INFO\", agents: [ { classname : io.github.agentsoz.jill.example.greeter.Greeter, args : [-neighbourhoodSize, 5], count: 10000 } ] }"
@@ -181,10 +183,10 @@ Terminated 10000 agents in 5 ms
 
 ### 4. Token Passing
 
-In this setup a group of agents are connected together in a ring configuration such that each agent can talk to two others, one on either side. The benchmark simply passes a token around in the ring, varying the number of agents and rounds for which the token is passed. Below we explore the result for 10,000 agents passing the token for 100 rounds: 
+In this setup a group of agents are connected together in a ring configuration such that each agent can talk to two others, one on either side. The benchmark simply passes a token around in the ring, varying the number of agents and rounds for which the token is passed. Below we explore the result for 10,000 agents passing the token for 100 rounds:
 
 ```
-> ./test/tokenpassing.sh 
+> ./test/tokenpassing.sh
 ...
 Running token passing version 1 between 10000 agents for 100 rounds (see tokenpassing1-10000a-100r.*)
 Started at  Fri Aug 19 13:00:54 AEST 2016
@@ -220,20 +222,20 @@ and the entire software life cycle.
   `mvn source:jar javadoc:jar`
 
 * For quality assurance, we use the PMD static code checker with copy
-  paste duplication checking enabled <https://pmd.github.io/>,  the Checkstyle 
-  java code style checker for compliance with Google code style 
-  <http://checkstyle.sourceforge.net/>, and the JaCoCo java code coverage 
-  checker with minimum coverage targets <http://www.jacoco.org>. 
-  The Maven build will fail if the code is non-compliant with the above. 
+  paste duplication checking enabled <https://pmd.github.io/>,  the Checkstyle
+  java code style checker for compliance with Google code style
+  <http://checkstyle.sourceforge.net/>, and the JaCoCo java code coverage
+  checker with minimum coverage targets <http://www.jacoco.org>.
+  The Maven build will fail if the code is non-compliant with the above.
   To temporarily disable the checks, use the following build command:
   `mvn clean install -Dpmd.skip=true -Dcpd.skip=true -Dcheckstyle.skip=true -Djacoco.skip=true`
 
 * All development is carried out on the `dev` branch. Code contributions should
   be made on new branches off `dev` by submitting a pull request. For more
-  information on this Git workflow see 
+  information on this Git workflow see
   <http://nvie.com/posts/a-successful-git-branching-model/>.
 
-  
+
 
 ## License
 
@@ -255,4 +257,3 @@ License along with this program.  If not, see
 <http://www.gnu.org/licenses/lgpl-3.0.html>.
 
 Contact: Dhirendra Singh <dhi.singh@gmail.com>
-
