@@ -13,7 +13,7 @@ cache:
 
 # Undo _JAVA_OPTIONS environment variable as  we explicitly set heap sizes
 before_script:
-  - _JAVA_OPTIONS=-Xmx4g -Xmx4g
+  - _JAVA_OPTIONS="-Xmx4g -Xmx4g"
 
 env:
   global:
