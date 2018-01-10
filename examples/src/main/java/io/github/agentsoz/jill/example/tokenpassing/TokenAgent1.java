@@ -41,7 +41,7 @@ public class TokenAgent1 extends Agent {
     parse(params);
     out = writer;
     if (getId() == 0) {
-      Log.info("round 1");
+      Log.debug("round 1");
       send(1, new Token1(1, 1));
     }
   }

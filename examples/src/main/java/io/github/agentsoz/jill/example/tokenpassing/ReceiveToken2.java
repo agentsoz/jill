@@ -58,10 +58,10 @@ public class ReceiveToken2 extends Plan {
           // Not done, so start the next round
           int newRound = msg.getRound() + 1;
           msg.setRound(newRound);
-          Log.info("round " + newRound);
+          Log.debug("round " + newRound);
         } else {
           // All done, so return
-          Log.info("rounds complete");
+          Log.debug("rounds complete");
           return;
         }
       }

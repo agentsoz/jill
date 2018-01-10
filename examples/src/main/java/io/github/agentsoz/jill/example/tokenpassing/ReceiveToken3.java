@@ -72,10 +72,10 @@ public class ReceiveToken3 extends Plan {
           int newRound = msg.getRound() + 1;
           msg.setRound(newRound);
           msg.setHops(1);
-          Log.info("round " + newRound);
+          Log.debug("round " + newRound);
         } else {
           // All done, so return
-          Log.info("rounds complete");
+          Log.debug("rounds complete");
           return;
         }
       }

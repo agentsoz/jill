@@ -73,7 +73,7 @@ public class TokenAgent3 extends Agent {
 
       // Let Agent 0 start the token passing
       if (getId() == 0) {
-        Log.info("round 1");
+        Log.debug("round 1");
         Token3 token = new Token3(1, 1);
         token.setHops(1);
         send(1, token);
