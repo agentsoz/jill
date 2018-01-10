@@ -15,3 +15,7 @@ script: mvn clean install
 
 after_success:
   - mvn -N com.gavinmogan:codacy-maven-plugin:coverage -DcoverageReportFile=/home/travis/build/agentsoz/jill/target/coverage-reports/jacoco/jacoco.xml -DprojectToken=884cdc9110044d2e9efd91854ead6c82 -DapiToken=884cdc9110044d2e9efd91854ead6c82
+  - test/tokenpassing.sh
+  - test/greeter.sh
+  - test/hanoi.sh
+  - test/testagent.sh
