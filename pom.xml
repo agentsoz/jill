@@ -19,7 +19,7 @@
     <developerConnection>scm:git:https://github.com/agentsoz/jill.git</developerConnection>
     <url>https://github.com/agentsoz/jill.git</url>
     <tag>HEAD</tag>
-  </scm>  
+  </scm>
 
   <licenses>
     <license>
@@ -48,7 +48,7 @@
     </repository>
   </distributionManagement>
 
-  
+
   <modules>
     <module>jill</module>
     <module>examples</module>
@@ -63,14 +63,14 @@
       <version>4.12</version>
       <scope>test</scope>
     </dependency>
-    <!-- for JSON-style toString() of objects --> 
+    <!-- for JSON-style toString() of objects -->
     <dependency>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
       <version>2.3.1</version>
     </dependency>
     <!-- logging framework -->
-    <dependency> 
+    <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
       <version>1.0.13</version>
@@ -78,7 +78,7 @@
   </dependencies>
 
 <profiles>
-  <profile> 
+  <profile>
     <id>release</id>
     <build>
     <plugins>
@@ -140,7 +140,7 @@
             <nexusUrl>https://oss.sonatype.org/</nexusUrl>
             <autoReleaseAfterClose>false</autoReleaseAfterClose>
           </configuration>
-        </plugin>    
+        </plugin>
         <!-- Maven release plugin -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -188,14 +188,14 @@
               <goals>
                 <goal>update-project-license</goal>
                 <!-- diabling update header as it takes a long time; manually do mvn license:update-file-header prior to release-->
-                <!--<goal>update-file-header</goal>--> 
+                <!--<goal>update-file-header</goal>-->
               </goals>
               <phase>process-sources</phase>
             </execution>
           </executions>
         </plugin>
 
-        <!-- Checkstyle code style checker  --> 
+        <!-- Checkstyle code style checker  -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-checkstyle-plugin</artifactId>
@@ -313,7 +313,7 @@
           </configuration>
         </plugin>
 
-        <!-- Checkstyle code style checker  --> 
+        <!-- Checkstyle code style checker  -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-checkstyle-plugin</artifactId>
@@ -325,43 +325,6 @@
             <excludes>**/SparseBitSet.java,**/*RegressionTest*.java,**/playground/**</excludes>
           </configuration>
         </plugin>
-
-          <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-          <plugin>
-            <groupId>org.eclipse.m2e</groupId>
-            <artifactId>lifecycle-mapping</artifactId>
-            <version>1.0.0</version>
-            <configuration>
-              <lifecycleMappingMetadata>
-                <pluginExecutions>
-                  <pluginExecution>
-                    <pluginExecutionFilter>
-                      <groupId>
-                        org.codehaus.mojo
-                      </groupId>
-                      <artifactId>
-                        license-maven-plugin
-                      </artifactId>
-                      <versionRange>
-                        [1.8,)
-                      </versionRange>
-                      <goals>
-                        <goal>
-                          update-project-license
-                        </goal>
-                        <goal>
-                          update-file-header
-                        </goal>
-                      </goals>
-                    </pluginExecutionFilter>
-                    <action>
-                      <ignore />
-                    </action>
-                  </pluginExecution>
-                </pluginExecutions>
-              </lifecycleMappingMetadata>
-            </configuration>
-          </plugin>
         </plugins>
       </pluginManagement>
   </build>

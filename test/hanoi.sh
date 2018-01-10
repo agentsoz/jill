@@ -1,33 +1,32 @@
 #!/bin/bash
 
-DIR=$(dirname "$0")
+DISCS=18
 
-CP=${DIR}/../jill/target/jill-0.3.3-SNAPSHOT-jar-with-dependencies.jar:${DIR}/../examples/target/jill-examples-0.3.3-SNAPSHOT.jar
+CMD="mvn exec:exec
+  -pl examples
+  -Dexec.executable=java
+  -Dexec.classpathScope=test
+  -Dexec.args=\"
+    -Xmx4g -Xms4g
+    -cp %classpath io.github.agentsoz.jill.Main
+    --config
+      \\\"{
+        programOutputFile : '../test/hanoi.out',
+        logFile : '../test/hanoi.log',
+        logLevel : INFO,
+        randomSeed : 123456,
+        agents:
+         [
+          {
+           classname : io.github.agentsoz.jill.example.hanoi.Player,
+           args : [-discs, ${DISCS}],
+           count: 1
+          }
+         ]
+      }\\\"
+  \""
 
-CMD="java -cp ${CP} io.github.agentsoz.jill.Main --help"
 echo $CMD; eval $CMD
 
-DISCS=20
-OUTFILE=${DIR}/hanoi.out
-echo ""
-echo "Solving Towers of Hanoi with ${DISCS} discs (see ${OUTFILE})"
-
-CFG='"{
-programOutputFile : \"'${OUTFILE}'\",
-logFile : \"'${DIR}'/hanoi.log\",
-logLevel : \"INFO\",
-agents:
- [
-  {
-   classname : io.github.agentsoz.jill.example.hanoi.Player, 
-   args : [-discs, '${DISCS}'], 
-   count: 1
-  }
- ]
-}"'
-
-CMD="java -cp ${CP} io.github.agentsoz.jill.Main --config $CFG" 
-echo "Started at " $(date)
-echo $CMD; eval $CMD > /dev/null
-echo "Finished at" $(date)
-
+MOVES=$(grep Moving test/hanoi.out | wc -l | tr -d '\n')
+echo -e "\nSolved Towers of Hanoi with ${DISCS} discs in ${MOVES} moves\n"
