@@ -97,7 +97,6 @@ public final class Main {
    * Initialises the Jill engine.
    * 
    * @param config a valid loaded configuration
-   * @p
    */
   public static boolean init(Config config) {
 
