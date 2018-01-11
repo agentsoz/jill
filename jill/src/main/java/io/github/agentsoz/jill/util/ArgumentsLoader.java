@@ -31,6 +31,12 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
+/**
+ * <p>ArgumentsLoader class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 public final class ArgumentsLoader {
 
   private static Config config;
@@ -44,7 +50,7 @@ public final class ArgumentsLoader {
 
   /**
    * Returns a usage string for the Jill command line arguments.
-   * 
+   *
    * @return the usage string
    */
   public static String usage() {
@@ -63,7 +69,7 @@ public final class ArgumentsLoader {
 
   /**
    * Parses the given command line arguments.
-   * 
+   *
    * @param args the command line arguments
    */
   public static void parse(String[] args) {
@@ -133,10 +139,20 @@ public final class ArgumentsLoader {
     System.exit(withCode);
   }
 
+  /**
+   * <p>getExtensions.</p>
+   *
+   * @return an array of {@link java.lang.String} objects.
+   */
   public static String[] getExtensions() {
     return new String[0];
   }
 
+  /**
+   * <p>Getter for the field <code>config</code>.</p>
+   *
+   * @return a {@link io.github.agentsoz.jill.config.Config} object.
+   */
   public static Config getConfig() {
     return config;
   }
@@ -176,6 +192,9 @@ public final class ArgumentsLoader {
     return config;
   }
 
+  /**
+   * <p>reset.</p>
+   */
   public static void reset() {
     config = null;
   }

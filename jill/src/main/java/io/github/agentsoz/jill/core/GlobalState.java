@@ -29,9 +29,9 @@ import java.util.Set;
 
 /**
  * A catalog of all known agent, goal and plan types.
- * 
- * @author dsingh
  *
+ * @author dsingh
+ * @version $Id: $Id
  */
 public final class GlobalState {
 

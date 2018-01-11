@@ -26,13 +26,19 @@ import io.github.agentsoz.jill.lang.PlanStep;
 
 import java.util.Map;
 
+/**
+ * <p>MoveTower class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 public class MoveTower extends Plan {
 
   Solve solve;
 
   /**
    * Creates a MoveTower plan.
-   * 
+   *
    * @param agent the agent that has this plan
    * @param goal the goal that this plan handles
    * @param name a name for this plan
@@ -43,11 +49,17 @@ public class MoveTower extends Plan {
     body = steps;
   }
 
+  /**
+   * {@inheritDoc}.
+   */
   @Override
   public boolean context() {
     return true; // null indicates true
   }
 
+  /**
+   * {@inheritDoc}.
+   */
   @Override
   public void setPlanVariables(Map<String, Object> var) {
     // TODO Auto-generated method stub

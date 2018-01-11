@@ -29,6 +29,12 @@ import ch.qos.logback.core.FileAppender;
 import org.slf4j.LoggerFactory;
 
 
+/**
+ * <p>Log class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 public final class Log {
 
   private static Logger logger;
@@ -40,22 +46,47 @@ public final class Log {
     
   }
 
+  /**
+   * <p>info.</p>
+   *
+   * @param msg a {@link java.lang.String} object.
+   */
   public static void info(String msg) {
     logger.info(msg);
   }
 
+  /**
+   * <p>trace.</p>
+   *
+   * @param msg a {@link java.lang.String} object.
+   */
   public static void trace(String msg) {
     logger.trace(msg);
   }
 
+  /**
+   * <p>warn.</p>
+   *
+   * @param msg a {@link java.lang.String} object.
+   */
   public static void warn(String msg) {
     logger.warn(msg);
   }
 
+  /**
+   * <p>debug.</p>
+   *
+   * @param msg a {@link java.lang.String} object.
+   */
   public static void debug(String msg) {
     logger.debug(msg);
   }
 
+  /**
+   * <p>error.</p>
+   *
+   * @param msg a {@link java.lang.String} object.
+   */
   public static void error(String msg) {
     logger.error(msg);
   }
@@ -63,7 +94,7 @@ public final class Log {
 
   /**
    * Creates a new logger.
-   * 
+   *
    * @param name a name for the logger
    * @param level the logging level for the logger
    * @param file the file to output all logging to
@@ -92,9 +123,10 @@ public final class Log {
 
   /**
    * Returns a agent name string to use for logging.
-   * 
+   *
    * @param idx ID of the agent
    * @return string to use for logging
+   * @since 0.3.4
    */
   public static String logPrefix(int idx) {
     return "Agent " + idx + ":";
@@ -102,10 +134,11 @@ public final class Log {
   
   /**
    * Returns a formatted string for logging the duration between two timestamps.
-   * 
+   *
    * @param start start time in ms
    * @param end end time in ms
-   * @return formatted duration string 
+   * @return formatted duration string
+   * @since 0.3.4
    */
   public static String formattedDuration(long start, long end) {
     return "(" + (end - start) + " ms)";

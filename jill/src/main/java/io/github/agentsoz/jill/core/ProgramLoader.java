@@ -42,6 +42,12 @@ import java.lang.reflect.InvocationTargetException;
 
 
 
+/**
+ * <p>ProgramLoader class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 public final class ProgramLoader {
 
   private static final Logger logger = LoggerFactory.getLogger(Main.LOGGER_NAME);
@@ -60,7 +66,7 @@ public final class ProgramLoader {
   /**
    * Creates a given number of agents of a given Class, and adds the newly created agents to the
    * given store.
-   * 
+   *
    * @param className the fully qualified Java classname for the agents begin created
    * @param num the number of agents (class instances) to create
    * @param agents the store to which these agents should be added
@@ -316,7 +322,7 @@ public final class ProgramLoader {
 
   /**
    * Loads a Jill extension.
-   * 
+   *
    * @param className the fully qalified Java classname of the extension
    * @return an instance of the Jill extension class
    */

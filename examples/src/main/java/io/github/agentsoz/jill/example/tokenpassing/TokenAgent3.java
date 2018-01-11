@@ -28,20 +28,36 @@ import io.github.agentsoz.jill.util.Log;
 
 import java.io.PrintStream;
 
+/**
+ * <p>TokenAgent3 class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 @AgentInfo(hasGoals = {"io.github.agentsoz.jill.example.tokenpassing.Token3"})
 public class TokenAgent3 extends Agent {
 
+  /** Constant <code>out</code>. */
   public static PrintStream out;
   private static final String beliefset = "neighbour";
 
   // Defaults
+  /** Constant <code>rounds=1</code>. */
   public static int rounds = 1;
   private static int neighbourhood = 2;
 
+  /**
+   * <p>Constructor for TokenAgent3.</p>
+   *
+   * @param str a {@link java.lang.String} object.
+   */
   public TokenAgent3(String str) {
     super(str);
   }
 
+  /**
+   * {@inheritDoc}.
+   */
   @Override
   public void start(PrintStream writer, String[] params) {
     parse(params);
@@ -85,7 +101,7 @@ public class TokenAgent3 extends Agent {
 
   /**
    * Parses the command line arguments.
-   * 
+   *
    * @param args the command line arguments
    */
   public static void parse(String[] args) {

@@ -23,6 +23,12 @@ import io.github.agentsoz.jill.struct.AObject;
 
 import java.util.Arrays;
 
+/**
+ * <p>Belief class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 public class Belief extends AObject {
 
   private int beliefset;
@@ -30,7 +36,7 @@ public class Belief extends AObject {
 
   /**
    * Constructs a new belief.
-   * 
+   *
    * @param id unique ID of this belief (must folllow sequence 0,1,2,3...)
    * @param beliefset the beliefset to which this belief belongs
    * @param tuple the belief values
@@ -44,7 +50,7 @@ public class Belief extends AObject {
 
   /**
    * Gets the beliefset to which this belief belongs.
-   * 
+   *
    * @return the beliefset
    */
   public int getBeliefset() {
@@ -53,7 +59,7 @@ public class Belief extends AObject {
 
   /**
    * Sets the beliefset to which this belief belongs.
-   * 
+   *
    * @param beliefset the beliefset to set
    */
   public void setBeliefset(int beliefset) {
@@ -62,7 +68,7 @@ public class Belief extends AObject {
 
   /**
    * Gets the values of this belief.
-   * 
+   *
    * @return the tuple
    */
   public Object[] getTuple() {
@@ -71,17 +77,15 @@ public class Belief extends AObject {
 
   /**
    * Sets the values of this belief.
-   * 
+   *
    * @param tuple the tuple to set
    */
   public void setTuple(Object[] tuple) {
     this.tuple = tuple;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see java.lang.Object#hashCode()
+  /**
+   * {@inheritDoc}.
    */
   @Override
   public int hashCode() {
@@ -92,10 +96,8 @@ public class Belief extends AObject {
     return result;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see java.lang.Object#equals(java.lang.Object)
+  /**
+   * {@inheritDoc}.
    */
   @Override
   public boolean equals(Object obj) {

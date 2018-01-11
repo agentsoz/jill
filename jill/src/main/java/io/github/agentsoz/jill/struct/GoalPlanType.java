@@ -19,6 +19,13 @@ package io.github.agentsoz.jill.struct;
  * #L%
  */
 
+/**
+ * <p>GoalPlanType class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ * @since 0.3.4
+ */
 public class GoalPlanType extends AObject {
 
   private byte[] parents;
@@ -26,7 +33,7 @@ public class GoalPlanType extends AObject {
 
   /**
    * Creates a new Goal-Plan type object.
-   *  
+   *
    * @param str a name for this object
    */
   public GoalPlanType(String str) {
@@ -37,7 +44,7 @@ public class GoalPlanType extends AObject {
 
   /**
    * Gets the parents of this object in the Goal-Plan tree.
-   * 
+   *
    * @return array of parent IDs, or null if this object has no parents
    */
   public byte[] getParents() {
@@ -51,7 +58,7 @@ public class GoalPlanType extends AObject {
 
   /**
    * Adds a parent for this object.
-   * 
+   *
    * @param parent ID of the parent
    */
   public void addParent(byte parent) {
@@ -61,8 +68,8 @@ public class GoalPlanType extends AObject {
 
 
   /**
-   * Gets all the children of this object in the Goal-Plan tree. 
-   * 
+   * Gets all the children of this object in the Goal-Plan tree.
+   *
    * @return array of children IDs, or null if this object has no children
    */
   public byte[] getChildren() {
@@ -76,7 +83,7 @@ public class GoalPlanType extends AObject {
 
   /**
    * Adds a new child for this object.
-   * 
+   *
    * @param child ID of the child
    */
   public void addChild(byte child) {
@@ -87,7 +94,7 @@ public class GoalPlanType extends AObject {
 
   /**
    * Grows the given array by the given size.
-   * 
+   *
    * @param bytes the array to grow
    * @param increment the size by which to grow it
    * @return the new extended array with all the contents of the old array copied over

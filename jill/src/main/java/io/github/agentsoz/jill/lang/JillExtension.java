@@ -19,12 +19,18 @@ package io.github.agentsoz.jill.lang;
  * #L%
  */
 
+/**
+ * <p>JillExtension interface.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 public interface JillExtension {
 
   /**
    * Initialises this extension. Called immediately after the Jill system has finished initialising
    * ({@link io.github.agentsoz.jill.Main#init(Config)}).
-   * 
+   *
    * @param args command line arguments pertaining to this extension
    */
   public void init(String[] args);

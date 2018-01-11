@@ -23,6 +23,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 
+/**
+ * <p>GoalInfo class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 @Retention(RetentionPolicy.RUNTIME)
 public @interface GoalInfo {
   

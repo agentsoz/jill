@@ -21,6 +21,12 @@ import java.util.Map;
  * #L%
  */
 
+/**
+ * <p>Abstract Plan class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 public abstract class Plan {
 
   private final Agent agent;
@@ -31,7 +37,7 @@ public abstract class Plan {
 
   /**
    * Creates a new plan for the gven goal for the given agent.
-   * 
+   *
    * @param agent the agent to which this plan applies
    * @param goal the goal that this plan handles
    * @param name a name for this plan
@@ -41,18 +47,43 @@ public abstract class Plan {
     this.goal = goal;
   }
 
+  /**
+   * <p>context.</p>
+   *
+   * @return a boolean.
+   */
   public abstract boolean context();
 
+  /**
+   * <p>setPlanVariables.</p>
+   *
+   * @param vars a {@link java.util.Map} object.
+   */
   public abstract void setPlanVariables(Map<String, Object> vars);
 
+  /**
+   * <p>Getter for the field <code>agent</code>.</p>
+   *
+   * @return a {@link io.github.agentsoz.jill.lang.Agent} object.
+   */
   public Agent getAgent() {
     return agent;
   }
 
+  /**
+   * <p>Getter for the field <code>goal</code>.</p>
+   *
+   * @return a {@link io.github.agentsoz.jill.lang.Goal} object.
+   */
   public Goal getGoal() {
     return goal;
   }
 
+  /**
+   * <p>post.</p>
+   *
+   * @param goal a {@link io.github.agentsoz.jill.lang.Goal} object.
+   */
   public void post(Goal goal) {
     getAgent().post(goal);
   }
@@ -69,7 +100,7 @@ public abstract class Plan {
 
   /**
    * Checks if this plan has finished executing.
-   * 
+   *
    * @return true if this plan has finished executing, false otherwise
    */
   public boolean hasfinished() {

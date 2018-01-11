@@ -72,7 +72,6 @@ import java.io.Serializable;
  * @author      Arthur van Hoff
  * @author      Michael McCloskey
  * @author      Martin Buchholz
- * @version     1.0, 2009-03-17
  * @since       1.6
  */
 public class SparseBitSet implements Cloneable, Serializable
@@ -361,6 +360,7 @@ public class SparseBitSet implements Cloneable, Serializable
      * @exception   NegativeArraySizeException if the specified initial size
      *              is negative
      * @since       1.6
+     * @throws java.lang.NegativeArraySizeException if any.
      */
     protected SparseBitSet(int capacity, int compactionCount)
             throws NegativeArraySizeException
@@ -420,6 +420,7 @@ public class SparseBitSet implements Cloneable, Serializable
      * @exception   IndexOutOfBoundsException if the specified index is negative
      *              or equal to Integer.MAX_VALUE
      * @since       1.6
+     * @throws java.lang.IndexOutOfBoundsException if any.
      */
     public void and(int i, boolean value) throws IndexOutOfBoundsException
     {
@@ -444,8 +445,8 @@ public class SparseBitSet implements Cloneable, Serializable
      *              equal to Integer.MAX_VALUE, or <code>j</code> is negative,
      *              or <code>i</code> is larger than <code>j</code>
      * @since       1.6
+     * @throws java.lang.IndexOutOfBoundsException if any.
      */
-
     public void and(int i, int j, SparseBitSet b) throws IndexOutOfBoundsException
     {
         setScanner(i, j, b, andStrategy);
@@ -521,6 +522,7 @@ public class SparseBitSet implements Cloneable, Serializable
      *              equal to Integer.MAX_VALUE, or <code>j</code> is negative,
      *              or <code>i</code> is larger than <code>j</code>
      * @since       1.6
+     * @throws java.lang.IndexOutOfBoundsException if any.
      */
     public void andNot(int i, int j, SparseBitSet b)
             throws IndexOutOfBoundsException
@@ -616,13 +618,14 @@ public class SparseBitSet implements Cloneable, Serializable
      *              equal to Integer.MAX_VALUE, or <code>j</code> is negative,
      *              or <code>i</code> is larger than <code>j</code>
      * @since       1.6
+     * @throws java.lang.IndexOutOfBoundsException if any.
      */
     public void clear(int i, int j) throws IndexOutOfBoundsException
     {
         setScanner(i, j, null, clearStrategy);
     }
 
-    /** 
+    /**
      *  Sets all of the bits in this <code>SparseBitSet</code> to
      *  <code>false</code>.
      *
@@ -635,6 +638,8 @@ public class SparseBitSet implements Cloneable, Serializable
     }
 
     /**
+     * {@inheritDoc}
+     *
      *  Cloning this <code>SparseBitSet</code> produces a new
      *  <code>SparseBitSet</code> that is <i>equal</i>() to it. The clone of the
      *  bit set is another bit set that has exactly the same bits set to
@@ -646,8 +651,6 @@ public class SparseBitSet implements Cloneable, Serializable
      *  allocated to a <code>SparseBitSet</code> is not normally decreased,
      *  replacing a bit set by its clone may be a way of both managing memory
      *  consumption and improving the rapidity of access.
-     *
-     * @return      a clone of this SparseBitSet
      * @since       1.6
      */
     @Override
@@ -679,17 +682,15 @@ public class SparseBitSet implements Cloneable, Serializable
     }
 
     /**
+     * {@inheritDoc}
+     *
      *  Compares this object against the specified object. The result is
-     *  <code>true</code> if and only if the argument is not <code>null</code> 
-     *  and is a <code>SparseBitSet</code> object that has exactly the same bits 
+     *  <code>true</code> if and only if the argument is not <code>null</code>
+     *  and is a <code>SparseBitSet</code> object that has exactly the same bits
      *  set to <code>true</code> as this bit set. That is, for every nonnegative
      *  <code>i</code> indexing a bit in the set,
      *  <pre>((SparseBitSet)obj).get(i) == this.get(i)</pre>
      *  must be true.
-     *
-     * @param       obj the Object with which to compare
-     * @return      <code>true</code> if the objects are equivalent;
-     *              <code>false</code> otherwise.
      * @since       1.6
      */
     @Override
@@ -746,6 +747,7 @@ public class SparseBitSet implements Cloneable, Serializable
      *              equal to Integer.MAX_VALUE, or <code>j</code> is negative, or
      *              <code>i</code> is larger than <code>j</code>
      * @since       1.6
+     * @throws java.lang.IndexOutOfBoundsException if any.
      */
     public void flip(int i, int j) throws IndexOutOfBoundsException
     {
@@ -789,6 +791,7 @@ public class SparseBitSet implements Cloneable, Serializable
      *              equal to Integer.MAX_VALUE, or <code>j</code> is negative, or
      *              <code>i</code> is larger than <code>j</code>
      * @since       1.6
+     * @throws java.lang.IndexOutOfBoundsException if any.
      */
     public SparseBitSet get(int i, int j) throws IndexOutOfBoundsException
     {
@@ -798,6 +801,8 @@ public class SparseBitSet implements Cloneable, Serializable
     }
 
     /**
+     * {@inheritDoc}
+     *
      *  Returns a hash code value for this bit set. The hash code depends only on
      *  which bits have been set within this <code>SparseBitSet</code>. The
      *  algorithm used to compute it may be described as follows.
@@ -819,8 +824,6 @@ public class SparseBitSet implements Cloneable, Serializable
      *      return (int)((h &gt;&gt; 32) ^ h);
      *  }</pre>
      *  Note that the hash code values change if the set of bits is altered.
-     *
-     * @return      a hash code value for this bit set
      * @since       1.6
      * @see         Object#equals(Object)
      * @see         java.util.Hashtable
@@ -847,6 +850,7 @@ public class SparseBitSet implements Cloneable, Serializable
      *              equal to Integer.MAX_VALUE, or <code>j</code> is negative,
      *              or <code>i</code> is larger than <code>j</code>
      * @since       1.6
+     * @throws java.lang.IndexOutOfBoundsException if any.
      */
     public boolean intersects(int i, int j, SparseBitSet b)
             throws IndexOutOfBoundsException
@@ -1069,6 +1073,7 @@ public class SparseBitSet implements Cloneable, Serializable
      *              equal to Integer.MAX_VALUE, or <code>j</code> is negative,
      *              or <code>i</code> is larger than <code>j</code>
      * @since       1.6
+     * @throws java.lang.IndexOutOfBoundsException if any.
      */
     public void or(int i, int j, SparseBitSet b) throws IndexOutOfBoundsException
     {
@@ -1164,6 +1169,7 @@ public class SparseBitSet implements Cloneable, Serializable
      *              equal to Integer.MAX_INT, or <code>j</code> is negative, or
      *              <code>i</code> is larger than <code>j</code>.
      * @since       1.6
+     * @throws java.lang.IndexOutOfBoundsException if any.
      */
     public void set(int i, int j) throws IndexOutOfBoundsException
     {
@@ -1290,6 +1296,8 @@ public class SparseBitSet implements Cloneable, Serializable
     }
 
     /**
+     * {@inheritDoc}
+     *
      *  Returns a string representation of this bit set. For every index for which
      *  this <code>SparseBitSet</code> contains a bit in the set state, the decimal
      *  representation of that index is included in the result. Such indices are
@@ -1319,8 +1327,6 @@ public class SparseBitSet implements Cloneable, Serializable
      *  This method is intended for diagnostic use (as it is relatively expensive
      *  in time), but can be useful in interpreting problems in an application's use
      *  of a <code>SparseBitSet</code>.
-     *
-     * @return      a String representation of this SparseBitSet
      * @see         #toStringCompaction(int length)
      * @since       1.6
      */
@@ -1369,10 +1375,11 @@ public class SparseBitSet implements Cloneable, Serializable
         return p.toString();
     }
 
-    /** Sequences of set bits longer than this value are shown by
+    /**
+     * Sequences of set bits longer than this value are shown by
      *  {@link #toString()} as a "sub-sequence," in the form <code>a..b</code>.
      *  Setting this value to zero causes each set bit to be listed individually.
-     *  The default default value is 2 (which means sequences of three or more 
+     *  The default default value is 2 (which means sequences of three or more
      *  bits set are shown as a subsequence, and all other set bits are listed
      *  individually).
      *  <p>
@@ -1456,6 +1463,7 @@ public class SparseBitSet implements Cloneable, Serializable
      *              equal to Integer.MAX_VALUE, or <code>j</code> is negative,
      *              or <code>i</code> is larger than <code>j</code>
      * @since       1.6
+     * @throws java.lang.IndexOutOfBoundsException if any.
      */
     public void xor(int i, int j, SparseBitSet b) throws IndexOutOfBoundsException
     {
@@ -1517,6 +1525,7 @@ public class SparseBitSet implements Cloneable, Serializable
      * @param       j upper bound for a operation
      * @exception   IndexOutOfBoundsException indicating the range is not valid
      * @since       1.6
+     * @throws java.lang.IndexOutOfBoundsException if any.
      */
     protected static final void throwIndexOutOfBoundsException(int i, int j)
             throws IndexOutOfBoundsException
@@ -1631,6 +1640,7 @@ public class SparseBitSet implements Cloneable, Serializable
      * @exception   IndexOutOfBoundsException the exception
      * @since       1.6
      * @see         AbstractStrategy
+     * @throws java.lang.IndexOutOfBoundsException if any.
      */
     protected final void setScanner(int i, int j, SparseBitSet b,
                                     AbstractStrategy op) throws IndexOutOfBoundsException

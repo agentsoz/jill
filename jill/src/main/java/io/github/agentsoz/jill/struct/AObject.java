@@ -25,8 +25,9 @@ import io.github.agentsoz.jill.util.AString;
 /**
  * AObject is meant to serve as a base class for all objects that require a unique identifier and a
  * name. It stores this information in a compact form which is useful for in-memory storage.
- * 
+ *
  * @author dsingh
+ * @version $Id: $Id
  */
 public class AObject {
 
@@ -40,7 +41,7 @@ public class AObject {
 
   /**
    * Constructs an AObject with the given str name and id of NULLID.
-   * 
+   *
    * @param str the name of this object
    * @see GlobalConstant#NULLID
    */
@@ -50,7 +51,7 @@ public class AObject {
 
   /**
    * Gets the id of this object.
-   * 
+   *
    * @return the object id
    */
   public int getId() {
@@ -59,7 +60,7 @@ public class AObject {
 
   /**
    * Sets the id of this object.
-   * 
+   *
    * @param id the new id
    */
   public void setId(int id) {
@@ -68,7 +69,7 @@ public class AObject {
 
   /**
    * Gets the name of this object.
-   * 
+   *
    * @return the object name
    */
   public String getName() {
@@ -77,7 +78,7 @@ public class AObject {
 
   /**
    * Sets the name of this object.
-   * 
+   *
    * @param str the new name
    */
   public void setName(String str) {
@@ -86,6 +87,8 @@ public class AObject {
 
   /**
    * Returns a String representation of this object.
+   *
+   * @return a {@link java.lang.String} object.
    */
   public String toString() {
     return AString.toString(name) + ":" + id;
@@ -93,7 +96,7 @@ public class AObject {
 
   /**
    * Checks if two objects have the same name. The check is case sensitive.
-   * 
+   *
    * @param obj1 the first object
    * @param obj2 the second object
    * @return true if the objects have the same non-null non-empty name, and false otherwise

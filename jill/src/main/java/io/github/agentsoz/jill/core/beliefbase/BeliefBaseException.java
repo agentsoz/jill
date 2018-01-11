@@ -19,13 +19,31 @@ package io.github.agentsoz.jill.core.beliefbase;
  * #L%
  */
 
+/**
+ * <p>BeliefBaseException class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 public class BeliefBaseException extends Exception {
   private static final long serialVersionUID = -2198448974372743421L;
 
+  /**
+   * <p>Constructor for BeliefBaseException.</p>
+   *
+   * @param msg a {@link java.lang.String} object.
+   */
   public BeliefBaseException(String msg) {
     super(msg);
   }
   
+  /**
+   * <p>Constructor for BeliefBaseException.</p>
+   *
+   * @param msg a {@link java.lang.String} object.
+   * @param exception a {@link java.lang.Exception} object.
+   * @since 0.3.4
+   */
   public BeliefBaseException(String msg, Exception exception) {
     super(msg,exception);
   }

@@ -28,6 +28,12 @@ import io.github.agentsoz.jill.util.Log;
 import java.io.PrintStream;
 import java.util.Random;
 
+/**
+ * <p>Greeter class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 @AgentInfo(hasGoals = {"io.github.agentsoz.jill.example.greeter.BeFriendly"})
 public class Greeter extends Agent {
 
@@ -46,10 +52,18 @@ public class Greeter extends Agent {
   private static final String[] surnames = {"Anderson", "Brown", "Jones", "Martin", "Morton",
       "Smith", "Taylor", "White", "Williams", "Wilson",};
 
+  /**
+   * <p>Constructor for Greeter.</p>
+   *
+   * @param name a {@link java.lang.String} object.
+   */
   public Greeter(String name) {
     super(name);
   }
 
+  /**
+   * {@inheritDoc}.
+   */
   @Override
   public void start(PrintStream writer, String[] params) {
     // Parse the arguments
@@ -105,7 +119,7 @@ public class Greeter extends Agent {
 
   /**
    * Parses the command line arguments.
-   * 
+   *
    * @param args arguments passed to this program
    */
   public static void parse(String[] args) {

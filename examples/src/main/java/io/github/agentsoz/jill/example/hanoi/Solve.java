@@ -22,6 +22,12 @@ package io.github.agentsoz.jill.example.hanoi;
 import io.github.agentsoz.jill.lang.Goal;
 import io.github.agentsoz.jill.lang.GoalInfo;
 
+/**
+ * <p>Solve class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 @GoalInfo(hasPlans = {"io.github.agentsoz.jill.example.hanoi.MoveTower"})
 public class Solve extends Goal {
 
@@ -30,13 +36,18 @@ public class Solve extends Goal {
   public int dest;
   public int spare;
 
+  /**
+   * <p>Constructor for Solve.</p>
+   *
+   * @param str a {@link java.lang.String} object.
+   */
   public Solve(String str) {
     super(str);
   }
 
   /**
    * Creates a Solve goal.
-   * 
+   *
    * @param name a name for this goal
    * @param disc the the disc that is to be moved
    * @param src the source pin ID, on which this disc currently sits
@@ -51,6 +62,11 @@ public class Solve extends Goal {
     this.spare = spare;
   }
 
+  /**
+   * <p>toString.</p>
+   *
+   * @return a {@link java.lang.String} object.
+   */
   public String toString() {
     return "solve(disc=" + disc + ", src=" + src + ", dest=" + dest + ", spare=" + spare + ")";
   }

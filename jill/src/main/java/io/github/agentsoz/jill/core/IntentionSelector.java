@@ -41,6 +41,12 @@ import java.util.LinkedHashSet;
 import java.util.Random;
 import java.util.Set;
 
+/**
+ * <p>IntentionSelector class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 public class IntentionSelector implements Runnable {
 
   private final Logger logger = LoggerFactory.getLogger(Main.LOGGER_NAME);
@@ -58,7 +64,7 @@ public class IntentionSelector implements Runnable {
 
   /**
    * Constructs a new intention selector to manage a set of agents.
-   * 
+   *
    * @param poolid ID of this pool (must follow the sequence 0,1,2,3,...).
    * @param seed to initialise the random number generator
    */
@@ -318,7 +324,7 @@ public class IntentionSelector implements Runnable {
 
   /**
    * Checks if this intention selector is idle.
-   * 
+   *
    * @return true if idle, false otherwise
    */
   public boolean isIdle() {
@@ -339,8 +345,7 @@ public class IntentionSelector implements Runnable {
 
   /**
    * Sets the idle status of the given agent managed by this intention selector.
-   * 
-   * 
+   *
    * @param agentId ID of the agent whose idle status is being set
    * @param idle the new idle status of this agent
    */

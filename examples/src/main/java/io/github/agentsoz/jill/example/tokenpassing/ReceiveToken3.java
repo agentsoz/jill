@@ -29,15 +29,31 @@ import io.github.agentsoz.jill.util.Log;
 
 import java.util.Map;
 
+/**
+ * <p>ReceiveToken3 class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 public class ReceiveToken3 extends Plan {
 
   /*package*/ String neighbour;
 
+  /**
+   * <p>Constructor for ReceiveToken3.</p>
+   *
+   * @param agent a {@link io.github.agentsoz.jill.lang.Agent} object.
+   * @param goal a {@link io.github.agentsoz.jill.lang.Goal} object.
+   * @param name a {@link java.lang.String} object.
+   */
   public ReceiveToken3(Agent agent, Goal goal, String name) {
     super(agent, goal, name);
     body = steps;
   }
 
+  /**
+   * {@inheritDoc}.
+   */
   @Override
   public boolean context() {
     Agent agent = getAgent();
@@ -51,6 +67,9 @@ public class ReceiveToken3 extends Plan {
     return false;
   }
 
+  /**
+   * {@inheritDoc}.
+   */
   @Override
   public void setPlanVariables(Map<String, Object> vars) {
     for (String attribute : vars.keySet()) {

@@ -25,13 +25,19 @@ import io.github.agentsoz.jill.struct.AObject;
 
 import java.util.Arrays;
 
+/**
+ * <p>BeliefSet class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 public class BeliefSet extends AObject {
 
   private final BeliefSetField[] fields;
 
   /**
    * Constructs a new belief set.
-   * 
+   *
    * @param id the unique ID of this belief set (must follow sequence 0,1,2,3,...)
    * @param name a name for this belief set
    * @param fields the fields (columns) of this belief set
@@ -44,7 +50,7 @@ public class BeliefSet extends AObject {
 
   /**
    * Gets the fields of this belief set.
-   * 
+   *
    * @return the fields
    */
   public BeliefSetField[] getFields() {
@@ -53,9 +59,10 @@ public class BeliefSet extends AObject {
 
   /**
    * Gets the field of this belief set that has the given name.
-   * 
+   *
    * @param name the name of the field to retrieve
    * @return the belief set field matching that name, or null if not found
+   * @since 0.3.4
    */
   public BeliefSetField getFieldByName(String name) {
     BeliefSetField field = null;
@@ -70,9 +77,10 @@ public class BeliefSet extends AObject {
 
   /**
    * Gets the index (column) of the given field in this belief set.
-   * 
+   *
    * @param field the field for which the index is required
    * @return the index of that field, or -1 if not found
+   * @since 0.3.4
    */
   public int getIndex(BeliefSetField field) {
     int index = -1;
@@ -84,10 +92,8 @@ public class BeliefSet extends AObject {
     return index;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see java.lang.Object#hashCode()
+  /**
+   * {@inheritDoc}.
    */
   @Override
   public int hashCode() {
@@ -100,10 +106,8 @@ public class BeliefSet extends AObject {
     return result;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see java.lang.Object#equals(java.lang.Object)
+  /**
+   * {@inheritDoc}.
    */
   @Override
   public boolean equals(Object obj) {
@@ -130,6 +134,11 @@ public class BeliefSet extends AObject {
   }
 
 
+  /**
+   * <p>toString.</p>
+   *
+   * @return a {@link java.lang.String} object.
+   */
   public String toString() {
     return new Gson().toJson(this);
   }

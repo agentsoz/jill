@@ -21,15 +21,27 @@ package io.github.agentsoz.jill.extension.template;
 
 import io.github.agentsoz.jill.lang.JillExtension;
 
+/**
+ * <p>JillExtensionTemplate class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 public class JillExtensionTemplate implements JillExtension {
 
+  /**
+   * {@inheritDoc}.
+   */
   @Override
   public void init(String[] args) {
-    // TODO Auto-generated method stub
+    // Intentionally left empty
   }
 
+  /**
+   * {@inheritDoc}.
+   */
   @Override
   public void finish() {
-    // TODO Auto-generated method stub
+    // Intentionally left empty
   }
 }

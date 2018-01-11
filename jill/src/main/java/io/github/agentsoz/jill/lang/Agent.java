@@ -39,9 +39,9 @@ import java.util.Set;
 
 /**
  * Base class for all BDI-like agents in the system.
- * 
- * @author dsingh
  *
+ * @author dsingh
+ * @version $Id: $Id
  */
 public class Agent extends AObject {
 
@@ -91,7 +91,7 @@ public class Agent extends AObject {
 
   /**
    * Creates a new agent with the given name.
-   * 
+   *
    * @param name the name of this agent; consider using concise names when dealing with very large
    *        numbers of agents
    */
@@ -106,7 +106,7 @@ public class Agent extends AObject {
 
   /**
    * Gets the {@link #executionStack} of this agent.
-   * 
+   *
    * @return this agent's execution stack
    */
   public Stack255 getExecutionStack() {
@@ -117,7 +117,7 @@ public class Agent extends AObject {
    * Posts the given goal. This will trigger the BDI execution engine to generate applicable plan
    * instances to handle this goal. One instance, from the available options, will be selected and
    * executed.
-   * 
+   *
    * @param goal the goal that this agent should try to achieve
    */
   public void post(Goal goal) {
@@ -131,7 +131,7 @@ public class Agent extends AObject {
 
   /**
    * Send a message to an agent.
-   * 
+   *
    * @param id the agent to send the message to
    * @param msg the message to send
    * @return true if the message was sent successfully, false otherwise
@@ -151,7 +151,7 @@ public class Agent extends AObject {
 
   /**
    * Send a message to this agent.
-   * 
+   *
    * @param name the agent to send the message to
    * @param msg the message to send
    * @return true if the message was sent successfully, false otherwise
@@ -167,18 +167,27 @@ public class Agent extends AObject {
     return true;
   }
 
+  /**
+   * <p>start.</p>
+   *
+   * @param writer a {@link java.io.PrintStream} object.
+   * @param params an array of {@link java.lang.String} objects.
+   */
   public void start(PrintStream writer, String[] params) {
     logger.debug("{} is starting", Log.logPrefix(getId()));
   }
 
+  /**
+   * <p>finish.</p>
+   */
   public void finish() {
     logger.debug("{} is finishing", Log.logPrefix(getId()));
   }
 
   /**
    * Returns this agent's top level goals.
-   * 
-   * @return {@link Agent#goals}
+   *
+   * @return {@link io.github.agentsoz.jill.lang.Agent#goals}
    */
   public byte[] getGoals() {
     byte[] arr = new byte[goals.length];
@@ -188,7 +197,7 @@ public class Agent extends AObject {
 
   /**
    * Set's this agent's top level goals, i.e., {@link #goals}.
-   * 
+   *
    * @param bs an array of goal IDs (must exist in the
    *        {@link io.github.agentsoz.jill.core.GlobalState#goalTypes} catalog.
    */
@@ -199,18 +208,20 @@ public class Agent extends AObject {
 
   /**
    * Creates a new belief set with the given fields.
-   * 
+   *
    * <p>Example usage:
-   * 
+   *
    * <pre>
    * BeliefSetField[] fields = {new BeliefSetField("name", String.class, true),
    *     new BeliefSetField("gender", String.class, false),};
    * createBeliefSet("neighbour", fields);
    * </pre>
-   * 
+   *
    * @param name a name for this new belief set
-   * @param fields an array of belief set fields (see {@link BeliefSetField})
-   * @throws BeliefBaseException see {@link BeliefSetField}
+   * @param fields an array of belief set fields (see
+   *        {@link io.github.agentsoz.jill.core.beliefbase.BeliefSetField})
+   * @throws io.github.agentsoz.jill.core.beliefbase.BeliefBaseException exception
+   *        (see {@link io.github.agentsoz.jill.core.beliefbase.BeliefSetField})
    */
   public void createBeliefSet(String name, BeliefSetField[] fields) throws BeliefBaseException {
     beliefbase.createBeliefSet(getId(), name, fields);
@@ -218,12 +229,13 @@ public class Agent extends AObject {
 
   /**
    * Adds a new belief to the specified belief set.
-   * 
+   *
    * @param beliefsetName the belief set to add the belief to; must have been created previously
    *        using {@link #createBeliefSet(String, BeliefSetField[])}
    * @param tuple parameter list of field values; types must match the specification in
    *        {@link #createBeliefSet(String, BeliefSetField[])}
-   * @throws BeliefBaseException exception (see {@link BeliefBaseException})
+   * @throws io.github.agentsoz.jill.core.beliefbase.BeliefBaseException exception
+   *        (see {@link io.github.agentsoz.jill.core.beliefbase.BeliefBaseException})
    */
   public void addBelief(String beliefsetName, Object... tuple) throws BeliefBaseException {
     beliefbase.addBelief(getId(), beliefsetName, tuple);
@@ -231,10 +243,10 @@ public class Agent extends AObject {
 
   /**
    * Evaluates the given query against this agent's belief base.
-   * 
+   *
    * @param query the query to evaluate
    * @return true if the query returned results, false otherwise
-   * @throws BeliefBaseException thrown if something went wrong
+   * @throws BeliefBaseException if something went wrong
    */
   public boolean eval(String query) throws BeliefBaseException {
     boolean result = beliefbase.eval(getId(), query);
@@ -244,7 +256,7 @@ public class Agent extends AObject {
 
   /**
    * Gets the results of the last query run (see {@link #eval(String)}).
-   * 
+   *
    * @return the set of beliefs that matches the last query
    */
   public Set<Belief> getLastResults() {
@@ -253,7 +265,6 @@ public class Agent extends AObject {
 
   /**
    * Clears the results of the last query run (see {@link #eval(String)}).
-   * 
    */
   public void clearLastResults() {
     if (lastresult != null) {
@@ -266,7 +277,7 @@ public class Agent extends AObject {
    * Forces this agent to enter an idle state irrespective of whether it has any active intentions
    * or not. The agent will continue to remain in the suspected state until some event forces it to
    * become active again, at which point it will resume operation.
-   * 
+   *
    * @param val the new idle state of this agent
    */
   public void suspend(boolean val) {
@@ -278,7 +289,7 @@ public class Agent extends AObject {
    * Registers a meta-planning function for this agent. The registered function will be called by
    * the Jill engine with the available plan bindings, prior to any plan selection, giving the agent
    * the opportunity to do meta-level reasoning.
-   * 
+   *
    * @param metaplan the metaplan instance to register
    */
   public void registerMetaPlan(MetaPlan metaplan) {
@@ -288,7 +299,7 @@ public class Agent extends AObject {
   /**
    * Called by the Jill engine with available plan bindings, to Allow this agent to perform
    * meta-level reasoning.
-   * 
+   *
    * @param bindings the available plan bindings
    */
   public final void notifyAgentPrePlanSelection(PlanBindings bindings) {

@@ -27,23 +27,64 @@ import io.github.agentsoz.jill.util.Log;
 import java.util.Set;
 
 
+/**
+ * <p>Abstract BeliefBase class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 public abstract class BeliefBase {
 
+  /**
+   * <p>createBeliefSet.</p>
+   *
+   * @param agentid a int.
+   * @param name a {@link java.lang.String} object.
+   * @param fields an array of {@link io.github.agentsoz.jill.core.beliefbase.BeliefSetField}
+   *        objects.
+   * @return a boolean.
+   * @throws io.github.agentsoz.jill.core.beliefbase.BeliefBaseException if any.
+   */
   public abstract boolean createBeliefSet(int agentid, String name, BeliefSetField[] fields)
       throws BeliefBaseException;
 
+  /**
+   * <p>addBelief.</p>
+   *
+   * @param agentid a int.
+   * @param beliefsetName a {@link java.lang.String} object.
+   * @param tuple a {@link java.lang.Object} object.
+   * @return a boolean.
+   * @throws io.github.agentsoz.jill.core.beliefbase.BeliefBaseException if any.
+   */
   public abstract boolean addBelief(int agentid, String beliefsetName, Object... tuple)
       throws BeliefBaseException;
 
+  /**
+   * <p>eval.</p>
+   *
+   * @param agentid a int.
+   * @param query a {@link java.lang.String} object.
+   * @return a boolean.
+   * @throws io.github.agentsoz.jill.core.beliefbase.BeliefBaseException if any.
+   */
   public abstract boolean eval(int agentid, String query) throws BeliefBaseException;
 
+  /**
+   * <p>query.</p>
+   *
+   * @param agentid a int.
+   * @param key a {@link java.lang.String} object.
+   * @return a {@link java.util.Set} object.
+   * @throws io.github.agentsoz.jill.core.beliefbase.BeliefBaseException if any.
+   */
   public abstract Set<Belief> query(int agentid, String key) throws BeliefBaseException;
 
   /**
    * Sample program to test belief base evaluation speeds.
-   * 
+   *
    * @param args command line arguments
-   * @throws BeliefBaseException thrown on belief base update or evalaution errors
+   * @throws BeliefBaseException on belief base update or evaluation errors
    */
   public static void main(String[] args) throws BeliefBaseException {
     // Configure logging
@@ -130,11 +171,12 @@ public abstract class BeliefBase {
 
   /**
    * Evaluates the given query on the given belief base for the agent.
-   * 
+   *
    * @param bb the belief base to query
    * @param agentId the agent for which the query applies
    * @param query the belief query
-   * @throws BeliefBaseException thorwn if there is a query evaluation error
+   * @throws BeliefBaseException on query evaluation error
+   * @since 0.3.4
    */
   public static void doEval(BeliefBase bb, int agentId, String query) throws BeliefBaseException {
     final long t0 = System.currentTimeMillis();

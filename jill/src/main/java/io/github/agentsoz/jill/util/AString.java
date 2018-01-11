@@ -28,9 +28,9 @@ import java.io.UnsupportedEncodingException;
  * since String objects have a large memory overhead (an empty String object still takes 128 bytes,
  * but takes no space in byte array format). This comes at the cost of CPU cycles required to
  * convert back to a String object before use, however this processing overhead is very low.
- * 
- * @author dsingh
  *
+ * @author dsingh
+ * @version $Id: $Id
  */
 public final class AString {
 
@@ -47,7 +47,7 @@ public final class AString {
   /**
    * Encodes the String str into a sequence of bytes using the character set specified in CHARSET,
    * storing the result into a new byte array.
-   * 
+   *
    * @param str the String to convert from
    * @return the new byte array, or null if conversion was unsuccessful
    * @see String#getBytes(String)
@@ -68,7 +68,7 @@ public final class AString {
   /**
    * Decodes the byte array bytes into a String using the character set specified in CHARSET,
    * storing the result into a new String.
-   * 
+   *
    * @param bytes the byte array to decode
    * @return the new decoded String, or null if conversion was unsuccessful
    */

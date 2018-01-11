@@ -19,8 +19,16 @@ package io.github.agentsoz.jill.config;
  * #L%
  */
 
+/**
+ * <p>GlobalConstant class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 public class GlobalConstant {
+  /** Constant <code>NULLID=-1</code>. */
   public static final int NULLID = -1;
+  /** Constant <code>APP_HEADER="Jill Cognitive Agents Platform\n(C) 201"{trunked}</code>. */
   public static final String APP_HEADER =
       "Jill Cognitive Agents Platform" + "\n" + "(C) 2014 - 2015 by its authors. See AUTHORS file."
           + "\n\n" + "This program comes with ABSOLUTELY NO WARRANTY." + "\n"

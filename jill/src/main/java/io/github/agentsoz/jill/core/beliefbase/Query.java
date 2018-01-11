@@ -19,8 +19,17 @@ package io.github.agentsoz.jill.core.beliefbase;
  * #L%
  */
 
+/**
+ * <p>Query class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 public class Query {
 
+  /**
+   * <p>Constructor for Query.</p>
+   */
   public Query() {
     // TODO Auto-generated constructor stub
   }

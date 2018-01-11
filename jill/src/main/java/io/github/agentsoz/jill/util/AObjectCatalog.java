@@ -22,6 +22,12 @@ package io.github.agentsoz.jill.util;
 import io.github.agentsoz.jill.config.GlobalConstant;
 import io.github.agentsoz.jill.struct.AObject;
 
+/**
+ * <p>AObjectCatalog class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 public class AObjectCatalog extends AObject {
 
   private int nextid = GlobalConstant.NULLID + 1;
@@ -30,7 +36,7 @@ public class AObjectCatalog extends AObject {
 
   /**
    * Constructs a object catalog.
-   * 
+   *
    * @param name s nsme for the catalog
    * @param size the initial size of the catalog
    * @param inc the size by which the catalog should grow when it reaches capacity
@@ -43,7 +49,7 @@ public class AObjectCatalog extends AObject {
 
   /**
    * Gets the object at the given index of the catalog.
-   * 
+   *
    * @param index the index of the object
    * @return the object at that index
    */
@@ -58,7 +64,7 @@ public class AObjectCatalog extends AObject {
    * Find an object by name. Can be very expensive for large catalogs, since a name comparison is
    * performed in sequence on the objects in the catalog, until a match is found. Search is case
    * sensitive.
-   * 
+   *
    * @param name the name to find
    * @return an AObject with a matching name, or null if not found
    */
@@ -73,7 +79,7 @@ public class AObjectCatalog extends AObject {
 
   /**
    * Pushes a new object to the top of the catalog.
-   * 
+   *
    * @param obj the object to add
    */
   public void push(AObject obj) {
@@ -89,8 +95,8 @@ public class AObjectCatalog extends AObject {
   }
 
   /**
-   * Pops (removes) the object at the top of the catalog. 
-   * 
+   * Pops (removes) the object at the top of the catalog.
+   *
    * @return the object at the top, or null if the catalog is empty
    */
   public AObject pop() {
@@ -103,6 +109,11 @@ public class AObjectCatalog extends AObject {
     return null;
   }
 
+  /**
+   * <p>size.</p>
+   *
+   * @return a int.
+   */
   public int size() {
     return nextid;
   }

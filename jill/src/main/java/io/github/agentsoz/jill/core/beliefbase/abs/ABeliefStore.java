@@ -35,6 +35,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * <p>ABeliefStore class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 @SuppressWarnings("PMD.GodClass")
 public class ABeliefStore extends BeliefBase {
 
@@ -54,7 +60,7 @@ public class ABeliefStore extends BeliefBase {
 
   /**
    * Constructs a new belief store.
-   * 
+   *
    * @param nagents the store will manage beliefs for thsi number of agents
    * @param nthreads the number of threads that may concurrently query/update this belief set
    */
@@ -70,6 +76,9 @@ public class ABeliefStore extends BeliefBase {
     agents2beliefs = new SparseBitSet[nagents];
   }
 
+  /**
+   * {@inheritDoc}.
+   */
   @Override
   public boolean createBeliefSet(int agentid, String name, BeliefSetField[] fields)
       throws BeliefBaseException {
@@ -83,6 +92,9 @@ public class ABeliefStore extends BeliefBase {
     return true;
   }
 
+  /**
+   * {@inheritDoc}.
+   */
   @Override
   public boolean addBelief(int agentid, String beliefsetName, Object... tuple)
       throws BeliefBaseException {
@@ -119,11 +131,17 @@ public class ABeliefStore extends BeliefBase {
     return true;
   }
 
+  /**
+   * {@inheritDoc}.
+   */
   @Override
   public boolean eval(int agentid, String key) throws BeliefBaseException {
     return !query(agentid, key).isEmpty();
   }
 
+  /**
+   * {@inheritDoc}.
+   */
   @Override
   public Set<Belief> query(int agentid, String key) throws BeliefBaseException {
     // Get the cached query if we have seen it before, else parse it
@@ -257,7 +275,7 @@ public class ABeliefStore extends BeliefBase {
 
   /**
    * Gets the type of the given object.
-   * 
+   *
    * @param obj the object whose type is being queried
    * @return the type of the object, or null if unknown
    */
@@ -314,7 +332,7 @@ public class ABeliefStore extends BeliefBase {
 
   /**
    * Sample program to test pattern matching.
-   * 
+   *
    * @param args command line arguments
    * @throws BeliefBaseException thrown if something went wrong
    */
@@ -347,14 +365,15 @@ public class ABeliefStore extends BeliefBase {
   }
 
   /**
-   * Gets the belief set field name (see {@link BeliefSetField}) for the given belief set for the
-   * given agent.
-   * 
+   * Gets the belief set field name (see
+   * {@link io.github.agentsoz.jill.core.beliefbase.BeliefSetField}) for the given belief set
+   * for the given agent.
+   *
    * @param agentid the agent in question
    * @param beliefset the beliefset of that agent
    * @param index the index of the belief set field in that belief set
    * @return the name of the belief set field
-   * @throws BeliefBaseException thrown if something went wrong
+   * @throws BeliefBaseException if something went wrong
    */
   public static String getFieldName(int agentid, int beliefset, int index)
       throws BeliefBaseException {

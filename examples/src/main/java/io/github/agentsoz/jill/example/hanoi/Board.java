@@ -24,6 +24,12 @@ import io.github.agentsoz.jill.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <p>Board class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 public class Board {
 
   @SuppressWarnings("unchecked")
@@ -31,7 +37,7 @@ public class Board {
 
   /**
    * Creates a new game board.
-   * 
+   *
    * @param ndiscs number of discs in the game
    */
   public Board(int ndiscs) {
@@ -46,7 +52,7 @@ public class Board {
 
   /**
    * Move a disc from pin A to pin B.
-   * 
+   *
    * @param pinA the ID of the source pin
    * @param pinB the ID of the destination pin
    * @return true if the move was made, false otherwise
@@ -76,6 +82,9 @@ public class Board {
     return true;
   }
 
+  /**
+   * {@inheritDoc}.
+   */
   @Override
   public String toString() {
     StringBuilder str = new StringBuilder();

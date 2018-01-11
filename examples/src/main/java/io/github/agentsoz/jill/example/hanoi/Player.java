@@ -25,23 +25,43 @@ import io.github.agentsoz.jill.util.Log;
 
 import java.io.PrintStream;
 
+/**
+ * <p>Player class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 @AgentInfo(hasGoals = {"io.github.agentsoz.jill.example.hanoi.Solve"})
 public class Player extends Agent {
 
+  /** Constant <code>out</code>. */
   public static PrintStream out;
 
   // Defaults
   private static int ndiscs = 5;
   private Board board;
 
+  /**
+   * <p>Constructor for Player.</p>
+   *
+   * @param name a {@link java.lang.String} object.
+   */
   public Player(String name) {
     super(name);
   }
 
+  /**
+   * <p>Getter for the field <code>board</code>.</p>
+   *
+   * @return a {@link io.github.agentsoz.jill.example.hanoi.Board} object.
+   */
   public Board getBoard() {
     return board;
   }
 
+  /**
+   * {@inheritDoc}.
+   */
   @Override
   public void start(PrintStream writer, String[] params) {
     out = writer;
@@ -60,7 +80,7 @@ public class Player extends Agent {
 
   /**
    * Parses the command line arguments.
-   * 
+   *
    * @param args the command line arguments
    */
   public static void parse(String[] args) {

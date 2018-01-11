@@ -19,7 +19,16 @@ package io.github.agentsoz.jill.lang;
  * #L%
  */
 
+/**
+ * <p>PlanStep interface.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 public interface PlanStep {
 
+  /**
+   * <p>step.</p>
+   */
   public void step();
 }

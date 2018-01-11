@@ -28,18 +28,37 @@ import io.github.agentsoz.jill.util.Log;
 
 import java.util.Map;
 
+/**
+ * <p>ReceiveToken1 class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 public class ReceiveToken1 extends Plan {
 
+  /**
+   * <p>Constructor for ReceiveToken1.</p>
+   *
+   * @param agent a {@link io.github.agentsoz.jill.lang.Agent} object.
+   * @param goal a {@link io.github.agentsoz.jill.lang.Goal} object.
+   * @param name a {@link java.lang.String} object.
+   */
   public ReceiveToken1(Agent agent, Goal goal, String name) {
     super(agent, goal, name);
     body = steps;
   }
 
+  /**
+   * {@inheritDoc}.
+   */
   @Override
   public boolean context() {
     return true;
   }
 
+  /**
+   * {@inheritDoc}.
+   */
   @Override
   public void setPlanVariables(Map<String, Object> vars) {
     // No plan bindings to worry about

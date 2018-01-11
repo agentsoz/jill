@@ -22,6 +22,12 @@ package io.github.agentsoz.jill.lang;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+/**
+ * <p>PlanInfo class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PlanInfo {
   

@@ -38,9 +38,17 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * <p>Main class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 public final class Main {
 
+  /** Constant <code>LOGGER_NAME="io.github.agentsoz.jill"</code>. */
   public static final String LOGGER_NAME = "io.github.agentsoz.jill";
+  /** Constant <code>logger</code>. */
   public static Logger logger;
 
   /**
@@ -49,6 +57,7 @@ public final class Main {
   static int npools;
   static int poolsize;
   static IntentionSelector[] intentionSelectors;
+  /** Constant <code>poolsIdle</code>. */
   public static AtomicInteger poolsIdle = new AtomicInteger();
   private static PrintStream writer;
 
@@ -63,7 +72,7 @@ public final class Main {
 
   /**
    * Program entry
-   * 
+   *
    * @param args command line arguments.
    */
   public static void main(String[] args) {
@@ -95,8 +104,9 @@ public final class Main {
 
   /**
    * Initialises the Jill engine.
-   * 
+   *
    * @param config a valid loaded configuration
+   * @return a boolean.
    */
   public static boolean init(Config config) {
 
@@ -159,7 +169,7 @@ public final class Main {
 
   /**
    * Starts the Jill engine. Must have previously been initialised (see {@link #init(Config)}).
-   * 
+   *
    * @param config a valid config
    */
   public static void start(Config config) {
@@ -238,7 +248,7 @@ public final class Main {
 
   /**
    * Checks if the system is idle, i.e., all the agents pools are idle
-   * 
+   *
    * @return true if idle, false otherwise
    */
   public static boolean arePoolsIdle() {
@@ -250,9 +260,9 @@ public final class Main {
   }
 
   /**
-   * Checks if the {@link IntentionSelector} pools have finished, i.e., all agents in the pools are
-   * idle.
-   * 
+   * Checks if the {@link io.github.agentsoz.jill.core.IntentionSelector} pools have finished,
+   * i.e., all agents in the pools are idle.
+   *
    * @return true if pools have finished, false otherwise
    */
   public static boolean arePoolsFinished() {
@@ -274,7 +284,7 @@ public final class Main {
 
   /**
    * Sets a bit in the agentsIdle cache, to mark if this agent is idle (or not).
-   * 
+   *
    * @param agentId the agent is question
    * @param isIdle the new idle status of this agent
    */
@@ -285,7 +295,7 @@ public final class Main {
 
   /**
    * Gets the ID of the intention selection pool to which the given agent belongs.
-   * 
+   *
    * @param agentid ID of the agent for which the pool ID is being requested
    * @return ID of the pool to which this agent belongs
    */
@@ -300,7 +310,7 @@ public final class Main {
   /**
    * Flags to the given intentions selection pool that an external message is waiting to be
    * processed.
-   * 
+   *
    * @param toPool ID of the intention selection pool
    */
   public static void flagMessageTo(int toPool) {

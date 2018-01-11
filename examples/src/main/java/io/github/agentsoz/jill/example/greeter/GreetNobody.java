@@ -27,13 +27,19 @@ import io.github.agentsoz.jill.util.Log;
 
 import java.util.Map;
 
+/**
+ * <p>GreetNobody class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 public class GreetNobody extends Plan {
 
   String neighbour;
 
   /**
    * A fallback plan if we have no neighbour to greet.
-   * 
+   *
    * @param agent the agent to which this plan belongs
    * @param goal the goal for which this is a plan
    * @param name NOT USED
@@ -44,11 +50,17 @@ public class GreetNobody extends Plan {
     neighbour = "Unknown";
   }
 
+  /**
+   * {@inheritDoc}.
+   */
   @Override
   public boolean context() {
     return true;
   }
 
+  /**
+   * {@inheritDoc}.
+   */
   @Override
   public void setPlanVariables(Map<String, Object> vars) {
     // TODO Auto-generated method stub

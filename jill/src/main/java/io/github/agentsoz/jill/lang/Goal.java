@@ -21,14 +21,30 @@ import io.github.agentsoz.jill.util.AString;
  * #L%
  */
 
+/**
+ * <p>Goal class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 public class Goal {
 
   private final byte[] name;
 
+  /**
+   * <p>Constructor for Goal.</p>
+   *
+   * @param str a {@link java.lang.String} object.
+   */
   public Goal(String str) {
     name = AString.toBytes(str);
   }
 
+  /**
+   * <p>toString.</p>
+   *
+   * @return a {@link java.lang.String} object.
+   */
   public String toString() {
     return AString.toString(name);
   }

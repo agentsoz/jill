@@ -35,9 +35,9 @@ import java.util.Set;
 
 /**
  * Stores the set of bindings for a given plan type, and used for meta level reasoning.
- * 
- * @author dsingh
  *
+ * @author dsingh
+ * @version $Id: $Id
  */
 public class PlanBindings {
 
@@ -48,9 +48,9 @@ public class PlanBindings {
 
   /**
    * Creates a new plan binding.
-   * 
+   *
    * @param rand the random number generator to use for when selecting plan instances with
-   *        {@link PlanSelectionPolicy#RANDOM} policy
+   *        {@link io.github.agentsoz.jill.config.GlobalConstant.PlanSelectionPolicy#RANDOM} policy
    */
   public PlanBindings(Random rand) {
     this.rand = (rand == null) ? new Random() : rand;
@@ -61,7 +61,7 @@ public class PlanBindings {
   /**
    * Add the set of bindings for a given plan to this store. Any previously stored bindings for this
    * plan will be replaced.
-   * 
+   *
    * @param plan the plan type
    * @param planBindings the available bindings
    */
@@ -90,7 +90,7 @@ public class PlanBindings {
   /**
    * Returns a set of plan types that have bindings. For each plan type there may be various
    * bindings which can be retrieved using {@link #getBindings(Plan)}
-   * 
+   *
    * @return set of plan types
    */
   public Set<Plan> getPlans() {
@@ -102,7 +102,7 @@ public class PlanBindings {
    * of plans whose context conditions do not bind any variables. A {@code null} set indicates that
    * no variable bindings exist for the given plan, as is the case when the context condition of the
    * plan simply returns true.
-   * 
+   *
    * @param plan the plan type
    * @return set of available bindings for this plan type
    */
@@ -121,7 +121,7 @@ public class PlanBindings {
   /**
    * Returns the total number of bindings in this store. This is the sum of all plan bindings. Note
    * that plans with no bindings are counted as 1.
-   * 
+   *
    * @return the number of bindings in this store
    */
   public int size() {
@@ -146,7 +146,7 @@ public class PlanBindings {
 
   /**
    * Selects a plan instance from the set of plan bindings, using the given policy.
-   * 
+   *
    * @param policy the policy to use for plan selection
    * @return the selected plan, or {@code null} if something went wrong
    */

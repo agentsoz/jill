@@ -19,17 +19,38 @@ package io.github.agentsoz.jill.struct;
  * #L%
  */
 
+/**
+ * <p>GoalType class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 public class GoalType extends GoalPlanType {
   private Class<?> goalClass;
 
+  /**
+   * <p>Constructor for GoalType.</p>
+   *
+   * @param name a {@link java.lang.String} object.
+   */
   public GoalType(String name) {
     super(name);
   }
 
+  /**
+   * <p>Getter for the field <code>goalClass</code>.</p>
+   *
+   * @return a {@link java.lang.Class} object.
+   */
   public Class<?> getGoalClass() {
     return goalClass;
   }
 
+  /**
+   * <p>Setter for the field <code>goalClass</code>.</p>
+   *
+   * @param goalClass a {@link java.lang.Class} object.
+   */
   public void setGoalClass(Class<?> goalClass) {
     this.goalClass = goalClass;
   }

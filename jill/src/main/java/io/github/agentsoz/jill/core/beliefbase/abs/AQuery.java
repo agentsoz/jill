@@ -23,6 +23,12 @@ import com.google.gson.Gson;
 
 import io.github.agentsoz.jill.core.beliefbase.abs.ABeliefStore.Operator;
 
+/**
+ * <p>AQuery class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 public class AQuery {
 
   private int beliefset;
@@ -32,7 +38,7 @@ public class AQuery {
 
   /**
    * Construct a new belief based query.
-   * 
+   *
    * @param beliefset the belief set to query
    * @param field the field (within the belief set) to query
    * @param op the query comparison operator
@@ -48,7 +54,7 @@ public class AQuery {
 
   /**
    * Gets the belief set for this query.
-   * 
+   *
    * @return the beliefset
    */
   public int getBeliefset() {
@@ -57,7 +63,7 @@ public class AQuery {
 
   /**
    * Sets the belief set for this query.
-   * 
+   *
    * @param beliefset the beliefset to set
    */
   public void setBeliefset(int beliefset) {
@@ -66,7 +72,7 @@ public class AQuery {
 
   /**
    * Gets the field (within the belief set) being queried.
-   * 
+   *
    * @return the field
    */
   public int getField() {
@@ -75,7 +81,7 @@ public class AQuery {
 
   /**
    * Sets the field (within the belief set) being queried.
-   * 
+   *
    * @param field the field to set
    */
   public void setField(int field) {
@@ -84,7 +90,7 @@ public class AQuery {
 
   /**
    * Gets the query comparison operator.
-   * 
+   *
    * @return the op
    */
   public Operator getOp() {
@@ -93,7 +99,7 @@ public class AQuery {
 
   /**
    * Sets the query comparison operator.
-   * 
+   *
    * @param op the op to set
    */
   public void setOp(Operator op) {
@@ -102,7 +108,7 @@ public class AQuery {
 
   /**
    * Gets the value being compared to.
-   * 
+   *
    * @return the value
    */
   public Object getValue() {
@@ -111,7 +117,7 @@ public class AQuery {
 
   /**
    * Sets the value being compared to.
-   * 
+   *
    * @param value the value to set
    */
   public void setValue(Object value) {
@@ -120,6 +126,8 @@ public class AQuery {
 
   /**
    * String representation of this query.
+   *
+   * @return a {@link java.lang.String} object.
    */
   public String toString() {
     return new Gson().toJson(this);

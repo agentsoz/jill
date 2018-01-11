@@ -19,11 +19,17 @@ package io.github.agentsoz.jill.lang;
  * #L%
  */
 
+/**
+ * <p>MetaPlan interface.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 public interface MetaPlan {
 
   /**
    * Allows the agent to reason over all plan options.
-   * 
+   *
    * @param bindings the available plan bindings
    */
   public void consider(PlanBindings bindings);

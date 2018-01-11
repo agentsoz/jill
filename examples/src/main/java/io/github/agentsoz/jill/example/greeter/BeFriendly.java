@@ -22,10 +22,21 @@ package io.github.agentsoz.jill.example.greeter;
 import io.github.agentsoz.jill.lang.Goal;
 import io.github.agentsoz.jill.lang.GoalInfo;
 
+/**
+ * <p>BeFriendly class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 @GoalInfo(hasPlans = {"io.github.agentsoz.jill.example.greeter.GreetNeighbour",
     "io.github.agentsoz.jill.example.greeter.GreetNobody"})
 public class BeFriendly extends Goal {
 
+  /**
+   * <p>Constructor for BeFriendly.</p>
+   *
+   * @param str a {@link java.lang.String} object.
+   */
   public BeFriendly(String str) {
     super(str);
   }

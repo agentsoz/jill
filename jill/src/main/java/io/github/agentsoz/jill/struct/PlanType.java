@@ -21,35 +21,76 @@ package io.github.agentsoz.jill.struct;
 
 import java.lang.reflect.Method;
 
+/**
+ * <p>PlanType class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ */
 public class PlanType extends GoalPlanType {
   private Class<?> planClass;
   private Method context;
   private Method body;
 
+  /**
+   * <p>Constructor for PlanType.</p>
+   *
+   * @param name a {@link java.lang.String} object.
+   */
   public PlanType(String name) {
     super(name);
   }
 
+  /**
+   * <p>Getter for the field <code>context</code>.</p>
+   *
+   * @return a {@link java.lang.reflect.Method} object.
+   */
   public Method getContext() {
     return context;
   }
 
+  /**
+   * <p>Setter for the field <code>context</code>.</p>
+   *
+   * @param context a {@link java.lang.reflect.Method} object.
+   */
   public void setContext(Method context) {
     this.context = context;
   }
 
+  /**
+   * <p>Getter for the field <code>body</code>.</p>
+   *
+   * @return a {@link java.lang.reflect.Method} object.
+   */
   public Method getBody() {
     return body;
   }
 
+  /**
+   * <p>Setter for the field <code>body</code>.</p>
+   *
+   * @param body a {@link java.lang.reflect.Method} object.
+   */
   public void setBody(Method body) {
     this.body = body;
   }
 
+  /**
+   * <p>Getter for the field <code>planClass</code>.</p>
+   *
+   * @return a {@link java.lang.Class} object.
+   */
   public Class<?> getPlanClass() {
     return planClass;
   }
 
+  /**
+   * <p>Setter for the field <code>planClass</code>.</p>
+   *
+   * @param planClass a {@link java.lang.Class} object.
+   */
   public void setPlanClass(Class<?> planClass) {
     this.planClass = planClass;
   }

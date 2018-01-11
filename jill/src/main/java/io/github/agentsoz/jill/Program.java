@@ -31,6 +31,13 @@ import io.github.agentsoz.jill.lang.JillExtension;
 import java.util.Scanner;
 
 
+/**
+ * <p>Program class.</p>
+ *
+ * @author dsingh
+ * @version $Id: $Id
+ * @since 0.3.4
+ */
 public final class Program {
 
   /**
@@ -50,7 +57,7 @@ public final class Program {
 
   /**
    * Initialises the intention selection pools.
-   * 
+   *
    * @param nagents total number of agents to distribution between the intention selection pools
    * @param ncores total number of cores
    */
@@ -114,7 +121,7 @@ public final class Program {
 
   /**
    * Registers a new Jill extension.
-   * 
+   *
    * @param extension the extension to register
    */
   public static void registerExtension(JillExtension extension) {
