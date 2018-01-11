@@ -98,7 +98,7 @@
     <plugin>
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-javadoc-plugin</artifactId>
-      <version>2.9.1</version>
+      <version>3.0.0</version>
       <executions>
         <execution>
           <id>attach-javadocs</id>
@@ -141,6 +141,7 @@
             <autoReleaseAfterClose>false</autoReleaseAfterClose>
           </configuration>
         </plugin>
+
         <!-- Maven release plugin -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -153,6 +154,7 @@
             <goals>deploy</goals>
           </configuration>
         </plugin>
+
         <!-- Maven compiler plugin -->
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
@@ -162,12 +164,30 @@
             <target>1.8</target>
           </configuration>
         </plugin>
+        
+        <!-- Javadoc plugin -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>3.0.0</version>
+          <executions>
+            <execution>
+              <id>attach-javadocs</id>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
         <!-- Maven surefire plugin -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.20</version>
         </plugin>
+
+        <!-- License header plugin -->
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>license-maven-plugin</artifactId>
