@@ -175,14 +175,15 @@ public final class Main {
   public static void start(Config config) {
     // Start the agents
     long t0 = System.currentTimeMillis();
-    int index = -1;
+    int index = 0;
+    int subIndex = 0;
     for (Config.AgentTypeData agentType : config.getAgents()) {
-      index++;
+      index += subIndex;
       String[] args = (agentType.getArgs() == null || agentType.getArgs().isEmpty()) ? new String[0]
           : agentType.getArgs().toArray(new String[agentType.getArgs().size()]);
-      for (int j = index; j < index + agentType.getCount(); j++) {
+      for (subIndex = index; subIndex < index + agentType.getCount(); subIndex++) {
         // Get the agent
-        Agent agent = (Agent) GlobalState.agents.get(j);
+        Agent agent = (Agent) GlobalState.agents.get(subIndex);
         // Start the agent
         agent.start(writer, args);
       }
