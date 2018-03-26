@@ -59,7 +59,7 @@ Jill is available from [Maven Central](http://search.maven.org/#search%7Cga%7C1%
     <dependency>
         <groupId>io.github.agentsoz</groupId>
         <artifactId>jill</artifactId>
-        <version>0.3.3</version>
+        <version>0.3.4</version>
     </dependency>
     ...
 </dependencies>
