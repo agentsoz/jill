@@ -178,7 +178,7 @@ public final class Main {
     int index = 0;
     int subIndex = 0;
     for (Config.AgentTypeData agentType : config.getAgents()) {
-      index += subIndex;
+      index = subIndex;
       String[] args = (agentType.getArgs() == null || agentType.getArgs().isEmpty()) ? new String[0]
           : agentType.getArgs().toArray(new String[agentType.getArgs().size()]);
       for (subIndex = index; subIndex < index + agentType.getCount(); subIndex++) {

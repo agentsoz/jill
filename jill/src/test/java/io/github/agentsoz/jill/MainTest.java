@@ -187,14 +187,17 @@ public class MainTest {
         + "a20 a21 a22 a23 a24 a25 a26 a27 a28 a29 "
         + "a30 a31 a32 a33 a34 a35 a36 a37 a38 a39 "
         + "a40 a41 a42 a43 a44 a45 a46 a47 a48 a49 "
-        + "777777777777777777777777777777";
+        + "a0 a1 a2 a3 a4 "
+        + "77777777777777777777777777777777777";
     final String[] args = {"--plan-selection-policy", "FIRST",
         "--config", "{"
         + "randomSeed:123456,"
         + "numThreads:1,"
         + "agents:["
         + "{classname:io.github.agentsoz.jill.testprogram.LogAgent, args:[\"-d\"], count:50},"
-        + "{classname:io.github.agentsoz.jill.testprogram.TestAgent,args:[\"-d\"], count:30}"
+        + "{classname:io.github.agentsoz.jill.testprogram.TestAgent,args:[\"-d\"], count:30},"
+        + "{classname:io.github.agentsoz.jill.testprogram.LogAgent,args:[\"-d\"], count:5},"
+        + "{classname:io.github.agentsoz.jill.testprogram.TestAgent,args:[\"-d\"], count:5}"
         + "]"
         + "}"};
     Main.main(args);
