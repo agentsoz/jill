@@ -230,8 +230,11 @@ public class ABeliefStore extends BeliefBase {
   private static Set<Belief> filterResultsForAgent(int agentid, Set<Belief> results) {
     assert (results != null);
     // Finally, check if this result holds true for this agent
-    SparseBitSet agentbeliefs = agents2beliefs[agentid];
     HashSet<Belief> matches = new HashSet<Belief>();
+    SparseBitSet agentbeliefs = agents2beliefs[agentid];
+    if (agentbeliefs == null) {
+      return matches;
+    }
     /*
      * for (Belief belief : results) { int beliefID = beliefs2.get(belief); // check if the agent
      * has this belief if (agentbeliefs.get(beliefID)) { matches.add(belief); } }
