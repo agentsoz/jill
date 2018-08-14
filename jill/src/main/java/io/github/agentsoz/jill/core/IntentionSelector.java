@@ -219,7 +219,7 @@ public class IntentionSelector implements Runnable {
     synchronized (agentExecutionStack) {
       logger.debug(Log.logPrefix(agent.getId()) + " choose an instance of plan "
           + planInstance.getClass().getSimpleName() + " to handle goal "
-          + gtype.getClass().getSimpleName());
+          + node.getClass().getSimpleName());
       agentExecutionStack.push(planInstance);
     }
     return true;
