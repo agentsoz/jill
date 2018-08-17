@@ -30,7 +30,7 @@ public class GlobalConstant {
   public static final int NULLID = -1;
   /** Constant <code>APP_HEADER="Jill Cognitive Agents Platform\n(C) 201"{trunked}</code>. */
   public static final String APP_HEADER =
-      "Jill Cognitive Agents Platform" + "\n" + "(C) 2014 - 2015 by its authors. See AUTHORS file."
+      "Jill Cognitive Agents Platform" + "\n" + "(C) 2014 - 2018 by its authors. See AUTHORS file."
           + "\n\n" + "This program comes with ABSOLUTELY NO WARRANTY." + "\n"
           + "This is free software, and you are welcome to redistribute it" + "\n"
           + "under certain conditions; for details see LICENSE file provided.";
