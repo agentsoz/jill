@@ -84,7 +84,9 @@ public final class Program {
    */
   static void startIntentionSelectionThreads() {
     for (int i = 0; i < Main.npools; i++) {
-      new Thread(Main.intentionSelectors[i]).start(); // start and wait at the entry barrier
+      Thread thread = new Thread(Main.intentionSelectors[i]);
+      thread.setName("jill-" + i);
+      thread.start(); // start and wait at the entry barrier
     }
   }
 
