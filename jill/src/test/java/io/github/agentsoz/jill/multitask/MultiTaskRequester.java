@@ -25,19 +25,19 @@ import io.github.agentsoz.jill.lang.AgentInfo;
 import java.io.PrintStream;
 
 @AgentInfo(hasGoals = {"io.github.agentsoz.jill.multitask.Task"})
-public class MultiTasker extends Agent {
+public class MultiTaskRequester extends Agent {
 
-  public MultiTasker(String name) {
+  public MultiTaskRequester(String name) {
     super(name);
   }
 
   @Override
   public void start(PrintStream writer, String[] params) {
     if (getId() == 0) {
-      // post three top level goals if this is the first agent
-      post(new Task(getId(), "do-p"));
-      post(new Task(getId(), "do-q"));
-      post(new Task(getId(), "do-r"));
+      // requests three top level goals
+      send(1, new Task(getId(), "ask-p"));
+      send(1, new Task(getId(), "ask-q"));
+      send(1, new Task(getId(), "ask-r"));
     }
   }
 

@@ -135,17 +135,36 @@ public class MainTest {
   @Test
   public void testMultiTask() {
     final String output = ""
-        + "p-1\n" + "q-1\n" + "r-1\n"
-        + "p-2\n" + "q-2\n" + "r-2\n"
-        + "p-3\n" + "q-3\n" + "r-3\n"
-        + "p-4\n" + "q-4\n" + "r-4\n"
-        + "p-5\n" + "q-5\n" + "r-5\n";
+        + "do-p-1\n" + "do-q-1\n" + "do-r-1\n"
+        + "do-p-2\n" + "do-q-2\n" + "do-r-2\n"
+        + "do-p-3\n" + "do-q-3\n" + "do-r-3\n"
+        + "do-p-4\n" + "do-q-4\n" + "do-r-4\n"
+        + "do-p-5\n" + "do-q-5\n" + "do-r-5\n";
     String[] args = {"--config", "{"
         + "randomSeed:123456,"
         + "numThreads:1,"
         + "agents:["
         + "{classname:io.github.agentsoz.jill.multitask.MultiTasker,"
         + "args:[], count:1}" + "]}"};
+    Main.main(args);
+    assertEquals(output, out.toString());
+  }
+
+  @Test
+  public void testMultiTaskRequest() {
+    final String output = ""
+        + "ask-p-1\n" + "ask-q-1\n" + "ask-r-1\n"
+        + "ask-p-2\n" + "ask-q-2\n" + "ask-r-2\n"
+        + "ask-p-3\n" + "ask-q-3\n" + "ask-r-3\n"
+        + "ask-p-4\n" + "ask-q-4\n" + "ask-r-4\n"
+        + "ask-p-5\n" + "ask-q-5\n" + "ask-r-5\n";
+    String[] args = {"--config", "{"
+        + "randomSeed:123456,"
+        + "numThreads:1,"
+        + "agents:["
+        + "{classname:io.github.agentsoz.jill.multitask.MultiTaskRequester, args:[], count:1},"
+        + "{classname:io.github.agentsoz.jill.multitask.MultiTasker, args:[], count:1}"
+        + "]}"};
     Main.main(args);
     assertEquals(output, out.toString());
   }
