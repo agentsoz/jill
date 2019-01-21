@@ -240,7 +240,7 @@ and the entire software life cycle.
 ## License
 
 Jill Cognitive Agents Project
-Copyright (C) 2014 - 2018 by its authors. See AUTHORS file.
+Copyright (C) 2014 - 2019 by its authors. See AUTHORS file.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
