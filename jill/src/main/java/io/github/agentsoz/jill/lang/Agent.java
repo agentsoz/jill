@@ -114,6 +114,15 @@ public class Agent extends AObject {
   }
 
   /**
+   * Creates and returns a new {@link #executionStack} for this agent.
+   *
+   * @return the new execution stack
+   */
+  public Stack255 getNewExecutionStack() {
+    return executionStack; // FIXME #4: create and return new stack
+  }
+
+  /**
    * Posts the given goal. This will trigger the BDI execution engine to generate applicable plan
    * instances to handle this goal. One instance, from the available options, will be selected and
    * executed.
@@ -121,12 +130,33 @@ public class Agent extends AObject {
    * @param goal the goal that this agent should try to achieve
    */
   public void post(Goal goal) {
-    synchronized (executionStack) {
+    post(getNewExecutionStack(), goal);
+  }
+
+  /**
+   * Push the given goal to the given stack.
+   * @param stack the stack to push to new goal to
+   * @param goal the goal to push
+   */
+  private void post(Stack255 stack, Goal goal) {
+    synchronized (stack) {
       logger.debug("{} posting goal {}", Log.logPrefix(getId()), goal.getClass().getSimpleName());
-      executionStack.push(goal);
+      stack.push(goal);
       Main.setAgentIdle(getId(), false);
     }
     Main.flagMessageTo(Main.poolid(getId()));
+  }
+
+  /**
+   * Posts the given goal as a subgoal in the current execution stack.
+   * This will trigger the BDI execution engine to generate applicable plan
+   * instances to handle this goal. One instance, from the available options, will be selected and
+   * executed.
+   *
+   * @param goal the goal that this agent should try to achieve
+   */
+  public void subgoal(Goal goal) {
+    post(getExecutionStack(), goal);
   }
 
   /**

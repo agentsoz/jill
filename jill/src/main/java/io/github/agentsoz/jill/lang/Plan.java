@@ -80,12 +80,21 @@ public abstract class Plan {
   }
 
   /**
-   * <p>post.</p>
+   * <p>Posts a top-level goal in a new intention stack</p>
    *
    * @param goal a {@link io.github.agentsoz.jill.lang.Goal} object.
    */
   public void post(Goal goal) {
     getAgent().post(goal);
+  }
+
+  /**
+   * <p>Adds a new (sub) goal to the active intention stack</p>
+   *
+   * @param goal a {@link io.github.agentsoz.jill.lang.Goal} object.
+   */
+  public void subgoal(Goal goal) {
+    getAgent().subgoal(goal);
   }
 
   /**
