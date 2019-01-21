@@ -131,6 +131,26 @@ public class MainTest {
     assertEquals(out.toString(), output);
   }
 
+
+  @Test
+  public void testMultiTask() {
+    final String output = ""
+        + "p-1\n" + "q-1\n" + "r-1\n"
+        + "p-2\n" + "q-2\n" + "r-2\n"
+        + "p-3\n" + "q-3\n" + "r-3\n"
+        + "p-4\n" + "q-4\n" + "r-4\n"
+        + "p-5\n" + "q-5\n" + "r-5\n";
+    String[] args = {"--config", "{"
+        + "randomSeed:123456,"
+        + "numThreads:1,"
+        + "agents:["
+        + "{classname:io.github.agentsoz.jill.multitask.MultiTasker,"
+        + "args:[], count:1}" + "]}"};
+    Main.main(args);
+    assertEquals(output, out.toString());
+  }
+
+
   @Test
   public void testBeliefBindingsInMetaPlan() {
     final String output = "PlanGreetNeighbour" + ",0:Alex K. Jones:male" + ",0:Daniel I. Smith:male"
