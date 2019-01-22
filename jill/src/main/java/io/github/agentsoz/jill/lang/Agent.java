@@ -66,11 +66,7 @@ public class Agent extends AObject {
   private byte[] goals; // This agent's goal-plan tree
 
   /**
-   * This agent's intention stack.
-   * 
-   * <p>TODO: Currently, only a single intention stack is supported, which means that an agent can
-   * only really have one top level goal instance. This is to be extended to allow one stack per top
-   * level goal instance.
+   * This agent's intention stacks.
    * 
    * <p>NOTE: This stack is of type {@link io.github.agentsoz.jill.util.Stack255} which supports a
    * maximum of 255 objects. This means that the active goal-plan execution trace cannot be longer
@@ -78,7 +74,7 @@ public class Agent extends AObject {
    * an issue for recursive behaviours where a plan posts an instance of the same goal type that it
    * handles.
    */
-  private final Stack255 executionStack;
+  private final IntentionStacks stacks;
 
   /**
    * A handle to any registered meta-planning function.
@@ -97,29 +93,48 @@ public class Agent extends AObject {
    */
   public Agent(String name) {
     super(name);
-    executionStack = new Stack255((byte) 8, (byte) 2);
     beliefbase = GlobalState.beliefbase;
     agents = GlobalState.agents;
     lastresult = null;
     metaplan = null;
+    // initialise the intention stacks
+    stacks = new IntentionStacks();
+
   }
 
+
   /**
-   * Gets the {@link #executionStack} of this agent.
+   * Gets the active intention stack of this agent.
    *
    * @return this agent's execution stack
    */
   public Stack255 getExecutionStack() {
-    return executionStack;
+    return stacks.getActiveStack();
   }
 
   /**
-   * Creates and returns a new {@link #executionStack} for this agent.
+   * Selects and returns the next active intention stack of this agent.
+   * @return the intention stack that was activated
+   */
+  public Stack255 nextActiveStack() {
+    return stacks.nextActiveStack();
+  }
+
+  /**
+   * Removes any empty intention stacks and resets the active stack to the first one.
+   * @return the size of the intentions stacks after cleanup
+   */
+  public int cleanupStacks() {
+    return stacks.cleanup();
+  }
+
+  /**
+   * Creates and returns a new intention stack for this agent.
    *
    * @return the new execution stack
    */
-  public Stack255 getNewExecutionStack() {
-    return executionStack; // FIXME #4: create and return new stack
+  private Stack255 getNewExecutionStack() {
+    return stacks.getEmptyIntentionStack();
   }
 
   /**

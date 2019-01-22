@@ -110,6 +110,7 @@ public class IntentionSelector implements Runnable {
           // If it is a goal then find a plan for it and put it on the stack
           manageGoal(i, agent, agentExecutionStack, (Goal) node);
         }
+        agent.nextActiveStack(); // select the next active stack for next time
       }
       // remove agents that have finished executing plans and have gone idle in this cycle
       removeFinishedAgents(toRemove);
@@ -246,9 +247,15 @@ public class IntentionSelector implements Runnable {
         // Pop the goal off the stack
         agentExecutionStack.pop();
         if (agentExecutionStack.isEmpty()) {
-          // Mark this agent as idle
-          // Main.setAgentIdle(i, true);
-          toRemove.add(agentIndex);
+          // remove empty intention stacks
+          Agent agent = (Agent) GlobalState.agents.get(agentIndex);
+          int size = agent.cleanupStacks();
+          // If we are left with only one stack and that is empty, then agent is idle
+          if (size == 1 && agent.getExecutionStack().isEmpty()) {
+            // Mark this agent as idle
+            // Main.setAgentIdle(i, true);
+            toRemove.add(agentIndex);
+          }
         }
       }
     } else {
