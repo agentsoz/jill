@@ -3,13 +3,13 @@
   <parent>
     <groupId>io.github.agentsoz</groupId>
     <artifactId>jill-project</artifactId>
-    <version>0.3.5-SNAPSHOT</version>
+    <version>0.3.5</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
   <artifactId>jill</artifactId>
-  <version>0.3.5-SNAPSHOT</version>
+  <version>0.3.5</version>
 
   <name>${project.groupId}:${project.artifactId}</name>
   <description>Jill cognitive agents (Core)</description>
