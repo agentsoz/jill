@@ -25,7 +25,7 @@ import io.github.agentsoz.jill.core.beliefbase.BeliefBaseException;
 import io.github.agentsoz.jill.core.beliefbase.BeliefSet;
 import io.github.agentsoz.jill.core.beliefbase.BeliefSetField;
 import io.github.agentsoz.jill.util.Log;
-import io.github.agentsoz.jill.util.SparseBitSet;
+import org.roaringbitmap.RoaringBitmap;
 
 import java.io.Console;
 import java.util.Collections;
@@ -56,7 +56,7 @@ public class ABeliefStore extends BeliefBase {
   private static ConcurrentHashMap<Integer, Belief> beliefsByID; // NOPMD - canot be final
   private static ConcurrentHashMap<String, AQuery> queries; // NOPMD - canot be final
   private static ConcurrentHashMap<String, Set<Belief>> cachedresults; // NOPMD - canot be final
-  private static SparseBitSet[] agents2beliefs; // NOPMD - canot be final
+  private static RoaringBitmap[] agents2beliefs; // NOPMD - canot be final
 
   /**
    * Constructs a new belief store.
@@ -73,7 +73,7 @@ public class ABeliefStore extends BeliefBase {
     queries = new ConcurrentHashMap<String, AQuery>(64, loadfactor, nthreads);
     cachedresults =
         new ConcurrentHashMap<String, Set<Belief>>(queries.size(), loadfactor, nthreads);
-    agents2beliefs = new SparseBitSet[nagents];
+    agents2beliefs = new RoaringBitmap[nagents];
   }
 
   /**
@@ -115,11 +115,11 @@ public class ABeliefStore extends BeliefBase {
       id = beliefs.get(belief);
     }
     // Add it to the agents beliefs
-    SparseBitSet bits = agents2beliefs[agentid];
+    RoaringBitmap bits = agents2beliefs[agentid];
     if (bits == null) {
-      bits = new SparseBitSet();
+      bits = new RoaringBitmap();
     }
-    bits.set(id);
+    bits.add(id);
     agents2beliefs[agentid] = bits;
     // Update the cached results
     for (String query : cachedresults.keySet()) {
@@ -231,7 +231,7 @@ public class ABeliefStore extends BeliefBase {
     assert (results != null);
     // Finally, check if this result holds true for this agent
     HashSet<Belief> matches = new HashSet<Belief>();
-    SparseBitSet agentbeliefs = agents2beliefs[agentid];
+    RoaringBitmap agentbeliefs = agents2beliefs[agentid];
     if (agentbeliefs == null) {
       return matches;
     }
@@ -239,10 +239,12 @@ public class ABeliefStore extends BeliefBase {
      * for (Belief belief : results) { int beliefID = beliefs2.get(belief); // check if the agent
      * has this belief if (agentbeliefs.get(beliefID)) { matches.add(belief); } }
      */
-    for (int i = agentbeliefs.nextSetBit(0); i >= 0; i = agentbeliefs.nextSetBit(i + 1)) {
+    for (long i = agentbeliefs.nextValue(0);
+         i >= 0 && i < agentbeliefs.last();
+         i = agentbeliefs.nextValue((int)i + 1)) {
       // check if this belief exists in the results set
-      Belief belief = beliefsByID.get(i);
-      if (results.contains(belief)) {
+      Belief belief = beliefsByID.get((int)i);
+      if (belief != null && results.contains(belief)) {
         matches.add(belief);
       }
     }
