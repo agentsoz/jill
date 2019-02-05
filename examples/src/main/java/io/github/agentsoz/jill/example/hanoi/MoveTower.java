@@ -82,7 +82,7 @@ public class MoveTower extends Plan {
   }, new PlanStep() {
     public void step() {
       if (solve.disc != 1) {
-        post(new Solve("", solve.disc - 1, solve.src, solve.spare, solve.dest));
+        subgoal(new Solve("", solve.disc - 1, solve.src, solve.spare, solve.dest));
       }
     }
   }, new PlanStep() {
@@ -94,7 +94,7 @@ public class MoveTower extends Plan {
   }, new PlanStep() {
     public void step() {
       if (solve.disc != 1) {
-        post(new Solve("", solve.disc - 1, solve.spare, solve.dest, solve.src));
+        subgoal(new Solve("", solve.disc - 1, solve.spare, solve.dest, solve.src));
       }
     }
   },};
