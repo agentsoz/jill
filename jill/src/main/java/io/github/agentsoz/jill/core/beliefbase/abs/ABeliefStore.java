@@ -30,6 +30,7 @@ import org.roaringbitmap.RoaringBitmap;
 import java.io.Console;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
@@ -239,11 +240,10 @@ public class ABeliefStore extends BeliefBase {
      * for (Belief belief : results) { int beliefID = beliefs2.get(belief); // check if the agent
      * has this belief if (agentbeliefs.get(beliefID)) { matches.add(belief); } }
      */
-    for (long i = agentbeliefs.nextValue(0);
-         i >= 0 && i < agentbeliefs.last();
-         i = agentbeliefs.nextValue((int)i + 1)) {
+    for (Iterator<Integer> it = agentbeliefs.iterator(); it.hasNext(); ) {
+      long ii = it.next();
       // check if this belief exists in the results set
-      Belief belief = beliefsByID.get((int)i);
+      Belief belief = beliefsByID.get((int)ii);
       if (belief != null && results.contains(belief)) {
         matches.add(belief);
       }
