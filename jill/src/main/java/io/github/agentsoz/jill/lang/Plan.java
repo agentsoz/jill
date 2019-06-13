@@ -108,6 +108,20 @@ public abstract class Plan {
   }
 
   /**
+   * Resets execution to the start of this plan.
+   */
+  public void reset() {
+    index = 0;
+  }
+
+  /**
+   * Drops the remainder of this plan.
+   */
+  public void drop() {
+    index = Byte.MAX_VALUE;
+  }
+
+  /**
    * Checks if this plan has finished executing.
    *
    * @return true if this plan has finished executing, false otherwise

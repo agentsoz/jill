@@ -154,6 +154,9 @@ public class Agent extends AObject {
    * @param goal the goal to push
    */
   private void post(Stack255 stack, Goal goal) {
+    if (goal == null) {
+      return;
+    }
     synchronized (stack) {
       logger.debug("{} posting goal {}", Log.logPrefix(getId()), goal.getClass().getSimpleName());
       stack.push(goal);
