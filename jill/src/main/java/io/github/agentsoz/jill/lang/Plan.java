@@ -1,5 +1,7 @@
 package io.github.agentsoz.jill.lang;
 
+import io.github.agentsoz.jill.util.AString;
+
 import java.util.Map;
 
 /*
@@ -31,6 +33,8 @@ public abstract class Plan {
 
   private final Agent agent;
   private final Goal goal;
+  private byte[] name;
+
   private byte index;
 
   public PlanStep[] body;
@@ -45,6 +49,7 @@ public abstract class Plan {
   public Plan(Agent agent, Goal goal, String name) { // NOPMD - ignore unused param 'name'
     this.agent = agent;
     this.goal = goal;
+    this.name = AString.toBytes(name);
   }
 
   /**
@@ -77,6 +82,28 @@ public abstract class Plan {
    */
   public Goal getGoal() {
     return goal;
+  }
+
+  /**
+   * <p>toString.</p>
+   *
+   * @return a {@link java.lang.String} object.
+   */
+  public String toString() {
+    return AString.toString(name);
+  }
+
+  /**
+   * <p>Gets the full name composed of the goal and plan names</p>
+   *
+   * @return a {@link java.lang.String} object.
+   */
+  public String getFullName() {
+    return getGoal().toString() + "~>" + AString.toString(name);
+  }
+
+  public void setName(String name) {
+    this.name = AString.toBytes(name);
   }
 
   /**
