@@ -132,6 +132,22 @@ public class ABeliefStore extends BeliefBase {
     return true;
   }
 
+  @Override
+  public boolean removeBelief(int agentid, Belief belief) throws BeliefBaseException {
+    if (!beliefs.containsKey(belief)) {
+      return false;
+    }
+    int id = beliefs.get(belief);
+    // Add it to the agents beliefs
+    RoaringBitmap bits = agents2beliefs[agentid];
+    if (bits == null) {
+      bits = new RoaringBitmap();
+    }
+    bits.remove(id);
+    agents2beliefs[agentid] = bits;
+    return true;
+  }
+
   /**
    * {@inheritDoc}.
    */

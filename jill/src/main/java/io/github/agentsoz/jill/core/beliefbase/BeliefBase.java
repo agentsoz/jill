@@ -60,6 +60,17 @@ public abstract class BeliefBase {
   public abstract boolean addBelief(int agentid, String beliefsetName, Object... tuple)
       throws BeliefBaseException;
 
+
+  /**
+   * <p>removeBelief.</p>
+   *
+   * @param agentid a int.
+   * @param belief the belief to remove.
+   * @return true if the belief was removed, false otherwise
+   * @throws io.github.agentsoz.jill.core.beliefbase.BeliefBaseException if any.
+   */
+  public abstract boolean removeBelief(int agentid, Belief belief) throws BeliefBaseException;
+
   /**
    * <p>eval.</p>
    *
