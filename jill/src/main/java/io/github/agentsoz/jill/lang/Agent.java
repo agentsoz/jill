@@ -290,6 +290,18 @@ public class Agent extends AObject {
   }
 
   /**
+   * Removes the given belief of the agent.
+   *
+   * @param belief the belief to remove (see {@link #getLastResults()}
+   * @return true if removed, false otherwise
+   * @throws io.github.agentsoz.jill.core.beliefbase.BeliefBaseException exception
+   *        (see {@link io.github.agentsoz.jill.core.beliefbase.BeliefBaseException})
+   */
+  public boolean removeBelief(Belief belief) throws BeliefBaseException {
+    return beliefbase.removeBelief(getId(), belief);
+  }
+
+  /**
    * Evaluates the given query against this agent's belief base.
    *
    * @param query the query to evaluate
