@@ -178,8 +178,15 @@ public class IntentionSelector implements Runnable {
   private boolean manageGoal(int agentIndex, Agent agent, Stack255 agentExecutionStack, Goal node) {
     // Get the goal type for this goal
     GoalType gtype = (GoalType) GlobalState.goalTypes.find(node.getClass().getName());
+    if (gtype == null) {
+      throw new JillException(Log.logPrefix(agent.getId())
+              + " has no goal matching " + node.getClass().getName());
+    }
     byte[] ptypes = gtype.getChildren();
-    assert (ptypes != null);
+    if (ptypes == null) {
+      throw new JillException(Log.logPrefix(agent.getId())
+              + " has no plans for handling goal " + node.getClass().getName());
+    }
     // Clear any previous plan bindings before adding any new ones
     bindings.clear();
     for (int p = 0; p < ptypes.length; p++) {
