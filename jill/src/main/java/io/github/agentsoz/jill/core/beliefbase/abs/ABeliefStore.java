@@ -53,27 +53,26 @@ public class ABeliefStore extends BeliefBase {
   private static ConcurrentHashMap<String, BeliefSet> beliefsets; // NOPMD - canot be final
   private static ConcurrentHashMap<Integer, BeliefSet> beliefsetsByID; // NOPMD - canot be final
   private static ConcurrentHashMap<Belief, Integer> beliefs; // NOPMD - canot be final
-  private static ConcurrentHashMap<Integer, Belief> beliefsByID; // NOPMD - canot be final
   private static ConcurrentHashMap<String, AQuery> queries; // NOPMD - canot be final
   private static ConcurrentHashMap<String, Set<Belief>> cachedresults; // NOPMD - canot be final
-  private static RoaringBitmap[] beliefs2agents; // NOPMD - canot be final
+  private static ConcurrentHashMap<Integer, RoaringBitmap> beliefs2agents; // NOPMD - canot be final
 
   /**
    * Constructs a new belief store.
    *
-   * @param nagents the store will manage beliefs for thsi number of agents
+   * @param nagents the store will manage beliefs for this number of agents
    * @param nthreads the number of threads that may concurrently query/update this belief set
    */
   public ABeliefStore(int nagents, int nthreads) {
     beliefsets = new ConcurrentHashMap<String, BeliefSet>(1, loadfactor, nthreads);
     beliefsetsByID =
         new ConcurrentHashMap<Integer, BeliefSet>(beliefsets.size(), loadfactor, nthreads);
-    beliefs = new ConcurrentHashMap<Belief, Integer>(nagents * 10, loadfactor, nthreads);
-    beliefsByID = new ConcurrentHashMap<Integer, Belief>(beliefs.size(), loadfactor, nthreads);
+    beliefs = new ConcurrentHashMap<Belief, Integer>(Math.max(100,nagents), loadfactor, nthreads);
     queries = new ConcurrentHashMap<String, AQuery>(64, loadfactor, nthreads);
     cachedresults =
         new ConcurrentHashMap<String, Set<Belief>>(queries.size(), loadfactor, nthreads);
-    beliefs2agents = new RoaringBitmap[nagents];
+    beliefs2agents = new ConcurrentHashMap<Integer, RoaringBitmap>(beliefs.size(),
+        loadfactor, nthreads);
   }
 
   /**
@@ -109,21 +108,14 @@ public class ABeliefStore extends BeliefBase {
     if (!beliefs.containsKey(belief)) {
       id = beliefs.size();
       beliefs.put(belief, id);
-      beliefsByID.put(belief.getId(), belief);
-
+      beliefs2agents.put(id,new RoaringBitmap());
     } else {
       id = beliefs.get(belief);
     }
-    if (id >= beliefs2agents.length) {
-      beliefs2agents = grow(beliefs2agents, id + (int)(beliefs2agents.length * 0.2));
-    }
     // Add it to the agents beliefs
-    RoaringBitmap bits = beliefs2agents[id];
-    if (bits == null) {
-      bits = new RoaringBitmap();
-    }
+    RoaringBitmap bits = beliefs2agents.get(id);
     bits.add(agentid);
-    beliefs2agents[id] = bits;
+    beliefs2agents.put(id,bits);
     // Update the cached results
     for (String query : cachedresults.keySet()) {
       Set<Belief> results = cachedresults.get(query);
@@ -140,16 +132,10 @@ public class ABeliefStore extends BeliefBase {
       return false;
     }
     int id = beliefs.get(belief);
-    if (id >= beliefs2agents.length) {
-      beliefs2agents = grow(beliefs2agents, id + (int)(beliefs2agents.length * 0.2));
-    }
     // Remove it from the agents beliefs
-    RoaringBitmap bits = beliefs2agents[id];
-    if (bits == null) {
-      bits = new RoaringBitmap();
-    }
+    RoaringBitmap bits = beliefs2agents.get(id);
     bits.remove(agentid);
-    beliefs2agents[id] = bits;
+    beliefs2agents.put(id,bits);
     return true;
   }
 
@@ -260,7 +246,7 @@ public class ABeliefStore extends BeliefBase {
         throw new BeliefBaseException("belief '" + belief + "' doees not exist");
       }
       int id = beliefs.get(belief);
-      RoaringBitmap bits = beliefs2agents[id];
+      RoaringBitmap bits = beliefs2agents.get(id);
       if (bits != null && bits.contains(agentid)) {
         matches.add(belief);
       }
@@ -408,11 +394,4 @@ public class ABeliefStore extends BeliefBase {
     }
     return bsf[index].getName();
   }
-
-  private RoaringBitmap[] grow(RoaringBitmap[] objects, int increment) {
-    RoaringBitmap[] temp = new RoaringBitmap[objects.length + increment];
-    System.arraycopy(objects, 0, temp, 0, objects.length);
-    return temp;
-  }
-
 }
