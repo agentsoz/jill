@@ -30,7 +30,6 @@ import org.roaringbitmap.RoaringBitmap;
 import java.io.Console;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
@@ -57,7 +56,7 @@ public class ABeliefStore extends BeliefBase {
   private static ConcurrentHashMap<Integer, Belief> beliefsByID; // NOPMD - canot be final
   private static ConcurrentHashMap<String, AQuery> queries; // NOPMD - canot be final
   private static ConcurrentHashMap<String, Set<Belief>> cachedresults; // NOPMD - canot be final
-  private static RoaringBitmap[] agents2beliefs; // NOPMD - canot be final
+  private static RoaringBitmap[] beliefs2agents; // NOPMD - canot be final
 
   /**
    * Constructs a new belief store.
@@ -74,7 +73,7 @@ public class ABeliefStore extends BeliefBase {
     queries = new ConcurrentHashMap<String, AQuery>(64, loadfactor, nthreads);
     cachedresults =
         new ConcurrentHashMap<String, Set<Belief>>(queries.size(), loadfactor, nthreads);
-    agents2beliefs = new RoaringBitmap[nagents];
+    beliefs2agents = new RoaringBitmap[nagents];
   }
 
   /**
@@ -115,13 +114,16 @@ public class ABeliefStore extends BeliefBase {
     } else {
       id = beliefs.get(belief);
     }
+    if (id >= beliefs2agents.length) {
+      beliefs2agents = grow(beliefs2agents, id + (int)(beliefs2agents.length * 0.2));
+    }
     // Add it to the agents beliefs
-    RoaringBitmap bits = agents2beliefs[agentid];
+    RoaringBitmap bits = beliefs2agents[id];
     if (bits == null) {
       bits = new RoaringBitmap();
     }
-    bits.add(id);
-    agents2beliefs[agentid] = bits;
+    bits.add(agentid);
+    beliefs2agents[id] = bits;
     // Update the cached results
     for (String query : cachedresults.keySet()) {
       Set<Belief> results = cachedresults.get(query);
@@ -138,13 +140,16 @@ public class ABeliefStore extends BeliefBase {
       return false;
     }
     int id = beliefs.get(belief);
-    // Add it to the agents beliefs
-    RoaringBitmap bits = agents2beliefs[agentid];
+    if (id >= beliefs2agents.length) {
+      beliefs2agents = grow(beliefs2agents, id + (int)(beliefs2agents.length * 0.2));
+    }
+    // Remove it from the agents beliefs
+    RoaringBitmap bits = beliefs2agents[id];
     if (bits == null) {
       bits = new RoaringBitmap();
     }
-    bits.remove(id);
-    agents2beliefs[agentid] = bits;
+    bits.remove(agentid);
+    beliefs2agents[id] = bits;
     return true;
   }
 
@@ -244,23 +249,19 @@ public class ABeliefStore extends BeliefBase {
     return results;
   }
 
-  private static Set<Belief> filterResultsForAgent(int agentid, Set<Belief> results) {
+  private static Set<Belief> filterResultsForAgent(int agentid, Set<Belief> results)
+      throws BeliefBaseException {
     assert (results != null);
     // Finally, check if this result holds true for this agent
     HashSet<Belief> matches = new HashSet<Belief>();
-    RoaringBitmap agentbeliefs = agents2beliefs[agentid];
-    if (agentbeliefs == null) {
-      return matches;
-    }
-    /*
-     * for (Belief belief : results) { int beliefID = beliefs2.get(belief); // check if the agent
-     * has this belief if (agentbeliefs.get(beliefID)) { matches.add(belief); } }
-     */
-    for (Iterator<Integer> it = agentbeliefs.iterator(); it.hasNext(); ) {
-      long ii = it.next();
-      // check if this belief exists in the results set
-      Belief belief = beliefsByID.get((int)ii);
-      if (belief != null && results.contains(belief)) {
+
+    for (Belief belief : results) {
+      if (!beliefs.containsKey(belief)) {
+        throw new BeliefBaseException("belief '" + belief + "' doees not exist");
+      }
+      int id = beliefs.get(belief);
+      RoaringBitmap bits = beliefs2agents[id];
+      if (bits != null && bits.contains(agentid)) {
         matches.add(belief);
       }
     }
@@ -406,6 +407,12 @@ public class ABeliefStore extends BeliefBase {
       throw new BeliefBaseException("belief set field id " + index + " is invalid");
     }
     return bsf[index].getName();
+  }
+
+  private RoaringBitmap[] grow(RoaringBitmap[] objects, int increment) {
+    RoaringBitmap[] temp = new RoaringBitmap[objects.length + increment];
+    System.arraycopy(objects, 0, temp, 0, objects.length);
+    return temp;
   }
 
 }
