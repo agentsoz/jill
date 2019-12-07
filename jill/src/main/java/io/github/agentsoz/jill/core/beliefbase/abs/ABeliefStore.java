@@ -52,11 +52,10 @@ public class ABeliefStore extends BeliefBase {
 
   private static ConcurrentHashMap<String, BeliefSet> beliefsets; // NOPMD - canot be final
   private static ConcurrentHashMap<Integer, BeliefSet> beliefsetsByID; // NOPMD - canot be final
-  private static ConcurrentHashMap<Belief, Integer> beliefs; // NOPMD - canot be final
+  private static ConcurrentHashMap<Belief, RoaringBitmap> beliefs; // NOPMD - canot be final
   private static ConcurrentHashMap<String, AQuery> queries; // NOPMD - canot be final
   private static ConcurrentHashMap<String, Set<Belief>> cachedresults; // NOPMD - canot be final
-  private static ConcurrentHashMap<Integer, RoaringBitmap> beliefs2agents; // NOPMD - canot be final
-
+  private static int nAgents;
   /**
    * Constructs a new belief store.
    *
@@ -64,15 +63,15 @@ public class ABeliefStore extends BeliefBase {
    * @param nthreads the number of threads that may concurrently query/update this belief set
    */
   public ABeliefStore(int nagents, int nthreads) {
+    nAgents = nagents;
     beliefsets = new ConcurrentHashMap<String, BeliefSet>(1, loadfactor, nthreads);
     beliefsetsByID =
         new ConcurrentHashMap<Integer, BeliefSet>(beliefsets.size(), loadfactor, nthreads);
-    beliefs = new ConcurrentHashMap<Belief, Integer>(Math.max(100,nagents), loadfactor, nthreads);
+    beliefs = new ConcurrentHashMap<Belief, RoaringBitmap>(Math.max(64,nagents),
+        loadfactor, nthreads);
     queries = new ConcurrentHashMap<String, AQuery>(64, loadfactor, nthreads);
     cachedresults =
         new ConcurrentHashMap<String, Set<Belief>>(queries.size(), loadfactor, nthreads);
-    beliefs2agents = new ConcurrentHashMap<Integer, RoaringBitmap>(beliefs.size(),
-        loadfactor, nthreads);
   }
 
   /**
@@ -104,18 +103,13 @@ public class ABeliefStore extends BeliefBase {
     // Create a new Belief
     Belief belief = new Belief(beliefs.size(), beliefsets.get(beliefsetName).getId(), tuple);
     // Add it to the list of beliefs
-    int id;
     if (!beliefs.containsKey(belief)) {
-      id = beliefs.size();
-      beliefs.put(belief, id);
-      beliefs2agents.put(id,new RoaringBitmap());
-    } else {
-      id = beliefs.get(belief);
+      beliefs.put(belief, new RoaringBitmap());
     }
     // Add it to the agents beliefs
-    RoaringBitmap bits = beliefs2agents.get(id);
+    RoaringBitmap bits = beliefs.get(belief);
     bits.add(agentid);
-    beliefs2agents.put(id,bits);
+    beliefs.put(belief,bits);
     // Update the cached results
     for (String query : cachedresults.keySet()) {
       Set<Belief> results = cachedresults.get(query);
@@ -131,11 +125,10 @@ public class ABeliefStore extends BeliefBase {
     if (!beliefs.containsKey(belief)) {
       return false;
     }
-    int id = beliefs.get(belief);
     // Remove it from the agents beliefs
-    RoaringBitmap bits = beliefs2agents.get(id);
+    RoaringBitmap bits = beliefs.get(belief);
     bits.remove(agentid);
-    beliefs2agents.put(id,bits);
+    beliefs.put(belief,bits);
     return true;
   }
 
@@ -223,7 +216,7 @@ public class ABeliefStore extends BeliefBase {
   }
 
   private static Set<Belief> performQuery(AQuery query,
-      ConcurrentHashMap<Belief, Integer> beliefs2) {
+      ConcurrentHashMap<Belief, RoaringBitmap> beliefs2) {
     assert (query != null);
     assert (beliefs2 != null);
     Set<Belief> results = Collections.newSetFromMap(new ConcurrentHashMap<Belief, Boolean>());
@@ -245,8 +238,7 @@ public class ABeliefStore extends BeliefBase {
       if (!beliefs.containsKey(belief)) {
         throw new BeliefBaseException("belief '" + belief + "' doees not exist");
       }
-      int id = beliefs.get(belief);
-      RoaringBitmap bits = beliefs2agents.get(id);
+      RoaringBitmap bits = beliefs.get(belief);
       if (bits != null && bits.contains(agentid)) {
         matches.add(belief);
       }
@@ -393,5 +385,14 @@ public class ABeliefStore extends BeliefBase {
       throw new BeliefBaseException("belief set field id " + index + " is invalid");
     }
     return bsf[index].getName();
+  }
+
+  /**
+   * Returns the theoretical upper bound on the hash of RoaringBitmaps currently stored
+   */
+  public long memoryUpperBoundInBytes() {
+    long size = beliefs.size(); // number of bitmaps in use
+    size *= RoaringBitmap.maximumSerializedSize(nAgents, nAgents); // times max size per bitmap
+    return size;
   }
 }
