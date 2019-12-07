@@ -55,7 +55,7 @@ public class ABeliefStore extends BeliefBase {
   private static ConcurrentHashMap<Belief, RoaringBitmap> beliefs; // NOPMD - canot be final
   private static ConcurrentHashMap<String, AQuery> queries; // NOPMD - canot be final
   private static ConcurrentHashMap<String, Set<Belief>> cachedresults; // NOPMD - canot be final
-  private static int nAgents;
+  private final int numAgents;
   /**
    * Constructs a new belief store.
    *
@@ -63,7 +63,7 @@ public class ABeliefStore extends BeliefBase {
    * @param nthreads the number of threads that may concurrently query/update this belief set
    */
   public ABeliefStore(int nagents, int nthreads) {
-    nAgents = nagents;
+    numAgents = nagents;
     beliefsets = new ConcurrentHashMap<String, BeliefSet>(1, loadfactor, nthreads);
     beliefsetsByID =
         new ConcurrentHashMap<Integer, BeliefSet>(beliefsets.size(), loadfactor, nthreads);
@@ -388,11 +388,14 @@ public class ABeliefStore extends BeliefBase {
   }
 
   /**
-   * Returns the theoretical upper bound on the hash of RoaringBitmaps currently stored
+   * Returns the size upper bound set of RoaringBitmaps currently stored.
+   * @return size in bytes
    */
   public long memoryUpperBoundInBytes() {
-    long size = beliefs.size(); // number of bitmaps in use
-    size *= RoaringBitmap.maximumSerializedSize(nAgents, nAgents); // times max size per bitmap
+    long size = 0;
+    for (RoaringBitmap rr : beliefs.values()) {
+      size += RoaringBitmap.maximumSerializedSize(rr.getCardinality(), numAgents);
+    }
     return size;
   }
 }
