@@ -74,24 +74,28 @@ public class MoveTower extends Plan {
   }
   
   PlanStep[] steps = {new PlanStep() {
+    @Override
     public void step() {
       if (solve.disc == 1) {
         log();
       }
     }
   }, new PlanStep() {
+    @Override
     public void step() {
       if (solve.disc != 1) {
         subgoal(new Solve("", solve.disc - 1, solve.src, solve.spare, solve.dest));
       }
     }
   }, new PlanStep() {
+    @Override
     public void step() {
       if (solve.disc != 1) {
         log();
       }
     }
   }, new PlanStep() {
+    @Override
     public void step() {
       if (solve.disc != 1) {
         subgoal(new Solve("", solve.disc - 1, solve.spare, solve.dest, solve.src));

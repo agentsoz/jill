@@ -65,6 +65,7 @@ public class ReceiveToken1 extends Plan {
   }
 
   PlanStep[] steps = {new PlanStep() {
+    @Override
     public void step() {
       Token1 msg = (Token1) getGoal();
       int myid = getAgent().getId();

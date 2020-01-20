@@ -89,6 +89,7 @@ public abstract class Plan {
    *
    * @return a {@link java.lang.String} object.
    */
+  @Override
   public String toString() {
     return AString.toString(name);
   }

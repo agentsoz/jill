@@ -77,6 +77,7 @@ public class GreetNeighbour extends Plan {
   }
 
   PlanStep[] steps = {new PlanStep() {
+    @Override
     public void step() {
       Log.debug(getAgent().getName() + " says hello " + neighbour);
     }

@@ -80,6 +80,7 @@ public class ReceiveToken3 extends Plan {
   }
 
   PlanStep[] steps = {new PlanStep() {
+    @Override
     public void step() {
       Token3 msg = (Token3) getGoal();
       // int myid = getAgent().getId();

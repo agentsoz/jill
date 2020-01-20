@@ -83,6 +83,7 @@ public class IntentionSelector implements Runnable {
   /**
    * Runs this intentions selction thread.
    */
+  @Override
   public void run() {
     Set<Integer> toRemove = new HashSet<Integer>();
     do {
