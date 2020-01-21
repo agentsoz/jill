@@ -93,8 +93,8 @@ public class Agent extends AObject {
    */
   public Agent(String name) {
     super(name);
-    beliefbase = GlobalState.beliefbase;
-    agents = GlobalState.agents;
+    beliefbase = GlobalState.beliefbase; //NOPMD - possible unsafe assignment
+    agents = GlobalState.agents; //NOPMD - possible unsafe assignment
     lastresult = null;
     metaplan = null;
     // initialise the intention stacks

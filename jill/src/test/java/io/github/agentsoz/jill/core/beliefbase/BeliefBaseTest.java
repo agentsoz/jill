@@ -92,12 +92,13 @@ public class BeliefBaseTest {
     int numBeliefs = 5;
     BeliefBase bb = new ABeliefStore(numAgents, 4);
     String bs1 = "mem";
-    BeliefSetField[] fields1 = {new BeliefSetField("key", String.class, true),
+    final String key = "key";
+    BeliefSetField[] fields1 = {new BeliefSetField(key, String.class, true),
         new BeliefSetField("value", Boolean.class, false),};
     for (int i = 0; i < numAgents; i++) {
       bb.createBeliefSet(i, bs1, fields1);
       for (int j = 0; j < numBeliefs; j++) {
-        bb.addBelief(i, bs1, "key" + j, ((j % 2) == 0) ? true : false);
+        bb.addBelief(i, bs1, key + j, ((j % 2) == 0) ? true : false);
       }
     }
 
@@ -122,12 +123,13 @@ public class BeliefBaseTest {
     int numBeliefs = 5;
     BeliefBase bb = new ABeliefStore(numAgents, 4);
     String bs1 = "mem";
-    BeliefSetField[] fields1 = {new BeliefSetField("key", String.class, true),
+    final String key = "key";
+    BeliefSetField[] fields1 = {new BeliefSetField(key, String.class, true),
         new BeliefSetField("value", Boolean.class, false),};
     for (int i = 0; i < numAgents; i++) {
       bb.createBeliefSet(i, bs1, fields1);
       for (int j = 0; j < numBeliefs; j++) {
-        bb.addBelief(i, bs1, "key" + j, ((j % 2) == 0) ? true : false);
+        bb.addBelief(i, bs1, key + j, ((j % 2) == 0) ? true : false);
       }
     }
 

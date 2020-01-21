@@ -64,14 +64,16 @@ public class ABeliefStore extends BeliefBase {
    */
   public ABeliefStore(int nagents, int nthreads) {
     numAgents = nagents;
-    beliefsets = new ConcurrentHashMap<String, BeliefSet>(1, loadfactor, nthreads);
-    beliefsetsByID =
-        new ConcurrentHashMap<Integer, BeliefSet>(beliefsets.size(), loadfactor, nthreads);
-    beliefs = new ConcurrentHashMap<Belief, RoaringBitmap>(Math.max(64,nagents),
-        loadfactor, nthreads);
-    queries = new ConcurrentHashMap<String, AQuery>(64, loadfactor, nthreads);
-    cachedresults =
-        new ConcurrentHashMap<String, Set<Belief>>(queries.size(), loadfactor, nthreads);
+    beliefsets = new ConcurrentHashMap<String, BeliefSet>(
+        1, loadfactor, nthreads); //NOPMD - possible unsafe assignment
+    beliefsetsByID = new ConcurrentHashMap<Integer, BeliefSet>(
+        beliefsets.size(), loadfactor, nthreads); //NOPMD - possible unsafe assignment
+    beliefs = new ConcurrentHashMap<Belief, RoaringBitmap>(
+        Math.max(64,nagents), loadfactor, nthreads); //NOPMD - possible unsafe assignment
+    queries = new ConcurrentHashMap<String, AQuery>(
+        64, loadfactor, nthreads); //NOPMD - possible unsafe assignment
+    cachedresults = new ConcurrentHashMap<String, Set<Belief>>(
+        queries.size(), loadfactor, nthreads); //NOPMD - possible unsafe assignment
   }
 
   /**
