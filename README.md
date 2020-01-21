@@ -67,6 +67,11 @@ Jill is available from [Maven Central](http://search.maven.org/#search%7Cga%7C1%
 
 ## Benchmarks and Examples
 
+The following tests were run on a 2018 Macbook Pro (15,2 model) laptop with 4x
+2.7GHz i7 processors, SSD, 16GB RAM, and with the [JVM heap size set to
+4GB](https://github.com/agentsoz/jill/blob/9be6b654b4c86cdad07ca65a1ef8c0211969ddb9/test/testagent.sh#L10).
+
+
 ### 1. The Towers of Hanoi
 
 A solution for the classic [towers of hanoi puzzle](https://en.wikipedia.org/wiki/Tower_of_Hanoi) is available in the examples directory (see [hanoi player](https://github.com/agentsoz/jill/blob/master/examples/src/main/java/io/github/agentsoz/jill/example/hanoi/Player.java)). The goal is to move a stack of discs from the Pin0 (the first pin) to Pin3 (the third pin).
@@ -75,10 +80,10 @@ The hanoi player can be run using the convinience script [test/hanoi.sh](https:/
 ```
 > ./test/hanoi.sh
 ...
-[main] INFO  io.github.agentsoz.jill - Created 1 agents in (58 ms)
-[main] INFO  io.github.agentsoz.jill - Started 1 agents in (1 ms)
-[main] INFO  io.github.agentsoz.jill - Finished running 1 agents in (4820 ms)
-[main] INFO  io.github.agentsoz.jill - Terminated 1 agents in (3 ms)
+[main] INFO  io.github.agentsoz.jill - Created 1 agents in (35 ms)
+[main] INFO  io.github.agentsoz.jill - Started 1 agents in (4 ms)
+[main] INFO  io.github.agentsoz.jill - Finished running 1 agents in (1146 ms)
+[main] INFO  io.github.agentsoz.jill - Terminated 1 agents in (1 ms)
 ...
 Solved Towers of Hanoi with 18 discs in 262143 moves
 ```
@@ -144,13 +149,13 @@ To execute the test with one million BDI agents, use the convinience script [tes
 ```
 > ./test/testagent.sh
 ...
-[main] INFO  io.github.agentsoz.jill - Created 1000000 agents in (556 ms)
-[main] INFO  io.github.agentsoz.jill - Started 1000000 agents in (417 ms)
-[main] INFO  io.github.agentsoz.jill - Finished running 1000000 agents in (4495 ms)
-[main] INFO  io.github.agentsoz.jill - Terminated 1000000 agents in (22 ms)
+[main] INFO  io.github.agentsoz.jill - Created 1000000 agents in (742 ms)
+[main] INFO  io.github.agentsoz.jill - Started 1000000 agents in (623 ms)
+[main] INFO  io.github.agentsoz.jill - Finished running 1000000 agents in (3962 ms)
+[main] INFO  io.github.agentsoz.jill - Terminated 1000000 agents in (30 ms)
 ```
 
-That took ~5s to run 1 million agents to completion, not bad!
+That took ~4 seconds to run 1 million agents to completion, not bad!
 
 ### 3. Hello Neighbour
 
@@ -164,23 +169,23 @@ The script `./test/greeter.sh` runs this example in various configurations chang
 
 Running 10000 agents with 5 neighbours each (see greeter-10000a-5b.*)
 ...
-[main] INFO  io.github.agentsoz.jill - Created 10000 agents in (49 ms)
-[main] INFO  io.github.agentsoz.jill - Started 10000 agents in (117 ms)
-[main] INFO  io.github.agentsoz.jill - Finished running 10000 agents in (178 ms)
-[main] INFO  io.github.agentsoz.jill - Terminated 10000 agents in (2 ms)
+[main] INFO  io.github.agentsoz.jill - Created 10000 agents in (98 ms)
+[main] INFO  io.github.agentsoz.jill - Started 10000 agents in (129 ms)
+[main] INFO  io.github.agentsoz.jill - Finished running 10000 agents in (119 ms)
+[main] INFO  io.github.agentsoz.jill - Terminated 10000 agents in (3 ms)
 ...
 Running 50000 agents with 100 neighbours each (see greeter-50000a-100b.*)
 ...
-[main] INFO  io.github.agentsoz.jill - Created 50000 agents in (85 ms)
-[main] INFO  io.github.agentsoz.jill - Started 50000 agents in (1257 ms)
-[main] INFO  io.github.agentsoz.jill - Finished running 50000 agents in (568 ms)
-[main] INFO  io.github.agentsoz.jill - Terminated 50000 agents in (16 ms)
+[main] INFO  io.github.agentsoz.jill - Created 50000 agents in (214 ms)
+[main] INFO  io.github.agentsoz.jill - Started 50000 agents in (2143 ms)
+[main] INFO  io.github.agentsoz.jill - Finished running 50000 agents in (604 ms)
+[main] INFO  io.github.agentsoz.jill - Terminated 50000 agents in (8 ms)
 ...
 Running 10000 agents with 500 neighbours each (see greeter-10000a-500b.*)
 ...
-[main] INFO  io.github.agentsoz.jill - Created 10000 agents in (44 ms)
-[main] INFO  io.github.agentsoz.jill - Started 10000 agents in (1313 ms)
-[main] INFO  io.github.agentsoz.jill - Finished running 10000 agents in (542 ms)
+[main] INFO  io.github.agentsoz.jill - Created 10000 agents in (111 ms)
+[main] INFO  io.github.agentsoz.jill - Started 10000 agents in (2280 ms)
+[main] INFO  io.github.agentsoz.jill - Finished running 10000 agents in (679 ms)
 [main] INFO  io.github.agentsoz.jill - Terminated 10000 agents in (4 ms)
 ...
 ```
@@ -194,10 +199,10 @@ In this setup a group of agents ([TokenAgent2.java](io.github.agentsoz.jill.exam
 ...
 Running token passing version 2 between 10000 agents for 100 rounds (see tokenpassing2-10000a-100r.*)
 ...
-[main] INFO  io.github.agentsoz.jill - Created 10000 agents in (39 ms)
-[main] INFO  io.github.agentsoz.jill - Started 10000 agents in (5 ms)
-[main] INFO  io.github.agentsoz.jill - Finished running 10000 agents in (2569 ms)
-[main] INFO  io.github.agentsoz.jill - Terminated 10000 agents in (1 ms)
+[main] INFO  io.github.agentsoz.jill - Created 10000 agents in (83 ms)
+[main] INFO  io.github.agentsoz.jill - Started 10000 agents in (8 ms)
+[main] INFO  io.github.agentsoz.jill - Finished running 10000 agents in (1783 ms)
+[main] INFO  io.github.agentsoz.jill - Terminated 10000 agents in (2 ms)
 ...
 ```
 
