@@ -12,6 +12,8 @@
     <exclude name="AvoidReassigningLoopVariables" /> <!-- TOFIX: disabled for now -->
     <exclude name="ForLoopCanBeForeach" /> <!-- TOFIX: disabled for now -->
     <exclude name="GuardLogStatement" />
+    <exclude name="JUnitAssertionsShouldIncludeMessage" />
+    <exclude name="JUnitTestContainsTooManyAsserts" />
     <exclude name="MethodReturnsInternalArray" /> <!-- TOFIX: disabled for now -->
     <exclude name="SystemPrintln"/>
     <exclude name="UseVarargs" /> <!-- TOFIX: disabled for now -->
