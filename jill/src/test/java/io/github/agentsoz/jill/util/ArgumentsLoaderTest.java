@@ -124,7 +124,8 @@ public class ArgumentsLoaderTest {
     String configcontents = config.toString().replaceAll("\\s+", "");
     StringBuilder str = new StringBuilder();
     try {
-      BufferedReader reader = new BufferedReader(new FileReader(configFile));
+      BufferedReader reader = new BufferedReader( //NOPMD - ensure resources are closed after use
+          new FileReader(configFile));
       String line = reader.readLine();
       while (line != null) {
         line = line.replaceAll("(?://.*)", "");

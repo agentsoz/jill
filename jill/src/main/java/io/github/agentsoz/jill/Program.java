@@ -50,7 +50,7 @@ public final class Program {
    */
   static void pauseForUserInput() {
     System.out.println("Press the Enter/Return key to continue..");
-    Scanner in = new Scanner(System.in);
+    Scanner in = new Scanner(System.in); //NOPMD - ensure resources are closed after use
     in.nextLine();
     in.close();
   }
