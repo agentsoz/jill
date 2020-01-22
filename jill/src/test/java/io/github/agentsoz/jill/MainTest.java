@@ -19,6 +19,8 @@ package io.github.agentsoz.jill;
  * #L%
  */
 
+import static org.junit.Assert.assertEquals;
+
 import ch.qos.logback.classic.Level;
 import io.github.agentsoz.jill.core.GlobalState;
 import io.github.agentsoz.jill.util.ArgumentsLoader;
@@ -29,8 +31,6 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-
-import static org.junit.Assert.assertEquals;
 
 
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
