@@ -96,7 +96,7 @@ public class ABeliefStore extends BeliefBase {
    * {@inheritDoc}.
    */
   @Override
-  public boolean addBelief(int agentid, String beliefsetName, Object... tuple)
+  public synchronized boolean addBelief(int agentid, String beliefsetName, Object... tuple)
       throws BeliefBaseException {
     // Check that the beliefset exists
     if (!beliefsets.containsKey(beliefsetName)) {
@@ -123,7 +123,7 @@ public class ABeliefStore extends BeliefBase {
   }
 
   @Override
-  public boolean removeBelief(int agentid, Belief belief) throws BeliefBaseException {
+  public synchronized boolean removeBelief(int agentid, Belief belief) throws BeliefBaseException {
     if (!beliefs.containsKey(belief)) {
       return false;
     }
