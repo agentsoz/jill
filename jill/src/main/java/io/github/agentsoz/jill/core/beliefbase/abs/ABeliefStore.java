@@ -237,11 +237,11 @@ public class ABeliefStore extends BeliefBase {
     HashSet<Belief> matches = new HashSet<Belief>();
 
     for (Belief belief : results) {
-      if (!beliefs.containsKey(belief)) {
-        throw new BeliefBaseException("belief '" + belief + "' doees not exist");
-      }
       RoaringBitmap bits = beliefs.get(belief);
-      if (bits != null && bits.contains(agentid)) {
+      if (bits == null) {
+        throw new BeliefBaseException("belief '" + belief + "' does not exist");
+      }
+      if (bits.contains(agentid)) {
         matches.add(belief);
       }
     }
