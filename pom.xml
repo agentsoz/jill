@@ -60,7 +60,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.12</version>
+      <version>4.13.1</version>
       <scope>test</scope>
     </dependency>
     <!-- for JSON-style toString() of objects -->
@@ -79,7 +79,7 @@
     <dependency>
       <groupId>org.roaringbitmap</groupId>
       <artifactId>RoaringBitmap</artifactId>
-      <version>0.8.13</version>
+      <version>0.9.3</version>
     </dependency>
   </dependencies>
 
@@ -104,7 +104,7 @@
     <plugin>
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-javadoc-plugin</artifactId>
-      <version>3.1.1</version>
+      <version>3.2.0</version>
       <configuration>
         <!-- diable for now for travis: https://github.com/joel-costigliola/assertj-core/issues/1403 -->
         <skip>true</skip>
@@ -178,7 +178,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.1.1</version>
+          <version>3.2.0</version>
           <configuration>
             <!-- diable for now for travis: https://github.com/joel-costigliola/assertj-core/issues/1403 -->
             <skip>true</skip>
