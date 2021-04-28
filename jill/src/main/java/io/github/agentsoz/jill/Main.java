@@ -29,16 +29,15 @@ import io.github.agentsoz.jill.lang.JillExtension;
 import io.github.agentsoz.jill.util.AObjectCatalog;
 import io.github.agentsoz.jill.util.ArgumentsLoader;
 import io.github.agentsoz.jill.util.Log;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedOutputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.zip.GZIPOutputStream;
 
 /**
  * <p>Main class.</p>
@@ -154,11 +153,18 @@ public final class Main {
     // Redirect the agent program output if specified
     if (config.getProgramOutputFile() != null) {
       try {
-        writer = new PrintStream(
-            new BufferedOutputStream(new FileOutputStream(config.getProgramOutputFile())),
-            false,
-            "UTF-8");
-      } catch (FileNotFoundException | UnsupportedEncodingException e) {
+        if (config.getProgramOutputFile().endsWith(".gz")) {
+          writer = new PrintStream(
+                  new GZIPOutputStream(new FileOutputStream(config.getProgramOutputFile())),
+                  false,
+                  "UTF-8");
+        } else {
+          writer = new PrintStream(
+                  new BufferedOutputStream(new FileOutputStream(config.getProgramOutputFile())),
+                  false,
+                  "UTF-8");
+        }
+      } catch (IOException e) {
         logger.error("Could not open program outout file " + config.getProgramOutputFile(), e);
       }
     } else {
