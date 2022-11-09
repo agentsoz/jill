@@ -1,8 +1,7 @@
 # Jill
-
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/bbaec92c934d409eaf90a465179a854f)](https://www.codacy.com/app/agentsoz/jill?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=agentsoz/jill&amp;utm_campaign=Badge_Grade) [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/bbaec92c934d409eaf90a465179a854f)](https://www.codacy.com/app/agentsoz/jill?utm_source=github.com&utm_medium=referral&utm_content=agentsoz/jill&utm_campaign=Badge_Coverage)
-```master```[![Build Status](https://travis-ci.org/agentsoz/jill.svg?branch=master)](https://travis-ci.org/agentsoz/jill)
-```dev```[![Build Status](https://travis-ci.org/agentsoz/jill.svg?branch=dev)](https://travis-ci.org/agentsoz/jill)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/bbaec92c934d409eaf90a465179a854f)](https://www.codacy.com/gh/agentsoz/jill/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=agentsoz/jill&amp;utm_campaign=Badge_Grade) [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/bbaec92c934d409eaf90a465179a854f)](https://www.codacy.com/gh/agentsoz/jill/dashboard?utm_source=github.com&utm_medium=referral&utm_content=agentsoz/jill&utm_campaign=Badge_Coverage)
+```master```![](https://github.com/agentsoz/jill/actions/workflows/ci.yml/badge.svg)
+```dev```![](https://github.com/agentsoz/jill/actions/workflows/ci.yml/badge.svg?branch=dev)
 
 * [About](#about)
 * [Releases](#releases)
