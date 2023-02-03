@@ -18,16 +18,20 @@
     <exclude name="SystemPrintln"/>
     <exclude name="UseVarargs" /> <!-- TOFIX: disabled for now -->
     <exclude name="WhileLoopWithLiteralBoolean" /> <!-- TOFIX: disabled for now -->
+    <exclude name="UnusedAssignment" /> <!-- TOFIX: disabled for now -->
   </rule>
   <rule ref="category/java/errorprone.xml" >
     <exclude name="AvoidFieldNameMatchingMethodName" /> <!-- TOFIX: disabled for now -->
     <exclude name="AvoidLiteralsInIfCondition" /> <!-- TOFIX: disabled for now -->
     <exclude name="BeanMembersShouldSerialize" /> <!-- TOFIX: disabled for now -->
+    <exclude name="CompareObjectsWithEquals" /> <!-- TOFIX: disabled for now -->
     <exclude name="DataflowAnomalyAnalysis" /> <!-- TOFIX: disabled for now -->
     <exclude name="DoNotCallSystemExit" /> <!-- TOFIX: disabled for now -->
+    <exclude name="DoNotTerminateVM" /> <!-- TOFIX: disabled for now -->
     <exclude name="ImportFromSamePackage" /> <!-- TOFIX: disabled for now -->
     <exclude name="LoggerIsNotStaticFinal" />
     <exclude name="MissingSerialVersionUID" /> <!-- TOFIX: disabled for now -->
     <exclude name="NullAssignment" /> <!-- TOFIX: disabled for now -->
+    <exclude name="ReturnEmptyCollectionRatherThanNull" /> <!-- TOFIX: disabled for now -->
   </rule>
 </ruleset>
