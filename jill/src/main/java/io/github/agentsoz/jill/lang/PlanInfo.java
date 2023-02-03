@@ -33,7 +33,7 @@ public @interface PlanInfo {
   
   /**
    * The list of goals that this agent posts.
-   * 
+   *
    * @return list of goals that this agent posts
    */
   String[] postsGoals();

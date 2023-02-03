@@ -23,8 +23,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import io.github.agentsoz.jill.util.Stack255;
-
 import org.junit.Test;
 
 public class Stack255Test {

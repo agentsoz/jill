@@ -25,14 +25,12 @@ package io.github.agentsoz.jill.util;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.security.Permission;
-
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 public class ArgumentsLoaderParseTest {
 
@@ -72,7 +70,7 @@ public class ArgumentsLoaderParseTest {
 
   /**
    * Common setup for all tests. Saves stderr and stdout to an output stream.
-   * 
+   *
    * @throws Exception if something went wrong
    */
   @Before
@@ -86,7 +84,7 @@ public class ArgumentsLoaderParseTest {
 
   /**
    * Common setup for all tests. Closes stderr and stdout streams.
-   * 
+   *
    * @throws Exception if something went wrong
    */
   @After

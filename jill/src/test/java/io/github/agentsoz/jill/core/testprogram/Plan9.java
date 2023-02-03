@@ -3,7 +3,6 @@ package io.github.agentsoz.jill.core.testprogram;
 import io.github.agentsoz.jill.lang.Agent;
 import io.github.agentsoz.jill.lang.Goal;
 import io.github.agentsoz.jill.lang.Plan;
-
 import java.util.Map;
 
 /*

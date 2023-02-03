@@ -23,20 +23,16 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import ch.qos.logback.classic.Level;
-
 import io.github.agentsoz.jill.Main;
 import io.github.agentsoz.jill.core.GlobalState;
 import io.github.agentsoz.jill.core.ProgramLoader;
 import io.github.agentsoz.jill.lang.JillExtension;
 import io.github.agentsoz.jill.util.Log;
-
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
 
 public class ProgramLoaderTest {
 
@@ -45,7 +41,7 @@ public class ProgramLoaderTest {
 
   /**
    * Common setup for all tests. Saves stderr and stdout to an output stream.
-   * 
+   *
    * @throws Exception if something went wrong
    */
   @Before
@@ -61,7 +57,7 @@ public class ProgramLoaderTest {
 
   /**
    * Common setup for all tests. Closes stderr and stdout streams.
-   * 
+   *
    * @throws Exception if something went wrong
    */
   @After

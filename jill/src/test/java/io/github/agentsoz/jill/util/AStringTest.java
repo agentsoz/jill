@@ -24,8 +24,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import io.github.agentsoz.jill.util.AString;
-
 import org.junit.Test;
 
 public class AStringTest {

@@ -22,7 +22,6 @@ package io.github.agentsoz.jill.example.hanoi;
 import io.github.agentsoz.jill.lang.Agent;
 import io.github.agentsoz.jill.lang.AgentInfo;
 import io.github.agentsoz.jill.util.Log;
-
 import java.io.PrintStream;
 
 /**

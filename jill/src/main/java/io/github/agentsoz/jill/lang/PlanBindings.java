@@ -25,7 +25,6 @@ import io.github.agentsoz.jill.core.beliefbase.Belief;
 import io.github.agentsoz.jill.core.beliefbase.BeliefBaseException;
 import io.github.agentsoz.jill.core.beliefbase.abs.ABeliefStore;
 import io.github.agentsoz.jill.util.Log;
-
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -173,7 +172,7 @@ public class PlanBindings {
 
   /**
    * Selects a plan instance at random from the set of plan bindings.
-   * 
+   *
    * @return a randomly selected plan instance, or null if ther are no bindings to choose from
    */
   private Plan selectPlanAtRandom() {
@@ -200,7 +199,7 @@ public class PlanBindings {
 
   /**
    * Sets the plan instance variables using the given results set.
-   * 
+   *
    * @param agent the agent for which this operation applies
    * @param planInstance the plan instance that is to be populated
    * @param results the beliefs set representing all plan bindings
@@ -236,7 +235,7 @@ public class PlanBindings {
 
   /**
    * Gets the result at the given index from the results set.
-   * 
+   *
    * @param results results set (implementation must support predictable iteration order)
    * @param index the index within the set {@code (0 < index < results.size())} to retrieve
    * @return the result at the given index, or null if there was an error

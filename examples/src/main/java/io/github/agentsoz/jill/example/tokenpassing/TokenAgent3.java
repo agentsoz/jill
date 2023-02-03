@@ -25,7 +25,6 @@ import io.github.agentsoz.jill.core.beliefbase.BeliefSetField;
 import io.github.agentsoz.jill.lang.Agent;
 import io.github.agentsoz.jill.lang.AgentInfo;
 import io.github.agentsoz.jill.util.Log;
-
 import java.io.PrintStream;
 
 /**
@@ -64,7 +63,7 @@ public class TokenAgent3 extends Agent {
     out = writer;
 
     // Create a new belief set about neighbours
-    BeliefSetField[] fields = {new BeliefSetField("name", String.class, true),};
+    BeliefSetField[] fields = {new BeliefSetField("name", String.class, true), };
 
     try {
       // Attach this belief set to this agent

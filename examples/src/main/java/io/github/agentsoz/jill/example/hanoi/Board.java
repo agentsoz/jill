@@ -20,7 +20,6 @@ package io.github.agentsoz.jill.example.hanoi;
  */
 
 import io.github.agentsoz.jill.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 

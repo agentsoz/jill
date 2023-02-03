@@ -29,13 +29,11 @@ import io.github.agentsoz.jill.struct.AObject;
 import io.github.agentsoz.jill.util.AObjectCatalog;
 import io.github.agentsoz.jill.util.Log;
 import io.github.agentsoz.jill.util.Stack255;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.PrintStream;
 import java.util.HashSet;
 import java.util.Set;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Base class for all BDI-like agents in the system.
@@ -114,6 +112,7 @@ public class Agent extends AObject {
 
   /**
    * Selects and returns the next active intention stack of this agent.
+   *
    * @return the intention stack that was activated
    */
   public Stack255 nextActiveStack() {
@@ -122,6 +121,7 @@ public class Agent extends AObject {
 
   /**
    * Removes any empty intention stacks and resets the active stack to the first one.
+   *
    * @return the size of the intentions stacks after cleanup
    */
   public int cleanupStacks() {
@@ -150,6 +150,7 @@ public class Agent extends AObject {
 
   /**
    * Push the given goal to the given stack.
+   *
    * @param stack the stack to push to new goal to
    * @param goal the goal to push
    */

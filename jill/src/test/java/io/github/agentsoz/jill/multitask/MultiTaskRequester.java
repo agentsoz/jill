@@ -21,7 +21,6 @@ package io.github.agentsoz.jill.multitask;
 
 import io.github.agentsoz.jill.lang.Agent;
 import io.github.agentsoz.jill.lang.AgentInfo;
-
 import java.io.PrintStream;
 
 @AgentInfo(hasGoals = {"io.github.agentsoz.jill.multitask.Task"})

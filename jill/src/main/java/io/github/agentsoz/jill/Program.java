@@ -27,7 +27,6 @@ import io.github.agentsoz.jill.core.GlobalState;
 import io.github.agentsoz.jill.core.IntentionSelector;
 import io.github.agentsoz.jill.core.ProgramLoader;
 import io.github.agentsoz.jill.lang.JillExtension;
-
 import java.util.Scanner;
 
 
@@ -68,7 +67,7 @@ public final class Program {
 
   /**
    * Starts the intention selection threads that each handle a pool of agents.
-   * 
+   *
    * @param config the global configuration object
    */
   static void initIntentionSelectionThreads(Config config) {
@@ -101,7 +100,7 @@ public final class Program {
 
   /**
    * Loads any configured extensions (see {@link JillExtension}).
-   * 
+   *
    * @param config a valid configuration
    * @return true if successfully loaded, false otherwise
    */

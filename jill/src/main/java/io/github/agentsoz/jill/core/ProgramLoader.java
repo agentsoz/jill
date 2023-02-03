@@ -1,7 +1,5 @@
 package io.github.agentsoz.jill.core;
 
-import io.github.agentsoz.jill.Main;
-
 /*
  * #%L
  * Jill Cognitive Agents Platform
@@ -11,17 +9,17 @@ import io.github.agentsoz.jill.Main;
  * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU Lesser General Public License as published by the Free Software Foundation, either version 3
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
  * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * General Lesser Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Lesser Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/lgpl-3.0.html>.
  * #L%
  */
 
-import io.github.agentsoz.jill.core.GlobalState;
+import io.github.agentsoz.jill.Main;
 import io.github.agentsoz.jill.lang.Agent;
 import io.github.agentsoz.jill.lang.AgentInfo;
 import io.github.agentsoz.jill.lang.Goal;
@@ -33,14 +31,10 @@ import io.github.agentsoz.jill.struct.AgentType;
 import io.github.agentsoz.jill.struct.GoalType;
 import io.github.agentsoz.jill.struct.PlanType;
 import io.github.agentsoz.jill.util.AObjectCatalog;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
-
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>ProgramLoader class.</p>
@@ -131,7 +125,7 @@ public final class ProgramLoader {
 
   /**
    * Loads the given plan classes and sets up parent-child links with the given goal type.
-   * 
+   *
    * @param gtype the goal for which the list of plans is provided
    * @param plans list of plans to be loaded
    * @return true if successful, false otherwise
@@ -158,7 +152,7 @@ public final class ProgramLoader {
   /**
    * Completes the Goal-Plan hierarchy linkages between all {@link GlobalState#goalTypes} and
    * {@link GlobalState#planTypes}.
-   * 
+   *
    * @return true if successful, false otherwise
    */
   private static boolean completeGoalPlanHierarchy() {
@@ -191,7 +185,7 @@ public final class ProgramLoader {
 
   /**
    * Creates the specified number of agent instances of the given type and adds them to the catalog.
-   * 
+   *
    * @param agents the catalog to add agents to
    * @param atype the type of agents to create
    * @param aclass the class of that agent type
@@ -222,7 +216,7 @@ public final class ProgramLoader {
 
   /**
    * Gets the list of goals specified in the @AgentInfo annotation of the given agent class.
-   * 
+   *
    * @param aclass the agent class containing the @AgentInfo annotation
    * @return list of goals specified in the @AgentInfo annotation, or an empty array if unsuccessful
    */
@@ -248,7 +242,7 @@ public final class ProgramLoader {
 
   /**
    * Gets the list of plans specified in the @GoalInfo annotation of the given goal class.
-   * 
+   *
    * @param gclass the goal class containing the @GoalInfo annotation
    * @return list of plans specified in the @GoalInfo annotation, or an empty array if unsuccessful
    */
@@ -274,7 +268,7 @@ public final class ProgramLoader {
 
   /**
    * Gets the list of goals specified in the @PlanInfo annotation of the given plan class.
-   * 
+   *
    * @param pclass the plan class containing the @PlanInfo annotation
    * @return list of goals specified in the @PlanInfo annotation; or null if the annotioan was not
    *         present; or an empty array if the annotation has errors
@@ -299,7 +293,7 @@ public final class ProgramLoader {
 
   /**
    * Loads the class of given name and type.
-   * 
+   *
    * @param className the fully qualified class name
    * @param classType the class type to check against
    * @return the loaded class, or null if unsuccessful

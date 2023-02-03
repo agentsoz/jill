@@ -33,7 +33,7 @@ public @interface AgentInfo {
 
   /**
    * Returns the list of goals for this agent.
-   * 
+   *
    * @return the list of goals of this agent
    */
   String[] hasGoals();

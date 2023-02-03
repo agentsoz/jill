@@ -24,7 +24,6 @@ import io.github.agentsoz.jill.lang.Goal;
 import io.github.agentsoz.jill.lang.Plan;
 import io.github.agentsoz.jill.lang.PlanInfo;
 import io.github.agentsoz.jill.lang.PlanStep;
-
 import java.util.Map;
 
 @PlanInfo(postsGoals = {"io.github.agentsoz.jill.testprogram.GoalB",
@@ -52,7 +51,7 @@ public class PlanA extends Plan {
     public void step() {
       post(new GoalC("gC"));
     }
-  },};
+  }, };
 
   @Override
   public void setPlanVariables(Map<String, Object> vars) {

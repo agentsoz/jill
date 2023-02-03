@@ -25,7 +25,6 @@ import io.github.agentsoz.jill.lang.Goal;
 import io.github.agentsoz.jill.lang.Plan;
 import io.github.agentsoz.jill.lang.PlanStep;
 import io.github.agentsoz.jill.util.Log;
-
 import java.util.Map;
 
 public class PlanGreetNeighbour extends Plan {
@@ -34,7 +33,7 @@ public class PlanGreetNeighbour extends Plan {
 
   /**
    * Creates a plan to greet a neighbour.
-   * 
+   *
    * @param agent the agent to whom this plan belongs
    * @param goal the goal that this plan handles
    * @param name a name for this plan
@@ -71,6 +70,6 @@ public class PlanGreetNeighbour extends Plan {
         agent.writer.println("Hello " + neighbour);
       }
     }
-  },};
+  }, };
 
 }

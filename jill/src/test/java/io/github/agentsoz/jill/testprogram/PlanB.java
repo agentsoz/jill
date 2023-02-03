@@ -23,7 +23,6 @@ import io.github.agentsoz.jill.lang.Agent;
 import io.github.agentsoz.jill.lang.Goal;
 import io.github.agentsoz.jill.lang.Plan;
 import io.github.agentsoz.jill.lang.PlanStep;
-
 import java.util.Map;
 
 public class PlanB extends Plan {
@@ -41,7 +40,7 @@ public class PlanB extends Plan {
     public void step() {
       ((TestAgent) getAgent()).setStatus(((TestAgent) getAgent()).getStatus() | 0x0002);
     }
-  },};
+  }, };
 
   @Override
   public void setPlanVariables(Map<String, Object> vars) {

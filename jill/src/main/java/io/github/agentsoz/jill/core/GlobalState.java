@@ -22,7 +22,6 @@ package io.github.agentsoz.jill.core;
 import io.github.agentsoz.jill.core.beliefbase.abs.ABeliefStore;
 import io.github.agentsoz.jill.lang.JillExtension;
 import io.github.agentsoz.jill.util.AObjectCatalog;
-
 import java.util.HashSet;
 import java.util.Set;
 

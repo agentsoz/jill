@@ -22,11 +22,9 @@ package io.github.agentsoz.jill.util;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-
 import io.github.agentsoz.jill.Main;
 import io.github.agentsoz.jill.config.Config;
 import io.github.agentsoz.jill.config.GlobalConstant;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -94,7 +92,7 @@ public final class ArgumentsLoader {
   /**
    * Parses the given command line argument and associated option. Will abort if an unrecoverable
    * error occurs.
-   * 
+   *
    * @param arg the argument to parse
    * @param opt the options to parse for that argument
    */
@@ -163,7 +161,7 @@ public final class ArgumentsLoader {
    * {@code --configfile <file>}</li> </ul> The contents of {@code <string>} or {@code <file>} are
    * parsed in exactly the same way. The expected syntax is JSON format. If both options are
    * specified, then last specified option will overrule. </p>
-   * 
+   *
    * @return the Jill startup configuration object
    */
   static Config loadConfigFromString(String str) {

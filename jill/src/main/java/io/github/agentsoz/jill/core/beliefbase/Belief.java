@@ -20,7 +20,6 @@ package io.github.agentsoz.jill.core.beliefbase;
  */
 
 import io.github.agentsoz.jill.struct.AObject;
-
 import java.util.Arrays;
 
 /**

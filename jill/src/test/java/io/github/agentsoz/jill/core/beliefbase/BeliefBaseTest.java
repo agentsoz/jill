@@ -33,13 +33,12 @@ import io.github.agentsoz.jill.core.GlobalState;
 import io.github.agentsoz.jill.core.beliefbase.abs.ABeliefStore;
 import io.github.agentsoz.jill.util.ArgumentsLoader;
 import io.github.agentsoz.jill.util.Log;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Set;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 public class BeliefBaseTest {
 
@@ -94,7 +93,7 @@ public class BeliefBaseTest {
     String bs1 = "mem";
     final String key = "key";
     BeliefSetField[] fields1 = {new BeliefSetField(key, String.class, true),
-        new BeliefSetField("value", Boolean.class, false),};
+        new BeliefSetField("value", Boolean.class, false), };
     for (int i = 0; i < numAgents; i++) {
       bb.createBeliefSet(i, bs1, fields1);
       for (int j = 0; j < numBeliefs; j++) {
@@ -125,7 +124,7 @@ public class BeliefBaseTest {
     String bs1 = "mem";
     final String key = "key";
     BeliefSetField[] fields1 = {new BeliefSetField(key, String.class, true),
-        new BeliefSetField("value", Boolean.class, false),};
+        new BeliefSetField("value", Boolean.class, false), };
     for (int i = 0; i < numAgents; i++) {
       bb.createBeliefSet(i, bs1, fields1);
       for (int j = 0; j < numBeliefs; j++) {

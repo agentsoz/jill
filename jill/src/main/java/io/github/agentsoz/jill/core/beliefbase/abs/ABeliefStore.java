@@ -25,8 +25,6 @@ import io.github.agentsoz.jill.core.beliefbase.BeliefBaseException;
 import io.github.agentsoz.jill.core.beliefbase.BeliefSet;
 import io.github.agentsoz.jill.core.beliefbase.BeliefSetField;
 import io.github.agentsoz.jill.util.Log;
-import org.roaringbitmap.RoaringBitmap;
-
 import java.io.Console;
 import java.util.Collections;
 import java.util.HashSet;
@@ -34,6 +32,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.roaringbitmap.RoaringBitmap;
 
 /**
  * <p>ABeliefStore class.</p>
@@ -46,6 +45,13 @@ public class ABeliefStore extends BeliefBase {
 
   private static final float loadfactor = 0.9f;
 
+  /**
+   * Comparison operators used un queries.
+   * EQ: Equal
+   * NE: Not Equal
+   * LT: Less Than
+   * GT: Greater Than
+   */
   public enum Operator {
     EQ, NE, LT, GT,
   }
@@ -56,6 +62,7 @@ public class ABeliefStore extends BeliefBase {
   private static ConcurrentHashMap<String, AQuery> queries; // NOPMD - canot be final
   private static ConcurrentHashMap<String, Set<Belief>> cachedresults; // NOPMD - canot be final
   private final int numAgents;
+
   /**
    * Constructs a new belief store.
    *
@@ -64,15 +71,15 @@ public class ABeliefStore extends BeliefBase {
    */
   public ABeliefStore(int nagents, int nthreads) {
     numAgents = nagents;
-    beliefsets = new ConcurrentHashMap<String, BeliefSet>( //NOPMD - possible unsafe assignment
+    beliefsets = new ConcurrentHashMap<String, BeliefSet>(//NOPMD - possible unsafe assignment
         1, loadfactor, nthreads);
-    beliefsetsByID = new ConcurrentHashMap<Integer, BeliefSet>( //NOPMD - possible unsafe assignment
+    beliefsetsByID = new ConcurrentHashMap<Integer, BeliefSet>(//NOPMD - possible unsafe assignment
         beliefsets.size(), loadfactor, nthreads);
-    beliefs = new ConcurrentHashMap<Belief, RoaringBitmap>( //NOPMD - possible unsafe assignment
-        Math.max(64,nagents), loadfactor, nthreads);
-    queries = new ConcurrentHashMap<String, AQuery>( //NOPMD - possible unsafe assignment
+    beliefs = new ConcurrentHashMap<Belief, RoaringBitmap>(//NOPMD - possible unsafe assignment
+        Math.max(64, nagents), loadfactor, nthreads);
+    queries = new ConcurrentHashMap<String, AQuery>(//NOPMD - possible unsafe assignment
         64, loadfactor, nthreads);
-    cachedresults = new ConcurrentHashMap<String, Set<Belief>>( //NOPMD - possible unsafe assignment
+    cachedresults = new ConcurrentHashMap<String, Set<Belief>>(//NOPMD - possible unsafe assignment
         queries.size(), loadfactor, nthreads);
   }
 
@@ -111,7 +118,7 @@ public class ABeliefStore extends BeliefBase {
     // Add it to the agents beliefs
     RoaringBitmap bits = beliefs.get(belief);
     bits.add(agentid);
-    beliefs.put(belief,bits);
+    beliefs.put(belief, bits);
     // Update the cached results
     for (String query : cachedresults.keySet()) {
       Set<Belief> results = cachedresults.get(query);
@@ -130,7 +137,7 @@ public class ABeliefStore extends BeliefBase {
     // Remove it from the agents beliefs
     RoaringBitmap bits = beliefs.get(belief);
     bits.remove(agentid);
-    beliefs.put(belief,bits);
+    beliefs.put(belief, bits);
     return true;
   }
 
@@ -295,7 +302,7 @@ public class ABeliefStore extends BeliefBase {
 
   /**
    * Checks if the given query run on the given belief returns a match.
-   * 
+   *
    * @param belief the belief being queried
    * @param query the query being performed on the belief
    * @return true if there is a match, false otherwise
@@ -324,7 +331,7 @@ public class ABeliefStore extends BeliefBase {
 
   /**
    * Convinience function to return a logging prefix for this agent.
-   * 
+   *
    * @param agentid the ID of this agnet
    * @return the prefix to use for loggin purposes
    */
@@ -391,6 +398,7 @@ public class ABeliefStore extends BeliefBase {
 
   /**
    * Returns the size upper bound set of RoaringBitmaps currently stored.
+   *
    * @return size in bytes
    */
   public long memoryUpperBoundInBytes() {

@@ -25,7 +25,6 @@ import static org.junit.Assert.assertTrue;
 
 import io.github.agentsoz.jill.config.GlobalConstant;
 import io.github.agentsoz.jill.struct.AObject;
-
 import org.junit.Test;
 
 public class AObjectTest {

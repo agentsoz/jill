@@ -19,10 +19,8 @@ package io.github.agentsoz.jill.config;
  * #L%
  */
 
-import com.google.gson.Gson;
-
 import ch.qos.logback.classic.Level;
-
+import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +30,7 @@ import java.util.List;
  * @author dsingh
  * @version $Id: $Id
  */
-@SuppressWarnings({"PMD.ImmutableField","PMD.RedundantFieldInitializer"})
+@SuppressWarnings({"PMD.ImmutableField", "PMD.RedundantFieldInitializer"})
 public class Config {
 
   private String logFile = "Run.log";
@@ -145,6 +143,9 @@ public class Config {
     return new Gson().toJson(this);
   }
 
+  /**
+   * Configuration for Jill extensions.
+   */
   public class ExtensionData {
     private String classname;
     private List<String> args = new ArrayList<String>();
@@ -166,6 +167,9 @@ public class Config {
     }
   }
 
+  /**
+   * Configuration for agent types.
+   */
   public class AgentTypeData {
     private String classname;
     private List<String> args;

@@ -22,8 +22,6 @@ package io.github.agentsoz.jill.struct;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-import io.github.agentsoz.jill.struct.AObject;
-
 import org.junit.Test;
 
 public class AgentTypeTest {

@@ -1,7 +1,6 @@
 package io.github.agentsoz.jill.lang;
 
 import io.github.agentsoz.jill.util.AString;
-
 import java.util.Map;
 
 /*
@@ -95,7 +94,7 @@ public abstract class Plan {
   }
 
   /**
-   * <p>Gets the full name composed of the goal and plan names</p>
+   * <p>Gets the full name composed of the goal and plan names.</p>
    *
    * @return a {@link java.lang.String} object.
    */
@@ -108,7 +107,7 @@ public abstract class Plan {
   }
 
   /**
-   * <p>Posts a top-level goal in a new intention stack</p>
+   * <p>Posts a top-level goal in a new intention stack.</p>
    *
    * @param goal a {@link io.github.agentsoz.jill.lang.Goal} object.
    */
@@ -117,7 +116,7 @@ public abstract class Plan {
   }
 
   /**
-   * <p>Adds a new (sub) goal to the active intention stack</p>
+   * <p>Adds a new (sub) goal to the active intention stack.</p>
    *
    * @param goal a {@link io.github.agentsoz.jill.lang.Goal} object.
    */

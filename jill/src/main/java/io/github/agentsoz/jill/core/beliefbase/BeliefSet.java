@@ -20,9 +20,7 @@ package io.github.agentsoz.jill.core.beliefbase;
  */
 
 import com.google.gson.Gson;
-
 import io.github.agentsoz.jill.struct.AObject;
-
 import java.util.Arrays;
 
 /**

@@ -1,7 +1,5 @@
 package io.github.agentsoz.jill.testgreeter;
 
-import io.github.agentsoz.jill.core.beliefbase.Belief;
-
 /*
  * #%L
  * Jill Cognitive Agents Platform
@@ -21,6 +19,7 @@ import io.github.agentsoz.jill.core.beliefbase.Belief;
  * #L%
  */
 
+import io.github.agentsoz.jill.core.beliefbase.Belief;
 import io.github.agentsoz.jill.core.beliefbase.BeliefBaseException;
 import io.github.agentsoz.jill.core.beliefbase.BeliefSetField;
 import io.github.agentsoz.jill.lang.Agent;
@@ -29,7 +28,6 @@ import io.github.agentsoz.jill.lang.MetaPlan;
 import io.github.agentsoz.jill.lang.Plan;
 import io.github.agentsoz.jill.lang.PlanBindings;
 import io.github.agentsoz.jill.util.Log;
-
 import java.io.PrintStream;
 import java.util.Comparator;
 import java.util.LinkedHashSet;
@@ -64,7 +62,7 @@ public class TestGreeterAgent extends Agent {
 
     // Create a new belief set about neighbours
     BeliefSetField[] fields = {new BeliefSetField("name", String.class, true),
-        new BeliefSetField("gender", String.class, false),};
+        new BeliefSetField("gender", String.class, false), };
 
     try {
       // Attach this belief set to this agent
@@ -86,20 +84,20 @@ public class TestGreeterAgent extends Agent {
 
   /**
    * Helper function to add beliefs about neighbours.
-   * 
+   *
    * @param rand random number generator to use
    * @param count number of beliefs to add
    * @throws BeliefBaseException thrown if something went wrong
    */
   private void registerNeighbours(Random rand, int count) throws BeliefBaseException {
-    final String[] males =
-        {"Alex", "Daniel", "John", "Lionel", "Nick", "Oscar", "Paul", "Rod", "Sam", "Tom"};
+    final String[] males = {"Alex", "Daniel", "John", "Lionel", "Nick", "Oscar", "Paul",
+        "Rod", "Sam", "Tom"};
     final String[] females = {"Alice", "Elisa", "Fiona", "Julia", "Kate", "Laura", "Margaret",
         "Nancy", "Pam", "Rachael"};
     final String[] middle = {"A.", "B.", "C.", "D.", "E.", "F.", "G.", "H.", "I.", "J.", "K.", "L.",
         "M.", "N.", "O.", "P.", "Q.", "R.", "S.", "T.", "U.", "V.", "W.", "X.", "Y.", "Z."};
     final String[] surnames = {"Anderson", "Brown", "Jones", "Martin", "Morton", "Smith", "Taylor",
-        "White", "Williams", "Wilson",};
+        "White", "Williams", "Wilson", };
     int size = (count < 0) ? 0 : count;
     StringBuilder name = new StringBuilder();
     for (int i = 0; i < size; i++) {
@@ -116,7 +114,7 @@ public class TestGreeterAgent extends Agent {
 
   /**
    * Parses command line arguments. 
-   * 
+   *
    * @param args the command line arguments
    * @param agent the agent to which the arguments apply
    */

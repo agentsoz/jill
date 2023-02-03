@@ -34,7 +34,7 @@ public class Task extends Goal {
 
   /**
    * Creates a new message goal.
-   * 
+   *
    * @param senderId the ID of the sender agent the message is from
    * @param content the contents of the message
    */

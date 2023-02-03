@@ -46,6 +46,7 @@ public final class IntentionStacks {
 
   /**
    * Gets the active intentions stack.
+   *
    * @return the active stack
    */
   Stack255 getActiveStack() {
@@ -54,6 +55,7 @@ public final class IntentionStacks {
 
   /**
    * Makes the next intentions stack active using a round robin scheme.
+   *
    * @return the newly active stack.
    */
   Stack255 nextActiveStack() {
@@ -64,6 +66,7 @@ public final class IntentionStacks {
   /**
    * Returns an empty intentions stack.
    * Creates a new intentions stack and adds it to the list of stacks if needed.
+   *
    * @return the newly created stack
    */
   Stack255 getEmptyIntentionStack() {

@@ -45,7 +45,7 @@ public class BeliefBaseException extends Exception {
    * @since 0.3.4
    */
   public BeliefBaseException(String msg, Exception exception) {
-    super(msg,exception);
+    super(msg, exception);
   }
 
 }

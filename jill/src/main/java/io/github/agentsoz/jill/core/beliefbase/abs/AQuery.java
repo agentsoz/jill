@@ -20,7 +20,6 @@ package io.github.agentsoz.jill.core.beliefbase.abs;
  */
 
 import com.google.gson.Gson;
-
 import io.github.agentsoz.jill.core.beliefbase.abs.ABeliefStore.Operator;
 
 /**

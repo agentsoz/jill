@@ -1,7 +1,5 @@
 package io.github.agentsoz.jill.util;
 
-import static org.junit.Assert.assertNotNull;
-
 /*
  * #%L
  * Jill Cognitive Agents Platform
@@ -21,26 +19,23 @@ import static org.junit.Assert.assertNotNull;
  * #L%
  */
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import ch.qos.logback.classic.Level;
-
 import io.github.agentsoz.jill.Main;
 import io.github.agentsoz.jill.config.Config;
 import io.github.agentsoz.jill.core.GlobalState;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.slf4j.LoggerFactory;
-
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
-
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.slf4j.LoggerFactory;
 
 public class ArgumentsLoaderTest {
 
@@ -56,7 +51,7 @@ public class ArgumentsLoaderTest {
 
   /**
    * Common setup for all tests. Saves stderr and stdout to an output stream.
-   * 
+   *
    * @throws Exception if something went wrong
    */
   @Before
@@ -73,7 +68,7 @@ public class ArgumentsLoaderTest {
 
   /**
    * Common setup for all tests. Closes stderr and stdout streams.
-   * 
+   *
    * @throws Exception if something went wrong
    */
   @After
@@ -124,7 +119,7 @@ public class ArgumentsLoaderTest {
     String configcontents = config.toString().replaceAll("\\s+", "");
     StringBuilder str = new StringBuilder();
     try {
-      BufferedReader reader = new BufferedReader( //NOPMD - ensure resources are closed after use
+      BufferedReader reader = new BufferedReader(//NOPMD - ensure resources are closed after use
           new FileReader(configFile));
       String line = reader.readLine();
       while (line != null) {

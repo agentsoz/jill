@@ -29,12 +29,10 @@ import static org.junit.Assert.assertTrue;
 
 import io.github.agentsoz.jill.config.GlobalConstant.PlanSelectionPolicy;
 import io.github.agentsoz.jill.core.beliefbase.Belief;
-
-import org.junit.Test;
-
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Random;
+import org.junit.Test;
 
 @SuppressWarnings("PMD")
 public class PlanBindingsTest {

@@ -20,10 +20,8 @@ package io.github.agentsoz.jill.core.beliefbase;
  */
 
 import ch.qos.logback.classic.Level;
-
 import io.github.agentsoz.jill.core.beliefbase.abs.ABeliefStore;
 import io.github.agentsoz.jill.util.Log;
-
 import java.util.Set;
 
 
@@ -113,9 +111,9 @@ public abstract class BeliefBase {
     BeliefBase bb = new ABeliefStore(numAgents, 4);
     Log.info("Initialising " + numAgents + " agents with " + numNeighbours + " beliefs each");
     BeliefSetField[] fields1 = {new BeliefSetField("name", String.class, true),
-        new BeliefSetField("gender", String.class, false),};
+        new BeliefSetField("gender", String.class, false), };
     BeliefSetField[] fields2 = {new BeliefSetField("name", String.class, true),
-        new BeliefSetField("car", Boolean.class, false),};
+        new BeliefSetField("car", Boolean.class, false), };
 
     long t2 = System.currentTimeMillis();
     for (int i = 0; i < numAgents; i++) {

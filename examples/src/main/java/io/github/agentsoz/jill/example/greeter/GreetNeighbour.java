@@ -25,7 +25,6 @@ import io.github.agentsoz.jill.lang.Goal;
 import io.github.agentsoz.jill.lang.Plan;
 import io.github.agentsoz.jill.lang.PlanStep;
 import io.github.agentsoz.jill.util.Log;
-
 import java.util.Map;
 
 /**
@@ -81,6 +80,6 @@ public class GreetNeighbour extends Plan {
     public void step() {
       Log.debug(getAgent().getName() + " says hello " + neighbour);
     }
-  },};
+  }, };
 
 }

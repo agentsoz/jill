@@ -25,7 +25,6 @@ import io.github.agentsoz.jill.lang.Goal;
 import io.github.agentsoz.jill.lang.Plan;
 import io.github.agentsoz.jill.lang.PlanStep;
 import io.github.agentsoz.jill.util.Log;
-
 import java.util.Map;
 
 /**
@@ -88,5 +87,5 @@ public class ReceiveToken1 extends Plan {
       msg.setAgent(nextAgent);
       getAgent().send(nextAgent, msg);
     }
-  },};
+  }, };
 }

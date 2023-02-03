@@ -24,7 +24,6 @@ import io.github.agentsoz.jill.core.beliefbase.BeliefSetField;
 import io.github.agentsoz.jill.lang.Agent;
 import io.github.agentsoz.jill.lang.AgentInfo;
 import io.github.agentsoz.jill.util.Log;
-
 import java.io.PrintStream;
 import java.util.Random;
 
@@ -42,15 +41,15 @@ public class Greeter extends Agent {
   private static int numNeighbours = 1;
   private static final String beliefset = "neighbour";
 
-  private static final String[] males =
-      {"Alex", "Daniel", "John", "Lionel", "Nick", "Oscar", "Paul", "Rod", "Sam", "Tom"};
-  private static final String[] females =
-      {"Alice", "Elisa", "Fiona", "Julia", "Kate", "Laura", "Margaret", "Nancy", "Pam", "Rachael"};
-  private static final String[] middle =
-      {"A.", "B.", "C.", "D.", "E.", "F.", "G.", "H.", "I.", "J.", "K.", "L.", "M.", "N.", "O.",
-          "P.", "Q.", "R.", "S.", "T.", "U.", "V.", "W.", "X.", "Y.", "Z."};
+  private static final String[] males = {
+    "Alex", "Daniel", "John", "Lionel", "Nick", "Oscar", "Paul", "Rod", "Sam", "Tom"};
+  private static final String[] females = {
+    "Alice", "Elisa", "Fiona", "Julia", "Kate", "Laura", "Margaret", "Nancy", "Pam", "Rachael"};
+  private static final String[] middle = {
+    "A.", "B.", "C.", "D.", "E.", "F.", "G.", "H.", "I.", "J.", "K.", "L.", "M.", "N.", "O.",
+    "P.", "Q.", "R.", "S.", "T.", "U.", "V.", "W.", "X.", "Y.", "Z."};
   private static final String[] surnames = {"Anderson", "Brown", "Jones", "Martin", "Morton",
-      "Smith", "Taylor", "White", "Williams", "Wilson",};
+      "Smith", "Taylor", "White", "Williams", "Wilson", };
 
   /**
    * <p>Constructor for Greeter.</p>
@@ -71,7 +70,7 @@ public class Greeter extends Agent {
 
     // Create a new belief set about neighbours
     BeliefSetField[] fields = {new BeliefSetField("name", String.class, true),
-        new BeliefSetField("gender", String.class, false),};
+        new BeliefSetField("gender", String.class, false), };
 
     try {
       // Attach this belief set to this agent
@@ -90,7 +89,7 @@ public class Greeter extends Agent {
 
   /**
    * Helper function to add beliefs about neighbours.
-   * 
+   *
    * @param rand random number generator to use
    * @param count number of beliefs to add
    * @throws BeliefBaseException thrown if there is a belief base access error
@@ -105,7 +104,7 @@ public class Greeter extends Agent {
 
   /**
    * Builds a new name.
-   * 
+   *
    * @param male specifies whether the name should be for a male or female
    * @return the constructed name
    */

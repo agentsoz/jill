@@ -23,7 +23,6 @@ import io.github.agentsoz.jill.lang.Agent;
 import io.github.agentsoz.jill.lang.Goal;
 import io.github.agentsoz.jill.lang.Plan;
 import io.github.agentsoz.jill.lang.PlanStep;
-
 import java.util.Map;
 
 public class DoTask extends Plan {
@@ -32,7 +31,7 @@ public class DoTask extends Plan {
 
   /**
    * Handles a message goal.
-   * 
+   *
    * @param agent the agent to which this plan belongs
    * @param goal the goal that this plan handles
    * @param name a name for this plan
@@ -50,19 +49,19 @@ public class DoTask extends Plan {
 
   PlanStep[] steps = {
       () -> {
-        System.out.println((String)msg.getContent() + "-1");
+        System.out.println((String) msg.getContent() + "-1");
       },
       () -> {
-        System.out.println((String)msg.getContent() + "-2");
+        System.out.println((String) msg.getContent() + "-2");
       },
       () -> {
-        System.out.println((String)msg.getContent() + "-3");
+        System.out.println((String) msg.getContent() + "-3");
       },
       () -> {
-        System.out.println((String)msg.getContent() + "-4");
+        System.out.println((String) msg.getContent() + "-4");
       },
       () -> {
-        System.out.println((String)msg.getContent() + "-5");
+        System.out.println((String) msg.getContent() + "-5");
       },
   };
 

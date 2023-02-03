@@ -40,7 +40,7 @@ public class GlobalConstant {
    * from the list of applicable instances RANDOM: selects randomly from the list of applicable
    * instances LAST: selects the last plan instance from the list of applicable instances (for test
    * purposes only)
-   * 
+   *
    * @author dsingh
    *
    */

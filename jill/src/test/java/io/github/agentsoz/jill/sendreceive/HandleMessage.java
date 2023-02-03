@@ -23,7 +23,6 @@ import io.github.agentsoz.jill.lang.Agent;
 import io.github.agentsoz.jill.lang.Goal;
 import io.github.agentsoz.jill.lang.Plan;
 import io.github.agentsoz.jill.lang.PlanStep;
-
 import java.util.Map;
 
 public class HandleMessage extends Plan {
@@ -32,7 +31,7 @@ public class HandleMessage extends Plan {
 
   /**
    * Handles a message goal.
-   * 
+   *
    * @param agent the agent to which this plan belongs
    * @param goal the goal that this plan handles
    * @param name a name for this plan
@@ -61,7 +60,7 @@ public class HandleMessage extends Plan {
         System.out.print(msg.getContent());
       }
     }
-  },};
+  }, };
 
   @Override
   public void setPlanVariables(Map<String, Object> vars) {

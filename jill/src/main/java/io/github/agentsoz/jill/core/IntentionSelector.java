@@ -31,15 +31,13 @@ import io.github.agentsoz.jill.struct.GoalType;
 import io.github.agentsoz.jill.struct.PlanType;
 import io.github.agentsoz.jill.util.Log;
 import io.github.agentsoz.jill.util.Stack255;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Random;
 import java.util.Set;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>IntentionSelector class.</p>
@@ -121,15 +119,14 @@ public class IntentionSelector implements Runnable {
           break;
         }
       }
-    } 
-    while (true);
+    } while (true);
     logger.debug("Pool {} is exiting", poolid);
   }
 
   /**
    * Checks if this agent's execution stack is valid. The stack is valid if it is not null or empty
    * and has not exceeded the maximum size limit of 255.
-   * 
+   *
    * @param agent the agent whose stack is to be checked
    * @param agentExecutionStack that agent's execution stack
    * @return true if stack is valid, false otherwise
@@ -153,7 +150,7 @@ public class IntentionSelector implements Runnable {
 
   /**
    * Removes the given list of agents from the list of active agents.
-   * 
+   *
    * @param toRemove the list of agent IDs to remove
    */
   private void removeFinishedAgents(Set<Integer> toRemove) {
@@ -169,7 +166,7 @@ public class IntentionSelector implements Runnable {
    * Manages the goal at the top of the execution stack of an agent. All relevant plans are
    * evaluated to see if their context conditions hold. Plans deemed applicable are then added to
    * the list of bindings from which a plan instane will be eventually selected.
-   * 
+   *
    * @param agentIndex the agent's index
    * @param agent the agent in question
    * @param agentExecutionStack the agent's execution stack
@@ -237,7 +234,7 @@ public class IntentionSelector implements Runnable {
   /**
    * Manages the plan at the top of this agent's execution stack. If the plan has finished it is
    * removed, else it is progresses by a single {@link PlanStep}.
-   * 
+   *
    * @param agentIndex the agent in question
    * @param agentExecutionStack this agent's execution stack
    * @param node the plan at the top of the execution stack

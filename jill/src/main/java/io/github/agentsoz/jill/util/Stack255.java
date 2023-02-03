@@ -154,7 +154,7 @@ public class Stack255 {
 
   /**
    * Grows the stack capacity by {@link #increment} up to the maximum capacity of 255 (byte size).
-   * 
+   *
    * @return true if the stack was successfully increased, false otherwise
    */
   private boolean grow() {

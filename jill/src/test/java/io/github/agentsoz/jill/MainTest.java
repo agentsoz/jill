@@ -25,13 +25,11 @@ import ch.qos.logback.classic.Level;
 import io.github.agentsoz.jill.core.GlobalState;
 import io.github.agentsoz.jill.util.ArgumentsLoader;
 import io.github.agentsoz.jill.util.Log;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
 
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public class MainTest {
@@ -41,7 +39,7 @@ public class MainTest {
 
   /**
    * Common setup for all tests. Saves stderr and stdout to an output stream.
-   * 
+   *
    * @throws Exception if something went wrong
    */
   @Before
@@ -58,7 +56,7 @@ public class MainTest {
 
   /**
    * Common setup for all tests. Closes stderr and stdout streams.
-   * 
+   *
    * @throws Exception if something went wrong
    */
   @After
