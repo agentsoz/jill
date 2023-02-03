@@ -222,6 +222,7 @@
               <id>first</id>
               <goals>
                 <goal>update-project-license</goal>
+                <goal>add-third-party</goal>
                 <!-- diabling update header as it takes a long time; manually do mvn license:update-file-header prior to release-->
                 <!--<goal>update-file-header</goal>-->
               </goals>
