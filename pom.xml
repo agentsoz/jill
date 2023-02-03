@@ -214,8 +214,8 @@
             <canUpdateDescription>true</canUpdateDescription>
             <canUpdateCopyright>true</canUpdateCopyright>
             <inceptionYear>2014</inceptionYear>
-            <licenseName>lgpl_v3</licenseName>
-            <licenseFile>${basedir}/COPYING.LESSER</licenseFile>
+            <licenseName>mit</licenseName>
+            <licenseFile>${basedir}/LICENSE</licenseFile>
           </configuration>
           <executions>
             <execution>
