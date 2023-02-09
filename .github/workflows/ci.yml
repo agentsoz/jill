@@ -34,12 +34,3 @@ jobs:
       run: |
         cd jill && mvn clean install 
 
-    - name: Prepare artifacts
-      run: |
-        mkdir staging && cp jill/target/jill*-jar-with-dependencies.jar staging
-
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        path: staging
-
