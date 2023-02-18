@@ -7,7 +7,7 @@
 * [Releases](#releases)
 * [Benchmarks and Examples](#benchmarks-and-examples)
   * [The Towers of Hanoi](#1-the-towers-of-hanoi)
-  * [One Million BDI Agents](#2-one-million-bdi-agents)
+  * [10 Million BDI Agents](#2-10-million-bdi-agents)
   * [Hello Neighbour](#3-hello-neighbour)
   * [Token Passing](#4-token-passing)
 * [Developers](#developers)
@@ -66,9 +66,7 @@ Jill is available from [Maven Central](http://search.maven.org/#search%7Cga%7C1%
 
 ## Benchmarks and Examples
 
-The following tests were run on a 2018 Macbook Pro (15,2 model) laptop with 4x
-2.7GHz i7 processors, SSD, 16GB RAM, and with the [JVM heap size set to
-4GB](https://github.com/agentsoz/jill/blob/9be6b654b4c86cdad07ca65a1ef8c0211969ddb9/test/testagent.sh#L10).
+The following tests were run on a 2022 Macbook Pro (18,3 model) laptop with Apple M1 Max Pro chip with 8-core CPU, SSD, 32GB RAM, with [maximum memory available to tests (JVM heap size) set to 12GB](https://github.com/agentsoz/jill/blob/master/test/testagent.sh#L10).
 
 
 ### 1. The Towers of Hanoi
@@ -79,48 +77,49 @@ The hanoi player can be run using the convinience script [test/hanoi.sh](https:/
 ```
 > ./test/hanoi.sh
 ...
-[main] INFO  io.github.agentsoz.jill - Created 1 agents in (35 ms)
-[main] INFO  io.github.agentsoz.jill - Started 1 agents in (4 ms)
-[main] INFO  io.github.agentsoz.jill - Finished running 1 agents in (1146 ms)
-[main] INFO  io.github.agentsoz.jill - Terminated 1 agents in (1 ms)
+[main] INFO io.github.agentsoz.jill - Finished loading 1 agents
+[main] INFO io.github.agentsoz.jill - Created 1 agents in (12 ms)
+[main] INFO io.github.agentsoz.jill - Started 1 agents in (2 ms)
+[main] INFO io.github.agentsoz.jill - Finished running 1 agents in (2181 ms)
+[main] INFO io.github.agentsoz.jill - Terminated 1 agents in (1 ms)
 ...
-Solved Towers of Hanoi with 18 discs in 262143 moves
+Solved Towers of Hanoi with 20 discs in 1048575 moves
 ```
 The log output gives some idea of performance in terms of the number of moves and time taken to complete the puzzle. The output of the run, i.e., the solution, is written to `./test/hanoi.out`:
 ```
 > head -4 ./test/hanoi.out
-Initialised hanoi board with 15 discs:
-|15|14|13|12|11|10|9|8|7|6|5|4|3|2|1
+Initialised hanoi board with 20 discs:
+|20|19|18|17|16|15|14|13|12|11|10|9|8|7|6|5|4|3|2|1
 |
 |
 
 > tail -20 test/hanoi.out
-Moving disc 1 from pin 2 to 1
+Moving disc 1 from pin 2 to 0
+|2|1
 |3
+|20|19|18|17|16|15|14|13|12|11|10|9|8|7|6|5|4
+Moving disc 3 from pin 1 to 2
 |2|1
-|15|14|13|12|11|10|9|8|7|6|5|4
-Moving disc 3 from pin 0 to 2
 |
-|2|1
-|15|14|13|12|11|10|9|8|7|6|5|4|3
-Moving disc 1 from pin 1 to 0
-|1
+|20|19|18|17|16|15|14|13|12|11|10|9|8|7|6|5|4|3
+Moving disc 1 from pin 0 to 1
 |2
-|15|14|13|12|11|10|9|8|7|6|5|4|3
-Moving disc 2 from pin 1 to 2
 |1
+|20|19|18|17|16|15|14|13|12|11|10|9|8|7|6|5|4|3
+Moving disc 2 from pin 0 to 2
 |
-|15|14|13|12|11|10|9|8|7|6|5|4|3|2
-Moving disc 1 from pin 0 to 2
+|1
+|20|19|18|17|16|15|14|13|12|11|10|9|8|7|6|5|4|3|2
+Moving disc 1 from pin 1 to 2
 |
 |
-|15|14|13|12|11|10|9|8|7|6|5|4|3|2|1
+|20|19|18|17|16|15|14|13|12|11|10|9|8|7|6|5|4|3|2|1
 ```
 
 
-### 2. One Million BDI Agents
+### 2. 10 Million BDI Agents
 
-This test executes one million relatively complex BDI agents (see [TestAgent.java](https://github.com/agentsoz/jill/blob/master/jill/src/test/java/io/github/agentsoz/jill/testprogram/TestAgent.java)). Each agent has a goal-plan hierarchy as follows:
+This test executes 10 million relatively complex BDI agents (see [TestAgent.java](https://github.com/agentsoz/jill/blob/master/jill/src/test/java/io/github/agentsoz/jill/testprogram/TestAgent.java)). Each agent has a goal-plan hierarchy as follows:
 ```
             GoalA
         .-----^-----.
@@ -144,48 +143,48 @@ Note that the execution of the agents is interleaved such that Jill cycles throu
 [PlanC]:https://github.com/agentsoz/jill/blob/master/jill/src/test/java/io/github/agentsoz/jill/testprogram/PlanC.java
 [PlanD]:https://github.com/agentsoz/jill/blob/master/jill/src/test/java/io/github/agentsoz/jill/testprogram/PlanD.java
 
-To execute the test with one million BDI agents, use the convinience script [test/testagent.sh](https://github.com/agentsoz/jill/blob/master/test/testagent.sh)  as follows:
+To execute the test with 10 million BDI agents, use the convinience script [test/testagent.sh](https://github.com/agentsoz/jill/blob/master/test/testagent.sh)  as follows:
 ```
 > ./test/testagent.sh
 ...
-[main] INFO  io.github.agentsoz.jill - Created 1000000 agents in (742 ms)
-[main] INFO  io.github.agentsoz.jill - Started 1000000 agents in (623 ms)
-[main] INFO  io.github.agentsoz.jill - Finished running 1000000 agents in (3962 ms)
-[main] INFO  io.github.agentsoz.jill - Terminated 1000000 agents in (30 ms)
+[main] INFO io.github.agentsoz.jill - Created 10000000 agents in (1486 ms)
+[main] INFO io.github.agentsoz.jill - Started 10000000 agents in (1926 ms)
+[main] INFO io.github.agentsoz.jill - Finished running 10000000 agents in (8528 ms)
+[main] INFO io.github.agentsoz.jill - Terminated 10000000 agents in (84 ms)
 ```
 
-That took ~4 seconds to run 1 million agents to completion, not bad!
+That took ~8.5 seconds to run 10 million BDI agents to completion, not bad!
 
 ### 3. Hello Neighbour
 
 This example case is that of an agent ([Greeter.java](https://github.com/agentsoz/jill/blob/master/examples/src/main/java/io/github/agentsoz/jill/example/greeter/Greeter.java)), who has several neighbours and--feeling rather jovial this bright day--wishes to greet one of them. No one in particular mind you, just someone who is a male. Indeed, there must have been something in the air, because all agents in the example feel exactly the same way.
 
-This crafted scenario is perfect for highlight the use of binding variables in context conditions of plans. Basically what we want is to be able to specify the condition (select a male neighbour) in the context condition, and let Jill give us a binding (such as "Oscar N. Morton") who we can say hello to. (In fact Jill will create one plan instance for each match and which one of those will actually be selected for execution will depend on the `--plan-selection-policy` setting). The function [GreetNeighbour::context()](https://github.com/agentsoz/jill/blob/master/examples/src/main/java/io/github/agentsoz/jill/example/greeter/GreetNeighbour.java#L45) shows how to specify such a context condition. Internally, this executes as a query on the [belief database of the agent](https://github.com/agentsoz/jill/blob/master/examples/src/main/java/io/github/agentsoz/jill/example/greeter/Greeter.java#L51) and returns one plan instance for each match (in this case one plan instance per male neighbour). Inside the plan, the match must then be bound to a plan variable so that it can be used inside the plan body. This is done in [GreetNeighbour::setPlanVariables(Map&lt;String, Object&gt; vars)](https://github.com/agentsoz/jill/blob/master/examples/src/main/java/io/github/agentsoz/jill/example/greeter/GreetNeighbour.java#L55) where the matched neighbours name is saved in a plan variable. (Here `vars` is a list of key-value pairs--the belief database table column names being the keys, and the matched record being the values.) The saved name is then used inside the plan body to [say hello to that neighbour](https://github.com/agentsoz/jill/blob/master/examples/src/main/java/io/github/agentsoz/jill/example/greeter/GreetNeighbour.java#L70).
+This crafted scenario is perfect for highlighting the use of binding variables in context conditions of plans. Basically what we want is to be able to specify the condition (select a male neighbour) in the context condition, and let Jill give us a binding (such as "Oscar N. Morton") who we can say hello to. (In fact Jill will create one plan instance for each match and which one of those will actually be selected for execution will depend on the `--plan-selection-policy` setting). The function [GreetNeighbour::context()](https://github.com/agentsoz/jill/blob/master/examples/src/main/java/io/github/agentsoz/jill/example/greeter/GreetNeighbour.java#L45) shows how to specify such a context condition. Internally, this executes as a query on the [belief database of the agent](https://github.com/agentsoz/jill/blob/master/examples/src/main/java/io/github/agentsoz/jill/example/greeter/Greeter.java#L51) and returns one plan instance for each match (in this case one plan instance per male neighbour). Inside the plan, the match must then be bound to a plan variable so that it can be used inside the plan body. This is done in [GreetNeighbour::setPlanVariables(Map&lt;String, Object&gt; vars)](https://github.com/agentsoz/jill/blob/master/examples/src/main/java/io/github/agentsoz/jill/example/greeter/GreetNeighbour.java#L55) where the matched neighbours name is saved in a plan variable. (Here `vars` is a list of key-value pairs--the belief database table column names being the keys, and the matched record being the values.) The saved name is then used inside the plan body to [say hello to that neighbour](https://github.com/agentsoz/jill/blob/master/examples/src/main/java/io/github/agentsoz/jill/example/greeter/GreetNeighbour.java#L70).
 
 The script `./test/greeter.sh` runs this example in various configurations changing the number of agents and the number of neighbours per agent:
 ```
 > ./test/greeter.sh
 
-Running 10000 agents with 5 neighbours each (see greeter-10000a-5b.*)
+Running 10000 agents with 10 neighbours each (see greeter-10000a-10b.*)
 ...
-[main] INFO  io.github.agentsoz.jill - Created 10000 agents in (98 ms)
-[main] INFO  io.github.agentsoz.jill - Started 10000 agents in (129 ms)
-[main] INFO  io.github.agentsoz.jill - Finished running 10000 agents in (119 ms)
-[main] INFO  io.github.agentsoz.jill - Terminated 10000 agents in (3 ms)
+[main] INFO io.github.agentsoz.jill - Created 10000 agents in (30 ms)
+[main] INFO io.github.agentsoz.jill - Started 10000 agents in (61 ms)
+[main] INFO io.github.agentsoz.jill - Finished running 10000 agents in (85 ms)
+[main] INFO io.github.agentsoz.jill - Terminated 10000 agents in (2 ms)
 ...
-Running 50000 agents with 100 neighbours each (see greeter-50000a-100b.*)
+Running 50000 agents with 50 neighbours each (see greeter-50000a-50b.*)
 ...
-[main] INFO  io.github.agentsoz.jill - Created 50000 agents in (214 ms)
-[main] INFO  io.github.agentsoz.jill - Started 50000 agents in (2143 ms)
-[main] INFO  io.github.agentsoz.jill - Finished running 50000 agents in (604 ms)
-[main] INFO  io.github.agentsoz.jill - Terminated 50000 agents in (8 ms)
+[main] INFO io.github.agentsoz.jill - Created 50000 agents in (81 ms)
+[main] INFO io.github.agentsoz.jill - Started 50000 agents in (549 ms)
+[main] INFO io.github.agentsoz.jill - Finished running 50000 agents in (245 ms)
+[main] INFO io.github.agentsoz.jill - Terminated 50000 agents in (9 ms)
 ...
-Running 10000 agents with 500 neighbours each (see greeter-10000a-500b.*)
+Running 100000 agents with 100 neighbours each (see greeter-100000a-100b.*)
 ...
-[main] INFO  io.github.agentsoz.jill - Created 10000 agents in (111 ms)
-[main] INFO  io.github.agentsoz.jill - Started 10000 agents in (2280 ms)
-[main] INFO  io.github.agentsoz.jill - Finished running 10000 agents in (679 ms)
-[main] INFO  io.github.agentsoz.jill - Terminated 10000 agents in (4 ms)
+[main] INFO io.github.agentsoz.jill - Created 100000 agents in (85 ms)
+[main] INFO io.github.agentsoz.jill - Started 100000 agents in (1934 ms)
+[main] INFO io.github.agentsoz.jill - Finished running 100000 agents in (394 ms)
+[main] INFO io.github.agentsoz.jill - Terminated 100000 agents in (20 ms)
 ...
 ```
 
@@ -198,11 +197,11 @@ In this setup a group of agents ([TokenAgent2.java](io.github.agentsoz.jill.exam
 ...
 Running token passing version 2 between 10000 agents for 100 rounds (see tokenpassing2-10000a-100r.*)
 ...
-[main] INFO  io.github.agentsoz.jill - Created 10000 agents in (83 ms)
-[main] INFO  io.github.agentsoz.jill - Started 10000 agents in (8 ms)
-[main] INFO  io.github.agentsoz.jill - Finished running 10000 agents in (1783 ms)
-[main] INFO  io.github.agentsoz.jill - Terminated 10000 agents in (2 ms)
-...
+[main] INFO io.github.agentsoz.jill - Finished loading 10000 agents
+[main] INFO io.github.agentsoz.jill - Created 10000 agents in (31 ms)
+[main] INFO io.github.agentsoz.jill - Started 10000 agents in (4 ms)
+[main] INFO io.github.agentsoz.jill - Finished running 10000 agents in (1564 ms)
+[main] INFO io.github.agentsoz.jill - Terminated 10000 agents in (1 ms)
 ```
 
 ## Developers

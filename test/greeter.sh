@@ -6,7 +6,7 @@ function runit() {
     -Dexec.executable=java
     -Dexec.classpathScope=test
     -Dexec.args=\"
-      -Xmx4g -Xms4g
+      -Xmx12g -Xms12g
       -cp %classpath io.github.agentsoz.jill.Main
       --config
         \\\"{
@@ -29,16 +29,16 @@ function runit() {
 }
 
 a=10000
-b=5
+b=10
 ID=greeter-${a}a-${b}b
 runit
 
 a=50000
-b=100
+b=50
 ID=greeter-${a}a-${b}b
 runit
 
-a=10000
-b=500
+a=100000
+b=100
 ID=greeter-${a}a-${b}b
 runit

@@ -1,13 +1,13 @@
 #!/bin/bash
 
-a=1000000
+a=10000000
 
 CMD="mvn exec:exec
   -pl jill
   -Dexec.executable=java
   -Dexec.classpathScope=test
   -Dexec.args=\"
-    -Xmx4g -Xms4g
+    -Xmx12g -Xms12g
     -cp %classpath io.github.agentsoz.jill.Main
     --config
       \\\"{

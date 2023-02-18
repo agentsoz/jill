@@ -1,13 +1,13 @@
 #!/bin/bash
 
-DISCS=18
+DISCS=20
 
 CMD="mvn exec:exec
   -pl examples
   -Dexec.executable=java
   -Dexec.classpathScope=test
   -Dexec.args=\"
-    -Xmx4g -Xms4g
+    -Xmx12g -Xms12g
     -cp %classpath io.github.agentsoz.jill.Main
     --config
       \\\"{
