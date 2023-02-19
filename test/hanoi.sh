@@ -1,8 +1,10 @@
 #!/bin/bash
 
+dir=$(dirname "$0")
+
 DISCS=20
 
-CMD="mvn exec:exec
+CMD="$dir/../mvnw exec:exec
   -pl examples
   -Dexec.executable=java
   -Dexec.classpathScope=test

@@ -1,8 +1,10 @@
 #!/bin/bash
 
+dir=$(dirname "$0")
+
 a=10000000
 
-CMD="mvn exec:exec
+CMD="$dir/../mvnw exec:exec
   -pl jill
   -Dexec.executable=java
   -Dexec.classpathScope=test

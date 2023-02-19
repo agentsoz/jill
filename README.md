@@ -5,6 +5,7 @@
 
 * [About](#about)
 * [Releases](#releases)
+* [Usage](#usage)
 * [Benchmarks and Examples](#benchmarks-and-examples)
   * [The Towers of Hanoi](#1-the-towers-of-hanoi)
   * [10 Million BDI Agents](#2-10-million-bdi-agents)
@@ -62,6 +63,11 @@ Jill is available from [Maven Central](http://search.maven.org/#search%7Cga%7C1%
     </dependency>
     ...
 </dependencies>
+```
+
+Or it can be built locally using the supplied maven wrapper:
+```
+./mvnw clean package
 ```
 
 ## Benchmarks and Examples
