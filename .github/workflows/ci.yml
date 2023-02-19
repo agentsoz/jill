@@ -10,11 +10,11 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
 
     steps:
 
-    - name: Set up JDK 11.0.2
+    - name: Set up JDK
       uses: actions/setup-java@v3
       with:
         distribution: 'zulu'
