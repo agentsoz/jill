@@ -1,6 +1,6 @@
 # Jill
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/bbaec92c934d409eaf90a465179a854f)](https://www.codacy.com/gh/agentsoz/jill/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=agentsoz/jill&amp;utm_campaign=Badge_Grade) [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/bbaec92c934d409eaf90a465179a854f)](https://www.codacy.com/gh/agentsoz/jill/dashboard?utm_source=github.com&utm_medium=referral&utm_content=agentsoz/jill&utm_campaign=Badge_Coverage)
-```master```![](https://github.com/agentsoz/jill/actions/workflows/ci.yml/badge.svg)
+```main```![](https://github.com/agentsoz/jill/actions/workflows/ci.yml/badge.svg)
 ```dev```![](https://github.com/agentsoz/jill/actions/workflows/ci.yml/badge.svg?branch=dev)
 
 * [About](#about)
@@ -72,14 +72,14 @@ Or it can be built locally using the supplied maven wrapper:
 
 ## Benchmarks and Examples
 
-The following tests were run on a 2022 Macbook Pro (18,3 model) laptop with Apple M1 Max Pro chip with 8-core CPU, SSD, 32GB RAM, with [maximum memory available to tests (JVM heap size) set to 12GB](https://github.com/agentsoz/jill/blob/master/test/testagent.sh#L10).
+The following tests were run on a 2022 Macbook Pro (18,3 model) laptop with Apple M1 Max Pro chip with 8-core CPU, SSD, 32GB RAM, with [maximum memory available to tests (JVM heap size) set to 12GB](https://github.com/agentsoz/jill/blob/main/test/testagent.sh#L10).
 
 
 ### 1. The Towers of Hanoi
 
-A solution for the classic [towers of hanoi puzzle](https://en.wikipedia.org/wiki/Tower_of_Hanoi) is available in the examples directory (see [hanoi player](https://github.com/agentsoz/jill/blob/master/examples/src/main/java/io/github/agentsoz/jill/example/hanoi/Player.java)). The goal is to move a stack of discs from the Pin0 (the first pin) to Pin3 (the third pin).
+A solution for the classic [towers of hanoi puzzle](https://en.wikipedia.org/wiki/Tower_of_Hanoi) is available in the examples directory (see [hanoi player](https://github.com/agentsoz/jill/blob/main/examples/src/main/java/io/github/agentsoz/jill/example/hanoi/Player.java)). The goal is to move a stack of discs from the Pin0 (the first pin) to Pin3 (the third pin).
 
-The hanoi player can be run using the convinience script [test/hanoi.sh](https://github.com/agentsoz/jill/blob/master/test/hanoi.sh):
+The hanoi player can be run using the convinience script [test/hanoi.sh](https://github.com/agentsoz/jill/blob/main/test/hanoi.sh):
 ```
 > ./test/hanoi.sh
 ...
@@ -125,7 +125,7 @@ Moving disc 1 from pin 1 to 2
 
 ### 2. 10 Million BDI Agents
 
-This test executes 10 million relatively complex BDI agents (see [TestAgent.java](https://github.com/agentsoz/jill/blob/master/jill/src/test/java/io/github/agentsoz/jill/testprogram/TestAgent.java)). Each agent has a goal-plan hierarchy as follows:
+This test executes 10 million relatively complex BDI agents (see [TestAgent.java](https://github.com/agentsoz/jill/blob/main/jill/src/test/java/io/github/agentsoz/jill/testprogram/TestAgent.java)). Each agent has a goal-plan hierarchy as follows:
 ```
             GoalA
         .-----^-----.
@@ -141,15 +141,15 @@ If [PlanD] were selected, it executes (always successfully), after which [GoalA]
 
 Note that the execution of the agents is interleaved such that Jill cycles through all agents in each execution cycle, and progresses any active intentions (plans) by one plan step. When all agents eventually accomplish their [GoalA] and become idle, the program terminates (this behaviour can be disabled by passing the Jill option `--exit-on-idle FALSE` at runtime).
 
-[GoalA]:https://github.com/agentsoz/jill/blob/master/jill/src/test/java/io/github/agentsoz/jill/testprogram/GoalA.java
-[GoalB]:https://github.com/agentsoz/jill/blob/master/jill/src/test/java/io/github/agentsoz/jill/testprogram/GoalB.java
-[GoalC]:https://github.com/agentsoz/jill/blob/master/jill/src/test/java/io/github/agentsoz/jill/testprogram/GoalC.java
-[PlanA]:https://github.com/agentsoz/jill/blob/master/jill/src/test/java/io/github/agentsoz/jill/testprogram/PlanA.java
-[PlanB]:https://github.com/agentsoz/jill/blob/master/jill/src/test/java/io/github/agentsoz/jill/testprogram/PlanB.java
-[PlanC]:https://github.com/agentsoz/jill/blob/master/jill/src/test/java/io/github/agentsoz/jill/testprogram/PlanC.java
-[PlanD]:https://github.com/agentsoz/jill/blob/master/jill/src/test/java/io/github/agentsoz/jill/testprogram/PlanD.java
+[GoalA]:https://github.com/agentsoz/jill/blob/main/jill/src/test/java/io/github/agentsoz/jill/testprogram/GoalA.java
+[GoalB]:https://github.com/agentsoz/jill/blob/main/jill/src/test/java/io/github/agentsoz/jill/testprogram/GoalB.java
+[GoalC]:https://github.com/agentsoz/jill/blob/main/jill/src/test/java/io/github/agentsoz/jill/testprogram/GoalC.java
+[PlanA]:https://github.com/agentsoz/jill/blob/main/jill/src/test/java/io/github/agentsoz/jill/testprogram/PlanA.java
+[PlanB]:https://github.com/agentsoz/jill/blob/main/jill/src/test/java/io/github/agentsoz/jill/testprogram/PlanB.java
+[PlanC]:https://github.com/agentsoz/jill/blob/main/jill/src/test/java/io/github/agentsoz/jill/testprogram/PlanC.java
+[PlanD]:https://github.com/agentsoz/jill/blob/main/jill/src/test/java/io/github/agentsoz/jill/testprogram/PlanD.java
 
-To execute the test with 10 million BDI agents, use the convinience script [test/testagent.sh](https://github.com/agentsoz/jill/blob/master/test/testagent.sh)  as follows:
+To execute the test with 10 million BDI agents, use the convinience script [test/testagent.sh](https://github.com/agentsoz/jill/blob/main/test/testagent.sh)  as follows:
 ```
 > ./test/testagent.sh
 ...
@@ -163,9 +163,9 @@ That took ~8.5 seconds to run 10 million BDI agents to completion, not bad!
 
 ### 3. Hello Neighbour
 
-This example case is that of an agent ([Greeter.java](https://github.com/agentsoz/jill/blob/master/examples/src/main/java/io/github/agentsoz/jill/example/greeter/Greeter.java)), who has several neighbours and--feeling rather jovial this bright day--wishes to greet one of them. No one in particular mind you, just someone who is a male. Indeed, there must have been something in the air, because all agents in the example feel exactly the same way.
+This example case is that of an agent ([Greeter.java](https://github.com/agentsoz/jill/blob/main/examples/src/main/java/io/github/agentsoz/jill/example/greeter/Greeter.java)), who has several neighbours and--feeling rather jovial this bright day--wishes to greet one of them. No one in particular mind you, just someone who is a male. Indeed, there must have been something in the air, because all agents in the example feel exactly the same way.
 
-This crafted scenario is perfect for highlighting the use of binding variables in context conditions of plans. Basically what we want is to be able to specify the condition (select a male neighbour) in the context condition, and let Jill give us a binding (such as "Oscar N. Morton") who we can say hello to. (In fact Jill will create one plan instance for each match and which one of those will actually be selected for execution will depend on the `--plan-selection-policy` setting). The function [GreetNeighbour::context()](https://github.com/agentsoz/jill/blob/master/examples/src/main/java/io/github/agentsoz/jill/example/greeter/GreetNeighbour.java#L45) shows how to specify such a context condition. Internally, this executes as a query on the [belief database of the agent](https://github.com/agentsoz/jill/blob/master/examples/src/main/java/io/github/agentsoz/jill/example/greeter/Greeter.java#L51) and returns one plan instance for each match (in this case one plan instance per male neighbour). Inside the plan, the match must then be bound to a plan variable so that it can be used inside the plan body. This is done in [GreetNeighbour::setPlanVariables(Map&lt;String, Object&gt; vars)](https://github.com/agentsoz/jill/blob/master/examples/src/main/java/io/github/agentsoz/jill/example/greeter/GreetNeighbour.java#L55) where the matched neighbours name is saved in a plan variable. (Here `vars` is a list of key-value pairs--the belief database table column names being the keys, and the matched record being the values.) The saved name is then used inside the plan body to [say hello to that neighbour](https://github.com/agentsoz/jill/blob/master/examples/src/main/java/io/github/agentsoz/jill/example/greeter/GreetNeighbour.java#L70).
+This crafted scenario is perfect for highlighting the use of binding variables in context conditions of plans. Basically what we want is to be able to specify the condition (select a male neighbour) in the context condition, and let Jill give us a binding (such as "Oscar N. Morton") who we can say hello to. (In fact Jill will create one plan instance for each match and which one of those will actually be selected for execution will depend on the `--plan-selection-policy` setting). The function [GreetNeighbour::context()](https://github.com/agentsoz/jill/blob/main/examples/src/main/java/io/github/agentsoz/jill/example/greeter/GreetNeighbour.java#L45) shows how to specify such a context condition. Internally, this executes as a query on the [belief database of the agent](https://github.com/agentsoz/jill/blob/main/examples/src/main/java/io/github/agentsoz/jill/example/greeter/Greeter.java#L51) and returns one plan instance for each match (in this case one plan instance per male neighbour). Inside the plan, the match must then be bound to a plan variable so that it can be used inside the plan body. This is done in [GreetNeighbour::setPlanVariables(Map&lt;String, Object&gt; vars)](https://github.com/agentsoz/jill/blob/main/examples/src/main/java/io/github/agentsoz/jill/example/greeter/GreetNeighbour.java#L55) where the matched neighbours name is saved in a plan variable. (Here `vars` is a list of key-value pairs--the belief database table column names being the keys, and the matched record being the values.) The saved name is then used inside the plan body to [say hello to that neighbour](https://github.com/agentsoz/jill/blob/main/examples/src/main/java/io/github/agentsoz/jill/example/greeter/GreetNeighbour.java#L70).
 
 The script `./test/greeter.sh` runs this example in various configurations changing the number of agents and the number of neighbours per agent:
 ```
