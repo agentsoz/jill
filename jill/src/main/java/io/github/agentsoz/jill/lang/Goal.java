@@ -6,7 +6,7 @@ import io.github.agentsoz.jill.util.AString;
  * #%L
  * Jill Cognitive Agents Platform
  * %%
- * Copyright (C) 2014 - 2023 by its authors. See AUTHORS file.
+ * Copyright (C) 2014 - 2024 by its authors. See AUTHORS file.
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
