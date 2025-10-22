@@ -2,9 +2,9 @@ name: Jill CI
 
 on:
   push:
-    branches: '*'
+    branches: ['**']
   pull_request:
-    branches: '*'
+    branches: ['**']
 
 jobs:
   build:
@@ -13,20 +13,20 @@ jobs:
     steps:
 
     - name: Set up JDK
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v5
       with:
         distribution: 'zulu'
         java-version: '17'
 
     - name: Cache Maven packages
-      uses: actions/cache@v2
+      uses: actions/cache@v4
       with:
         path: ~/.m2
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
 
     - name: Clone the repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v5
 
     - name: Build Jill
       run: |
